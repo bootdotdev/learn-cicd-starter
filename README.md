@@ -1,3 +1,45 @@
 # learn-cicd-starter (Notely)
 
-The starter code for the "Notely" application for the "Learn CICD" course on [Boot.dev](https://boot.dev).
+This repo contains the starter code for the "Notely" application for the "Learn CICD" course on [Boot.dev](https://boot.dev).
+
+This README is for reference purposes only! Follow the instructions in the course, don't start doing all the steps here in the README.
+
+## Local Development
+
+Make sure you're on Go version 1.20+.
+
+Create a `.env` file in the root of the project with the following contents:
+
+```bash
+PORT="8000"
+```
+
+Run the server:
+
+```bash
+go build -o out && ./out
+```
+
+*This starts the server in non-database mode.* It will serve a webpage at `http://localhost:8000`. However, you won't be able to interact with the webpage until you connect it to a MySQL database and run the migrations.
+
+## Database Setup
+
+This project uses a MySQL database for persistent storage. You can install MySQL locally for local development, or connect to a remote database.
+
+Add *your* database connection string to your `.env` file. Here's an example:
+
+```bash
+DATABASE_URL="username:password@host/dbname?tls=true"
+```
+
+Once you have an empty database, you'll need to run migrations to create the schema. Make sure you have [goose](https://github.com/pressly/goose) installed:
+
+```bash
+go install github.com/pressly/goose/v3/cmd/goose@latest
+```
+
+Then run the migrations:
+
+```bash
+./scripts/migrateup.sh
+```
