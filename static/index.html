@@ -6,37 +6,30 @@
     <title>Notely</title>
 </head>
 
-<body>
+<body class="section">
     <h1>Notely</h1>
-    <button id="createUserButton">Create User</button>
 
-    <h2>Create Note</h2>
-    <textarea id="newNoteContent"></textarea>
-    <button id="createNoteButton">Create Note</button>
+    <div id="userCreationContainer" class="section">
+        <input id="nameField" type="text" placeholder="Enter your name">
+        <button id="createUserButton" onclick="createUser()">Create User</button>
+    </div>
 
-    <h2>Your Notes</h2>
-    <div id="notes"></div>
+    <div id="noteSection" class="section" style="display: none;">
+        <p id="greetingMessage"></p>
+
+        <textarea id="newNoteContent"></textarea>
+        <button id="createNoteButton" onclick="createNote()">Create Note</button>
+
+        <h2>Your Notes</h2>
+        <div id="notes"></div>
+
+        <button onclick="logout()">Logout</button>
+    </div>
 
     <script>
         const API_BASE = '/v1';
-        let currentUserAPIKey = localStorage.getItem('currentUserAPIKey')
+        let currentUserAPIKey = null;
         let currentUser = null;
-
-        document.getElementById('createUserButton').addEventListener('click', createUser);
-        document.getElementById('createNoteButton').addEventListener('click', createNote);
-
-        async function createUser() {
-            const response = await fetch(`${API_BASE}/users`, {
-                method: 'POST',
-                headers: { 'Content-Type': 'application/json' },
-                body: JSON.stringify({ name: 'Test User' })
-            });
-            const user = await response.json();
-            localStorage.setItem('currentUserAPIKey', user.api_key);
-            currentUserAPIKey = user.api_key;
-            currentUser = user;
-            alert(`User Created: ${user.name}`);
-        }
 
         async function createNote() {
             if (!currentUser) {
@@ -51,17 +44,11 @@
                 });
             const note = await response.json();
             displayNote(note);
-
         }
 
         async function getUser() {
             const response = await fetch(`${API_BASE}/users`, { headers: { 'Authorization': `ApiKey ${currentUserAPIKey}` } });
             return await response.json();
-        }
-
-        function logout() {
-            localStorage.removeItem('currentUserAPIKey');
-            currentUser = null;
         }
 
         async function loadNotes() {
@@ -82,14 +69,48 @@
             document.getElementById('notes').appendChild(noteElement);
         }
 
+        async function createUser() {
+            const nameField = document.getElementById('nameField');
+            const response = await fetch(`${API_BASE}/users`, {
+                method: 'POST',
+                headers: { 'Content-Type': 'application/json' },
+                body: JSON.stringify({ name: nameField.value }) // using the value from nameField
+            });
+            const user = await response.json();
+            localStorage.setItem('currentUserAPIKey', user.api_key);
+            login()
+            alert(`User Created: ${user.name}`);
+
+            // Once a user is created, hide the user creation section and show the note section
+            document.getElementById('userCreationContainer').style.display = 'none';
+            document.getElementById('noteSection').style.display = 'flex';
+        }
+
+        function logout() {
+            localStorage.removeItem('currentUserAPIKey');
+            currentUser = null;
+
+            // When a user logs out, show the user creation section and hide the note section
+            document.getElementById('userCreationContainer').style.display = 'block';
+            document.getElementById('noteSection').style.display = 'none';
+        }
+
         async function login() {
+            currentUserAPIKey = localStorage.getItem('currentUserAPIKey')
             if (!currentUserAPIKey) {
-                return
+                return;
             }
             const user = await getUser();
             currentUser = user;
             currentUserAPIKey = user.api_key;
             await loadNotes();
+
+            // When a user logs in, hide the user creation section and show the note section
+            document.getElementById('userCreationContainer').style.display = 'none';
+            document.getElementById('noteSection').style.display = 'flex';
+
+            // Display a greeting message
+            document.getElementById('greetingMessage').textContent = `Hello ${user.name}!`;
         }
 
         login();
@@ -110,19 +131,25 @@
             color: var(--light);
             margin: 0;
             padding: 0;
+            height: 100vh;
+        }
+
+        .section {
             display: flex;
             flex-direction: column;
             align-items: center;
-            height: 100vh;
             justify-content: center;
         }
-
-
 
         textarea {
             width: 300px;
             height: 100px;
             margin-bottom: 10px;
+        }
+
+        input {
+            display: block;
+            padding: 1rem;
         }
 
         button {
@@ -151,6 +178,7 @@
             margin-bottom: 10px;
         }
     </style>
+    <!-- your existing CSS code... -->
 </body>
 
 </html>

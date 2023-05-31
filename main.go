@@ -53,6 +53,7 @@ func main() {
 		}
 		dbQueries := database.New(db)
 		apiCfg.DB = dbQueries
+		log.Println("Connected to database!")
 	}
 
 	router := chi.NewRouter()
@@ -85,8 +86,6 @@ func main() {
 		v1Router.Get("/users", apiCfg.middlewareAuth(apiCfg.handlerUsersGet))
 		v1Router.Get("/notes", apiCfg.middlewareAuth(apiCfg.handlerNotesGet))
 		v1Router.Post("/notes", apiCfg.middlewareAuth(apiCfg.handlerNotesCreate))
-		v1Router.Delete("/notes/{noteID}", apiCfg.middlewareAuth(apiCfg.handlerNotesDelete))
-		v1Router.Put("/notes/{noteID}", apiCfg.middlewareAuth(apiCfg.handlerNotesUpdate))
 	}
 
 	v1Router.Get("/healthz", handlerReadiness)

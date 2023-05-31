@@ -34,16 +34,6 @@ func (q *Queries) CreateNote(ctx context.Context, arg CreateNoteParams) error {
 	return err
 }
 
-const deleteNote = `-- name: DeleteNote :exec
-
-DELETE FROM notes WHERE id = ?
-`
-
-func (q *Queries) DeleteNote(ctx context.Context, id string) error {
-	_, err := q.db.ExecContext(ctx, deleteNote, id)
-	return err
-}
-
 const getNote = `-- name: GetNote :one
 
 SELECT id, created_at, updated_at, note, user_id FROM notes WHERE id = ?
@@ -94,20 +84,4 @@ func (q *Queries) GetNotesForUser(ctx context.Context, userID string) ([]Note, e
 		return nil, err
 	}
 	return items, nil
-}
-
-const updateNote = `-- name: UpdateNote :exec
-
-UPDATE notes SET updated_at = ?, note = ? WHERE id = ?
-`
-
-type UpdateNoteParams struct {
-	UpdatedAt time.Time
-	Note      string
-	ID        string
-}
-
-func (q *Queries) UpdateNote(ctx context.Context, arg UpdateNoteParams) error {
-	_, err := q.db.ExecContext(ctx, updateNote, arg.UpdatedAt, arg.Note, arg.ID)
-	return err
 }
