@@ -105,17 +105,13 @@ func addParseTimeParam(input string) (string, error) {
 	if !strings.Contains(input, dummyScheme) {
 		input = "http://" + input
 	}
-
 	u, err := url.Parse(input)
 	if err != nil {
 		return "", err
 	}
-
 	q := u.Query()
 	q.Add("parseTime", "true")
 	u.RawQuery = q.Encode()
-
-	// Remove the added http:// if it's not in the original input
 	returnUrl := u.String()
 	returnUrl = strings.TrimPrefix(returnUrl, dummyScheme)
 	return returnUrl, nil
