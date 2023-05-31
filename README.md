@@ -43,3 +43,17 @@ Then run the migrations:
 ```bash
 ./scripts/migrateup.sh
 ```
+
+Start the server:
+
+```bash
+go build -o out && ./out
+```
+
+Because the `DATABASE_URL` environment variable is set, the server will connect to the database and serve the webpage at `http://localhost:8000`. The page should be fully functional now. You can:
+
+* Create a user (login as that user)
+* Save notes
+* Logout (To log in again you'll just create a new user)
+
+*The purpose of this project is to just be a simple CRUD app that we can use to practice CI/CD. It's not meant to be a fully functional app.*
