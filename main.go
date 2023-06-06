@@ -26,6 +26,7 @@ type apiConfig struct {
 //go:embed static/*
 var staticFiles embed.FS
 
+// comment for tests
 func main() {
 	godotenv.Load(".env")
 
