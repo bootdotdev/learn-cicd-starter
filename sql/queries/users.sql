@@ -9,6 +9,6 @@ VALUES (
 );
 --
 
--- name: GetUserByAPIKey :one
+-- name: GetUser :one
 SELECT * FROM users WHERE api_key = ?;
 --

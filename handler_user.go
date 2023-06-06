@@ -44,7 +44,7 @@ func (cfg *apiConfig) handlerUsersCreate(w http.ResponseWriter, r *http.Request)
 		return
 	}
 
-	user, err := cfg.DB.GetUserByAPIKey(r.Context(), apiKey)
+	user, err := cfg.DB.GetUser(r.Context(), apiKey)
 	if err != nil {
 		log.Println(err)
 		respondWithError(w, http.StatusInternalServerError, "Couldn't get user")
