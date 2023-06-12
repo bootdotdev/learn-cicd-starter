@@ -49,5 +49,5 @@ func (cfg *apiConfig) handlerNotesCreate(w http.ResponseWriter, r *http.Request,
 		respondWithError(w, http.StatusNotFound, "Couldn't get note")
 		return
 	}
-	respondWithJSON(w, http.StatusOK, databaseNoteToNote(note))
+	respondWithJSON(w, http.StatusCreated, databaseNoteToNote(note))
 }

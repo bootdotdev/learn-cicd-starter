@@ -7,7 +7,7 @@
 </head>
 
 <body class="section">
-    <h1>Notely</h1>
+    <h1>Welcome to Notely</h1>
 
     <div id="userCreationContainer" class="section">
         <input id="nameField" type="text" placeholder="Enter your name">
@@ -37,7 +37,7 @@
                 return;
             }
             const noteContent = document.getElementById('newNoteContent').value;
-            const response = await fetch(`${API_BASE}/notes`,
+            const response = await fetchWithAlert(`${API_BASE}/notes`,
                 {
                     method: 'POST', headers: { 'Content-Type': 'application/json', 'Authorization': `ApiKey ${currentUserAPIKey}` },
                     body: JSON.stringify({ note: noteContent })
@@ -47,7 +47,7 @@
         }
 
         async function getUser() {
-            const response = await fetch(`${API_BASE}/users`, { headers: { 'Authorization': `ApiKey ${currentUserAPIKey}` } });
+            const response = await fetchWithAlert(`${API_BASE}/users`, { headers: { 'Authorization': `ApiKey ${currentUserAPIKey}` } });
             return await response.json();
         }
 
@@ -55,7 +55,7 @@
             if (!currentUser) {
                 return;
             }
-            const response = await fetch(`${API_BASE}/notes`, { headers: { 'Authorization': `ApiKey ${currentUserAPIKey}` } });
+            const response = await fetchWithAlert(`${API_BASE}/notes`, { headers: { 'Authorization': `ApiKey ${currentUserAPIKey}` } });
             const notes = await response.json();
             const notesContainer = document.getElementById('notes');
             notesContainer.innerHTML = '';
@@ -71,7 +71,7 @@
 
         async function createUser() {
             const nameField = document.getElementById('nameField');
-            const response = await fetch(`${API_BASE}/users`, {
+            const response = await fetchWithAlert(`${API_BASE}/users`, {
                 method: 'POST',
                 headers: { 'Content-Type': 'application/json' },
                 body: JSON.stringify({ name: nameField.value }) // using the value from nameField
@@ -111,6 +111,15 @@
 
             // Display a greeting message
             document.getElementById('greetingMessage').textContent = `Hello ${user.name}!`;
+        }
+
+        async function fetchWithAlert(url, options) {
+            const response = await fetch(url, options);
+            if (response.status > 299) {
+                alert(`Error: ${response.status}`);
+                return;
+            }
+            return response;
         }
 
         login();
