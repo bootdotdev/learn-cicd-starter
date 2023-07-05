@@ -10,14 +10,14 @@ Make sure you're on Go version 1.20+.
 
 Create a `.env` file in the root of the project with the following contents:
 
-```bash
+```sh
 PORT="8000"
 ```
 
 Run the server:
 
-```bash
-go build -o notely && ./notely
+```console
+$ go build -o notely && ./notely
 ```
 
 *This starts the server in non-database mode.* It will serve a webpage at `http://localhost:8000`. However, you won't be able to interact with the webpage until you connect it to a MySQL database and run the migrations.
@@ -28,26 +28,26 @@ This project uses a MySQL database for persistent storage. You can install MySQL
 
 Add *your* database connection string to your `.env` file. Here's an example:
 
-```bash
+```sh
 DATABASE_URL="username:password@host/dbname?tls=true"
 ```
 
 Once you have an empty database, you'll need to run migrations to create the schema. Make sure you have [goose](https://github.com/pressly/goose) installed:
 
-```bash
-go install github.com/pressly/goose/v3/cmd/goose@latest
+```console
+$ go install github.com/pressly/goose/v3/cmd/goose@latest
 ```
 
 Then run the migrations:
 
-```bash
-./scripts/migrateup.sh
+```console
+$ ./scripts/migrateup.sh
 ```
 
 Start the server:
 
-```bash
-go build -o notely && ./notely
+```console
+$ go build -o notely && ./notely
 ```
 
 Because the `DATABASE_URL` environment variable is set, the server will connect to the database and serve the webpage at `http://localhost:8000`. The page should be fully functional now. You can:
