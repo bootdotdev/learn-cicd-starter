@@ -57,3 +57,5 @@ Because the `DATABASE_URL` environment variable is set, the server will connect 
 * Logout (To log in again you'll just create a new user)
 
 *The purpose of this project is to just be a simple CRUD app that we can use to practice CI/CD. It's not meant to be a fully functional app.*
+
+[//]: # (Comment for PR)
