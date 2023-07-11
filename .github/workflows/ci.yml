@@ -18,11 +18,11 @@ jobs:
       - name: Check out code
         uses: actions/checkout@v3
 
-      - name: Run tests
-        run: go test -cover ./...
-
+      - name: Run unit tests
+        run: go test ./...
+  
   style:
-    name: style
+    name: Style
     runs-on: ubuntu-latest
 
     steps:
@@ -34,5 +34,5 @@ jobs:
       - name: Check out code
         uses: actions/checkout@v3
 
-      - name: Check format
+      - name: Check formatting
         run: test -z $(go fmt ./...)
