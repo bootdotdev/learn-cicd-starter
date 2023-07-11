@@ -10,8 +10,8 @@ import (
 func TestGetApiKey(t *testing.T) {
 	mockReq := httptest.NewRequest("GET", "http://localhost:8000", nil)
 	mockReq.Header = http.Header{
-		"Host": {"localhost"},
-    "Content-Type": {"application/json"},
+		"Host":          {"localhost"},
+		"Content-Type":  {"application/json"},
 		"Authorization": {"ApiKey thisIsAnAPIKey"},
 	}
 
@@ -22,8 +22,8 @@ func TestGetApiKey(t *testing.T) {
 
 	want := "thisIsAnAPIKey"
 
-	if  !reflect.DeepEqual(want, got){
+	if !reflect.DeepEqual(want, got) {
 		t.Fatalf("expected: %v, got: %v\n", want, got)
 	}
-	
+
 }
