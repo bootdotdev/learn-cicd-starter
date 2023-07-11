@@ -1,4 +1,4 @@
-![code coverage badge](https://github.com/ddomd/learn-cicd-starter/actions/workflows/ci/badge.svg
+![code coverage badge](https://github.com/ddomd/learn-cicd-starter/workflows/ci/badge.svg
 )
 
 # learn-cicd-starter (Notely)
