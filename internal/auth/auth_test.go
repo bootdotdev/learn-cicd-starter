@@ -8,14 +8,17 @@ import (
 )
 
 func TestGetApiKey(t *testing.T) {
-	request := httptest.NewRequest("GET", "http://localhost:8000", nil)
-	request.Header = http.Header{
+	mockReq := httptest.NewRequest("GET", "http://localhost:8000", nil)
+	mockReq.Header = http.Header{
 		"Host": {"localhost"},
     "Content-Type": {"application/json"},
 		"Authorization": {"ApiKey thisIsAnAPIKey"},
 	}
 
-	got, _ := GetAPIKey(request.Header)
+	got, err := GetAPIKey(mockReq.Header)
+	if err != nil {
+		got = err.Error()
+	}
 
 	want := "thisIsAnAPIKey"
 
