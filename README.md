@@ -1,4 +1,4 @@
-![code coverage badge](https://github.com/tb38r/learn-cicd-starter/actions/workflows/Tests/badge.svg)
+![code coverage badge](https://github.com/tb38r/learn-cicd-starter/actions/workflows/ci.yml/badge.svg)
 
 
 
