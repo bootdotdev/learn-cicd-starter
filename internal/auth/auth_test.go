@@ -26,13 +26,11 @@ key, err = GetAPIKey(headers)
 
 var errMessage = ErrMalFormed
 
-// if err != ErrMalFormed {
-// 	t.Errorf("expected %v , got %v",errMessage, err)
-// }
-
-if err != errors.New("temp string to fail test"){
+if err != ErrMalFormed {
 	t.Errorf("expected %v , got %v",errMessage, err)
 }
+
+
 // Case 3: Valid authorization header
 headers.Del("Authorization")
 headers.Add("Authorization","ApiKey my-api-key")
