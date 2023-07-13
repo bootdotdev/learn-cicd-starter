@@ -20,3 +20,20 @@ jobs:
 
       - name:  Echo Go version
         run: go test ./... -cover
+ 
+    
+  Formatting:
+     name: apply formatting
+     runs-on: ubuntu-latest
+
+     steps:
+      - name: Set up Go
+        uses: actions/setup-go@v4
+        with:
+         go-version: '1.20'
+        
+      - name: Check out code
+        uses: actions/checkout@v3
+
+      - name: Return format error code
+        uses: test -z $(go fmt ./...)
