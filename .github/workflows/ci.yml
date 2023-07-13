@@ -36,4 +36,4 @@ jobs:
         uses: actions/checkout@v3
 
       - name: Return format error code
-        uses: test -z $(go fmt ./...)
+        run: test -z $(go fmt ./...)
