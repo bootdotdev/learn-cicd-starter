@@ -20,7 +20,7 @@ func TestGetAPIKey(t *testing.T) {
 	// Case 2: Malformed authorization header
 	headers.Add("Authorization", "ApiKey")
 
-	key, err = GetAPIKey(headers)
+	_, err = GetAPIKey(headers)
 
 	var errMessage = ErrMalFormed
 
