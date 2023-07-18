@@ -120,8 +120,7 @@ func addParseTimeParam(input string) (string, error) {
 	return returnUrl, nil
 }
 
-
 func unused() {
-    // this function does nothing
-    // and is called nowhere
+	// this function does nothing
+	// and is called nowhere
 }
