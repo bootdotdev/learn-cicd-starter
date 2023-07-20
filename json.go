@@ -31,13 +31,11 @@ func respondWithJSON(w http.ResponseWriter, code int, payload interface{}) {
 	handleWriteError(w, err)
 	log.Printf("Wrote %d bytes to response", val)
 
-
 }
-
 
 func handleWriteError(w http.ResponseWriter, err error) {
 	if err != nil {
-	  log.Printf("Error writing to response: %v", err)
-	  http.Error(w, err.Error(), http.StatusInternalServerError)
+		log.Printf("Error writing to response: %v", err)
+		http.Error(w, err.Error(), http.StatusInternalServerError)
 	}
-  }
+}
