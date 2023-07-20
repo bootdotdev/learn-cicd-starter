@@ -20,3 +20,19 @@ jobs:
 
             - name: Build app with script
               run:  scripts/buildprod.sh
+    gcp-run:  
+    
+        name: run cd
+        runs-on: ubuntu-latest
+
+        steps:
+              - id: 'auth'
+                uses: 'google-github-actions/auth@v1'
+                with:
+                 credentials_json: '${{ secrets.GCP_CREDENTIALS }}'
+            
+              - name: 'Set up Cloud SDK'
+                uses: 'google-github-actions/setup-gcloud@v1'
+            
+              - name: 'Use gcloud CLI'
+                run: 'gcloud info'
