@@ -9,6 +9,7 @@ import (
 	"net/url"
 	"os"
 	"strings"
+	"time"
 
 	"github.com/go-chi/chi"
 	"github.com/go-chi/cors"
@@ -23,6 +24,8 @@ type apiConfig struct {
 	DB *database.Queries
 }
 
+// nada
+//
 //go:embed static/*
 var staticFiles embed.FS
 
@@ -93,8 +96,9 @@ func main() {
 
 	router.Mount("/v1", v1Router)
 	srv := &http.Server{
-		Addr:    ":" + port,
-		Handler: router,
+		Addr:              ":" + port,
+		Handler:           router,
+		ReadHeaderTimeout: 1 * time.Second,
 	}
 
 	log.Printf("Serving on port: %s\n", port)
