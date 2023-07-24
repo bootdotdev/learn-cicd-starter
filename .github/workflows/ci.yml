@@ -19,7 +19,7 @@ jobs:
         uses: actions/checkout@v3
      
       - name: Format
-        uses: test -z $(go fmt ./...)
+        run: test -z $(go fmt ./...)
 
       - name: Run Unit Test
         run: go test -cover ./...
