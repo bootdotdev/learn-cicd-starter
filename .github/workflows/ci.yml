@@ -34,5 +34,5 @@ jobs:
         run: go test -cover ./...
 
       - name: Run Security Check
-        run: gosec
+        run: gosec ./...
         
