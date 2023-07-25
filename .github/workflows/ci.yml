@@ -21,6 +21,9 @@ jobs:
       - name: install staticcheck
         run: go install honnef.co/go/tools/cmd/staticcheck@latest
 
+      - name: install gosec
+        run: go install github.com/securego/gosec/v2/cmd/gosec@lates          
+
       - name: Static Check
         run: staticcheck ./...
 
@@ -29,4 +32,7 @@ jobs:
 
       - name: Run Unit Test
         run: go test -cover ./...
+
+      - name: Run Security Check
+        run: gosec
         
