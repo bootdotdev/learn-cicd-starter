@@ -24,6 +24,7 @@ jobs:
       - name: Run go tests with -cover
         run: go test -cover ./...
 
+
   style:
     name: format
     runs-on: ubuntu-latest
@@ -39,3 +40,9 @@ jobs:
 
       - name: run format
         run: go fmt ./...
+
+      - name: install staticcheck
+        run: go install honnef.co/go/tools/cmd/staticcheck@latest
+
+      - name: run staticcheck
+        run: staticcheck ./...
