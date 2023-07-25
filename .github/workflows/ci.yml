@@ -1,28 +1,38 @@
-name: ci
+me: ci
 
 on:
-  pull_request:
-    branches: [main]
+    pull_request:
+          branches: [main]
+          jobs:
+              tests:
+                    name: tests
+                          runs_on: ubuntu-latest
 
-jobs:
-  tests:
-    name: tests
-    runs-on: ubuntu-latest
+                                steps:
+                                      - name: Set-up Go
+                                              uses: actions/setup-go@v4
+                                                      with:
+                                                                go-version: "1.20"
+                                                                        
+                                                                      - name: Check out code
+                                                                              uses: actions/checkout@v3
 
-    steps:
-      - name: Set up Go
-        uses: actions/setup-go@v4
-        with:
-          go-version: "1.20"
+                                                                                    - name: Run tests
+                                                                                            run: go test -cover ./...
 
-      - name: Check out code
-        uses: actions/checkout@v3
+                                                                                                style:
+                                                                                                      name: format
+                                                                                                            runs_on: ubuntu-latest
 
-      - name: Echo Go Version
-        run: go version
+                                                                                                                  steps:
+                                                                                                                        - name: Set-up Go
+                                                                                                                                uses: actions/setup-go@v4
+                                                                                                                                        with:
+                                                                                                                                                  go-version: "1.20"
+                                                                                                                                                          
+                                                                                                                                                        - name: Check out code
+                                                                                                                                                                uses: actions/checkout@v3
 
-      - name: Run go tests
-        run: go test ./...
+                                                                                                                                                                      - name: Run fmt
+                                                                                                                                                                              run: go fmt ./...
 
-      - name: Run go tests with -cover
-        run: go test -cover ./...
