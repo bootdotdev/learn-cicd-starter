@@ -1,14 +1,13 @@
-name: ci
+name: CI
 
 on:
   pull_request:
     branches: [main]
 
 jobs:
-  tests:
+  test:
     name: Tests
     runs-on: ubuntu-latest
-
 
     steps:
       - name: Set up Go
@@ -19,7 +18,5 @@ jobs:
       - name: Check out code
         uses: actions/checkout@v3
 
-      - name: Print current Go version
+      - name: Check Go version
         run: go version
-
-
