@@ -1,7 +1,6 @@
-# This test should fail with status code 1
+# This test should fail with status code1
 
 name: ci
-
 
 on:
   pull_request:
@@ -10,17 +9,16 @@ on:
 jobs:
   tests:
     name: tests
-    runs-on: Ubuntu 22.04.2 LTS
+    runs-on: ubuntu-latest
 
-    steps: 
+    steps:
       - name: Set up Go
         uses: actions/setup-go@v4
-        with: 
-        go-version: "1.20"
-
+        with:
+          go-version: "1.20"
 
       - name: Check out code
         uses: actions/checkout@v3
 
       - name: Force Failure
-        run: (exit 1) 
+        run: (exit 1)
