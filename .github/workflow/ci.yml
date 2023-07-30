@@ -1,3 +1,5 @@
+# This test should fail with status code 1
+
 name: ci
 
 
