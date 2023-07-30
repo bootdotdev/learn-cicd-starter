@@ -19,7 +19,7 @@ jobs:
       - name: Check out code
         uses: actions/checkout@v3
 
-      - name: Force Failure
+      - name: Print current Go version
         run: go version
 
 
