@@ -25,7 +25,7 @@ func TestGetApiKey(t *testing.T) {
 			header: http.Header{
 				"Authorization": {"ApiKey abcd"},
 			},
-			want:      "",
+			want:      "abcd",
 			errorToBe: nil,
 		},
 		{
