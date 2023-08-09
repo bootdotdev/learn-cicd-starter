@@ -48,7 +48,7 @@ func TestGetApiKey(t *testing.T) {
 		got, err := GetAPIKey(tc.header)
 
 		if err != nil {
-			if err.Error() != tc.errorToBe.Error()  {
+			if err.Error() != tc.errorToBe.Error() {
 				t.Fatalf("%s: expected: %v, got: %v \n", tc.name, tc.errorToBe, err)
 			}
 		} else if !reflect.DeepEqual(tc.want, got) {
