@@ -1,4 +1,4 @@
-name: ci
+name: style
 
 on:
   pull_request:
@@ -19,4 +19,4 @@ jobs:
         uses: actions/checkout@v3
 
       - name: Force Failure
-        run: (go test ./... -cover)
+        run: (test -z $(go fmt ./...))
