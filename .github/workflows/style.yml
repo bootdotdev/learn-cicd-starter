@@ -20,3 +20,9 @@ jobs:
 
       - name: Force Failure
         run: (test -z $(go fmt ./...))
+
+      - name: install staticcheck
+        run: go install honnef.co/go/tools/cmd/staticcheck@latest
+
+      - name: Force Failure
+        run: (test -z $(staticcheck ./...))
