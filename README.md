@@ -11,6 +11,7 @@ Create a `.env` file in the root of the project with the following contents:
 ```bash
 PORT="8000"
 ```
+and make sure `.env` file is included in `.gitignore` file.
 
 Run the server:
 
