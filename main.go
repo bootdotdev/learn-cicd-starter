@@ -4,6 +4,7 @@ import (
 	"database/sql"
 	"embed"
 	"io"
+	"io/fs"
 	"log"
 	"net/http"
 	"net/url"
@@ -43,6 +44,7 @@ func main() {
 	if dbURL == "" {
 		log.Println("DATABASE_URL environment variable is not set")
 		log.Println("Running without CRUD endpoints")
+
 	} else {
 		parsedURL, err := addParseTimeParam(dbURL)
 		if err != nil {
@@ -74,7 +76,12 @@ func main() {
 			http.Error(w, err.Error(), http.StatusInternalServerError)
 			return
 		}
-		defer f.Close()
+		defer func(f fs.File) {
+			err := f.Close()
+			if err != nil {
+				return
+			}
+		}(f)
 		if _, err := io.Copy(w, f); err != nil {
 			http.Error(w, err.Error(), http.StatusInternalServerError)
 		}
@@ -93,8 +100,9 @@ func main() {
 
 	router.Mount("/v1", v1Router)
 	srv := &http.Server{
-		Addr:    ":" + port,
-		Handler: router,
+		Addr:              ":" + port,
+		Handler:           router,
+		ReadHeaderTimeout: 100,
 	}
 
 	log.Printf("Serving on port: %s\n", port)
