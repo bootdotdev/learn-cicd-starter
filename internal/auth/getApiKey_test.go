@@ -16,7 +16,7 @@ func TestGetApiKey(t *testing.T) {
 		},
 		{
 			input:    map[string][]string{"Authorization": {"ApiKey aaljfalakjfaakffksfajafka"}},
-			expected: "aljfalakjfaakffksfajafka",
+			expected: "aaljfalakjfaakffksfajafka",
 		},
 	}
 	for _, cs := range cases {
