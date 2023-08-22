@@ -1,5 +1,5 @@
 # learn-cicd-starter (Notely)
-
+![code coverage badge](https://github.com/purandixit07/learn-cicd-starter/workflows/Tests/badge.svg)
 This repo contains the starter code for the "Notely" application for the "Learn CICD" course on [Boot.dev](https://boot.dev).
 
 ## Local Development
@@ -11,6 +11,7 @@ Create a `.env` file in the root of the project with the following contents:
 ```bash
 PORT="8000"
 ```
+and make sure `.env` file is included in `.gitignore` file.
 
 Run the server:
 
