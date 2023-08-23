@@ -1,0 +1,27 @@
+{
+    "window.zoomLevel": 1,
+    "editor.fontSize": 12,
+    "[python]": {
+        "editor.formatOnType": true
+    },
+    "editor.formatOnSave": true,
+    "go.formatTool": "goimports",
+    "[go]": {
+        "editor.formatOnSave": true,
+        "editor.codeActionsOnSave": {
+            "source.organizeImports": true
+        }
+    },
+    "[go.mod]": {
+        "editor.formatOnSave": true,
+        "editor.codeActionsOnSave": {
+            "source.organizeImports": true
+        }
+    },
+    "editor.parameterHints.enabled": false,
+    "go.toolsManagement.autoUpdate": true,
+    "go.vetOnSave": "package",
+    "thunder-client.saveToWorkspace": true,
+    "editor.fontLigatures": false,
+    "editor.fontWeight": "normal"
+}
