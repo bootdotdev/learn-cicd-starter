@@ -38,7 +38,7 @@ jobs:
       - name: 'Set up gcloud sdk'
         uses: 'google-github-actions/setup-gcloud@v1'
     
-      - name: 'build and push Docker image'
+      - name: 'Build and push Docker image'
         run: 'gcloud builds submit --tag us-central1-docker.pkg.dev/notely-396910/notely-ar-repo/notely:latest .'
 
       - name: 'Deploy to Cloud Run'
