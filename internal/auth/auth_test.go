@@ -19,7 +19,7 @@ func TestGetAPIKey(t *testing.T) {
 		},
 		{
 			apiKey: "123",
-			expectedResult: "1234",
+			expectedResult: "123",
 		},
 		{
 			apiKey: "nlkwaejlkawe",
@@ -38,7 +38,7 @@ func TestGetAPIKey(t *testing.T) {
 		}
 	
 		if (tc.expectedResult != got) {
-			t.Fatalf("got %s but wanted %s", got, tc.apiKey)
+			t.Fatalf("got %s but expected %s", got, tc.expectedResult)
 		}	
 	}
 }
