@@ -80,6 +80,7 @@ func main() {
 		}
 	})
 
+	// setup chi router
 	v1Router := chi.NewRouter()
 
 	if apiCfg.DB != nil {
