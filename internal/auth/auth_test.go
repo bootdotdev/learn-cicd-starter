@@ -8,37 +8,37 @@ import (
 
 func TestGetAPIKey(t *testing.T) {
 	type test struct {
-		apiKey string
+		apiKey         string
 		expectedResult string
 	}
-	
+
 	tests := []test{
 		{
-			apiKey: "key",
+			apiKey:         "key",
 			expectedResult: "key",
 		},
 		{
-			apiKey: "123",
+			apiKey:         "123",
 			expectedResult: "123",
 		},
 		{
-			apiKey: "nlkwaejlkawe",
+			apiKey:         "nlkwaejlkawe",
 			expectedResult: "nlkwaejlkawe",
 		},
 	}
 
 	for _, tc := range tests {
 		headers := make(http.Header)
-		headers.Set("Authorization", "ApiKey " + tc.apiKey)
-	
+		headers.Set("Authorization", "ApiKey "+tc.apiKey)
+
 		got, err := GetAPIKey(headers)
 		if err != nil {
 			fmt.Println(err)
 			t.Fatal("test error")
 		}
-	
-		if (tc.expectedResult != got) {
+
+		if tc.expectedResult != got {
 			t.Fatalf("got %s but expected %s", got, tc.expectedResult)
-		}	
+		}
 	}
 }
