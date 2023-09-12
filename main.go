@@ -98,7 +98,9 @@ func main() {
 	}
 
 	log.Printf("Serving on port: %s\n", port)
+	log.Println("Test")
 	log.Fatal(srv.ListenAndServe())
+
 }
 
 func addParseTimeParam(input string) (string, error) {
