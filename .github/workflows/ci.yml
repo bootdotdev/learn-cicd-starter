@@ -21,6 +21,9 @@ jobs:
       - name: Run tests
         run: go test ./... -cover
 
+      - name: install gosec
+        run: go install github.com/securego/gosec/v2/cmd/gosec@latest
+
   style:
     name: styles
     runs-on: ubuntu-latest
@@ -42,4 +45,18 @@ jobs:
 
       - name: Lint all directories
         run: staticcheck ./...
+
+  # security:
+  #  name: Security
+  #  runs-on: ubuntu-latest
+
+  #  steps:
+  #     - name: Set up Go
+  #       uses: actions/setup-go@v4
+  #       with:
+  #         go-version: "1.20"
+
+  #     - name: Check out code
+  #       uses: actions/checkout@v3
+
 
