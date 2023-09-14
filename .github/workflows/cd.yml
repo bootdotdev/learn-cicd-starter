@@ -7,7 +7,7 @@ on:
 
 jobs:
   deploy:
-    name: deploy
+    name: Deploy
     runs-on: ubuntu-latest
 
     steps:
@@ -21,3 +21,15 @@ jobs:
 
       - name: Deploy
         run: scripts/buildprod.sh
+
+      - name: Set up GCP credentials and Cloud SDK
+        uses: google-github-actions/auth@v1
+        with:
+          credentials_json: ${{ secrets.GCP_CREDENTIALS }}
+
+      - name: Use gcloud CLI
+        run: gcloud info
+
+      - name: Build Docker and AR
+        run: gcloud builds submit --tag cloud-run-deployer@notely-399022.iam.gserviceaccount.com .
+
