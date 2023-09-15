@@ -1,4 +1,4 @@
-name: Deployment
+name: cd
 
 on:
   push:
@@ -7,42 +7,38 @@ on:
 
 jobs:
   deploy:
-    name: Deploy
+    name: deploy
     runs-on: ubuntu-latest
 
     steps:
-      - name: Set up Go
-        uses: actions/setup-go@v4
-        with:
-          go-version: "1.20"
+        - name: Set up Go
+          uses: actions/setup-go@v4
+          with:
+            go-version: "1.20"
 
-      - name: Check out code
-        uses: actions/checkout@v3
+        - name: Check out code
+          uses: actions/checkout@v3
 
-      - name: Install goose
-        run: go install github.com/pressly/goose/v3/cmd/goose@latest
+        - name: Build app
+          run: ./scripts/buildprod.sh
 
+        - id: 'auth'
+          uses: 'google-github-actions/auth@v1'
+          with:
+            credentials_json: '${{ secrets.GCP_CREDENTIALS }}'
 
-      - name: Deploy
-        run: scripts/buildprod.sh
+        - name: 'Set up Cloud SDK'
+          uses: 'google-github-actions/setup-gcloud@v1'
 
-        env:
-          DATABASE_URL: ${{ secrets.DATABASE_URL }}
+        - name: 'Build and push Docker image'
+          run: gcloud builds submit --tag us-central1-docker.pkg.dev/notely-399022/notely-ar-repo/notely:latest .
 
-      - name: Set up GCP credentials and Cloud SDK
-        uses: google-github-actions/auth@v1
-        with:
-          credentials_json: ${{ secrets.GCP_CREDENTIALS }}
+        - name: Install goose
+          run: go install github.com/pressly/goose/v3/cmd/goose@latest
 
-      - name: Use gcloud CLI
-        run: gcloud info
+        - name: Run db migration
+          run:   ./scripts/migrateup.sh
 
-      - name: Build Docker and AR
-        run: gcloud builds submit --tag us-central1-docker.pkg.dev/notely-399022/notely-ar-repo/notely:latest .
-
-      - name: Run db migration
-        run:   ./scripts/migrateup.sh
-
-      - name: 'Deploy to Cloud Run'
-        run: gcloud run deploy notely --image us-central1-docker.pkg.dev/notely-399022/notely-ar-repo/notely:latest --region us-central1 --allow-unauthenticated --project notely-399022 --max-instances=4
+        - name: 'Deploy to Cloud Run'
+          run: gcloud run deploy notely --image us-central1-docker.pkg.dev/notely-399022/notely-ar-repo/notely:latest --region us-central1 --allow-unauthenticated --project notely-399022 --max-instances=4
 
