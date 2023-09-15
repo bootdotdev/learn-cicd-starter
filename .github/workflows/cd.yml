@@ -10,7 +10,7 @@ jobs:
     runs-on: ubuntu-latest
 
     env:
-        DATABASE_URL: ' ${{ secrets.DATABASE_URL }} '
+        DATABASE_URL: '${{ secrets.DATABASE_URL }}'
 
     steps:
         - name: Set up Go
