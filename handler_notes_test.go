@@ -22,7 +22,7 @@ func Test_apiConfig_handlerNotesGet(t *testing.T) {
 	}
 	for _, tt := range tests {
 		t.Run(tt.name, func(t *testing.T) {
-			tt.cfg.handlerNotesGet(tt.args.w, tt.args.w, tt.args.user)
+			tt.cfg.handlerNotesGet(tt.args.w, tt.args.r, tt.args.user)
 		})
 	}
 }
