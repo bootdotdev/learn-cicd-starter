@@ -1,3 +1,5 @@
+![code coverage badge](https://github.com/thegreatestgiant/CI-CD/actions/workflows/ci.yml/badge.svg)
+
 ## Local Development
 
 Make sure you're on Go version 1.20+.
