@@ -18,8 +18,14 @@ jobs:
       - name: Check out code
         uses: actions/checkout@v3
 
+      - name: install gosec
+        run: go install github.com/securego/gosec/v2/cmd/gosec@latest
+
       - name: Running tests
         run: go test -cover ./...
+
+      - name: Running security tests
+        run: gosec ./...
   style:
     name: style
     runs-on: ubuntu-latest
