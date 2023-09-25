@@ -117,3 +117,7 @@ func addParseTimeParam(input string) (string, error) {
 	returnUrl = strings.TrimPrefix(returnUrl, dummyScheme)
 	return returnUrl, nil
 }
+
+func someUnusedFunc() {
+	// Some unused func that'll cause CI to fail
+}

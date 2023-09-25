@@ -33,5 +33,11 @@ jobs:
       - name: Check out code
         uses: actions/checkout@v3
 
+      - name: install staticcheck
+        run: go install honnef.co/go/tools/cmd/staticcheck@latest
+
       - name: Running style check
         run: test -z $(go fmt ./...)
+
+      - name: Running lint check
+        run: staticcheck ./...
