@@ -8,6 +8,8 @@ Make sure you're on Go version 1.20+.
 
 Create a `.env` file in the root of the project with the following contents:
 
+![code coverage badge](https://github.com/ajpotts01/learn-cicd-starter/actions/workflows/ci.yml/badge.svg)
+
 ```bash
 PORT="8000"
 ```
