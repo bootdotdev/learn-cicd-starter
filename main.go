@@ -29,7 +29,7 @@ var staticFiles embed.FS
 func main() {
 	err := godotenv.Load(".env")
 	if err != nil {
-		log.Printf("warning: assuming default configuration. .env unreadable: %v", err)
+		log.Printf("Warning: assuming default configuration. .env unreadable: %v", err)
 	}
 
 	port := os.Getenv("PORT")
