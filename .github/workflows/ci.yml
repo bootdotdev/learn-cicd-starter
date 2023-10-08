@@ -21,6 +21,11 @@ jobs:
       - name: Run tests with coverage
         run: go test ./... -cover
 
+      - name: install gosec
+        run: go install github.com/securego/gosec/v2/cmd/gosec@latest
+      - name: Run gosec
+        run: gosec ./..
+
   style:
     name: style
     runs-on: ubuntu-latest
