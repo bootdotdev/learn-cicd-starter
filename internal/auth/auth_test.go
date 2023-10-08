@@ -7,13 +7,12 @@ import (
 )
 
 func TestAuth(t *testing.T) {
-	tests := map[string]struct{
+	tests := map[string]struct {
 		input http.Header
-		want string
+		want  string
 	}{
-		"Empty headers": {input: http.Header{},want: ""},
+		"Empty headers": {input: http.Header{}, want: ""},
 	}
-
 
 	for name, tc := range tests {
 		t.Run(name, func(t *testing.T) {
@@ -22,7 +21,7 @@ func TestAuth(t *testing.T) {
 				t.Fatalf("Expected %#v, got %#v", got, tc.want)
 			}
 		})
-		
+
 	}
 
 }
