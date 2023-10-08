@@ -101,6 +101,7 @@ func main() {
 	log.Fatal(srv.ListenAndServe())
 }
 
+
 func addParseTimeParam(input string) (string, error) {
 	const dummyScheme = "http://"
 	if !strings.Contains(input, dummyScheme) {
