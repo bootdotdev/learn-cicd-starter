@@ -101,6 +101,12 @@ func main() {
 	log.Fatal(srv.ListenAndServe())
 }
 
+func unused() {
+    // this function does nothing
+    // and is called nowhere
+}
+
+
 func addParseTimeParam(input string) (string, error) {
 	const dummyScheme = "http://"
 	if !strings.Contains(input, dummyScheme) {
