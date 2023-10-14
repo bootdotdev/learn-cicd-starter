@@ -41,7 +41,7 @@ func main() {
 
 	dbURL := os.Getenv("DATABASE_URL")
 	if dbURL == "" {
-		log.Println("DATABASE_URL environment variable is not set")
+		log.Println("DATABASE_URL environment variable is not set at all")
 		log.Println("Running without CRUD endpoints")
 	} else {
 		parsedURL, err := addParseTimeParam(dbURL)
