@@ -1,3 +1,5 @@
+
+
 name: ci
 
 on:
@@ -18,6 +20,6 @@ jobs:
       - name: Check out code
         uses: actions/checkout@v3
 
-      - name: Force Failure
+      - name: Run unit tests
         run: go test ./...
 
