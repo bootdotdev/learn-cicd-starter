@@ -23,8 +23,8 @@ func TestGetAPIKey(t *testing.T) {
 			errMessage: "",
 		},
 		{
-			name: "NoAuthorizationHeader",
-			headers: http.Header{},
+			name:       "NoAuthorizationHeader",
+			headers:    http.Header{},
 			expected:   "",
 			expectErr:  true,
 			errMessage: ErrNoAuthHeaderIncluded.Error(),
