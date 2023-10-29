@@ -1,34 +1,41 @@
-name: CI
-
-on:
-  pull_request:
-    branches: [main]
-
 jobs:
   tests:
-    name: Run Tests and Security Checks
+    name: tests
     runs-on: ubuntu-latest
 
     steps:
-      - name: Checkout code
-        uses: actions/checkout@v2
-
       - name: Set up Go
-        uses: actions/setup-go@v2
+        uses: actions/setup-go@v4
         with:
-          go-version: 1.20
+          go-version: "1.20"
+          
+      - name: Check out code
+        uses: actions/checkout@v3
 
-      - name: Install dependencies
-        run: go mod download
-
-      - name: Run tests
+      - name: Run unit tests
         run: go test ./...
+  
+  style:
+    name: Style
+    runs-on: ubuntu-latest
 
-      - name: Install gosec
-        run: go get github.com/securego/gosec/v2/cmd/gosec@latest
+    steps:
+      - name: Set up Go
+        uses: actions/setup-go@v4
+        with:
+          go-version: "1.20"
+          
+      - name: Check out code
+        uses: actions/checkout@v3
 
-      - name: Run gosec
-        run: gosec ./...
+      - name: Check formatting
+        run: test -z $(go fmt ./...)
 
-      - name: Finalize
-        run: echo "CI process completed successfully!"
+      - name: install staticcheck
+        run: go install honnef.co/go/tools/cmd/staticcheck@latest
+
+      - name: run staticcheck
+        run: staticcheck ./...
+
+      - name: install gosec
+        run: go install github.com/securego/gosec/v2/cmd/gosec@latest
