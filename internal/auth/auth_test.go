@@ -23,11 +23,13 @@ func TestSplit(t *testing.T) {
 			output: "",
 			Error:  ErrNoAuthHeaderIncluded,
 		},
+
 		{
 			input:  http.Header{"Authorization": []string{""}},
 			output: "",
 			Error:  errors.New("malformed authorization header"),
 		},
+
 		{
 			input:  http.Header{"Authorization": []string{"fuck-you"}},
 			output: "",
