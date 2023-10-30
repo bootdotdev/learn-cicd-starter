@@ -20,6 +20,7 @@ jobs:
 
       - name: Run units tests
         run: go test ./... -cover
+
         
   styles:
     name: formatting tests
@@ -37,10 +38,12 @@ jobs:
       - name: Run formatting tests
         run: test -z $(go fmt ./...)
 
+
       - name: Install staticcheck
         run: go install honnef.co/go/tools/cmd/staticcheck@latest
 
       - name: Run staticcheck
         run: staticcheck ./...
+
 
 
