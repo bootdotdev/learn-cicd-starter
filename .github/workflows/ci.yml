@@ -20,6 +20,7 @@ jobs:
 
       - name: Run units tests
         run: go test ./... -cover
+
         
   styles:
     name: formatting tests
@@ -42,5 +43,6 @@ jobs:
 
       - name: Run staticcheck
         run: staticcheck ./...
+
 
 
