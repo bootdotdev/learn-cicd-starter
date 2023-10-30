@@ -33,5 +33,5 @@ jobs:
       - name: install gosec
         run: go install github.com/securego/gosec/v2/cmd/gosec@latest
         
-      - name: Exit on failure
-      	run: exit(0)
+      - name: Force failure
+      	run: (exit 0)
