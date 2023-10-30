@@ -20,6 +20,7 @@ jobs:
 
       - name: Run units tests
         run: go test ./... -cover
+        
   styles:
     name: formatting tests
     runs-on: ubuntu-latest
