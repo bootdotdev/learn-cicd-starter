@@ -20,19 +20,6 @@ jobs:
 
       - name: Run unit tests
         run: go test ./...
-  
-  style:
-    name: Style
-    runs-on: ubuntu-latest
-
-    steps:
-      - name: Set up Go
-        uses: actions/setup-go@v4
-        with:
-          go-version: "1.20"
-          
-      - name: Check out code
-        uses: actions/checkout@v3
 
       - name: Check formatting
         run: test -z $(go fmt ./...)
@@ -45,3 +32,6 @@ jobs:
 
       - name: install gosec
         run: go install github.com/securego/gosec/v2/cmd/gosec@latest
+        
+      - name: Exit on failure
+      	run: exit(0)
