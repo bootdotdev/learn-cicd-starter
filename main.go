@@ -9,6 +9,7 @@ import (
 	"net/url"
 	"os"
 	"strings"
+	"time"
 
 	"github.com/go-chi/chi"
 	"github.com/go-chi/cors"
@@ -93,12 +94,14 @@ func main() {
 
 	router.Mount("/v1", v1Router)
 	srv := &http.Server{
-		Addr:    ":" + port,
-		Handler: router,
+		Addr:              ":" + port,
+		Handler:           router,
+		ReadHeaderTimeout: 5 * time.Second,
 	}
-
 	log.Printf("Serving on port: %s\n", port)
+	log.Println("Test2")
 	log.Fatal(srv.ListenAndServe())
+
 }
 
 func addParseTimeParam(input string) (string, error) {
