@@ -27,7 +27,6 @@ jobs:
       - name: Test with the Go CLI
         run: go test -cover ./...
 
-jobs:
   style:
     name: formatting
     runs-on: ubuntu-latest
@@ -45,4 +44,4 @@ jobs:
         run: (go version)
 
       - name: Go format
-        run: (test -z $(go fmt ./...))
+        run: test -z $(go fmt ./...)
