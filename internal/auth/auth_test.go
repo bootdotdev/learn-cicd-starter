@@ -9,8 +9,8 @@ import (
 func TestGetApiKeyValidValue(t *testing.T) {
 	const want = "value"
 	header := http.Header{}
-	header.Set("Authorization", "ApiKey " + want)
-	got, err := GetAPIKey(header);
+	header.Set("Authorization", "ApiKey "+want)
+	got, err := GetAPIKey(header)
 	if err != nil {
 		t.Fatalf("expected: %v, got: %s", want, err.Error())
 	}
@@ -21,7 +21,7 @@ func TestGetApiKeyValidValue(t *testing.T) {
 
 func TestGetApiKeyNoAuthHeader(t *testing.T) {
 	header := http.Header{}
-	_, err := GetAPIKey(header);
+	_, err := GetAPIKey(header)
 	if err != ErrNoAuthHeaderIncluded {
 		t.Fatalf("expected: %v, got: %s", ErrNoAuthHeaderIncluded, err.Error())
 	}
@@ -31,10 +31,10 @@ func TestGetApiKeyInvalidValue(t *testing.T) {
 	const want = "value"
 	header := http.Header{}
 	header.Set("Authorization", want)
-	_, err := GetAPIKey(header);
+	_, err := GetAPIKey(header)
 	if err == nil {
 		t.Fatal("Expected error, but none happened")
 	} else if err.Error() != "malformed authorization header" {
 		t.Fatalf("expected: %v, got: %s", want, err.Error())
-	}	
+	}
 }
