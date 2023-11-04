@@ -18,6 +18,9 @@ jobs:
       - name: Check out code
         uses: actions/checkout@v3
 
+      - name: Install dependencies
+        run: go get
+
       - name: Build the app
         uses: ./scripts/buildprod.sh
 
