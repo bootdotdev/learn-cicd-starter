@@ -14,7 +14,7 @@ func TestGetApiKeyValidValue(t *testing.T) {
 	if err != nil {
 		t.Fatalf("expected: %v, got: %s", want, err.Error())
 	}
-	if !reflect.DeepEqual(got, "") {
+	if !reflect.DeepEqual(got, want) {
 		t.Fatalf("expected: %v, got: %v", want, got)
 	}
 }
