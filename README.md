@@ -7,6 +7,7 @@ This repo contains the starter code for the "Notely" application for the "Learn 
 Make sure you're on Go version 1.20+.
 
 Create a `.env` file in the root of the project with the following contents:
+in the command line, type 'touch .env'
 
 ```bash
 PORT="8000"
