@@ -22,6 +22,6 @@ jobs:
         run: go version
 
       - name: Run unit tests 
-        run: go test ./...
+        run: go test -cover ./...
 
 
