@@ -26,7 +26,7 @@ func TestGetAPIKey(t *testing.T) {
 		t.Error(err)
 	}
 	req.Header.Set("Auth", "ApiKey 1234567890")
-	apiKey, err = GetAPIKey(req.Header)
+	_, err = GetAPIKey(req.Header)
 	if err == nil {
 		t.Error("Error should be returned")
 	}
@@ -40,7 +40,7 @@ func TestGetAPIKey(t *testing.T) {
 	}
 	req.Header.Set("Authorization", "api-key 1234567890")
 
-	apiKey, err = GetAPIKey(req.Header)
+	_, err = GetAPIKey(req.Header)
 	if err.Error() != "malformed authorization header" {
 		t.Error(err)
 	}
