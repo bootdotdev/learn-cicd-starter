@@ -21,3 +21,7 @@ jobs:
       - name: Execute go version
         run: go version
 
+      - name: Run unit tests 
+        run: go test ./...
+
+
