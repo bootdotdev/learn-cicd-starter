@@ -22,4 +22,4 @@ go build -o notely && ./notely
 
 You do *not* need to set up a database or any interactivity on the webpage yet. Instructions for that will come later in the course!
 
-*Make sure to run version 1.16 or later to access the embed path.
+*Make sure to run version 1.16 or later to access the embed package.
