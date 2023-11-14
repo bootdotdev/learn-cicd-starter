@@ -18,5 +18,21 @@ jobs:
       - name: Check out code
         uses: actions/checkout@v3
 
-      - name: Force Failure
-        run: (exit 1)
+      - name: Run Unit Tests
+        run: go test ./... -cover
+
+  styling:
+      name: formatting
+      runs-on: ubuntu-latest
+
+      steps:
+        - name: Set up fmt
+          uses: actions/setup-go@v4
+          with:
+            go-version: "1.20"
+
+        - name: check out code
+          uses: actions/checkout@v3
+
+        - name: styling
+          run: test -z $(go fmt ./...)
