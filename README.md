@@ -1,4 +1,5 @@
-UPDATED README
+![ALT_TEXT](https://github.com/Anacardo89/learn-cicd-starter/actions/workflows/ci.yml/badge.svg
+)
 
 # learn-cicd-starter (Notely)
 
