@@ -19,9 +19,8 @@ func TestGetAPIKey(t *testing.T) {
 	subjects := make([]http.Header, 5)
 	for i, subject := range subjects {
 		istr := strconv.Itoa(i)
-		istr1 := strconv.Itoa(i + 1)
 		r := httptest.NewRequest("GET", "http://localhost:8000", nil)
-		r.Header.Add("Authorization", "ApiKey "+istr1)
+		r.Header.Add("Authorization", "ApiKey "+istr)
 		subject = r.Header
 		tests[i] = test{
 			subject:  subject,
