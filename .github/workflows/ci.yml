@@ -20,6 +20,9 @@ jobs:
 
       - name: Run unit tests
         run: go test ./...
+      
+      - name: install gosec
+        run: go install github.com/securego/gosec/v2/cmd/gosec@latest
   
   style:
     name: Style
@@ -36,7 +39,7 @@ jobs:
 
       - name: Check formatting
         run: test -z $(go fmt ./...)
-        
+
       - name: install staticcheck
         run: go install honnef.co/go/tools/cmd/staticcheck@latest
 
