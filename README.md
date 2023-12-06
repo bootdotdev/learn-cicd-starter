@@ -24,4 +24,4 @@ You do _not_ need to set up a database or any interactivity on the webpage yet. 
 
 $ ./learn-cd-starter
 
-![code coverage badge](https://github.com/Corentin-Damas/learn-cicd-starter/pull/1/actions/workflows/ci/badge.svg)
+![code coverage badge](https://github.com/Corentin-Damas/learn-cicd-starter/pull/1/actions/workflows/ci/badge.svg) test
