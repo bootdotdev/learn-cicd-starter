@@ -13,10 +13,10 @@ func TestGetAPIKey(T *testing.T){
 	result := res.Result()
  
 	_, err := GetAPIKey(result.Header)
-	if err != nil {
-		T.Errorf("Error from: %v", err)
+	if err == nil {
+		T.Errorf("Should not work: %v", err)
 	} else {
-		T.Logf("good formating")
+		T.Logf("Authorization malformating test successuffly fail")
 	}
 
 }
