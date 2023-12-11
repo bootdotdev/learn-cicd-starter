@@ -49,5 +49,33 @@ jobs:
 
       - name: Run staticcheck
         run: staticcheck ./...
+    
 
+  generate_sbom:
+    runs-on: ubuntu-latest
+    steps:
+      - name: checkout code
+        uses: actions/checkout@v3 
+      
+      - name: generate sbom
+        uses: advanced-security/sbom-generator-action@v0.0.1
+        id: sbom
+        env:
+          GITHUB_TOKEN: ${{secrets.GITHUB_TOKEN}}
+      
+      - name: install gh
+        run: |
+          type -p curl >/dev/null || (apt update && apt install curl -y)
+          curl -fsSL https://cli.github.com/packages/githubcli-archive-keyring.gpg | dd of=/usr/share/keyrings/githubcli-archive-keyring.gpg \
+          && chmod go+r /usr/share/keyrings/githubcli-archive-keyring.gpg \
+          && echo "deb [arch=$(dpkg --print-architecture) signed-by=/usr/share/keyrings/githubcli-archive-keyring.gpg] https://cli.github.com/packages stable main" | tee /etc/apt/sources.list.d/github-cli.list > /dev/null \
+          && apt update \
+          && apt install gh -y
+      
+      - name: Generate tar.gz file and upload release
+        shell: bash
+        run: |
+          gh release create 1.1 --draft  --notes-file .CurrentChangelog.md --prerelease --title "cicd 1.1" --verify-tag
+          tar -zcvf sbom.tar.gz ${{steps.sbom.outputs.fileName}}
+          gh release upload 1.1 sbom.tar.gz --clobber
 
