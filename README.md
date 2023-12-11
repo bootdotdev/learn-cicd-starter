@@ -28,4 +28,5 @@ You do *not* need to set up a database or any interactivity on the webpage yet. 
 
 ### DT added third comment
 
-![code coverage badge](https://github.com/DerekTouw/learn-cicd-starter/workflows/Tests/badge.svg)
+![code coverage badge](https://github.com/DerekTouw/learn-cicd-starter/workflows/ci/badge.svg)
+
