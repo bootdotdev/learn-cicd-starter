@@ -23,3 +23,6 @@ go build -o notely && ./notely
 You do *not* need to set up a database or any interactivity on the webpage yet. Instructions for that will come later in the course!
 
 ### DT added this comment to end of README.md for step 1-4
+
+### DT added another comment, to cause CI workflow to Run
+
