@@ -21,3 +21,12 @@ go build -o notely && ./notely
 *This starts the server in non-database mode.* It will serve a simple webpage at `http://localhost:8000`.
 
 You do *not* need to set up a database or any interactivity on the webpage yet. Instructions for that will come later in the course!
+
+### DT added this comment to end of README.md for step 1-4
+
+### DT added another comment, to cause CI workflow to Run
+
+### DT added third comment
+
+![code coverage badge](https://github.com/DerekTouw/learn-cicd-starter/workflows/ci/badge.svg)
+
