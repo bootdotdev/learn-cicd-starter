@@ -18,6 +18,8 @@ Run the server:
 go build -o notely && ./notely
 ```
 
+NOTE: Make sure to check out the browser settings that block insecure localhost requests! Those need to be off before you can proceed.
+
 *This starts the server in non-database mode.* It will serve a simple webpage at `http://localhost:8000`.
 
 You do *not* need to set up a database or any interactivity on the webpage yet. Instructions for that will come later in the course!
