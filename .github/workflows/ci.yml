@@ -19,4 +19,4 @@ jobs:
         uses: actions/checkout@v3
 
       - name: Echo Go version main
-        run: go version
+        run: go test ./...
