@@ -18,5 +18,8 @@ jobs:
       - name: Check out code
         uses: actions/checkout@v3
 
-      - name: Echo Go version main
+      - name: Test coverage
         run: go test -cover ./...
+
+      - name: Test formatting
+        run: test -z $(go fmt ./...)
