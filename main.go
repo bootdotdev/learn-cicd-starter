@@ -9,6 +9,7 @@ import (
 	"net/url"
 	"os"
 	"strings"
+	"time"
 
 	"github.com/go-chi/chi"
 	"github.com/go-chi/cors"
@@ -94,8 +95,9 @@ func main() {
 
 	router.Mount("/v1", v1Router)
 	srv := &http.Server{
-		Addr:    ":" + port,
-		Handler: router,
+		Handler:           router,
+		Addr:              ":" + port,
+		ReadHeaderTimeout: 3 * time.Second,
 	}
 	// change 2
 	log.Printf("Serving on port: %s\n", port)
@@ -117,9 +119,4 @@ func addParseTimeParam(input string) (string, error) {
 	returnUrl := u.String()
 	returnUrl = strings.TrimPrefix(returnUrl, dummyScheme)
 	return returnUrl, nil
-}
-
-func unused() {
-	// this function does nothing
-	// and is called nowhere
 }
