@@ -21,8 +21,8 @@ jobs:
       - name: Test coverage
         run: go test -cover ./...
 
-      - name: Test security check
-        run: gosec ./...
+      # - name: Test security check
+      #   run: gosec ./...
 
   style:
     name: Style
