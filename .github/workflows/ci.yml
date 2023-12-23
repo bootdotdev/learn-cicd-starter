@@ -20,3 +20,9 @@ jobs:
 
       - name: Print Go Version
         run: go version
+
+      - name: Run tests
+        run: go test ./...
+
+      - name: Run gofmt
+        run: go fmt
