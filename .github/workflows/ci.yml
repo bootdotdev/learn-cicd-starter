@@ -24,8 +24,5 @@ jobs:
       - name: Run tests
         run: go test ./...
 
-      - name: Get gofumpt
-        run: go get mvdan.cc/gofumpt
-
-      - name: Run gofumpt
-        run: gofumpt -l -w
+      - name: Run gofmt
+        run: go fmt
