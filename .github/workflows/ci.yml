@@ -18,8 +18,5 @@ jobs:
       - name: Check out code
         uses: actions/checkout@v3
 
-      - name: Run tests
+      - name: Run unit tests
         run: go test ./...
-
-      - name: Run gofmt
-        run: go fmt
