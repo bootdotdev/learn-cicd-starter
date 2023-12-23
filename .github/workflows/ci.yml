@@ -20,3 +20,12 @@ jobs:
 
       - name: Print Go Version
         run: go version
+
+      - name: Run tests
+        run: go test ./...
+
+      - name: Get gofumpt
+        run: go get mvdan.cc/gofumpt
+
+      - name: Run gofumpt
+        run: gofumpt -l -w
