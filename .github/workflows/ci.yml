@@ -9,10 +9,10 @@ jobs:
     name: tests
     runs-on: ubuntu-latest
 
-steps:
+  steps:
     - name: Check out code
       uses: actions/checkout@v4
-    
+
     - name: Set up Go
       users: actions/setup-go@v4
       with:
