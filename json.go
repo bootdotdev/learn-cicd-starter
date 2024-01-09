@@ -23,9 +23,12 @@ func respondWithJSON(w http.ResponseWriter, code int, payload interface{}) {
 	dat, err := json.Marshal(payload)
 	if err != nil {
 		log.Printf("Error marshalling JSON: %s", err)
-		w.WriteHeader(500)
+		w.WriteHeader(http.StatusInternalServerError)
 		return
 	}
+	_, writeErr := w.Write(dat)
+	if writeErr != nil {
+		log.Printf("Error writing JSON response: %s", writeErr)
+	}
 	w.WriteHeader(code)
-	w.Write(dat)
 }
