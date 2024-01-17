@@ -33,7 +33,7 @@ func main() {
 
 	port := os.Getenv("PORT")
 	if port == "" {
-		log.Fatal("PORT environment variable is not set")
+		log.Fatal("PORT environment variable is not set to")
 	}
 
 	apiCfg := apiConfig{}
@@ -116,5 +116,3 @@ func addParseTimeParam(input string) (string, error) {
 	returnUrl = strings.TrimPrefix(returnUrl, dummyScheme)
 	return returnUrl, nil
 }
-
-//working on branch addtest
