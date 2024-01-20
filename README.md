@@ -1,6 +1,6 @@
 ![ALT_TEXT](https://github.com/Bayan2019/learn-cicd-starter/actions/workflows/ci.yml/badge.svg)
 
-# learn-cicd-starter (Notely)
+# learn-cicd-starter (Notely) hhmm
 
 This repo contains the starter code for the "Notely" application for the "Learn CICD" course on [Boot.dev](https://boot.dev).
 
