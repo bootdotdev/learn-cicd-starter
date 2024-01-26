@@ -21,7 +21,7 @@ jobs:
       - name: Run tests
         run: go test -cover ./...
   style:
-    name: Format
+    name: Format Code
     runs-on: ubuntu-latest
 
     steps:
