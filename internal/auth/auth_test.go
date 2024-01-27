@@ -38,7 +38,7 @@ func TestGetAPIKey(t *testing.T) {
       header := http.Header{}
       header.Set("Authorization", test.authHeader)
       output, err := GetAPIKey(header)
-      if err != nil && test.errorIsExpected {
+      if err != nil && !test.errorIsExpected {
         t.Errorf("%s yielded an unexpected error %v\n", test.authHeader, err)
       }
       if output != test.expectedOutput {
