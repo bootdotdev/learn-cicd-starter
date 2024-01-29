@@ -1,4 +1,4 @@
-name: Style
+name: formatter
 
 on:
   pull_request:
@@ -6,7 +6,7 @@ on:
 
 jobs:
   tests:
-    name: Formatter
+    name: Style
     runs-on: ubuntu-latest
 
     steps:
