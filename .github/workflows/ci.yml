@@ -20,6 +20,6 @@ jobs:
 
       - name: Check Go version
         run: go version
-      
-      -name: Run Go Tests
+
+      - name: Run Go Tests
         run: go test ./...
