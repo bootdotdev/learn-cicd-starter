@@ -22,7 +22,7 @@ jobs:
         run: go test -v -cover ./...
 
   style:
-    name: Formatting
+    name: Style
     runs-on: ubuntu-latest
 
     steps:
