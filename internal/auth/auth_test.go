@@ -13,7 +13,7 @@ func TestGetAPIKey(t *testing.T) {
 	}
 
 	tests := []test{
-		{"ApiKey 11223", "11222"},
+		{"ApiKey 11223", "11223"},
 		{"ApiKey 45768", "45768"},
 	}
 
