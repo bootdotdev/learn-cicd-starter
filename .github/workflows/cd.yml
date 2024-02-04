@@ -20,3 +20,23 @@ jobs:
 
       - name: build app
         run: scripts/buildprod.sh
+
+  gc-builder:
+    # Add "id-token" with the intended permissions.
+    name: GoogleCloudBuilder
+    runs-on: ubuntu-latest
+
+    steps:
+      - id: 'auth'
+        uses: 'google-github-actions/auth@v2'
+        with:
+          credentials_json: '${{ secrets.GCP_CREDENTIALS }}'
+
+      - name: 'Set up Cloud SDK'
+        uses: 'google-github-actions/setup-gcloud@v2'
+
+      - name: 'Use gcloud CLI'
+        run: 'gcloud info'
+      
+      - name: build imgae to gcloud-ar
+        uses: $ gcloud builds submit --tag us-central1-docker.pkg.dev/notely-413019/notely-ar-repo/notely:latest .
