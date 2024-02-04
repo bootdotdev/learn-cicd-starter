@@ -5,19 +5,6 @@ on:
     branches: [main]
 
 jobs:
-style:
-  runs-on: ubuntu-latest
-  steps:
-    - name: Check out code
-      uses: actions/checkout@v2
-
-    - name: Set up Go
-      uses: actions/setup-go@v2
-      with:
-        go-version: 1.16.x
-
-    - name: Check code formatting
-      run: test -z $(go fmt ./...)
   tests:
     name: Tests
     runs-on: ubuntu-latest
@@ -31,8 +18,21 @@ style:
         with:
           go-version: "1.20"
 
-      - name: Check Go version
-        run: go version
+      - name: Run unit tests
+        run: go test ./... -cover
 
-      - name: Run Go Tests
-        run: go test -cover ./...
+  style:
+    name: Style
+    runs-on: ubuntu-latest
+
+    steps:
+      - name: Check out code
+        uses: actions/checkout@v4
+
+      - name: Set up Go
+        uses: actions/setup-go@v4
+        with:
+          go-version: "1.20"
+
+      - name: Check formatting
+        run: test -z $(go fmt ./...)
