@@ -20,3 +20,11 @@ jobs:
 
       - name: Build
         run: ./scripts/buildprod.sh
+
+      - name: Set up GCloud
+        uses: 'google-github-actions/setup-gcloud@v2'
+        with:
+          version: '>= 363.0.0'
+
+      - name: Upload image to GCR
+        run: gcloud builds submit --tag us-central1-docker.pkg.dev/notely-413322/notely-ar-repo/jerrydevs/notely:latest .
