@@ -4,6 +4,20 @@ on:
   pull_request:
     branches: [main]
 
+style:
+  runs-on: ubuntu-latest
+  steps:
+    - name: Check out code
+      uses: actions/checkout@v2
+
+    - name: Set up Go
+      uses: actions/setup-go@v2
+      with:
+        go-version: 1.16.x
+
+    - name: Check code formatting
+      run: test -z $(go fmt ./...)
+
 jobs:
   tests:
     name: Tests
@@ -23,6 +37,3 @@ jobs:
 
       - name: Run Go Tests
         run: go test -cover ./...
-
-      - name: Run Go Format
-        run: test -z $(go fmt ./...)
