@@ -4,6 +4,7 @@ on:
   pull_request:
     branches: [main]
 
+jobs:
 style:
   runs-on: ubuntu-latest
   steps:
@@ -17,8 +18,6 @@ style:
 
     - name: Check code formatting
       run: test -z $(go fmt ./...)
-
-jobs:
   tests:
     name: Tests
     runs-on: ubuntu-latest
