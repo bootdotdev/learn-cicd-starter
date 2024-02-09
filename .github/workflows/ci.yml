@@ -42,3 +42,14 @@ jobs:
 
       - name: CI Linting
         run: staticcheck ./...
+
+  security:
+    name: Security
+    runs-on: ubuntu-latest
+
+    steps:
+      - name: Install gosec
+        run: go install github.com/securego/gosec/v2/cmd/gosec@latest
+
+      - name: Gosec check
+        run: gosec ./...
