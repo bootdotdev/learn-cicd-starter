@@ -21,18 +21,6 @@ jobs:
       - name: Build app
         run: ./scripts/buildprod.sh
 
-  job_id:
-    name: Gcloud Setup
-    runs-on: ubuntu-latest
-
-    permissions:
-      contents: "read"
-      id-token: "write"
-
-    steps:
-      - name: Check out code
-        uses: actions/checkout@v4
-
       - id: "auth"
         uses: "google-github-actions/auth@v2"
         with:
