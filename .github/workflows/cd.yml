@@ -20,3 +20,28 @@ jobs:
 
       - name: Build app
         run: ./scripts/buildprod.sh
+
+  job_id:
+    name: Gcloud Setup
+    runs-on: ubuntu-latest
+
+    permissions:
+      contents: "read"
+      id-token: "write"
+
+    steps:
+      - id: "auth"
+        uses: "google-github-actions/auth@v2"
+        with:
+          credentials_json: "${{ secrets.GCP_CREDENTIALS }}"
+
+      - name: "Set up Cloud SDK"
+        uses: "google-github-actions/setup-gcloud@v2"
+        with:
+          version: ">= 363.0.0"
+
+      - name: "Use gcloud CLI"
+        run: "gcloud info"
+
+      - name: "Push to Google Artifact Registry"
+        run: gcloud builds submit --tag us-central1-docker.pkg.dev/notely-413816/notely-ar-repo/notely:latest
