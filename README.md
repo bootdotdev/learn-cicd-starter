@@ -6,6 +6,11 @@ This repo contains the starter code for the "Notely" application for the "Learn 
 
 Make sure you're on Go version 1.20+.
 
+In order to validate your Go versions test in the terminal:
+```bash
+go version
+```
+
 Create a `.env` file in the root of the project with the following contents:
 
 ```bash
