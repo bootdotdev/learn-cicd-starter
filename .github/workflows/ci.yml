@@ -20,3 +20,12 @@ jobs:
 
       - name: Show go version
         run: go version
+
+      - name: Run unit tests
+        run: go test
+
+      - name: Check formatting
+        run: go fmt
+    
+    
+          
