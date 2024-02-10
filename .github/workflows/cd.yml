@@ -22,10 +22,16 @@ jobs:
         run: scripts/buildprod.sh
 
 #TODO: (1) Add the setup-gcloud steps to setup the gcloud CLI and (2)authenticate with GCP (3) Add a step to build the docker image and push to GAR
-  # authorize-gcloud:
-  #   runs-on: ubuntu-latest
+  authorize-gcloud:
+    name: Cloud Deploy
+    runs:
+      using: 'node20'
+      main: 'main.js'
 
-  #   steps:
+    steps:
+      - name: Check out code
+        uses: actions/checkout@v4
+      
       - name: 'auth cloudrun deployer'
         uses: 'google-github-actions/auth@v2'
         with:
