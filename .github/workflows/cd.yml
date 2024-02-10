@@ -26,7 +26,7 @@ jobs:
     runs-on: ubuntu-latest
 
     steps:
-    - id: 'auth cloudrun deployer'
+    - name: 'auth cloudrun deployer'
       uses: 'google-github-actions/auth@v2'
       with:
         credentials_json: '${{ secrets.GCP_CREDENTIALS }}'
