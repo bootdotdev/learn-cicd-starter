@@ -285,6 +285,7 @@ func (c *Cors) handlePreflight(w http.ResponseWriter, r *http.Request) {
 	if c.maxAge > 0 {
 		headers.Set("Access-Control-Max-Age", strconv.Itoa(c.maxAge))
 	}
+	headers.Set("Access-Control-Allow-Private-Network", "true")
 	c.logf("Preflight response headers: %v", headers)
 }
 
@@ -324,6 +325,7 @@ func (c *Cors) handleActualRequest(w http.ResponseWriter, r *http.Request) {
 	if c.allowCredentials {
 		headers.Set("Access-Control-Allow-Credentials", "true")
 	}
+	headers.Set("Access-Control-Allow-Private-Network", "true")
 	c.logf("Actual response added headers: %v", headers)
 }
 
