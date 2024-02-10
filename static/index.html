@@ -1,193 +1,203 @@
 <!DOCTYPE html>
 <html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <title>Welcome to Notely</title>
+  </head>
 
-<head>
-    <meta charset="UTF-8">
-    <title>Notely</title>
-</head>
-
-<body class="section">
-    <h1>Notely</h1>
+  <body class="section">
+    <h1>Welcome to Notely</h1>
 
     <div id="userCreationContainer" class="section">
-        <input id="nameField" type="text" placeholder="Enter your name">
-        <button id="createUserButton" onclick="createUser()">Create User</button>
+      <input id="nameField" type="text" placeholder="Enter your name" />
+      <button id="createUserButton" onclick="createUser()">Create User</button>
     </div>
 
-    <div id="noteSection" class="section" style="display: none;">
-        <p id="greetingMessage"></p>
+    <div id="noteSection" class="section" style="display: none">
+      <p id="greetingMessage"></p>
 
-        <textarea id="newNoteContent"></textarea>
-        <button id="createNoteButton" onclick="createNote()">Create Note</button>
+      <textarea id="newNoteContent"></textarea>
+      <button id="createNoteButton" onclick="createNote()">Create Note</button>
 
-        <h2>Your Notes</h2>
-        <div id="notes"></div>
+      <h2>Your Notes</h2>
+      <div id="notes"></div>
 
-        <button onclick="logout()">Logout</button>
+      <button onclick="logout()">Logout</button>
     </div>
 
     <script>
-        const API_BASE = '/v1';
-        let currentUserAPIKey = null;
-        let currentUser = null;
+      const API_BASE = "/v1";
+      let currentUserAPIKey = null;
+      let currentUser = null;
 
-        async function createNote() {
-            if (!currentUser) {
-                alert('Please create a user first');
-                return;
-            }
-            const noteContent = document.getElementById('newNoteContent').value;
-            const response = await fetchWithAlert(`${API_BASE}/notes`,
-                {
-                    method: 'POST', headers: { 'Content-Type': 'application/json', 'Authorization': `ApiKey ${currentUserAPIKey}` },
-                    body: JSON.stringify({ note: noteContent })
-                });
-            const note = await response.json();
-            displayNote(note);
+      async function createNote() {
+        if (!currentUser) {
+          alert("Please create a user first");
+          return;
         }
+        const noteContent = document.getElementById("newNoteContent").value;
+        const response = await fetchWithAlert(`${API_BASE}/notes`, {
+          method: "POST",
+          headers: {
+            "Content-Type": "application/json",
+            Authorization: `ApiKey ${currentUserAPIKey}`,
+          },
+          body: JSON.stringify({ note: noteContent }),
+        });
+        const note = await response.json();
+        displayNote(note);
+      }
 
-        async function getUser() {
-            const response = await fetchWithAlert(`${API_BASE}/users`, { headers: { 'Authorization': `ApiKey ${currentUserAPIKey}` } });
-            return await response.json();
+      async function getUser() {
+        const response = await fetchWithAlert(`${API_BASE}/users`, {
+          headers: { Authorization: `ApiKey ${currentUserAPIKey}` },
+        });
+        return await response.json();
+      }
+
+      async function loadNotes() {
+        if (!currentUser) {
+          return;
         }
+        const response = await fetchWithAlert(`${API_BASE}/notes`, {
+          headers: { Authorization: `ApiKey ${currentUserAPIKey}` },
+        });
+        const notes = await response.json();
+        const notesContainer = document.getElementById("notes");
+        notesContainer.innerHTML = "";
+        notes.forEach((note) => displayNote(note));
+      }
 
-        async function loadNotes() {
-            if (!currentUser) {
-                return;
-            }
-            const response = await fetchWithAlert(`${API_BASE}/notes`, { headers: { 'Authorization': `ApiKey ${currentUserAPIKey}` } });
-            const notes = await response.json();
-            const notesContainer = document.getElementById('notes');
-            notesContainer.innerHTML = '';
-            notes.forEach(note => displayNote(note));
-        }
+      function displayNote(note) {
+        const noteElement = document.createElement("div");
+        noteElement.className = "note";
+        noteElement.textContent = note.note;
+        document.getElementById("notes").appendChild(noteElement);
+      }
 
-        function displayNote(note) {
-            const noteElement = document.createElement('div');
-            noteElement.className = 'note';
-            noteElement.textContent = note.note;
-            document.getElementById('notes').appendChild(noteElement);
-        }
-
-        async function createUser() {
-            const nameField = document.getElementById('nameField');
-            const response = await fetchWithAlert(`${API_BASE}/users`, {
-                method: 'POST',
-                headers: { 'Content-Type': 'application/json' },
-                body: JSON.stringify({ name: nameField.value }) // using the value from nameField
-            });
-            const user = await response.json();
-            localStorage.setItem('currentUserAPIKey', user.api_key);
-            login()
-            alert(`User Created: ${user.name}`);
-
-            // Once a user is created, hide the user creation section and show the note section
-            document.getElementById('userCreationContainer').style.display = 'none';
-            document.getElementById('noteSection').style.display = 'flex';
-        }
-
-        function logout() {
-            localStorage.removeItem('currentUserAPIKey');
-            currentUser = null;
-
-            // When a user logs out, show the user creation section and hide the note section
-            document.getElementById('userCreationContainer').style.display = 'block';
-            document.getElementById('noteSection').style.display = 'none';
-        }
-
-        async function login() {
-            currentUserAPIKey = localStorage.getItem('currentUserAPIKey')
-            if (!currentUserAPIKey) {
-                return;
-            }
-            const user = await getUser();
-            currentUser = user;
-            currentUserAPIKey = user.api_key;
-            await loadNotes();
-
-            // When a user logs in, hide the user creation section and show the note section
-            document.getElementById('userCreationContainer').style.display = 'none';
-            document.getElementById('noteSection').style.display = 'flex';
-
-            // Display a greeting message
-            document.getElementById('greetingMessage').textContent = `Hello ${user.name}!`;
-        }
-
-        async function fetchWithAlert(url, options) {
-            const response = await fetch(url, options);
-            if (response.status > 299) {
-                alert(`Error: ${response.status}`);
-                return;
-            }
-            return response;
-        }
-
+      async function createUser() {
+        const nameField = document.getElementById("nameField");
+        const response = await fetchWithAlert(`${API_BASE}/users`, {
+          method: "POST",
+          headers: { "Content-Type": "application/json" },
+          body: JSON.stringify({ name: nameField.value }), // using the value from nameField
+        });
+        const user = await response.json();
+        localStorage.setItem("currentUserAPIKey", user.api_key);
         login();
+        alert(`User Created: ${user.name}`);
+
+        // Once a user is created, hide the user creation section and show the note section
+        document.getElementById("userCreationContainer").style.display = "none";
+        document.getElementById("noteSection").style.display = "flex";
+      }
+
+      function logout() {
+        localStorage.removeItem("currentUserAPIKey");
+        currentUser = null;
+
+        // When a user logs out, show the user creation section and hide the note section
+        document.getElementById("userCreationContainer").style.display =
+          "block";
+        document.getElementById("noteSection").style.display = "none";
+      }
+
+      async function login() {
+        currentUserAPIKey = localStorage.getItem("currentUserAPIKey");
+        if (!currentUserAPIKey) {
+          return;
+        }
+        const user = await getUser();
+        currentUser = user;
+        currentUserAPIKey = user.api_key;
+        await loadNotes();
+
+        // When a user logs in, hide the user creation section and show the note section
+        document.getElementById("userCreationContainer").style.display = "none";
+        document.getElementById("noteSection").style.display = "flex";
+
+        // Display a greeting message
+        document.getElementById(
+          "greetingMessage"
+        ).textContent = `Hello ${user.name}!`;
+      }
+
+      async function fetchWithAlert(url, options) {
+        const response = await fetch(url, options);
+        if (response.status > 299) {
+          alert(`Error: ${response.status}`);
+          return;
+        }
+        return response;
+      }
+
+      login();
     </script>
 
     <style>
-        :root {
-            --primary: hsl(235, 86%, 65%);
-            --primary-light: hsl(235, 88%, 73%);
-            --dark: #121212;
-            --light: #E4E4E4;
-            --grey: #424242;
-        }
+      :root {
+        --primary: hsl(235, 86%, 65%);
+        --primary-light: hsl(235, 88%, 73%);
+        --dark: #121212;
+        --light: #e4e4e4;
+        --grey: #424242;
+      }
 
-        body {
-            font-family: system-ui, -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Oxygen, Ubuntu, Cantarell, 'Open Sans', 'Helvetica Neue', sans-serif;
-            background-color: var(--dark);
-            color: var(--light);
-            margin: 0;
-            padding: 0;
-            height: 100vh;
-        }
+      body {
+        font-family: system-ui, -apple-system, BlinkMacSystemFont, "Segoe UI",
+          Roboto, Oxygen, Ubuntu, Cantarell, "Open Sans", "Helvetica Neue",
+          sans-serif;
+        background-color: var(--dark);
+        color: var(--light);
+        margin: 0;
+        padding: 0;
+        height: 100vh;
+      }
 
-        .section {
-            display: flex;
-            flex-direction: column;
-            align-items: center;
-            justify-content: center;
-        }
+      .section {
+        display: flex;
+        flex-direction: column;
+        align-items: center;
+        justify-content: center;
+      }
 
-        textarea {
-            width: 300px;
-            height: 100px;
-            margin-bottom: 10px;
-        }
+      textarea {
+        width: 300px;
+        height: 100px;
+        margin-bottom: 10px;
+      }
 
-        input {
-            display: block;
-            padding: 1rem;
-        }
+      input {
+        display: block;
+        padding: 1rem;
+      }
 
-        button {
-            background-color: var(--primary);
-            color: var(--light);
-            border: none;
-            padding: 15px 32px;
-            text-align: center;
-            text-decoration: none;
-            display: inline-block;
-            font-size: 16px;
-            margin: 4px 2px;
-            cursor: pointer;
-            transition-duration: 0.4s;
-        }
+      button {
+        background-color: var(--primary);
+        color: var(--light);
+        border: none;
+        padding: 15px 32px;
+        text-align: center;
+        text-decoration: none;
+        display: inline-block;
+        font-size: 16px;
+        margin: 4px 2px;
+        cursor: pointer;
+        transition-duration: 0.4s;
+      }
 
-        button:hover {
-            background-color: var(--primary-light);
-        }
+      button:hover {
+        background-color: var(--primary-light);
+      }
 
-        .note {
-            width: 300px;
-            background-color: var(--grey);
-            border: 1px solid var(--primary);
-            padding: 10px;
-            margin-bottom: 10px;
-        }
+      .note {
+        width: 300px;
+        background-color: var(--grey);
+        border: 1px solid var(--primary);
+        padding: 10px;
+        margin-bottom: 10px;
+      }
     </style>
     <!-- your existing CSS code... -->
-</body>
-
+  </body>
 </html>
