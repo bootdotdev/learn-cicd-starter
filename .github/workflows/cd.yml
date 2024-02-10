@@ -26,16 +26,16 @@ jobs:
   #   runs-on: ubuntu-latest
 
   #   steps:
-    - name: 'auth cloudrun deployer'
-      uses: 'google-github-actions/auth@v2'
-      with:
-        credentials_json: '${{ secrets.GCP_CREDENTIALS }}'
+      - name: 'auth cloudrun deployer'
+        uses: 'google-github-actions/auth@v2'
+        with:
+          credentials_json: '${{ secrets.GCP_CREDENTIALS }}'
 
-    - name: 'Set up Cloud SDK'
-      uses: 'google-github-actions/setup-gcloud@v2'
+      - name: 'Set up Cloud SDK'
+        uses: 'google-github-actions/setup-gcloud@v2'
 
-    - name: 'Use gcloud CLI'
-      run: 'gcloud info'
-    
-    - name: 'Build the Docker image and push'
-      run: 'gcloud builds submit --tag us-central1-docker.pkg.dev/notely-413323/notely-ar-repo/IMAGE:TAG .'
+      - name: 'Use gcloud CLI'
+        run: 'gcloud info'
+      
+      - name: 'Build the Docker image and push'
+        run: 'gcloud builds submit --tag us-central1-docker.pkg.dev/notely-413323/notely-ar-repo/IMAGE:TAG .'
