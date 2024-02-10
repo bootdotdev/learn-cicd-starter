@@ -1,4 +1,4 @@
-package your_package
+package main
 
 import (
 	"testing"
