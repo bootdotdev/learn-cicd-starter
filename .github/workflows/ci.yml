@@ -3,6 +3,8 @@ name: ci
 on:
   pull_request:
     branches: [main]
+    paths-ignore:
+      - '**.md'
 
 jobs:
   tests:
