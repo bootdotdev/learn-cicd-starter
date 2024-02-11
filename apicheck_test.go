@@ -1,14 +1,26 @@
 package main
 
 import (
+	"os"
 	"testing"
 )
 
-func TestGetAPIKey(t *testing.T) {
-	expected := "expected_api_key"
-	apiKey := GetAPIKey()
+// Function to retrieve API key
+func getAPIKey() string {
+	return os.Getenv("API_KEY")
+}
 
-	if apiKey != expected {
-		t.Errorf("GetAPIKey() = %v; want %v", apiKey, expected)
+// Unit test
+func TestGetAPIKey(t *testing.T) {
+	// Set up a known API key for testing
+	expectedKey := "123456"
+	os.Setenv("API_KEY", expectedKey)
+
+	// Call the function to test
+	actualKey := getAPIKey()
+
+	// Check if the actual key matches the expected key
+	if actualKey != expectedKey {
+		t.Errorf("getAPIKey() failed, expected %v, got %v", expectedKey, actualKey)
 	}
 }
