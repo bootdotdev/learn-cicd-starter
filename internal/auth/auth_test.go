@@ -7,7 +7,6 @@ import (
 )
 
 func TestGetApiKey(t *testing.T) {
-	t.FailNow() // intentional fail to ensure ci fails when expected
 	testApiKey := "reallysecureapikey"
 	testHeader := http.Header{}
 	testHeader.Set("Authorization", fmt.Sprintf("ApiKey %s", testApiKey))
