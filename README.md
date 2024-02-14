@@ -2,7 +2,7 @@
 
 This repo contains the starter code for the "Notely" application for the "Learn CICD" course on [Boot.dev](https://boot.dev).
 
-![Deploy](https://github.com/trolfu/learn-ci/actions/workflows/ci.yaml/badge.svg)
+[![ci](https://github.com/trolfu/learn-cicd/actions/workflows/ci.yml/badge.svg)](https://github.com/trolfu/learn-cicd/actions/workflows/ci.yml)
 
 ## Local Development
 
