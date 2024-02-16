@@ -1,4 +1,4 @@
-![example workflow](https://github.com/GeraldArnould/earn-cicd-starter/actions/workflows/ci.yml/badge.svg)
+![example workflow](https://github.com/GeraldArnould/learn-cicd-starter/actions/workflows/ci.yml/badge.svg)
 
 # learn-cicd-starter (Notely)
 
