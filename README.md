@@ -1,3 +1,5 @@
+![coverage](https://github.com/hlpd-pham/learn-cicd-starter/blob/main/.github/workflows/ci.yml/badge.svg)
+
 # learn-cicd-starter (Notely) - Forked from Boot.dev
 
 This repo contains the starter code for the "Notely" application for the "Learn CICD" course on [Boot.dev](https://boot.dev).
