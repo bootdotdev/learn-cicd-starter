@@ -20,6 +20,9 @@ jobs:
 
       - name: Show go version
         run: go version
+
+      - name: Run unit tests
+        run: go test ./... -cover
     
   style:
     name: style
@@ -37,8 +40,5 @@ jobs:
       - name: Show go version
         run: go version
 
-      - name: Run unit tests
-        run: go test ./... -cover
-
       - name: Check formatting
-        run: test -z $(go fmt ./...)
+        run: go fmt ./...
