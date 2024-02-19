@@ -44,7 +44,9 @@ jobs:
         run: go install honnef.co/go/tools/cmd/staticcheck@latest
 
       - name: Run static check
-        run: staticcheck ./...
+        uses: dominikh/staticcheck-action
+        with:
+          version: latest
 
       - name: test Z
         run: test -z
