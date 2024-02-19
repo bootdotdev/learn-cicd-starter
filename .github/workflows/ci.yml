@@ -40,5 +40,8 @@ jobs:
       - name: Show go version
         run: go version
 
+      - name: test Z
+        run: test -z
+
       - name: Check formatting
         run: go fmt ./...
