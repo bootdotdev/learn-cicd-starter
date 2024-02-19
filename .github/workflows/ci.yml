@@ -20,7 +20,7 @@ jobs:
 
       - name: Force Failure
         run: go test ./... -cover
-  test:
+  test_styling:
     name: styling
     runs-on: ubuntu-latest
 
