@@ -20,14 +20,14 @@ jobs:
 
       - name: Show go version
         run: go version
-
-      - name: Run unit tests
-        run: go test ./... -cover
     
   style:
     name: Check formatting
     runs-on: ubuntu-latest
 
     steps:
-      - name: Check formatting
-        run: test -z $(go fmt ./...)
+    - name: Run unit tests
+      run: go test ./... -cover
+
+    - name: Check formatting
+      run: test -z $(go fmt ./...)
