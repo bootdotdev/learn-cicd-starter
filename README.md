@@ -1,4 +1,4 @@
-![code coverage badge](https://github.com/hlpd-pham/learn-cicd-starter/workflows/tests.yml/badge.svg)
+![code coverage badge](https://github.com/hlpd-pham/learn-cicd-starter/actions/workflows/tests.yml/badge.svg)
 
 # learn-cicd-starter (Notely) - Forked from Boot.dev
 
