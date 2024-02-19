@@ -39,6 +39,12 @@ jobs:
 
       - name: Show go version
         run: go version
+      
+      - name: Install staticcheck
+        run: go install honnef.co/go/tools/cmd/staticcheck@latest
+
+      - name: Run static check
+        run: staticcheck ./...
 
       - name: test Z
         run: test -z
