@@ -1,11 +1,11 @@
-name: CD
+name: Deploy
 
 on:
   pull_request:
     branches: [main]
 
 jobs:
-  test:
+  deploy:
     name: Deploy
     runs-on: ubuntu-latest
 
