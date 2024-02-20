@@ -20,3 +20,18 @@ jobs:
 
       - name: Build app
         run: scripts/buildprod.sh
+
+      - id: "auth"
+        uses: "google-github-actions/auth@v2"
+        with:
+          service_account: "cloud-run-deployer@notely-414915.iam.gserviceaccount.com"
+          project_id: "notely-414915"
+          credentials_json: "${{ secrets.GCP_CREDENTIALS }}"
+
+      - name: "Set up Cloud SDK"
+        uses: "google-github-actions/setup-gcloud@v2"
+        with:
+          version: ">= 363.0.0"
+
+      - name: "Use gcloud CLI"
+        run: "gcloud info"
