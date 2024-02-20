@@ -35,3 +35,6 @@ jobs:
 
       - name: "Use gcloud CLI"
         run: "gcloud info"
+
+      - name: "Publish to Gcloud AR"
+        run: "gcloud builds submit --tag us-west1-docker.pkg.dev/notely-414915/notely-ar-repo/notely:0.1.0"
