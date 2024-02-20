@@ -117,3 +117,9 @@ func addParseTimeParam(input string) (string, error) {
 	returnUrl = strings.TrimPrefix(returnUrl, dummyScheme)
 	return returnUrl, nil
 }
+
+func unused() {
+    // this function does nothing
+    // and is called nowhere
+}
+
