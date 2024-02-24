@@ -18,5 +18,8 @@ jobs:
         with:
           go-version: '1.20'
 
-      - name: Force Failure
-        run: go version
+    - name: Test
+      run: go test ./...
+
+    - name: Format
+      run: go fmt ./...
