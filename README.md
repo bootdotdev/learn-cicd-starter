@@ -24,3 +24,8 @@ You do *not* need to set up a database or any interactivity on the webpage yet. 
 
 //* Adding updates for tests again & running the ci by pr
 
+
+RUNNING TESTS
+Our current CI doesn't do anything interesting.
+
+A good CI pipeline typically includes unit tests, integration tests, styling checks, linting checks, security checks or any other type of automated test. If any of the tests fail, the build is considered broken and the developer is notified so they can fix it.
