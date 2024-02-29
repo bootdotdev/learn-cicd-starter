@@ -12,11 +12,10 @@ import (
 
 	"github.com/go-chi/chi"
 	"github.com/go-chi/cors"
+	_ "github.com/go-sql-driver/mysql"
 	"github.com/joho/godotenv"
 
 	"github.com/bootdotdev/learn-cicd-starter/internal/database"
-
-	_ "github.com/go-sql-driver/mysql"
 )
 
 type apiConfig struct {
@@ -34,7 +33,7 @@ func main() {
 
 	port := os.Getenv("PORT")
 	if port == "" {
-		log.Fatal("PORT environment variable is not set")
+		log.Fatal("PORT environment variable is not set to")
 	}
 
 	apiCfg := apiConfig{}
