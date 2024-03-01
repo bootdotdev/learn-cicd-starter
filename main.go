@@ -75,6 +75,7 @@ func main() {
 			return
 		}
 		defer f.Close()
+
 		if _, err := io.Copy(w, f); err != nil {
 			http.Error(w, err.Error(), http.StatusInternalServerError)
 		}
