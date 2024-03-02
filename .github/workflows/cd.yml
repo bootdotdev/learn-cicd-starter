@@ -9,10 +9,15 @@ jobs:
     name: Deploy
     runs-on: ubuntu-latest
     timeout-minutes: 30
+    env:
+      DATABASE_URL: ${{ secrets.DATABASE_URL }}
 
     steps:
       - name: Check out code
         uses: actions/checkout@v4
+
+      - name: Set up Goose
+        runs: actions/setup-goose@latest
 
       - name: Set up Go
         uses: actions/setup-go@v4
@@ -21,6 +26,9 @@ jobs:
 
       - name: Build app
         run: scripts/buildprod.sh
+      
+      - name: Migrate db
+        run: scripts/migrateup.sh
 
       - name: 'auth'
         uses: 'google-github-actions/auth@v2'
