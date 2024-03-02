@@ -9,6 +9,7 @@ import (
 	"net/url"
 	"os"
 	"strings"
+	"time"
 
 	"github.com/go-chi/chi"
 	"github.com/go-chi/cors"
@@ -35,6 +36,9 @@ func main() {
 	port := os.Getenv("PORT")
 	if port == "" {
 		log.Fatal("PORT environment variable is not set")
+		if err != nil {
+			log.Fatal(err)
+		}
 	}
 
 	apiCfg := apiConfig{}
@@ -93,8 +97,9 @@ func main() {
 
 	router.Mount("/v1", v1Router)
 	srv := &http.Server{
-		Addr:    ":" + port,
-		Handler: router,
+		Addr:              ":" + port,
+		Handler:           router,
+		ReadHeaderTimeout: 5 * time.Second, // Set an appropriate value for your application
 	}
 
 	log.Printf("Serving on port: %s\n", port)
@@ -117,3 +122,8 @@ func addParseTimeParam(input string) (string, error) {
 	returnUrl = strings.TrimPrefix(returnUrl, dummyScheme)
 	return returnUrl, nil
 }
+
+// func unused() {
+// 	// this function does nothing
+// 	// and is called nowhere
+// }
