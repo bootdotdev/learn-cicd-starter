@@ -17,7 +17,7 @@ jobs:
         uses: actions/checkout@v4
 
       - name: Set up Goose
-        runs: actions/setup-goose@latest
+        uses: actions/setup-goose@latest
 
       - name: Set up Go
         uses: actions/setup-go@v4
