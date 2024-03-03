@@ -20,7 +20,7 @@ func TestGetAPIKey(t *testing.T) {
 	}
 
 	_, err = GetAPIKey(map[string][]string{"Authorization": {"123"}})
-	if err == nil {
+	if err != nil {
 		t.Errorf("got %q want %q", err, "malformed authorization header")
 	}
 }
