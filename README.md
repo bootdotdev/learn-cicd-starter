@@ -1,10 +1,4 @@
-# learn-cicd-starter (Notely)
-
 ![code coverage badge](https://github.com/Revan68/learn-cicd-starter/actions/workflows/ci.yml/badge.svg)
-
-This repo contains the starter code for the "Notely" application for the "Learn CICD" course on [Boot.dev](https://boot.dev).
-
-This README is for reference purposes only! Follow the instructions in the course, don't start doing all the steps here in the README.
 
 ## Local Development
 
@@ -58,4 +52,4 @@ Because the `DATABASE_URL` environment variable is set, the server will connect 
 * Save notes
 * Logout (To log in again you'll just create a new user)
 
-*The purpose of this project is to just be a simple CRUD app that we can use to practice CI/CD. It's not meant to be a fully functional app.*
+*The purpose of this project is to just be a simple CRUD app that we can use to practice CI/CD. It's not meant to be a fully functional app.* test tgeste tsets
