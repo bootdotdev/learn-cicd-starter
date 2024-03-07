@@ -2,7 +2,7 @@ version: "2"
 sql:
   - schema: "sql/schema"
     queries: "sql/queries"
-    engine: "mysql"
+    engine: "sqlite"
     gen:
       go:
         out: "internal/database"

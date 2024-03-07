@@ -1,10 +1,10 @@
 -- +goose Up
 CREATE TABLE users (
-    id VARCHAR(36) PRIMARY KEY,
-    created_at TIMESTAMP NOT NULL,
-    updated_at TIMESTAMP NOT NULL,
+    id TEXT PRIMARY KEY,
+    created_at TEXT NOT NULL,
+    updated_at TEXT NOT NULL,
     name TEXT NOT NULL,
-    api_key VARCHAR(64) UNIQUE NOT NULL
+    api_key TEXT UNIQUE NOT NULL
 );
 
 -- +goose Down
