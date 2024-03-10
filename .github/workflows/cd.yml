@@ -21,6 +21,11 @@ jobs:
       - name: Build the app
         run: ./scripts/buildprod.sh
 
+      - id: auth
+        uses: google-github-actions/auth@v2
+        with:
+          credentials_json: "${{ secrets.GCP_CREDENTIALS }}"
+
       - name: Set up gcloud CLI
         uses: google-github-actions/setup-gcloud@v2
 
