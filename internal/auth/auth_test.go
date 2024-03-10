@@ -46,3 +46,16 @@ func TestGetAPIKeyUnsupportedScheme(t *testing.T) {
 		t.Errorf("Expected error 'malformed authorization header', but got '%v'", err)
 	}
 }
+
+func TestGetAPIKeyOnlyPrefix(t *testing.T) {
+	headers := http.Header{
+		"Authorization": []string{"ApiKey "},
+	}
+	token, err := GetAPIKey(headers)
+	if err != nil {
+		t.Errorf("Did not expect an error, but got '%v'", err)
+	}
+	if token != "" {
+		t.Errorf("Expected an empty token, but got '%s'", token)
+	}
+}
