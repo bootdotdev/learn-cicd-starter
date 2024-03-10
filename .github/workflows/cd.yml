@@ -20,3 +20,9 @@ jobs:
 
       - name: Build the app
         run: ./scripts/buildprod.sh
+
+      - name: Set up gcloud CLI
+        uses: google-github-actions/setup-gcloud@v2
+
+      - name: Build Docker image and push it to Google Artifact Registry
+        run: gcloud builds submit --tag us-central1-docker.pkg.dev/notely-416722/notely-ar-repo/notely:latest .
