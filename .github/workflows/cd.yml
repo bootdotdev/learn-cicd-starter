@@ -1,9 +1,11 @@
+name: cd
+
 on:
   push:
     branches: [main]
 
 jobs:
-  Deploy:
+  deploy:
     name: Deploy
     runs-on: ubuntu-latest
 
@@ -16,5 +18,19 @@ jobs:
         with:
           go-version: '1.20'
 
-      - name: Build the app
-        run: scripts/buildprod.sh
+      - name: Build app
+        run: ./scripts/buildprod.sh
+
+      - id: auth
+        uses: google-github-actions/auth@v2
+        with:
+          credentials_json: ${{ secrets.GCP_CREDENTIALS }}
+
+      - name: Set up Cloud SDK
+        uses: google-github-actions/setup-gcloud@v2
+
+      - name: Use gcloud CLI
+        run: gcloud info
+
+      - name: Build and push Docker image
+        run: gcloud builds submit --tag REGION-docker.pkg.dev/PROJECT_ID/REPOSITORY/IMAGE:TAG .
