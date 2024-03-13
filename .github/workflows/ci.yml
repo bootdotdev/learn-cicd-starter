@@ -18,6 +18,6 @@ jobs:
         with:
           go-version: '1.20'
 
-      - name: Test
-        run: go version
+      - name: Force Failure
+        run: (exit 1)
  
