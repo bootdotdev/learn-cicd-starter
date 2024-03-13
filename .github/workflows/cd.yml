@@ -22,7 +22,9 @@ jobs:
           go-version: '1.20'
 
       - name: Install goose
-        run: go get -u github.com/pressly/goose/cmd/goose
+        run: |
+            go get -u github.com/pressly/goose/cmd/goose
+            echo "${GOPATH}/bin" >> $GITHUB_PATH
 
       - name: Fix vendor
         run: go tidy vendor
