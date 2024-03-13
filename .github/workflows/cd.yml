@@ -27,7 +27,7 @@ jobs:
             echo "${GOPATH}/bin" >> $GITHUB_PATH
 
       - name: Fix vendor
-        run: go tidy vendor
+        run: go mod vendor
 
       - name: Build app
         run: scripts/buildprod.sh
