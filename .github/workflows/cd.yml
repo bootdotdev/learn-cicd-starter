@@ -25,7 +25,7 @@ jobs:
         run: go get -u github.com/pressly/goose/cmd/goose
 
       - name: Fix vendor
-        run: go mod vendor
+        run: go tidy vendor
 
       - name: Build app
         run: scripts/buildprod.sh
