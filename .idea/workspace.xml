@@ -6,18 +6,6 @@
   <component name="ChangeListManager">
     <list default="true" id="64a68a4c-7596-4ad4-a318-08fc4da5a09e" name="Changes" comment="">
       <change beforePath="$PROJECT_DIR$/.github/workflows/ci.yml" beforeDir="false" afterPath="$PROJECT_DIR$/.github/workflows/ci.yml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/handler_notes.go" beforeDir="false" afterPath="$PROJECT_DIR$/handler_notes.go" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/handler_ready.go" beforeDir="false" afterPath="$PROJECT_DIR$/handler_ready.go" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/handler_user.go" beforeDir="false" afterPath="$PROJECT_DIR$/handler_user.go" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/internal/auth/auth.go" beforeDir="false" afterPath="$PROJECT_DIR$/internal/auth/auth.go" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/internal/database/db.go" beforeDir="false" afterPath="$PROJECT_DIR$/internal/database/db.go" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/internal/database/models.go" beforeDir="false" afterPath="$PROJECT_DIR$/internal/database/models.go" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/internal/database/notes.sql.go" beforeDir="false" afterPath="$PROJECT_DIR$/internal/database/notes.sql.go" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/internal/database/users.sql.go" beforeDir="false" afterPath="$PROJECT_DIR$/internal/database/users.sql.go" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/json.go" beforeDir="false" afterPath="$PROJECT_DIR$/json.go" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/middleware_auth.go" beforeDir="false" afterPath="$PROJECT_DIR$/middleware_auth.go" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/models.go" beforeDir="false" afterPath="$PROJECT_DIR$/models.go" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
