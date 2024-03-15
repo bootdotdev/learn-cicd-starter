@@ -15,7 +15,7 @@ jobs:
 
       - name: Set up Go
         uses: actions/setup-go@v4
-        run: go test ./...
+        run: (go test ./...)
 
       - name: Force Failure
         run: (exit 0)
