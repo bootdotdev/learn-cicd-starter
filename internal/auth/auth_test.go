@@ -21,7 +21,7 @@ func TestGetApiKey(t *testing.T) {
 	}
 
 	// Check that the API key is correct
-	if apiKey != "abc12" {
+	if apiKey != "abc123" {
 		t.Errorf("Expected API key to be 'abc123', got %s", apiKey)
 	}
 }
