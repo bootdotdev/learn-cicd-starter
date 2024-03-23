@@ -25,7 +25,7 @@ func TestGetAPIKey(t *testing.T) {
 				"Authorization": []string{"FoobarHeader"},
 			},
 			expectedKey:   "",
-			expectedError: errors.New("malformed authorization headerX"),
+			expectedError: errors.New("malformed authorization header"),
 		},
 		{
 			name: "valid ApiKey",
