@@ -30,7 +30,7 @@ func TestGetAPIKey(t *testing.T) {
 		},
 		"wrong prefix": {
 			input: http.Header{"Authorization": []string{"Bearer testing"}},
-			want:  "testing",
+			want:  "",
 		},
 	}
 
