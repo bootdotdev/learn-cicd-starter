@@ -36,3 +36,14 @@ jobs:
 
       - name: Check formatting
         run: test -z $(go fmt ./...)
+
+  lint:
+    name: "Run a linting check"
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+        with:
+          fetch-depth: 1
+      - uses: dominikh/staticcheck-action@v1
+        with:
+          version: "latest"
