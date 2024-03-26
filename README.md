@@ -1,3 +1,5 @@
+![code coverage badge](https://github.com/otaleghani/learn-cicd-starter/actions/workflows/ci.yml/badge.svg)
+
 SEPPIA SEMPRONIA
 And alfredo was minchia bollita
 Sandro was here
