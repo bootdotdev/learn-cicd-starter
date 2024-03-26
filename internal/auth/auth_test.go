@@ -1,8 +1,8 @@
 package auth
 
 import (
-	"testing"
 	"net/http"
+	"testing"
 )
 
 func TestBearer(t *testing.T) {
