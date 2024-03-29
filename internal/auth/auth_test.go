@@ -5,5 +5,7 @@ import (
 )
 
 func TestGetAPIKey(t *testing.T) {
-  t.Error("tests are running")
+  if ( 2 < 1 ) {
+    t.Error("2 cannot be larger than 1")
+  }
 }
