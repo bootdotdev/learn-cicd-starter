@@ -15,9 +15,9 @@ import (
 	"github.com/go-chi/cors"
 	"github.com/joho/godotenv"
 
-	"github.com/4lexir4/learn-cicd-starter/internal/database"
+	"github.com/bootdotdev/learn-cicd-starter/internal/database"
 
-	_ "github.com/go-sql-driver/mysql"
+	_ "github.com/tursodatabase/libsql-client-go/libsql"
 )
 
 type apiConfig struct {
