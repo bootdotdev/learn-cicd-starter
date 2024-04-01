@@ -16,18 +16,10 @@ jobs:
       - name: Set up Go
         uses: actions/setup-go@v4
         with:
-          go-version: '1.20'
+          go-version: "1.20"
 
-      - name: Unit test
-        run: go test -cover ./...
-
-      - name: Install gosec
-        run: go install github.com/securego/gosec/v2/cmd/gosec@latest
-
-      - name: Security check 
-        run: gosec ./...
-
-
+      - name: Run unit tests
+        run: go test ./... -cover
 
   style:
     name: Style
@@ -40,14 +32,16 @@ jobs:
       - name: Set up Go
         uses: actions/setup-go@v4
         with:
-          go-version: '1.20'
+          go-version: "1.20"
+
+      - name: Check formatting
+        run: test -z $(go fmt ./...)
 
       - name: Install staticcheck
         run: go install honnef.co/go/tools/cmd/staticcheck@latest
 
-      - name: Check style
-        run: test -z $(go fmt ./...)
-
-      - name: Check linting
+      - name: Run staticcheck
         run: staticcheck ./...
 
+      - name: Install gosec
+        run: go install github.com/securego/gosec/v2/cmd/gosec@latest
