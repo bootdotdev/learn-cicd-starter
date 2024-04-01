@@ -1,12 +1,15 @@
 # learn-cicd-starter (Notely)
 
+![code coverage badge](https://github.com/4lexir4/learn-cicd-starter/actions/workflows/ci.yml/badge.svg)
+
+--------------
 This repo contains the starter code for the "Notely" application for the "Learn CICD" course on [Boot.dev](https://boot.dev).
 
 ## Local Development
 
 Make sure you're on Go version 1.20+.
 
-Create a `.env` file in the root of the project with the following contents:
+Create a `.env` file in the root of the project Rith the following contents:
 
 ```bash
 PORT="8080"
