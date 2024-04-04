@@ -29,7 +29,7 @@ func TestDatabaseUserToUser(t *testing.T) {
 				CreatedAt: createdAt,
 				UpdatedAt: updatedAt,
 				Name:      "test",
-				ApiKey:    "tes",
+				ApiKey:    "test",
 			},
 		},
 	}
