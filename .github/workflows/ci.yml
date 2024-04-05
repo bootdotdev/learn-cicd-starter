@@ -18,5 +18,5 @@ jobs:
         with:
           go-version: "1.20"
 
-      - name: Force Failure
-        run: go version
+      - name: Unit Test
+        run: go test ./...
