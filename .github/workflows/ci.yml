@@ -20,3 +20,20 @@ jobs:
 
       - name: Run unit tests
         run: go test ./... -cover
+
+jobs:
+  tests:
+    name: Formatting Check
+    runs-on: ubuntu-latest
+
+    steps:
+      - name: Check out code
+        uses: actions/checkout@v4
+
+      - name: Set up Go
+        uses: actions/setup-go@v4
+        with:
+          go-version: '1.20'
+      
+      - name: Check Formatting
+        run: test -z $(go fmt ./...)
