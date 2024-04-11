@@ -9,6 +9,9 @@ jobs:
     name: Deploy
     runs-on: ubuntu-latest
 
+    env:
+      DATABASE_URL: ${{ secrets.DATABASE_URL }}
+
     steps:
       - name: Check out code
         uses: actions/checkout@v4
@@ -19,16 +22,24 @@ jobs:
           go-version: "1.20"
 
       - name: Build app
-        run: scripts/buildprod.sh
+        run: ./scripts/buildprod.sh
 
-      - name: Set up Google Cloud SDK
-        uses: google-github-actions/setup-gcloud@v0.4.0
+      - id: "auth"
+        uses: "google-github-actions/auth@v1"
         with:
-          service_account_key: ${{ secrets.GCP_CREDENTIALS }}
+          credentials_json: "${{ secrets.GCP_CREDENTIALS }}"
 
-      - name: Run database migrations
-        run: goose -dir migrations postgres ${{ secrets.DATABASE_URL }} up
+      - name: "Set up Cloud SDK"
+        uses: "google-github-actions/setup-gcloud@v1"
 
-      - name: Build and push Docker image to Google Artifact Registry
-        run: |
-          gcloud builds submit --tag us-central1-docker.pkg.dev/notely-420014/notely-ar-repo/notely:latest .
+      - name: "Build and push Docker image"
+        run: "gcloud builds submit --tag us-central1-docker.pkg.dev/notely-420014/notely-ar-repo/notely:latest ."
+
+      - name: Install goose
+        run: go install github.com/pressly/goose/v3/cmd/goose@latest
+
+      - name: Run migrations
+        run: ./scripts/migrateup.sh
+
+      - name: "Deploy to Cloud Run"
+        run: "gcloud run deploy notely --image us-central1-docker.pkg.dev/notely-420014/notely-ar-repo/notely:latest --region us-central1 --allow-unauthenticated --project notely-420014"
