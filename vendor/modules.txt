@@ -1,3 +1,5 @@
+# github.com/BurntSushi/toml v1.2.1
+## explicit; go 1.16
 # github.com/antlr/antlr4/runtime/Go/antlr/v4 v4.0.0-20230512164433-5d1fd1a340c9
 ## explicit; go 1.18
 github.com/antlr/antlr4/runtime/Go/antlr/v4
@@ -32,6 +34,16 @@ github.com/tursodatabase/libsql-client-go/libsql/internal/ws
 ## explicit; go 1.18
 golang.org/x/exp/constraints
 golang.org/x/exp/slices
+# golang.org/x/exp/typeparams v0.0.0-20221208152030-732eee02a75a
+## explicit; go 1.18
+# golang.org/x/mod v0.12.0
+## explicit; go 1.17
+# golang.org/x/sys v0.11.0
+## explicit; go 1.17
+# golang.org/x/tools v0.12.1-0.20230825192346-2191a27a6dc5
+## explicit; go 1.18
+# honnef.co/go/tools v0.4.7
+## explicit; go 1.19
 # nhooyr.io/websocket v1.8.7
 ## explicit; go 1.13
 nhooyr.io/websocket
