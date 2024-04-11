@@ -26,8 +26,9 @@ jobs:
         with:
           service_account_key: ${{ secrets.GCP_CREDENTIALS }}
 
+      - name: Run database migrations
+        run: goose -dir migrations postgres ${{ secrets.DATABASE_URL }} up
+
       - name: Build and push Docker image to Google Artifact Registry
         run: |
           gcloud builds submit --tag us-central1-docker.pkg.dev/notely-420014/notely-ar-repo/notely:latest .
-        env:
-          REGION: "your-region"
