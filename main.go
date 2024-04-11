@@ -7,6 +7,7 @@ import (
 	"log"
 	"net/http"
 	"os"
+	"time"
 
 	"github.com/go-chi/chi"
 	"github.com/go-chi/cors"
@@ -23,11 +24,6 @@ type apiConfig struct {
 
 //go:embed static/*
 var staticFiles embed.FS
-
-func unused() {
-    // this function does nothing
-    // and is called nowhere
-}
 
 func main() {
 	err := godotenv.Load(".env")
@@ -94,8 +90,9 @@ func main() {
 
 	router.Mount("/v1", v1Router)
 	srv := &http.Server{
-		Addr:    ":" + port,
-		Handler: router,
+		Addr:              ":" + port,
+		Handler:           router,
+		ReadHeaderTimeout: time.Second * 10,
 	}
 
 	log.Printf("Serving on port: %s\n", port)
