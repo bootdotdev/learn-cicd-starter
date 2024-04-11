@@ -20,3 +20,14 @@ jobs:
 
       - name: Build app
         run: scripts/buildprod.sh
+
+      - name: Set up Google Cloud SDK
+        uses: google-github-actions/setup-gcloud@v0.4.0
+        with:
+          service_account_key: ${{ secrets.GCP_CREDENTIALS }}
+
+      - name: Build and push Docker image to Google Artifact Registry
+        run: |
+          gcloud builds submit --tag us-central1-docker.pkg.dev/notely-420014/notely-ar-repo/notely:latest .
+        env:
+          REGION: "your-region"
