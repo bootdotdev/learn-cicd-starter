@@ -23,6 +23,7 @@ type apiConfig struct {
 
 //go:embed static/*
 var staticFiles embed.FS
+
 // test is not failing
 
 func main() {
