@@ -1,4 +1,4 @@
-ame: ci
+name: ci
 
 on:
   pull_request:
@@ -36,3 +36,4 @@ jobs:
 
       - name: Check formatting tests
         run: test -z $(go fmt ./...)
+
