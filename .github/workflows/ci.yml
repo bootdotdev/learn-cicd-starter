@@ -42,3 +42,9 @@ jobs:
 
       - name: Run Tests
         run: (go test ./... -cover)
+      
+      - name: Install go sec
+        run: go install github.com/securego/gosec/v2/cmd/gosec@latest
+
+      - name: Run go sec
+        run: (gosec ./...)
