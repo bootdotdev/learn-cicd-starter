@@ -1,4 +1,4 @@
-// Code generated from SQLiteParser.g4 by ANTLR 4.12.0. DO NOT EDIT.
+// Code generated from SQLiteParser.g4 by ANTLR 4.13.1. DO NOT EDIT.
 
 package sqliteparser // SQLiteParser
 import (
@@ -6,7 +6,7 @@ import (
 	"strconv"
 	"sync"
 
-	"github.com/antlr/antlr4/runtime/Go/antlr/v4"
+	"github.com/antlr4-go/antlr/v4"
 )
 
 // Suppress unused import errors
@@ -18,20 +18,20 @@ type SQLiteParser struct {
 	*antlr.BaseParser
 }
 
-var sqliteparserParserStaticData struct {
+var SQLiteParserParserStaticData struct {
 	once                   sync.Once
 	serializedATN          []int32
-	literalNames           []string
-	symbolicNames          []string
-	ruleNames              []string
-	predictionContextCache *antlr.PredictionContextCache
+	LiteralNames           []string
+	SymbolicNames          []string
+	RuleNames              []string
+	PredictionContextCache *antlr.PredictionContextCache
 	atn                    *antlr.ATN
 	decisionToDFA          []*antlr.DFA
 }
 
 func sqliteparserParserInit() {
-	staticData := &sqliteparserParserStaticData
-	staticData.literalNames = []string{
+	staticData := &SQLiteParserParserStaticData
+	staticData.LiteralNames = []string{
 		"", "';'", "'.'", "'('", "')'", "','", "'='", "'*'", "'+'", "'-'", "'~'",
 		"'||'", "'/'", "'%'", "'<<'", "'>>'", "'&'", "'|'", "'<'", "'<='", "'>'",
 		"'>='", "'=='", "'!='", "'<>'", "'ABORT'", "'ACTION'", "'ADD'", "'AFTER'",
@@ -62,7 +62,7 @@ func sqliteparserParserInit() {
 		"'NULLS'", "'FIRST'", "'LAST'", "'FILTER'", "'GROUPS'", "'EXCLUDE'",
 		"'TIES'", "'OTHERS'", "'DO'", "'NOTHING'",
 	}
-	staticData.symbolicNames = []string{
+	staticData.SymbolicNames = []string{
 		"", "SCOL", "DOT", "OPEN_PAR", "CLOSE_PAR", "COMMA", "ASSIGN", "STAR",
 		"PLUS", "MINUS", "TILDE", "PIPE2", "DIV", "MOD", "LT2", "GT2", "AMP",
 		"PIPE", "LT", "LT_EQ", "GT", "GT_EQ", "EQ", "NOT_EQ1", "NOT_EQ2", "ABORT_",
@@ -93,7 +93,7 @@ func sqliteparserParserInit() {
 		"BIND_PARAMETER", "STRING_LITERAL", "BLOB_LITERAL", "SINGLE_LINE_COMMENT",
 		"MULTILINE_COMMENT", "SPACES", "UNEXPECTED_CHAR",
 	}
-	staticData.ruleNames = []string{
+	staticData.RuleNames = []string{
 		"parse", "sql_stmt_list", "sql_stmt", "alter_table_stmt", "analyze_stmt",
 		"attach_stmt", "begin_stmt", "commit_stmt", "rollback_stmt", "savepoint_stmt",
 		"release_stmt", "create_index_stmt", "indexed_column", "create_table_stmt",
@@ -121,7 +121,7 @@ func sqliteparserParserInit() {
 		"window_name", "alias", "filename", "base_window_name", "simple_func",
 		"aggregate_func", "table_function_name", "any_name",
 	}
-	staticData.predictionContextCache = antlr.NewPredictionContextCache()
+	staticData.PredictionContextCache = antlr.NewPredictionContextCache()
 	staticData.serializedATN = []int32{
 		4, 1, 193, 2056, 2, 0, 7, 0, 2, 1, 7, 1, 2, 2, 7, 2, 2, 3, 7, 3, 2, 4,
 		7, 4, 2, 5, 7, 5, 2, 6, 7, 6, 2, 7, 7, 7, 2, 8, 7, 8, 2, 9, 7, 9, 2, 10,
@@ -1168,7 +1168,7 @@ func sqliteparserParserInit() {
 // NewSQLiteParser(). You can call this function if you wish to initialize the static state ahead
 // of time.
 func SQLiteParserInit() {
-	staticData := &sqliteparserParserStaticData
+	staticData := &SQLiteParserParserStaticData
 	staticData.once.Do(sqliteparserParserInit)
 }
 
@@ -1177,11 +1177,11 @@ func NewSQLiteParser(input antlr.TokenStream) *SQLiteParser {
 	SQLiteParserInit()
 	this := new(SQLiteParser)
 	this.BaseParser = antlr.NewBaseParser(input)
-	staticData := &sqliteparserParserStaticData
-	this.Interpreter = antlr.NewParserATNSimulator(this, staticData.atn, staticData.decisionToDFA, staticData.predictionContextCache)
-	this.RuleNames = staticData.ruleNames
-	this.LiteralNames = staticData.literalNames
-	this.SymbolicNames = staticData.symbolicNames
+	staticData := &SQLiteParserParserStaticData
+	this.Interpreter = antlr.NewParserATNSimulator(this, staticData.atn, staticData.decisionToDFA, staticData.PredictionContextCache)
+	this.RuleNames = staticData.RuleNames
+	this.LiteralNames = staticData.LiteralNames
+	this.SymbolicNames = staticData.SymbolicNames
 	this.GrammarFileName = "SQLiteParser.g4"
 
 	return this
@@ -1519,15 +1519,20 @@ type IParseContext interface {
 }
 
 type ParseContext struct {
-	*antlr.BaseParserRuleContext
+	antlr.BaseParserRuleContext
 	parser antlr.Parser
 }
 
 func NewEmptyParseContext() *ParseContext {
 	var p = new(ParseContext)
-	p.BaseParserRuleContext = antlr.NewBaseParserRuleContext(nil, -1)
+	antlr.InitBaseParserRuleContext(&p.BaseParserRuleContext, nil, -1)
 	p.RuleIndex = SQLiteParserRULE_parse
 	return p
+}
+
+func InitEmptyParseContext(p *ParseContext) {
+	antlr.InitBaseParserRuleContext(&p.BaseParserRuleContext, nil, -1)
+	p.RuleIndex = SQLiteParserRULE_parse
 }
 
 func (*ParseContext) IsParseContext() {}
@@ -1535,7 +1540,7 @@ func (*ParseContext) IsParseContext() {}
 func NewParseContext(parser antlr.Parser, parent antlr.ParserRuleContext, invokingState int) *ParseContext {
 	var p = new(ParseContext)
 
-	p.BaseParserRuleContext = antlr.NewBaseParserRuleContext(parent, invokingState)
+	antlr.InitBaseParserRuleContext(&p.BaseParserRuleContext, parent, invokingState)
 
 	p.parser = parser
 	p.RuleIndex = SQLiteParserRULE_parse
@@ -1611,32 +1616,16 @@ func (s *ParseContext) ExitRule(listener antlr.ParseTreeListener) {
 }
 
 func (p *SQLiteParser) Parse() (localctx IParseContext) {
-	this := p
-	_ = this
-
 	localctx = NewParseContext(p, p.GetParserRuleContext(), p.GetState())
 	p.EnterRule(localctx, 0, SQLiteParserRULE_parse)
 	var _la int
 
-	defer func() {
-		p.ExitRule()
-	}()
-
-	defer func() {
-		if err := recover(); err != nil {
-			if v, ok := err.(antlr.RecognitionException); ok {
-				localctx.SetException(v)
-				p.GetErrorHandler().ReportError(p, v)
-				p.GetErrorHandler().Recover(p, v)
-			} else {
-				panic(err)
-			}
-		}
-	}()
-
 	p.EnterOuterAlt(localctx, 1)
 	p.SetState(229)
 	p.GetErrorHandler().Sync(p)
+	if p.HasError() {
+		goto errorExit
+	}
 	_la = p.GetTokenStream().LA(1)
 
 	for ((int64(_la) & ^0x3f) == 0 && ((int64(1)<<_la)&-6339801325483589630) != 0) || ((int64((_la-66)) & ^0x3f) == 0 && ((int64(1)<<(_la-66))&-7971300971697405919) != 0) || ((int64((_la-130)) & ^0x3f) == 0 && ((int64(1)<<(_la-130))&550913) != 0) {
@@ -1647,14 +1636,31 @@ func (p *SQLiteParser) Parse() (localctx IParseContext) {
 
 		p.SetState(231)
 		p.GetErrorHandler().Sync(p)
+		if p.HasError() {
+			goto errorExit
+		}
 		_la = p.GetTokenStream().LA(1)
 	}
 	{
 		p.SetState(232)
 		p.Match(SQLiteParserEOF)
+		if p.HasError() {
+			// Recognition error - abort rule
+			goto errorExit
+		}
 	}
 
+errorExit:
+	if p.HasError() {
+		v := p.GetError()
+		localctx.SetException(v)
+		p.GetErrorHandler().ReportError(p, v)
+		p.GetErrorHandler().Recover(p, v)
+		p.SetError(nil)
+	}
+	p.ExitRule()
 	return localctx
+	goto errorExit // Trick to prevent compiler error if the label is not used
 }
 
 // ISql_stmt_listContext is an interface to support dynamic dispatch.
@@ -1675,15 +1681,20 @@ type ISql_stmt_listContext interface {
 }
 
 type Sql_stmt_listContext struct {
-	*antlr.BaseParserRuleContext
+	antlr.BaseParserRuleContext
 	parser antlr.Parser
 }
 
 func NewEmptySql_stmt_listContext() *Sql_stmt_listContext {
 	var p = new(Sql_stmt_listContext)
-	p.BaseParserRuleContext = antlr.NewBaseParserRuleContext(nil, -1)
+	antlr.InitBaseParserRuleContext(&p.BaseParserRuleContext, nil, -1)
 	p.RuleIndex = SQLiteParserRULE_sql_stmt_list
 	return p
+}
+
+func InitEmptySql_stmt_listContext(p *Sql_stmt_listContext) {
+	antlr.InitBaseParserRuleContext(&p.BaseParserRuleContext, nil, -1)
+	p.RuleIndex = SQLiteParserRULE_sql_stmt_list
 }
 
 func (*Sql_stmt_listContext) IsSql_stmt_listContext() {}
@@ -1691,7 +1702,7 @@ func (*Sql_stmt_listContext) IsSql_stmt_listContext() {}
 func NewSql_stmt_listContext(parser antlr.Parser, parent antlr.ParserRuleContext, invokingState int) *Sql_stmt_listContext {
 	var p = new(Sql_stmt_listContext)
 
-	p.BaseParserRuleContext = antlr.NewBaseParserRuleContext(parent, invokingState)
+	antlr.InitBaseParserRuleContext(&p.BaseParserRuleContext, parent, invokingState)
 
 	p.parser = parser
 	p.RuleIndex = SQLiteParserRULE_sql_stmt_list
@@ -1771,44 +1782,35 @@ func (s *Sql_stmt_listContext) ExitRule(listener antlr.ParseTreeListener) {
 }
 
 func (p *SQLiteParser) Sql_stmt_list() (localctx ISql_stmt_listContext) {
-	this := p
-	_ = this
-
 	localctx = NewSql_stmt_listContext(p, p.GetParserRuleContext(), p.GetState())
 	p.EnterRule(localctx, 2, SQLiteParserRULE_sql_stmt_list)
 	var _la int
-
-	defer func() {
-		p.ExitRule()
-	}()
-
-	defer func() {
-		if err := recover(); err != nil {
-			if v, ok := err.(antlr.RecognitionException); ok {
-				localctx.SetException(v)
-				p.GetErrorHandler().ReportError(p, v)
-				p.GetErrorHandler().Recover(p, v)
-			} else {
-				panic(err)
-			}
-		}
-	}()
 
 	var _alt int
 
 	p.EnterOuterAlt(localctx, 1)
 	p.SetState(237)
 	p.GetErrorHandler().Sync(p)
+	if p.HasError() {
+		goto errorExit
+	}
 	_la = p.GetTokenStream().LA(1)
 
 	for _la == SQLiteParserSCOL {
 		{
 			p.SetState(234)
 			p.Match(SQLiteParserSCOL)
+			if p.HasError() {
+				// Recognition error - abort rule
+				goto errorExit
+			}
 		}
 
 		p.SetState(239)
 		p.GetErrorHandler().Sync(p)
+		if p.HasError() {
+			goto errorExit
+		}
 		_la = p.GetTokenStream().LA(1)
 	}
 	{
@@ -1817,22 +1819,37 @@ func (p *SQLiteParser) Sql_stmt_list() (localctx ISql_stmt_listContext) {
 	}
 	p.SetState(249)
 	p.GetErrorHandler().Sync(p)
-	_alt = p.GetInterpreter().AdaptivePredict(p.GetTokenStream(), 3, p.GetParserRuleContext())
-
+	if p.HasError() {
+		goto errorExit
+	}
+	_alt = p.GetInterpreter().AdaptivePredict(p.BaseParser, p.GetTokenStream(), 3, p.GetParserRuleContext())
+	if p.HasError() {
+		goto errorExit
+	}
 	for _alt != 2 && _alt != antlr.ATNInvalidAltNumber {
 		if _alt == 1 {
 			p.SetState(242)
 			p.GetErrorHandler().Sync(p)
+			if p.HasError() {
+				goto errorExit
+			}
 			_la = p.GetTokenStream().LA(1)
 
 			for ok := true; ok; ok = _la == SQLiteParserSCOL {
 				{
 					p.SetState(241)
 					p.Match(SQLiteParserSCOL)
+					if p.HasError() {
+						// Recognition error - abort rule
+						goto errorExit
+					}
 				}
 
 				p.SetState(244)
 				p.GetErrorHandler().Sync(p)
+				if p.HasError() {
+					goto errorExit
+				}
 				_la = p.GetTokenStream().LA(1)
 			}
 			{
@@ -1843,26 +1860,57 @@ func (p *SQLiteParser) Sql_stmt_list() (localctx ISql_stmt_listContext) {
 		}
 		p.SetState(251)
 		p.GetErrorHandler().Sync(p)
-		_alt = p.GetInterpreter().AdaptivePredict(p.GetTokenStream(), 3, p.GetParserRuleContext())
+		if p.HasError() {
+			goto errorExit
+		}
+		_alt = p.GetInterpreter().AdaptivePredict(p.BaseParser, p.GetTokenStream(), 3, p.GetParserRuleContext())
+		if p.HasError() {
+			goto errorExit
+		}
 	}
 	p.SetState(255)
 	p.GetErrorHandler().Sync(p)
-	_alt = p.GetInterpreter().AdaptivePredict(p.GetTokenStream(), 4, p.GetParserRuleContext())
-
+	if p.HasError() {
+		goto errorExit
+	}
+	_alt = p.GetInterpreter().AdaptivePredict(p.BaseParser, p.GetTokenStream(), 4, p.GetParserRuleContext())
+	if p.HasError() {
+		goto errorExit
+	}
 	for _alt != 2 && _alt != antlr.ATNInvalidAltNumber {
 		if _alt == 1 {
 			{
 				p.SetState(252)
 				p.Match(SQLiteParserSCOL)
+				if p.HasError() {
+					// Recognition error - abort rule
+					goto errorExit
+				}
 			}
 
 		}
 		p.SetState(257)
 		p.GetErrorHandler().Sync(p)
-		_alt = p.GetInterpreter().AdaptivePredict(p.GetTokenStream(), 4, p.GetParserRuleContext())
+		if p.HasError() {
+			goto errorExit
+		}
+		_alt = p.GetInterpreter().AdaptivePredict(p.BaseParser, p.GetTokenStream(), 4, p.GetParserRuleContext())
+		if p.HasError() {
+			goto errorExit
+		}
 	}
 
+errorExit:
+	if p.HasError() {
+		v := p.GetError()
+		localctx.SetException(v)
+		p.GetErrorHandler().ReportError(p, v)
+		p.GetErrorHandler().Recover(p, v)
+		p.SetError(nil)
+	}
+	p.ExitRule()
 	return localctx
+	goto errorExit // Trick to prevent compiler error if the label is not used
 }
 
 // ISql_stmtContext is an interface to support dynamic dispatch.
@@ -1906,15 +1954,20 @@ type ISql_stmtContext interface {
 }
 
 type Sql_stmtContext struct {
-	*antlr.BaseParserRuleContext
+	antlr.BaseParserRuleContext
 	parser antlr.Parser
 }
 
 func NewEmptySql_stmtContext() *Sql_stmtContext {
 	var p = new(Sql_stmtContext)
-	p.BaseParserRuleContext = antlr.NewBaseParserRuleContext(nil, -1)
+	antlr.InitBaseParserRuleContext(&p.BaseParserRuleContext, nil, -1)
 	p.RuleIndex = SQLiteParserRULE_sql_stmt
 	return p
+}
+
+func InitEmptySql_stmtContext(p *Sql_stmtContext) {
+	antlr.InitBaseParserRuleContext(&p.BaseParserRuleContext, nil, -1)
+	p.RuleIndex = SQLiteParserRULE_sql_stmt
 }
 
 func (*Sql_stmtContext) IsSql_stmtContext() {}
@@ -1922,7 +1975,7 @@ func (*Sql_stmtContext) IsSql_stmtContext() {}
 func NewSql_stmtContext(parser antlr.Parser, parent antlr.ParserRuleContext, invokingState int) *Sql_stmtContext {
 	var p = new(Sql_stmtContext)
 
-	p.BaseParserRuleContext = antlr.NewBaseParserRuleContext(parent, invokingState)
+	antlr.InitBaseParserRuleContext(&p.BaseParserRuleContext, parent, invokingState)
 
 	p.parser = parser
 	p.RuleIndex = SQLiteParserRULE_sql_stmt
@@ -2349,51 +2402,50 @@ func (s *Sql_stmtContext) ExitRule(listener antlr.ParseTreeListener) {
 }
 
 func (p *SQLiteParser) Sql_stmt() (localctx ISql_stmtContext) {
-	this := p
-	_ = this
-
 	localctx = NewSql_stmtContext(p, p.GetParserRuleContext(), p.GetState())
 	p.EnterRule(localctx, 4, SQLiteParserRULE_sql_stmt)
 	var _la int
 
-	defer func() {
-		p.ExitRule()
-	}()
-
-	defer func() {
-		if err := recover(); err != nil {
-			if v, ok := err.(antlr.RecognitionException); ok {
-				localctx.SetException(v)
-				p.GetErrorHandler().ReportError(p, v)
-				p.GetErrorHandler().Recover(p, v)
-			} else {
-				panic(err)
-			}
-		}
-	}()
-
 	p.EnterOuterAlt(localctx, 1)
 	p.SetState(263)
 	p.GetErrorHandler().Sync(p)
+	if p.HasError() {
+		goto errorExit
+	}
 	_la = p.GetTokenStream().LA(1)
 
 	if _la == SQLiteParserEXPLAIN_ {
 		{
 			p.SetState(258)
 			p.Match(SQLiteParserEXPLAIN_)
+			if p.HasError() {
+				// Recognition error - abort rule
+				goto errorExit
+			}
 		}
 		p.SetState(261)
 		p.GetErrorHandler().Sync(p)
+		if p.HasError() {
+			goto errorExit
+		}
 		_la = p.GetTokenStream().LA(1)
 
 		if _la == SQLiteParserQUERY_ {
 			{
 				p.SetState(259)
 				p.Match(SQLiteParserQUERY_)
+				if p.HasError() {
+					// Recognition error - abort rule
+					goto errorExit
+				}
 			}
 			{
 				p.SetState(260)
 				p.Match(SQLiteParserPLAN_)
+				if p.HasError() {
+					// Recognition error - abort rule
+					goto errorExit
+				}
 			}
 
 		}
@@ -2401,7 +2453,11 @@ func (p *SQLiteParser) Sql_stmt() (localctx ISql_stmtContext) {
 	}
 	p.SetState(289)
 	p.GetErrorHandler().Sync(p)
-	switch p.GetInterpreter().AdaptivePredict(p.GetTokenStream(), 7, p.GetParserRuleContext()) {
+	if p.HasError() {
+		goto errorExit
+	}
+
+	switch p.GetInterpreter().AdaptivePredict(p.BaseParser, p.GetTokenStream(), 7, p.GetParserRuleContext()) {
 	case 1:
 		{
 			p.SetState(265)
@@ -2546,9 +2602,21 @@ func (p *SQLiteParser) Sql_stmt() (localctx ISql_stmtContext) {
 			p.Vacuum_stmt()
 		}
 
+	case antlr.ATNInvalidAltNumber:
+		goto errorExit
 	}
 
+errorExit:
+	if p.HasError() {
+		v := p.GetError()
+		localctx.SetException(v)
+		p.GetErrorHandler().ReportError(p, v)
+		p.GetErrorHandler().Recover(p, v)
+		p.SetError(nil)
+	}
+	p.ExitRule()
 	return localctx
+	goto errorExit // Trick to prevent compiler error if the label is not used
 }
 
 // IAlter_table_stmtContext is an interface to support dynamic dispatch.
@@ -2597,7 +2665,7 @@ type IAlter_table_stmtContext interface {
 }
 
 type Alter_table_stmtContext struct {
-	*antlr.BaseParserRuleContext
+	antlr.BaseParserRuleContext
 	parser          antlr.Parser
 	new_table_name  ITable_nameContext
 	old_column_name IColumn_nameContext
@@ -2606,9 +2674,14 @@ type Alter_table_stmtContext struct {
 
 func NewEmptyAlter_table_stmtContext() *Alter_table_stmtContext {
 	var p = new(Alter_table_stmtContext)
-	p.BaseParserRuleContext = antlr.NewBaseParserRuleContext(nil, -1)
+	antlr.InitBaseParserRuleContext(&p.BaseParserRuleContext, nil, -1)
 	p.RuleIndex = SQLiteParserRULE_alter_table_stmt
 	return p
+}
+
+func InitEmptyAlter_table_stmtContext(p *Alter_table_stmtContext) {
+	antlr.InitBaseParserRuleContext(&p.BaseParserRuleContext, nil, -1)
+	p.RuleIndex = SQLiteParserRULE_alter_table_stmt
 }
 
 func (*Alter_table_stmtContext) IsAlter_table_stmtContext() {}
@@ -2616,7 +2689,7 @@ func (*Alter_table_stmtContext) IsAlter_table_stmtContext() {}
 func NewAlter_table_stmtContext(parser antlr.Parser, parent antlr.ParserRuleContext, invokingState int) *Alter_table_stmtContext {
 	var p = new(Alter_table_stmtContext)
 
-	p.BaseParserRuleContext = antlr.NewBaseParserRuleContext(parent, invokingState)
+	antlr.InitBaseParserRuleContext(&p.BaseParserRuleContext, parent, invokingState)
 
 	p.parser = parser
 	p.RuleIndex = SQLiteParserRULE_alter_table_stmt
@@ -2805,41 +2878,29 @@ func (s *Alter_table_stmtContext) ExitRule(listener antlr.ParseTreeListener) {
 }
 
 func (p *SQLiteParser) Alter_table_stmt() (localctx IAlter_table_stmtContext) {
-	this := p
-	_ = this
-
 	localctx = NewAlter_table_stmtContext(p, p.GetParserRuleContext(), p.GetState())
 	p.EnterRule(localctx, 6, SQLiteParserRULE_alter_table_stmt)
-
-	defer func() {
-		p.ExitRule()
-	}()
-
-	defer func() {
-		if err := recover(); err != nil {
-			if v, ok := err.(antlr.RecognitionException); ok {
-				localctx.SetException(v)
-				p.GetErrorHandler().ReportError(p, v)
-				p.GetErrorHandler().Recover(p, v)
-			} else {
-				panic(err)
-			}
-		}
-	}()
-
 	p.EnterOuterAlt(localctx, 1)
 	{
 		p.SetState(291)
 		p.Match(SQLiteParserALTER_)
+		if p.HasError() {
+			// Recognition error - abort rule
+			goto errorExit
+		}
 	}
 	{
 		p.SetState(292)
 		p.Match(SQLiteParserTABLE_)
+		if p.HasError() {
+			// Recognition error - abort rule
+			goto errorExit
+		}
 	}
 	p.SetState(296)
 	p.GetErrorHandler().Sync(p)
 
-	if p.GetInterpreter().AdaptivePredict(p.GetTokenStream(), 8, p.GetParserRuleContext()) == 1 {
+	if p.GetInterpreter().AdaptivePredict(p.BaseParser, p.GetTokenStream(), 8, p.GetParserRuleContext()) == 1 {
 		{
 			p.SetState(293)
 			p.Schema_name()
@@ -2847,8 +2908,14 @@ func (p *SQLiteParser) Alter_table_stmt() (localctx IAlter_table_stmtContext) {
 		{
 			p.SetState(294)
 			p.Match(SQLiteParserDOT)
+			if p.HasError() {
+				// Recognition error - abort rule
+				goto errorExit
+			}
 		}
 
+	} else if p.HasError() { // JIM
+		goto errorExit
 	}
 	{
 		p.SetState(298)
@@ -2856,20 +2923,35 @@ func (p *SQLiteParser) Alter_table_stmt() (localctx IAlter_table_stmtContext) {
 	}
 	p.SetState(321)
 	p.GetErrorHandler().Sync(p)
+	if p.HasError() {
+		goto errorExit
+	}
 
 	switch p.GetTokenStream().LA(1) {
 	case SQLiteParserRENAME_:
 		{
 			p.SetState(299)
 			p.Match(SQLiteParserRENAME_)
+			if p.HasError() {
+				// Recognition error - abort rule
+				goto errorExit
+			}
 		}
 		p.SetState(309)
 		p.GetErrorHandler().Sync(p)
-		switch p.GetInterpreter().AdaptivePredict(p.GetTokenStream(), 10, p.GetParserRuleContext()) {
+		if p.HasError() {
+			goto errorExit
+		}
+
+		switch p.GetInterpreter().AdaptivePredict(p.BaseParser, p.GetTokenStream(), 10, p.GetParserRuleContext()) {
 		case 1:
 			{
 				p.SetState(300)
 				p.Match(SQLiteParserTO_)
+				if p.HasError() {
+					// Recognition error - abort rule
+					goto errorExit
+				}
 			}
 			{
 				p.SetState(301)
@@ -2883,12 +2965,18 @@ func (p *SQLiteParser) Alter_table_stmt() (localctx IAlter_table_stmtContext) {
 			p.SetState(303)
 			p.GetErrorHandler().Sync(p)
 
-			if p.GetInterpreter().AdaptivePredict(p.GetTokenStream(), 9, p.GetParserRuleContext()) == 1 {
+			if p.GetInterpreter().AdaptivePredict(p.BaseParser, p.GetTokenStream(), 9, p.GetParserRuleContext()) == 1 {
 				{
 					p.SetState(302)
 					p.Match(SQLiteParserCOLUMN_)
+					if p.HasError() {
+						// Recognition error - abort rule
+						goto errorExit
+					}
 				}
 
+			} else if p.HasError() { // JIM
+				goto errorExit
 			}
 			{
 				p.SetState(305)
@@ -2900,6 +2988,10 @@ func (p *SQLiteParser) Alter_table_stmt() (localctx IAlter_table_stmtContext) {
 			{
 				p.SetState(306)
 				p.Match(SQLiteParserTO_)
+				if p.HasError() {
+					// Recognition error - abort rule
+					goto errorExit
+				}
 			}
 			{
 				p.SetState(307)
@@ -2909,22 +3001,34 @@ func (p *SQLiteParser) Alter_table_stmt() (localctx IAlter_table_stmtContext) {
 				localctx.(*Alter_table_stmtContext).new_column_name = _x
 			}
 
+		case antlr.ATNInvalidAltNumber:
+			goto errorExit
 		}
 
 	case SQLiteParserADD_:
 		{
 			p.SetState(311)
 			p.Match(SQLiteParserADD_)
+			if p.HasError() {
+				// Recognition error - abort rule
+				goto errorExit
+			}
 		}
 		p.SetState(313)
 		p.GetErrorHandler().Sync(p)
 
-		if p.GetInterpreter().AdaptivePredict(p.GetTokenStream(), 11, p.GetParserRuleContext()) == 1 {
+		if p.GetInterpreter().AdaptivePredict(p.BaseParser, p.GetTokenStream(), 11, p.GetParserRuleContext()) == 1 {
 			{
 				p.SetState(312)
 				p.Match(SQLiteParserCOLUMN_)
+				if p.HasError() {
+					// Recognition error - abort rule
+					goto errorExit
+				}
 			}
 
+		} else if p.HasError() { // JIM
+			goto errorExit
 		}
 		{
 			p.SetState(315)
@@ -2935,16 +3039,26 @@ func (p *SQLiteParser) Alter_table_stmt() (localctx IAlter_table_stmtContext) {
 		{
 			p.SetState(316)
 			p.Match(SQLiteParserDROP_)
+			if p.HasError() {
+				// Recognition error - abort rule
+				goto errorExit
+			}
 		}
 		p.SetState(318)
 		p.GetErrorHandler().Sync(p)
 
-		if p.GetInterpreter().AdaptivePredict(p.GetTokenStream(), 12, p.GetParserRuleContext()) == 1 {
+		if p.GetInterpreter().AdaptivePredict(p.BaseParser, p.GetTokenStream(), 12, p.GetParserRuleContext()) == 1 {
 			{
 				p.SetState(317)
 				p.Match(SQLiteParserCOLUMN_)
+				if p.HasError() {
+					// Recognition error - abort rule
+					goto errorExit
+				}
 			}
 
+		} else if p.HasError() { // JIM
+			goto errorExit
 		}
 		{
 			p.SetState(320)
@@ -2952,10 +3066,21 @@ func (p *SQLiteParser) Alter_table_stmt() (localctx IAlter_table_stmtContext) {
 		}
 
 	default:
-		panic(antlr.NewNoViableAltException(p, nil, nil, nil, nil, nil))
+		p.SetError(antlr.NewNoViableAltException(p, nil, nil, nil, nil, nil))
+		goto errorExit
 	}
 
+errorExit:
+	if p.HasError() {
+		v := p.GetError()
+		localctx.SetException(v)
+		p.GetErrorHandler().ReportError(p, v)
+		p.GetErrorHandler().Recover(p, v)
+		p.SetError(nil)
+	}
+	p.ExitRule()
 	return localctx
+	goto errorExit // Trick to prevent compiler error if the label is not used
 }
 
 // IAnalyze_stmtContext is an interface to support dynamic dispatch.
@@ -2976,15 +3101,20 @@ type IAnalyze_stmtContext interface {
 }
 
 type Analyze_stmtContext struct {
-	*antlr.BaseParserRuleContext
+	antlr.BaseParserRuleContext
 	parser antlr.Parser
 }
 
 func NewEmptyAnalyze_stmtContext() *Analyze_stmtContext {
 	var p = new(Analyze_stmtContext)
-	p.BaseParserRuleContext = antlr.NewBaseParserRuleContext(nil, -1)
+	antlr.InitBaseParserRuleContext(&p.BaseParserRuleContext, nil, -1)
 	p.RuleIndex = SQLiteParserRULE_analyze_stmt
 	return p
+}
+
+func InitEmptyAnalyze_stmtContext(p *Analyze_stmtContext) {
+	antlr.InitBaseParserRuleContext(&p.BaseParserRuleContext, nil, -1)
+	p.RuleIndex = SQLiteParserRULE_analyze_stmt
 }
 
 func (*Analyze_stmtContext) IsAnalyze_stmtContext() {}
@@ -2992,7 +3122,7 @@ func (*Analyze_stmtContext) IsAnalyze_stmtContext() {}
 func NewAnalyze_stmtContext(parser antlr.Parser, parent antlr.ParserRuleContext, invokingState int) *Analyze_stmtContext {
 	var p = new(Analyze_stmtContext)
 
-	p.BaseParserRuleContext = antlr.NewBaseParserRuleContext(parent, invokingState)
+	antlr.InitBaseParserRuleContext(&p.BaseParserRuleContext, parent, invokingState)
 
 	p.parser = parser
 	p.RuleIndex = SQLiteParserRULE_analyze_stmt
@@ -3063,47 +3193,33 @@ func (s *Analyze_stmtContext) ExitRule(listener antlr.ParseTreeListener) {
 }
 
 func (p *SQLiteParser) Analyze_stmt() (localctx IAnalyze_stmtContext) {
-	this := p
-	_ = this
-
 	localctx = NewAnalyze_stmtContext(p, p.GetParserRuleContext(), p.GetState())
 	p.EnterRule(localctx, 8, SQLiteParserRULE_analyze_stmt)
-
-	defer func() {
-		p.ExitRule()
-	}()
-
-	defer func() {
-		if err := recover(); err != nil {
-			if v, ok := err.(antlr.RecognitionException); ok {
-				localctx.SetException(v)
-				p.GetErrorHandler().ReportError(p, v)
-				p.GetErrorHandler().Recover(p, v)
-			} else {
-				panic(err)
-			}
-		}
-	}()
-
 	p.EnterOuterAlt(localctx, 1)
 	{
 		p.SetState(323)
 		p.Match(SQLiteParserANALYZE_)
+		if p.HasError() {
+			// Recognition error - abort rule
+			goto errorExit
+		}
 	}
 	p.SetState(331)
 	p.GetErrorHandler().Sync(p)
 
-	if p.GetInterpreter().AdaptivePredict(p.GetTokenStream(), 15, p.GetParserRuleContext()) == 1 {
+	if p.GetInterpreter().AdaptivePredict(p.BaseParser, p.GetTokenStream(), 15, p.GetParserRuleContext()) == 1 {
 		{
 			p.SetState(324)
 			p.Schema_name()
 		}
 
-	} else if p.GetInterpreter().AdaptivePredict(p.GetTokenStream(), 15, p.GetParserRuleContext()) == 2 {
+	} else if p.HasError() { // JIM
+		goto errorExit
+	} else if p.GetInterpreter().AdaptivePredict(p.BaseParser, p.GetTokenStream(), 15, p.GetParserRuleContext()) == 2 {
 		p.SetState(328)
 		p.GetErrorHandler().Sync(p)
 
-		if p.GetInterpreter().AdaptivePredict(p.GetTokenStream(), 14, p.GetParserRuleContext()) == 1 {
+		if p.GetInterpreter().AdaptivePredict(p.BaseParser, p.GetTokenStream(), 14, p.GetParserRuleContext()) == 1 {
 			{
 				p.SetState(325)
 				p.Schema_name()
@@ -3111,17 +3227,35 @@ func (p *SQLiteParser) Analyze_stmt() (localctx IAnalyze_stmtContext) {
 			{
 				p.SetState(326)
 				p.Match(SQLiteParserDOT)
+				if p.HasError() {
+					// Recognition error - abort rule
+					goto errorExit
+				}
 			}
 
+		} else if p.HasError() { // JIM
+			goto errorExit
 		}
 		{
 			p.SetState(330)
 			p.Table_or_index_name()
 		}
 
+	} else if p.HasError() { // JIM
+		goto errorExit
 	}
 
+errorExit:
+	if p.HasError() {
+		v := p.GetError()
+		localctx.SetException(v)
+		p.GetErrorHandler().ReportError(p, v)
+		p.GetErrorHandler().Recover(p, v)
+		p.SetError(nil)
+	}
+	p.ExitRule()
 	return localctx
+	goto errorExit // Trick to prevent compiler error if the label is not used
 }
 
 // IAttach_stmtContext is an interface to support dynamic dispatch.
@@ -3143,15 +3277,20 @@ type IAttach_stmtContext interface {
 }
 
 type Attach_stmtContext struct {
-	*antlr.BaseParserRuleContext
+	antlr.BaseParserRuleContext
 	parser antlr.Parser
 }
 
 func NewEmptyAttach_stmtContext() *Attach_stmtContext {
 	var p = new(Attach_stmtContext)
-	p.BaseParserRuleContext = antlr.NewBaseParserRuleContext(nil, -1)
+	antlr.InitBaseParserRuleContext(&p.BaseParserRuleContext, nil, -1)
 	p.RuleIndex = SQLiteParserRULE_attach_stmt
 	return p
+}
+
+func InitEmptyAttach_stmtContext(p *Attach_stmtContext) {
+	antlr.InitBaseParserRuleContext(&p.BaseParserRuleContext, nil, -1)
+	p.RuleIndex = SQLiteParserRULE_attach_stmt
 }
 
 func (*Attach_stmtContext) IsAttach_stmtContext() {}
@@ -3159,7 +3298,7 @@ func (*Attach_stmtContext) IsAttach_stmtContext() {}
 func NewAttach_stmtContext(parser antlr.Parser, parent antlr.ParserRuleContext, invokingState int) *Attach_stmtContext {
 	var p = new(Attach_stmtContext)
 
-	p.BaseParserRuleContext = antlr.NewBaseParserRuleContext(parent, invokingState)
+	antlr.InitBaseParserRuleContext(&p.BaseParserRuleContext, parent, invokingState)
 
 	p.parser = parser
 	p.RuleIndex = SQLiteParserRULE_attach_stmt
@@ -3234,42 +3373,32 @@ func (s *Attach_stmtContext) ExitRule(listener antlr.ParseTreeListener) {
 }
 
 func (p *SQLiteParser) Attach_stmt() (localctx IAttach_stmtContext) {
-	this := p
-	_ = this
-
 	localctx = NewAttach_stmtContext(p, p.GetParserRuleContext(), p.GetState())
 	p.EnterRule(localctx, 10, SQLiteParserRULE_attach_stmt)
-
-	defer func() {
-		p.ExitRule()
-	}()
-
-	defer func() {
-		if err := recover(); err != nil {
-			if v, ok := err.(antlr.RecognitionException); ok {
-				localctx.SetException(v)
-				p.GetErrorHandler().ReportError(p, v)
-				p.GetErrorHandler().Recover(p, v)
-			} else {
-				panic(err)
-			}
-		}
-	}()
-
 	p.EnterOuterAlt(localctx, 1)
 	{
 		p.SetState(333)
 		p.Match(SQLiteParserATTACH_)
+		if p.HasError() {
+			// Recognition error - abort rule
+			goto errorExit
+		}
 	}
 	p.SetState(335)
 	p.GetErrorHandler().Sync(p)
 
-	if p.GetInterpreter().AdaptivePredict(p.GetTokenStream(), 16, p.GetParserRuleContext()) == 1 {
+	if p.GetInterpreter().AdaptivePredict(p.BaseParser, p.GetTokenStream(), 16, p.GetParserRuleContext()) == 1 {
 		{
 			p.SetState(334)
 			p.Match(SQLiteParserDATABASE_)
+			if p.HasError() {
+				// Recognition error - abort rule
+				goto errorExit
+			}
 		}
 
+	} else if p.HasError() { // JIM
+		goto errorExit
 	}
 	{
 		p.SetState(337)
@@ -3278,13 +3407,27 @@ func (p *SQLiteParser) Attach_stmt() (localctx IAttach_stmtContext) {
 	{
 		p.SetState(338)
 		p.Match(SQLiteParserAS_)
+		if p.HasError() {
+			// Recognition error - abort rule
+			goto errorExit
+		}
 	}
 	{
 		p.SetState(339)
 		p.Schema_name()
 	}
 
+errorExit:
+	if p.HasError() {
+		v := p.GetError()
+		localctx.SetException(v)
+		p.GetErrorHandler().ReportError(p, v)
+		p.GetErrorHandler().Recover(p, v)
+		p.SetError(nil)
+	}
+	p.ExitRule()
 	return localctx
+	goto errorExit // Trick to prevent compiler error if the label is not used
 }
 
 // IBegin_stmtContext is an interface to support dynamic dispatch.
@@ -3307,15 +3450,20 @@ type IBegin_stmtContext interface {
 }
 
 type Begin_stmtContext struct {
-	*antlr.BaseParserRuleContext
+	antlr.BaseParserRuleContext
 	parser antlr.Parser
 }
 
 func NewEmptyBegin_stmtContext() *Begin_stmtContext {
 	var p = new(Begin_stmtContext)
-	p.BaseParserRuleContext = antlr.NewBaseParserRuleContext(nil, -1)
+	antlr.InitBaseParserRuleContext(&p.BaseParserRuleContext, nil, -1)
 	p.RuleIndex = SQLiteParserRULE_begin_stmt
 	return p
+}
+
+func InitEmptyBegin_stmtContext(p *Begin_stmtContext) {
+	antlr.InitBaseParserRuleContext(&p.BaseParserRuleContext, nil, -1)
+	p.RuleIndex = SQLiteParserRULE_begin_stmt
 }
 
 func (*Begin_stmtContext) IsBegin_stmtContext() {}
@@ -3323,7 +3471,7 @@ func (*Begin_stmtContext) IsBegin_stmtContext() {}
 func NewBegin_stmtContext(parser antlr.Parser, parent antlr.ParserRuleContext, invokingState int) *Begin_stmtContext {
 	var p = new(Begin_stmtContext)
 
-	p.BaseParserRuleContext = antlr.NewBaseParserRuleContext(parent, invokingState)
+	antlr.InitBaseParserRuleContext(&p.BaseParserRuleContext, parent, invokingState)
 
 	p.parser = parser
 	p.RuleIndex = SQLiteParserRULE_begin_stmt
@@ -3390,36 +3538,24 @@ func (s *Begin_stmtContext) ExitRule(listener antlr.ParseTreeListener) {
 }
 
 func (p *SQLiteParser) Begin_stmt() (localctx IBegin_stmtContext) {
-	this := p
-	_ = this
-
 	localctx = NewBegin_stmtContext(p, p.GetParserRuleContext(), p.GetState())
 	p.EnterRule(localctx, 12, SQLiteParserRULE_begin_stmt)
 	var _la int
-
-	defer func() {
-		p.ExitRule()
-	}()
-
-	defer func() {
-		if err := recover(); err != nil {
-			if v, ok := err.(antlr.RecognitionException); ok {
-				localctx.SetException(v)
-				p.GetErrorHandler().ReportError(p, v)
-				p.GetErrorHandler().Recover(p, v)
-			} else {
-				panic(err)
-			}
-		}
-	}()
 
 	p.EnterOuterAlt(localctx, 1)
 	{
 		p.SetState(341)
 		p.Match(SQLiteParserBEGIN_)
+		if p.HasError() {
+			// Recognition error - abort rule
+			goto errorExit
+		}
 	}
 	p.SetState(343)
 	p.GetErrorHandler().Sync(p)
+	if p.HasError() {
+		goto errorExit
+	}
 	_la = p.GetTokenStream().LA(1)
 
 	if (int64((_la-58)) & ^0x3f) == 0 && ((int64(1)<<(_la-58))&16779265) != 0 {
@@ -3438,27 +3574,46 @@ func (p *SQLiteParser) Begin_stmt() (localctx IBegin_stmtContext) {
 	}
 	p.SetState(349)
 	p.GetErrorHandler().Sync(p)
+	if p.HasError() {
+		goto errorExit
+	}
 	_la = p.GetTokenStream().LA(1)
 
 	if _la == SQLiteParserTRANSACTION_ {
 		{
 			p.SetState(345)
 			p.Match(SQLiteParserTRANSACTION_)
+			if p.HasError() {
+				// Recognition error - abort rule
+				goto errorExit
+			}
 		}
 		p.SetState(347)
 		p.GetErrorHandler().Sync(p)
 
-		if p.GetInterpreter().AdaptivePredict(p.GetTokenStream(), 18, p.GetParserRuleContext()) == 1 {
+		if p.GetInterpreter().AdaptivePredict(p.BaseParser, p.GetTokenStream(), 18, p.GetParserRuleContext()) == 1 {
 			{
 				p.SetState(346)
 				p.Transaction_name()
 			}
 
+		} else if p.HasError() { // JIM
+			goto errorExit
 		}
 
 	}
 
+errorExit:
+	if p.HasError() {
+		v := p.GetError()
+		localctx.SetException(v)
+		p.GetErrorHandler().ReportError(p, v)
+		p.GetErrorHandler().Recover(p, v)
+		p.SetError(nil)
+	}
+	p.ExitRule()
 	return localctx
+	goto errorExit // Trick to prevent compiler error if the label is not used
 }
 
 // ICommit_stmtContext is an interface to support dynamic dispatch.
@@ -3478,15 +3633,20 @@ type ICommit_stmtContext interface {
 }
 
 type Commit_stmtContext struct {
-	*antlr.BaseParserRuleContext
+	antlr.BaseParserRuleContext
 	parser antlr.Parser
 }
 
 func NewEmptyCommit_stmtContext() *Commit_stmtContext {
 	var p = new(Commit_stmtContext)
-	p.BaseParserRuleContext = antlr.NewBaseParserRuleContext(nil, -1)
+	antlr.InitBaseParserRuleContext(&p.BaseParserRuleContext, nil, -1)
 	p.RuleIndex = SQLiteParserRULE_commit_stmt
 	return p
+}
+
+func InitEmptyCommit_stmtContext(p *Commit_stmtContext) {
+	antlr.InitBaseParserRuleContext(&p.BaseParserRuleContext, nil, -1)
+	p.RuleIndex = SQLiteParserRULE_commit_stmt
 }
 
 func (*Commit_stmtContext) IsCommit_stmtContext() {}
@@ -3494,7 +3654,7 @@ func (*Commit_stmtContext) IsCommit_stmtContext() {}
 func NewCommit_stmtContext(parser antlr.Parser, parent antlr.ParserRuleContext, invokingState int) *Commit_stmtContext {
 	var p = new(Commit_stmtContext)
 
-	p.BaseParserRuleContext = antlr.NewBaseParserRuleContext(parent, invokingState)
+	antlr.InitBaseParserRuleContext(&p.BaseParserRuleContext, parent, invokingState)
 
 	p.parser = parser
 	p.RuleIndex = SQLiteParserRULE_commit_stmt
@@ -3537,28 +3697,9 @@ func (s *Commit_stmtContext) ExitRule(listener antlr.ParseTreeListener) {
 }
 
 func (p *SQLiteParser) Commit_stmt() (localctx ICommit_stmtContext) {
-	this := p
-	_ = this
-
 	localctx = NewCommit_stmtContext(p, p.GetParserRuleContext(), p.GetState())
 	p.EnterRule(localctx, 14, SQLiteParserRULE_commit_stmt)
 	var _la int
-
-	defer func() {
-		p.ExitRule()
-	}()
-
-	defer func() {
-		if err := recover(); err != nil {
-			if v, ok := err.(antlr.RecognitionException); ok {
-				localctx.SetException(v)
-				p.GetErrorHandler().ReportError(p, v)
-				p.GetErrorHandler().Recover(p, v)
-			} else {
-				panic(err)
-			}
-		}
-	}()
 
 	p.EnterOuterAlt(localctx, 1)
 	{
@@ -3574,17 +3715,34 @@ func (p *SQLiteParser) Commit_stmt() (localctx ICommit_stmtContext) {
 	}
 	p.SetState(353)
 	p.GetErrorHandler().Sync(p)
+	if p.HasError() {
+		goto errorExit
+	}
 	_la = p.GetTokenStream().LA(1)
 
 	if _la == SQLiteParserTRANSACTION_ {
 		{
 			p.SetState(352)
 			p.Match(SQLiteParserTRANSACTION_)
+			if p.HasError() {
+				// Recognition error - abort rule
+				goto errorExit
+			}
 		}
 
 	}
 
+errorExit:
+	if p.HasError() {
+		v := p.GetError()
+		localctx.SetException(v)
+		p.GetErrorHandler().ReportError(p, v)
+		p.GetErrorHandler().Recover(p, v)
+		p.SetError(nil)
+	}
+	p.ExitRule()
 	return localctx
+	goto errorExit // Trick to prevent compiler error if the label is not used
 }
 
 // IRollback_stmtContext is an interface to support dynamic dispatch.
@@ -3606,15 +3764,20 @@ type IRollback_stmtContext interface {
 }
 
 type Rollback_stmtContext struct {
-	*antlr.BaseParserRuleContext
+	antlr.BaseParserRuleContext
 	parser antlr.Parser
 }
 
 func NewEmptyRollback_stmtContext() *Rollback_stmtContext {
 	var p = new(Rollback_stmtContext)
-	p.BaseParserRuleContext = antlr.NewBaseParserRuleContext(nil, -1)
+	antlr.InitBaseParserRuleContext(&p.BaseParserRuleContext, nil, -1)
 	p.RuleIndex = SQLiteParserRULE_rollback_stmt
 	return p
+}
+
+func InitEmptyRollback_stmtContext(p *Rollback_stmtContext) {
+	antlr.InitBaseParserRuleContext(&p.BaseParserRuleContext, nil, -1)
+	p.RuleIndex = SQLiteParserRULE_rollback_stmt
 }
 
 func (*Rollback_stmtContext) IsRollback_stmtContext() {}
@@ -3622,7 +3785,7 @@ func (*Rollback_stmtContext) IsRollback_stmtContext() {}
 func NewRollback_stmtContext(parser antlr.Parser, parent antlr.ParserRuleContext, invokingState int) *Rollback_stmtContext {
 	var p = new(Rollback_stmtContext)
 
-	p.BaseParserRuleContext = antlr.NewBaseParserRuleContext(parent, invokingState)
+	antlr.InitBaseParserRuleContext(&p.BaseParserRuleContext, parent, invokingState)
 
 	p.parser = parser
 	p.RuleIndex = SQLiteParserRULE_rollback_stmt
@@ -3685,63 +3848,68 @@ func (s *Rollback_stmtContext) ExitRule(listener antlr.ParseTreeListener) {
 }
 
 func (p *SQLiteParser) Rollback_stmt() (localctx IRollback_stmtContext) {
-	this := p
-	_ = this
-
 	localctx = NewRollback_stmtContext(p, p.GetParserRuleContext(), p.GetState())
 	p.EnterRule(localctx, 16, SQLiteParserRULE_rollback_stmt)
 	var _la int
-
-	defer func() {
-		p.ExitRule()
-	}()
-
-	defer func() {
-		if err := recover(); err != nil {
-			if v, ok := err.(antlr.RecognitionException); ok {
-				localctx.SetException(v)
-				p.GetErrorHandler().ReportError(p, v)
-				p.GetErrorHandler().Recover(p, v)
-			} else {
-				panic(err)
-			}
-		}
-	}()
 
 	p.EnterOuterAlt(localctx, 1)
 	{
 		p.SetState(355)
 		p.Match(SQLiteParserROLLBACK_)
+		if p.HasError() {
+			// Recognition error - abort rule
+			goto errorExit
+		}
 	}
 	p.SetState(357)
 	p.GetErrorHandler().Sync(p)
+	if p.HasError() {
+		goto errorExit
+	}
 	_la = p.GetTokenStream().LA(1)
 
 	if _la == SQLiteParserTRANSACTION_ {
 		{
 			p.SetState(356)
 			p.Match(SQLiteParserTRANSACTION_)
+			if p.HasError() {
+				// Recognition error - abort rule
+				goto errorExit
+			}
 		}
 
 	}
 	p.SetState(364)
 	p.GetErrorHandler().Sync(p)
+	if p.HasError() {
+		goto errorExit
+	}
 	_la = p.GetTokenStream().LA(1)
 
 	if _la == SQLiteParserTO_ {
 		{
 			p.SetState(359)
 			p.Match(SQLiteParserTO_)
+			if p.HasError() {
+				// Recognition error - abort rule
+				goto errorExit
+			}
 		}
 		p.SetState(361)
 		p.GetErrorHandler().Sync(p)
 
-		if p.GetInterpreter().AdaptivePredict(p.GetTokenStream(), 22, p.GetParserRuleContext()) == 1 {
+		if p.GetInterpreter().AdaptivePredict(p.BaseParser, p.GetTokenStream(), 22, p.GetParserRuleContext()) == 1 {
 			{
 				p.SetState(360)
 				p.Match(SQLiteParserSAVEPOINT_)
+				if p.HasError() {
+					// Recognition error - abort rule
+					goto errorExit
+				}
 			}
 
+		} else if p.HasError() { // JIM
+			goto errorExit
 		}
 		{
 			p.SetState(363)
@@ -3750,7 +3918,17 @@ func (p *SQLiteParser) Rollback_stmt() (localctx IRollback_stmtContext) {
 
 	}
 
+errorExit:
+	if p.HasError() {
+		v := p.GetError()
+		localctx.SetException(v)
+		p.GetErrorHandler().ReportError(p, v)
+		p.GetErrorHandler().Recover(p, v)
+		p.SetError(nil)
+	}
+	p.ExitRule()
 	return localctx
+	goto errorExit // Trick to prevent compiler error if the label is not used
 }
 
 // ISavepoint_stmtContext is an interface to support dynamic dispatch.
@@ -3769,15 +3947,20 @@ type ISavepoint_stmtContext interface {
 }
 
 type Savepoint_stmtContext struct {
-	*antlr.BaseParserRuleContext
+	antlr.BaseParserRuleContext
 	parser antlr.Parser
 }
 
 func NewEmptySavepoint_stmtContext() *Savepoint_stmtContext {
 	var p = new(Savepoint_stmtContext)
-	p.BaseParserRuleContext = antlr.NewBaseParserRuleContext(nil, -1)
+	antlr.InitBaseParserRuleContext(&p.BaseParserRuleContext, nil, -1)
 	p.RuleIndex = SQLiteParserRULE_savepoint_stmt
 	return p
+}
+
+func InitEmptySavepoint_stmtContext(p *Savepoint_stmtContext) {
+	antlr.InitBaseParserRuleContext(&p.BaseParserRuleContext, nil, -1)
+	p.RuleIndex = SQLiteParserRULE_savepoint_stmt
 }
 
 func (*Savepoint_stmtContext) IsSavepoint_stmtContext() {}
@@ -3785,7 +3968,7 @@ func (*Savepoint_stmtContext) IsSavepoint_stmtContext() {}
 func NewSavepoint_stmtContext(parser antlr.Parser, parent antlr.ParserRuleContext, invokingState int) *Savepoint_stmtContext {
 	var p = new(Savepoint_stmtContext)
 
-	p.BaseParserRuleContext = antlr.NewBaseParserRuleContext(parent, invokingState)
+	antlr.InitBaseParserRuleContext(&p.BaseParserRuleContext, parent, invokingState)
 
 	p.parser = parser
 	p.RuleIndex = SQLiteParserRULE_savepoint_stmt
@@ -3836,39 +4019,33 @@ func (s *Savepoint_stmtContext) ExitRule(listener antlr.ParseTreeListener) {
 }
 
 func (p *SQLiteParser) Savepoint_stmt() (localctx ISavepoint_stmtContext) {
-	this := p
-	_ = this
-
 	localctx = NewSavepoint_stmtContext(p, p.GetParserRuleContext(), p.GetState())
 	p.EnterRule(localctx, 18, SQLiteParserRULE_savepoint_stmt)
-
-	defer func() {
-		p.ExitRule()
-	}()
-
-	defer func() {
-		if err := recover(); err != nil {
-			if v, ok := err.(antlr.RecognitionException); ok {
-				localctx.SetException(v)
-				p.GetErrorHandler().ReportError(p, v)
-				p.GetErrorHandler().Recover(p, v)
-			} else {
-				panic(err)
-			}
-		}
-	}()
-
 	p.EnterOuterAlt(localctx, 1)
 	{
 		p.SetState(366)
 		p.Match(SQLiteParserSAVEPOINT_)
+		if p.HasError() {
+			// Recognition error - abort rule
+			goto errorExit
+		}
 	}
 	{
 		p.SetState(367)
 		p.Savepoint_name()
 	}
 
+errorExit:
+	if p.HasError() {
+		v := p.GetError()
+		localctx.SetException(v)
+		p.GetErrorHandler().ReportError(p, v)
+		p.GetErrorHandler().Recover(p, v)
+		p.SetError(nil)
+	}
+	p.ExitRule()
 	return localctx
+	goto errorExit // Trick to prevent compiler error if the label is not used
 }
 
 // IRelease_stmtContext is an interface to support dynamic dispatch.
@@ -3888,15 +4065,20 @@ type IRelease_stmtContext interface {
 }
 
 type Release_stmtContext struct {
-	*antlr.BaseParserRuleContext
+	antlr.BaseParserRuleContext
 	parser antlr.Parser
 }
 
 func NewEmptyRelease_stmtContext() *Release_stmtContext {
 	var p = new(Release_stmtContext)
-	p.BaseParserRuleContext = antlr.NewBaseParserRuleContext(nil, -1)
+	antlr.InitBaseParserRuleContext(&p.BaseParserRuleContext, nil, -1)
 	p.RuleIndex = SQLiteParserRULE_release_stmt
 	return p
+}
+
+func InitEmptyRelease_stmtContext(p *Release_stmtContext) {
+	antlr.InitBaseParserRuleContext(&p.BaseParserRuleContext, nil, -1)
+	p.RuleIndex = SQLiteParserRULE_release_stmt
 }
 
 func (*Release_stmtContext) IsRelease_stmtContext() {}
@@ -3904,7 +4086,7 @@ func (*Release_stmtContext) IsRelease_stmtContext() {}
 func NewRelease_stmtContext(parser antlr.Parser, parent antlr.ParserRuleContext, invokingState int) *Release_stmtContext {
 	var p = new(Release_stmtContext)
 
-	p.BaseParserRuleContext = antlr.NewBaseParserRuleContext(parent, invokingState)
+	antlr.InitBaseParserRuleContext(&p.BaseParserRuleContext, parent, invokingState)
 
 	p.parser = parser
 	p.RuleIndex = SQLiteParserRULE_release_stmt
@@ -3959,49 +4141,49 @@ func (s *Release_stmtContext) ExitRule(listener antlr.ParseTreeListener) {
 }
 
 func (p *SQLiteParser) Release_stmt() (localctx IRelease_stmtContext) {
-	this := p
-	_ = this
-
 	localctx = NewRelease_stmtContext(p, p.GetParserRuleContext(), p.GetState())
 	p.EnterRule(localctx, 20, SQLiteParserRULE_release_stmt)
-
-	defer func() {
-		p.ExitRule()
-	}()
-
-	defer func() {
-		if err := recover(); err != nil {
-			if v, ok := err.(antlr.RecognitionException); ok {
-				localctx.SetException(v)
-				p.GetErrorHandler().ReportError(p, v)
-				p.GetErrorHandler().Recover(p, v)
-			} else {
-				panic(err)
-			}
-		}
-	}()
-
 	p.EnterOuterAlt(localctx, 1)
 	{
 		p.SetState(369)
 		p.Match(SQLiteParserRELEASE_)
+		if p.HasError() {
+			// Recognition error - abort rule
+			goto errorExit
+		}
 	}
 	p.SetState(371)
 	p.GetErrorHandler().Sync(p)
 
-	if p.GetInterpreter().AdaptivePredict(p.GetTokenStream(), 24, p.GetParserRuleContext()) == 1 {
+	if p.GetInterpreter().AdaptivePredict(p.BaseParser, p.GetTokenStream(), 24, p.GetParserRuleContext()) == 1 {
 		{
 			p.SetState(370)
 			p.Match(SQLiteParserSAVEPOINT_)
+			if p.HasError() {
+				// Recognition error - abort rule
+				goto errorExit
+			}
 		}
 
+	} else if p.HasError() { // JIM
+		goto errorExit
 	}
 	{
 		p.SetState(373)
 		p.Savepoint_name()
 	}
 
+errorExit:
+	if p.HasError() {
+		v := p.GetError()
+		localctx.SetException(v)
+		p.GetErrorHandler().ReportError(p, v)
+		p.GetErrorHandler().Recover(p, v)
+		p.SetError(nil)
+	}
+	p.ExitRule()
 	return localctx
+	goto errorExit // Trick to prevent compiler error if the label is not used
 }
 
 // ICreate_index_stmtContext is an interface to support dynamic dispatch.
@@ -4037,15 +4219,20 @@ type ICreate_index_stmtContext interface {
 }
 
 type Create_index_stmtContext struct {
-	*antlr.BaseParserRuleContext
+	antlr.BaseParserRuleContext
 	parser antlr.Parser
 }
 
 func NewEmptyCreate_index_stmtContext() *Create_index_stmtContext {
 	var p = new(Create_index_stmtContext)
-	p.BaseParserRuleContext = antlr.NewBaseParserRuleContext(nil, -1)
+	antlr.InitBaseParserRuleContext(&p.BaseParserRuleContext, nil, -1)
 	p.RuleIndex = SQLiteParserRULE_create_index_stmt
 	return p
+}
+
+func InitEmptyCreate_index_stmtContext(p *Create_index_stmtContext) {
+	antlr.InitBaseParserRuleContext(&p.BaseParserRuleContext, nil, -1)
+	p.RuleIndex = SQLiteParserRULE_create_index_stmt
 }
 
 func (*Create_index_stmtContext) IsCreate_index_stmtContext() {}
@@ -4053,7 +4240,7 @@ func (*Create_index_stmtContext) IsCreate_index_stmtContext() {}
 func NewCreate_index_stmtContext(parser antlr.Parser, parent antlr.ParserRuleContext, invokingState int) *Create_index_stmtContext {
 	var p = new(Create_index_stmtContext)
 
-	p.BaseParserRuleContext = antlr.NewBaseParserRuleContext(parent, invokingState)
+	antlr.InitBaseParserRuleContext(&p.BaseParserRuleContext, parent, invokingState)
 
 	p.parser = parser
 	p.RuleIndex = SQLiteParserRULE_create_index_stmt
@@ -4241,71 +4428,81 @@ func (s *Create_index_stmtContext) ExitRule(listener antlr.ParseTreeListener) {
 }
 
 func (p *SQLiteParser) Create_index_stmt() (localctx ICreate_index_stmtContext) {
-	this := p
-	_ = this
-
 	localctx = NewCreate_index_stmtContext(p, p.GetParserRuleContext(), p.GetState())
 	p.EnterRule(localctx, 22, SQLiteParserRULE_create_index_stmt)
 	var _la int
-
-	defer func() {
-		p.ExitRule()
-	}()
-
-	defer func() {
-		if err := recover(); err != nil {
-			if v, ok := err.(antlr.RecognitionException); ok {
-				localctx.SetException(v)
-				p.GetErrorHandler().ReportError(p, v)
-				p.GetErrorHandler().Recover(p, v)
-			} else {
-				panic(err)
-			}
-		}
-	}()
 
 	p.EnterOuterAlt(localctx, 1)
 	{
 		p.SetState(375)
 		p.Match(SQLiteParserCREATE_)
+		if p.HasError() {
+			// Recognition error - abort rule
+			goto errorExit
+		}
 	}
 	p.SetState(377)
 	p.GetErrorHandler().Sync(p)
+	if p.HasError() {
+		goto errorExit
+	}
 	_la = p.GetTokenStream().LA(1)
 
 	if _la == SQLiteParserUNIQUE_ {
 		{
 			p.SetState(376)
 			p.Match(SQLiteParserUNIQUE_)
+			if p.HasError() {
+				// Recognition error - abort rule
+				goto errorExit
+			}
 		}
 
 	}
 	{
 		p.SetState(379)
 		p.Match(SQLiteParserINDEX_)
+		if p.HasError() {
+			// Recognition error - abort rule
+			goto errorExit
+		}
 	}
 	p.SetState(383)
 	p.GetErrorHandler().Sync(p)
 
-	if p.GetInterpreter().AdaptivePredict(p.GetTokenStream(), 26, p.GetParserRuleContext()) == 1 {
+	if p.GetInterpreter().AdaptivePredict(p.BaseParser, p.GetTokenStream(), 26, p.GetParserRuleContext()) == 1 {
 		{
 			p.SetState(380)
 			p.Match(SQLiteParserIF_)
+			if p.HasError() {
+				// Recognition error - abort rule
+				goto errorExit
+			}
 		}
 		{
 			p.SetState(381)
 			p.Match(SQLiteParserNOT_)
+			if p.HasError() {
+				// Recognition error - abort rule
+				goto errorExit
+			}
 		}
 		{
 			p.SetState(382)
 			p.Match(SQLiteParserEXISTS_)
+			if p.HasError() {
+				// Recognition error - abort rule
+				goto errorExit
+			}
 		}
 
+	} else if p.HasError() { // JIM
+		goto errorExit
 	}
 	p.SetState(388)
 	p.GetErrorHandler().Sync(p)
 
-	if p.GetInterpreter().AdaptivePredict(p.GetTokenStream(), 27, p.GetParserRuleContext()) == 1 {
+	if p.GetInterpreter().AdaptivePredict(p.BaseParser, p.GetTokenStream(), 27, p.GetParserRuleContext()) == 1 {
 		{
 			p.SetState(385)
 			p.Schema_name()
@@ -4313,8 +4510,14 @@ func (p *SQLiteParser) Create_index_stmt() (localctx ICreate_index_stmtContext) 
 		{
 			p.SetState(386)
 			p.Match(SQLiteParserDOT)
+			if p.HasError() {
+				// Recognition error - abort rule
+				goto errorExit
+			}
 		}
 
+	} else if p.HasError() { // JIM
+		goto errorExit
 	}
 	{
 		p.SetState(390)
@@ -4323,6 +4526,10 @@ func (p *SQLiteParser) Create_index_stmt() (localctx ICreate_index_stmtContext) 
 	{
 		p.SetState(391)
 		p.Match(SQLiteParserON_)
+		if p.HasError() {
+			// Recognition error - abort rule
+			goto errorExit
+		}
 	}
 	{
 		p.SetState(392)
@@ -4331,6 +4538,10 @@ func (p *SQLiteParser) Create_index_stmt() (localctx ICreate_index_stmtContext) 
 	{
 		p.SetState(393)
 		p.Match(SQLiteParserOPEN_PAR)
+		if p.HasError() {
+			// Recognition error - abort rule
+			goto errorExit
+		}
 	}
 	{
 		p.SetState(394)
@@ -4338,12 +4549,19 @@ func (p *SQLiteParser) Create_index_stmt() (localctx ICreate_index_stmtContext) 
 	}
 	p.SetState(399)
 	p.GetErrorHandler().Sync(p)
+	if p.HasError() {
+		goto errorExit
+	}
 	_la = p.GetTokenStream().LA(1)
 
 	for _la == SQLiteParserCOMMA {
 		{
 			p.SetState(395)
 			p.Match(SQLiteParserCOMMA)
+			if p.HasError() {
+				// Recognition error - abort rule
+				goto errorExit
+			}
 		}
 		{
 			p.SetState(396)
@@ -4352,20 +4570,34 @@ func (p *SQLiteParser) Create_index_stmt() (localctx ICreate_index_stmtContext) 
 
 		p.SetState(401)
 		p.GetErrorHandler().Sync(p)
+		if p.HasError() {
+			goto errorExit
+		}
 		_la = p.GetTokenStream().LA(1)
 	}
 	{
 		p.SetState(402)
 		p.Match(SQLiteParserCLOSE_PAR)
+		if p.HasError() {
+			// Recognition error - abort rule
+			goto errorExit
+		}
 	}
 	p.SetState(405)
 	p.GetErrorHandler().Sync(p)
+	if p.HasError() {
+		goto errorExit
+	}
 	_la = p.GetTokenStream().LA(1)
 
 	if _la == SQLiteParserWHERE_ {
 		{
 			p.SetState(403)
 			p.Match(SQLiteParserWHERE_)
+			if p.HasError() {
+				// Recognition error - abort rule
+				goto errorExit
+			}
 		}
 		{
 			p.SetState(404)
@@ -4374,7 +4606,17 @@ func (p *SQLiteParser) Create_index_stmt() (localctx ICreate_index_stmtContext) 
 
 	}
 
+errorExit:
+	if p.HasError() {
+		v := p.GetError()
+		localctx.SetException(v)
+		p.GetErrorHandler().ReportError(p, v)
+		p.GetErrorHandler().Recover(p, v)
+		p.SetError(nil)
+	}
+	p.ExitRule()
 	return localctx
+	goto errorExit // Trick to prevent compiler error if the label is not used
 }
 
 // IIndexed_columnContext is an interface to support dynamic dispatch.
@@ -4396,15 +4638,20 @@ type IIndexed_columnContext interface {
 }
 
 type Indexed_columnContext struct {
-	*antlr.BaseParserRuleContext
+	antlr.BaseParserRuleContext
 	parser antlr.Parser
 }
 
 func NewEmptyIndexed_columnContext() *Indexed_columnContext {
 	var p = new(Indexed_columnContext)
-	p.BaseParserRuleContext = antlr.NewBaseParserRuleContext(nil, -1)
+	antlr.InitBaseParserRuleContext(&p.BaseParserRuleContext, nil, -1)
 	p.RuleIndex = SQLiteParserRULE_indexed_column
 	return p
+}
+
+func InitEmptyIndexed_columnContext(p *Indexed_columnContext) {
+	antlr.InitBaseParserRuleContext(&p.BaseParserRuleContext, nil, -1)
+	p.RuleIndex = SQLiteParserRULE_indexed_column
 }
 
 func (*Indexed_columnContext) IsIndexed_columnContext() {}
@@ -4412,7 +4659,7 @@ func (*Indexed_columnContext) IsIndexed_columnContext() {}
 func NewIndexed_columnContext(parser antlr.Parser, parent antlr.ParserRuleContext, invokingState int) *Indexed_columnContext {
 	var p = new(Indexed_columnContext)
 
-	p.BaseParserRuleContext = antlr.NewBaseParserRuleContext(parent, invokingState)
+	antlr.InitBaseParserRuleContext(&p.BaseParserRuleContext, parent, invokingState)
 
 	p.parser = parser
 	p.RuleIndex = SQLiteParserRULE_indexed_column
@@ -4511,33 +4758,18 @@ func (s *Indexed_columnContext) ExitRule(listener antlr.ParseTreeListener) {
 }
 
 func (p *SQLiteParser) Indexed_column() (localctx IIndexed_columnContext) {
-	this := p
-	_ = this
-
 	localctx = NewIndexed_columnContext(p, p.GetParserRuleContext(), p.GetState())
 	p.EnterRule(localctx, 24, SQLiteParserRULE_indexed_column)
 	var _la int
 
-	defer func() {
-		p.ExitRule()
-	}()
-
-	defer func() {
-		if err := recover(); err != nil {
-			if v, ok := err.(antlr.RecognitionException); ok {
-				localctx.SetException(v)
-				p.GetErrorHandler().ReportError(p, v)
-				p.GetErrorHandler().Recover(p, v)
-			} else {
-				panic(err)
-			}
-		}
-	}()
-
 	p.EnterOuterAlt(localctx, 1)
 	p.SetState(409)
 	p.GetErrorHandler().Sync(p)
-	switch p.GetInterpreter().AdaptivePredict(p.GetTokenStream(), 30, p.GetParserRuleContext()) {
+	if p.HasError() {
+		goto errorExit
+	}
+
+	switch p.GetInterpreter().AdaptivePredict(p.BaseParser, p.GetTokenStream(), 30, p.GetParserRuleContext()) {
 	case 1:
 		{
 			p.SetState(407)
@@ -4550,15 +4782,24 @@ func (p *SQLiteParser) Indexed_column() (localctx IIndexed_columnContext) {
 			p.expr(0)
 		}
 
+	case antlr.ATNInvalidAltNumber:
+		goto errorExit
 	}
 	p.SetState(413)
 	p.GetErrorHandler().Sync(p)
+	if p.HasError() {
+		goto errorExit
+	}
 	_la = p.GetTokenStream().LA(1)
 
 	if _la == SQLiteParserCOLLATE_ {
 		{
 			p.SetState(411)
 			p.Match(SQLiteParserCOLLATE_)
+			if p.HasError() {
+				// Recognition error - abort rule
+				goto errorExit
+			}
 		}
 		{
 			p.SetState(412)
@@ -4568,6 +4809,9 @@ func (p *SQLiteParser) Indexed_column() (localctx IIndexed_columnContext) {
 	}
 	p.SetState(416)
 	p.GetErrorHandler().Sync(p)
+	if p.HasError() {
+		goto errorExit
+	}
 	_la = p.GetTokenStream().LA(1)
 
 	if _la == SQLiteParserASC_ || _la == SQLiteParserDESC_ {
@@ -4578,7 +4822,17 @@ func (p *SQLiteParser) Indexed_column() (localctx IIndexed_columnContext) {
 
 	}
 
+errorExit:
+	if p.HasError() {
+		v := p.GetError()
+		localctx.SetException(v)
+		p.GetErrorHandler().ReportError(p, v)
+		p.GetErrorHandler().Recover(p, v)
+		p.SetError(nil)
+	}
+	p.ExitRule()
 	return localctx
+	goto errorExit // Trick to prevent compiler error if the label is not used
 }
 
 // ICreate_table_stmtContext is an interface to support dynamic dispatch.
@@ -4623,16 +4877,21 @@ type ICreate_table_stmtContext interface {
 }
 
 type Create_table_stmtContext struct {
-	*antlr.BaseParserRuleContext
+	antlr.BaseParserRuleContext
 	parser     antlr.Parser
 	row_ROW_ID antlr.Token
 }
 
 func NewEmptyCreate_table_stmtContext() *Create_table_stmtContext {
 	var p = new(Create_table_stmtContext)
-	p.BaseParserRuleContext = antlr.NewBaseParserRuleContext(nil, -1)
+	antlr.InitBaseParserRuleContext(&p.BaseParserRuleContext, nil, -1)
 	p.RuleIndex = SQLiteParserRULE_create_table_stmt
 	return p
+}
+
+func InitEmptyCreate_table_stmtContext(p *Create_table_stmtContext) {
+	antlr.InitBaseParserRuleContext(&p.BaseParserRuleContext, nil, -1)
+	p.RuleIndex = SQLiteParserRULE_create_table_stmt
 }
 
 func (*Create_table_stmtContext) IsCreate_table_stmtContext() {}
@@ -4640,7 +4899,7 @@ func (*Create_table_stmtContext) IsCreate_table_stmtContext() {}
 func NewCreate_table_stmtContext(parser antlr.Parser, parent antlr.ParserRuleContext, invokingState int) *Create_table_stmtContext {
 	var p = new(Create_table_stmtContext)
 
-	p.BaseParserRuleContext = antlr.NewBaseParserRuleContext(parent, invokingState)
+	antlr.InitBaseParserRuleContext(&p.BaseParserRuleContext, parent, invokingState)
 
 	p.parser = parser
 	p.RuleIndex = SQLiteParserRULE_create_table_stmt
@@ -4865,28 +5124,9 @@ func (s *Create_table_stmtContext) ExitRule(listener antlr.ParseTreeListener) {
 }
 
 func (p *SQLiteParser) Create_table_stmt() (localctx ICreate_table_stmtContext) {
-	this := p
-	_ = this
-
 	localctx = NewCreate_table_stmtContext(p, p.GetParserRuleContext(), p.GetState())
 	p.EnterRule(localctx, 26, SQLiteParserRULE_create_table_stmt)
 	var _la int
-
-	defer func() {
-		p.ExitRule()
-	}()
-
-	defer func() {
-		if err := recover(); err != nil {
-			if v, ok := err.(antlr.RecognitionException); ok {
-				localctx.SetException(v)
-				p.GetErrorHandler().ReportError(p, v)
-				p.GetErrorHandler().Recover(p, v)
-			} else {
-				panic(err)
-			}
-		}
-	}()
 
 	var _alt int
 
@@ -4894,9 +5134,16 @@ func (p *SQLiteParser) Create_table_stmt() (localctx ICreate_table_stmtContext) 
 	{
 		p.SetState(418)
 		p.Match(SQLiteParserCREATE_)
+		if p.HasError() {
+			// Recognition error - abort rule
+			goto errorExit
+		}
 	}
 	p.SetState(420)
 	p.GetErrorHandler().Sync(p)
+	if p.HasError() {
+		goto errorExit
+	}
 	_la = p.GetTokenStream().LA(1)
 
 	if _la == SQLiteParserTEMP_ || _la == SQLiteParserTEMPORARY_ {
@@ -4916,29 +5163,47 @@ func (p *SQLiteParser) Create_table_stmt() (localctx ICreate_table_stmtContext) 
 	{
 		p.SetState(422)
 		p.Match(SQLiteParserTABLE_)
+		if p.HasError() {
+			// Recognition error - abort rule
+			goto errorExit
+		}
 	}
 	p.SetState(426)
 	p.GetErrorHandler().Sync(p)
 
-	if p.GetInterpreter().AdaptivePredict(p.GetTokenStream(), 34, p.GetParserRuleContext()) == 1 {
+	if p.GetInterpreter().AdaptivePredict(p.BaseParser, p.GetTokenStream(), 34, p.GetParserRuleContext()) == 1 {
 		{
 			p.SetState(423)
 			p.Match(SQLiteParserIF_)
+			if p.HasError() {
+				// Recognition error - abort rule
+				goto errorExit
+			}
 		}
 		{
 			p.SetState(424)
 			p.Match(SQLiteParserNOT_)
+			if p.HasError() {
+				// Recognition error - abort rule
+				goto errorExit
+			}
 		}
 		{
 			p.SetState(425)
 			p.Match(SQLiteParserEXISTS_)
+			if p.HasError() {
+				// Recognition error - abort rule
+				goto errorExit
+			}
 		}
 
+	} else if p.HasError() { // JIM
+		goto errorExit
 	}
 	p.SetState(431)
 	p.GetErrorHandler().Sync(p)
 
-	if p.GetInterpreter().AdaptivePredict(p.GetTokenStream(), 35, p.GetParserRuleContext()) == 1 {
+	if p.GetInterpreter().AdaptivePredict(p.BaseParser, p.GetTokenStream(), 35, p.GetParserRuleContext()) == 1 {
 		{
 			p.SetState(428)
 			p.Schema_name()
@@ -4946,8 +5211,14 @@ func (p *SQLiteParser) Create_table_stmt() (localctx ICreate_table_stmtContext) 
 		{
 			p.SetState(429)
 			p.Match(SQLiteParserDOT)
+			if p.HasError() {
+				// Recognition error - abort rule
+				goto errorExit
+			}
 		}
 
+	} else if p.HasError() { // JIM
+		goto errorExit
 	}
 	{
 		p.SetState(433)
@@ -4955,12 +5226,19 @@ func (p *SQLiteParser) Create_table_stmt() (localctx ICreate_table_stmtContext) 
 	}
 	p.SetState(457)
 	p.GetErrorHandler().Sync(p)
+	if p.HasError() {
+		goto errorExit
+	}
 
 	switch p.GetTokenStream().LA(1) {
 	case SQLiteParserOPEN_PAR:
 		{
 			p.SetState(434)
 			p.Match(SQLiteParserOPEN_PAR)
+			if p.HasError() {
+				// Recognition error - abort rule
+				goto errorExit
+			}
 		}
 		{
 			p.SetState(435)
@@ -4968,13 +5246,22 @@ func (p *SQLiteParser) Create_table_stmt() (localctx ICreate_table_stmtContext) 
 		}
 		p.SetState(440)
 		p.GetErrorHandler().Sync(p)
-		_alt = p.GetInterpreter().AdaptivePredict(p.GetTokenStream(), 36, p.GetParserRuleContext())
-
+		if p.HasError() {
+			goto errorExit
+		}
+		_alt = p.GetInterpreter().AdaptivePredict(p.BaseParser, p.GetTokenStream(), 36, p.GetParserRuleContext())
+		if p.HasError() {
+			goto errorExit
+		}
 		for _alt != 1 && _alt != antlr.ATNInvalidAltNumber {
 			if _alt == 1+1 {
 				{
 					p.SetState(436)
 					p.Match(SQLiteParserCOMMA)
+					if p.HasError() {
+						// Recognition error - abort rule
+						goto errorExit
+					}
 				}
 				{
 					p.SetState(437)
@@ -4984,16 +5271,29 @@ func (p *SQLiteParser) Create_table_stmt() (localctx ICreate_table_stmtContext) 
 			}
 			p.SetState(442)
 			p.GetErrorHandler().Sync(p)
-			_alt = p.GetInterpreter().AdaptivePredict(p.GetTokenStream(), 36, p.GetParserRuleContext())
+			if p.HasError() {
+				goto errorExit
+			}
+			_alt = p.GetInterpreter().AdaptivePredict(p.BaseParser, p.GetTokenStream(), 36, p.GetParserRuleContext())
+			if p.HasError() {
+				goto errorExit
+			}
 		}
 		p.SetState(447)
 		p.GetErrorHandler().Sync(p)
+		if p.HasError() {
+			goto errorExit
+		}
 		_la = p.GetTokenStream().LA(1)
 
 		for _la == SQLiteParserCOMMA {
 			{
 				p.SetState(443)
 				p.Match(SQLiteParserCOMMA)
+				if p.HasError() {
+					// Recognition error - abort rule
+					goto errorExit
+				}
 			}
 			{
 				p.SetState(444)
@@ -5002,20 +5302,34 @@ func (p *SQLiteParser) Create_table_stmt() (localctx ICreate_table_stmtContext) 
 
 			p.SetState(449)
 			p.GetErrorHandler().Sync(p)
+			if p.HasError() {
+				goto errorExit
+			}
 			_la = p.GetTokenStream().LA(1)
 		}
 		{
 			p.SetState(450)
 			p.Match(SQLiteParserCLOSE_PAR)
+			if p.HasError() {
+				// Recognition error - abort rule
+				goto errorExit
+			}
 		}
 		p.SetState(453)
 		p.GetErrorHandler().Sync(p)
+		if p.HasError() {
+			goto errorExit
+		}
 		_la = p.GetTokenStream().LA(1)
 
 		if _la == SQLiteParserWITHOUT_ {
 			{
 				p.SetState(451)
 				p.Match(SQLiteParserWITHOUT_)
+				if p.HasError() {
+					// Recognition error - abort rule
+					goto errorExit
+				}
 			}
 			{
 				p.SetState(452)
@@ -5023,6 +5337,10 @@ func (p *SQLiteParser) Create_table_stmt() (localctx ICreate_table_stmtContext) 
 				var _m = p.Match(SQLiteParserIDENTIFIER)
 
 				localctx.(*Create_table_stmtContext).row_ROW_ID = _m
+				if p.HasError() {
+					// Recognition error - abort rule
+					goto errorExit
+				}
 			}
 
 		}
@@ -5031,6 +5349,10 @@ func (p *SQLiteParser) Create_table_stmt() (localctx ICreate_table_stmtContext) 
 		{
 			p.SetState(455)
 			p.Match(SQLiteParserAS_)
+			if p.HasError() {
+				// Recognition error - abort rule
+				goto errorExit
+			}
 		}
 		{
 			p.SetState(456)
@@ -5038,10 +5360,21 @@ func (p *SQLiteParser) Create_table_stmt() (localctx ICreate_table_stmtContext) 
 		}
 
 	default:
-		panic(antlr.NewNoViableAltException(p, nil, nil, nil, nil, nil))
+		p.SetError(antlr.NewNoViableAltException(p, nil, nil, nil, nil, nil))
+		goto errorExit
 	}
 
+errorExit:
+	if p.HasError() {
+		v := p.GetError()
+		localctx.SetException(v)
+		p.GetErrorHandler().ReportError(p, v)
+		p.GetErrorHandler().Recover(p, v)
+		p.SetError(nil)
+	}
+	p.ExitRule()
 	return localctx
+	goto errorExit // Trick to prevent compiler error if the label is not used
 }
 
 // IColumn_defContext is an interface to support dynamic dispatch.
@@ -5062,15 +5395,20 @@ type IColumn_defContext interface {
 }
 
 type Column_defContext struct {
-	*antlr.BaseParserRuleContext
+	antlr.BaseParserRuleContext
 	parser antlr.Parser
 }
 
 func NewEmptyColumn_defContext() *Column_defContext {
 	var p = new(Column_defContext)
-	p.BaseParserRuleContext = antlr.NewBaseParserRuleContext(nil, -1)
+	antlr.InitBaseParserRuleContext(&p.BaseParserRuleContext, nil, -1)
 	p.RuleIndex = SQLiteParserRULE_column_def
 	return p
+}
+
+func InitEmptyColumn_defContext(p *Column_defContext) {
+	antlr.InitBaseParserRuleContext(&p.BaseParserRuleContext, nil, -1)
+	p.RuleIndex = SQLiteParserRULE_column_def
 }
 
 func (*Column_defContext) IsColumn_defContext() {}
@@ -5078,7 +5416,7 @@ func (*Column_defContext) IsColumn_defContext() {}
 func NewColumn_defContext(parser antlr.Parser, parent antlr.ParserRuleContext, invokingState int) *Column_defContext {
 	var p = new(Column_defContext)
 
-	p.BaseParserRuleContext = antlr.NewBaseParserRuleContext(parent, invokingState)
+	antlr.InitBaseParserRuleContext(&p.BaseParserRuleContext, parent, invokingState)
 
 	p.parser = parser
 	p.RuleIndex = SQLiteParserRULE_column_def
@@ -5182,28 +5520,9 @@ func (s *Column_defContext) ExitRule(listener antlr.ParseTreeListener) {
 }
 
 func (p *SQLiteParser) Column_def() (localctx IColumn_defContext) {
-	this := p
-	_ = this
-
 	localctx = NewColumn_defContext(p, p.GetParserRuleContext(), p.GetState())
 	p.EnterRule(localctx, 28, SQLiteParserRULE_column_def)
 	var _la int
-
-	defer func() {
-		p.ExitRule()
-	}()
-
-	defer func() {
-		if err := recover(); err != nil {
-			if v, ok := err.(antlr.RecognitionException); ok {
-				localctx.SetException(v)
-				p.GetErrorHandler().ReportError(p, v)
-				p.GetErrorHandler().Recover(p, v)
-			} else {
-				panic(err)
-			}
-		}
-	}()
 
 	p.EnterOuterAlt(localctx, 1)
 	{
@@ -5213,15 +5532,20 @@ func (p *SQLiteParser) Column_def() (localctx IColumn_defContext) {
 	p.SetState(461)
 	p.GetErrorHandler().Sync(p)
 
-	if p.GetInterpreter().AdaptivePredict(p.GetTokenStream(), 40, p.GetParserRuleContext()) == 1 {
+	if p.GetInterpreter().AdaptivePredict(p.BaseParser, p.GetTokenStream(), 40, p.GetParserRuleContext()) == 1 {
 		{
 			p.SetState(460)
 			p.Type_name()
 		}
 
+	} else if p.HasError() { // JIM
+		goto errorExit
 	}
 	p.SetState(466)
 	p.GetErrorHandler().Sync(p)
+	if p.HasError() {
+		goto errorExit
+	}
 	_la = p.GetTokenStream().LA(1)
 
 	for ((int64(_la) & ^0x3f) == 0 && ((int64(1)<<_la)&72673329139417088) != 0) || ((int64((_la-102)) & ^0x3f) == 0 && ((int64(1)<<(_la-102))&274877941765) != 0) || _la == SQLiteParserGENERATED_ {
@@ -5232,10 +5556,23 @@ func (p *SQLiteParser) Column_def() (localctx IColumn_defContext) {
 
 		p.SetState(468)
 		p.GetErrorHandler().Sync(p)
+		if p.HasError() {
+			goto errorExit
+		}
 		_la = p.GetTokenStream().LA(1)
 	}
 
+errorExit:
+	if p.HasError() {
+		v := p.GetError()
+		localctx.SetException(v)
+		p.GetErrorHandler().ReportError(p, v)
+		p.GetErrorHandler().Recover(p, v)
+		p.SetError(nil)
+	}
+	p.ExitRule()
 	return localctx
+	goto errorExit // Trick to prevent compiler error if the label is not used
 }
 
 // IType_nameContext is an interface to support dynamic dispatch.
@@ -5259,15 +5596,20 @@ type IType_nameContext interface {
 }
 
 type Type_nameContext struct {
-	*antlr.BaseParserRuleContext
+	antlr.BaseParserRuleContext
 	parser antlr.Parser
 }
 
 func NewEmptyType_nameContext() *Type_nameContext {
 	var p = new(Type_nameContext)
-	p.BaseParserRuleContext = antlr.NewBaseParserRuleContext(nil, -1)
+	antlr.InitBaseParserRuleContext(&p.BaseParserRuleContext, nil, -1)
 	p.RuleIndex = SQLiteParserRULE_type_name
 	return p
+}
+
+func InitEmptyType_nameContext(p *Type_nameContext) {
+	antlr.InitBaseParserRuleContext(&p.BaseParserRuleContext, nil, -1)
+	p.RuleIndex = SQLiteParserRULE_type_name
 }
 
 func (*Type_nameContext) IsType_nameContext() {}
@@ -5275,7 +5617,7 @@ func (*Type_nameContext) IsType_nameContext() {}
 func NewType_nameContext(parser antlr.Parser, parent antlr.ParserRuleContext, invokingState int) *Type_nameContext {
 	var p = new(Type_nameContext)
 
-	p.BaseParserRuleContext = antlr.NewBaseParserRuleContext(parent, invokingState)
+	antlr.InitBaseParserRuleContext(&p.BaseParserRuleContext, parent, invokingState)
 
 	p.parser = parser
 	p.RuleIndex = SQLiteParserRULE_type_name
@@ -5400,33 +5742,16 @@ func (s *Type_nameContext) ExitRule(listener antlr.ParseTreeListener) {
 }
 
 func (p *SQLiteParser) Type_name() (localctx IType_nameContext) {
-	this := p
-	_ = this
-
 	localctx = NewType_nameContext(p, p.GetParserRuleContext(), p.GetState())
 	p.EnterRule(localctx, 30, SQLiteParserRULE_type_name)
-
-	defer func() {
-		p.ExitRule()
-	}()
-
-	defer func() {
-		if err := recover(); err != nil {
-			if v, ok := err.(antlr.RecognitionException); ok {
-				localctx.SetException(v)
-				p.GetErrorHandler().ReportError(p, v)
-				p.GetErrorHandler().Recover(p, v)
-			} else {
-				panic(err)
-			}
-		}
-	}()
-
 	var _alt int
 
 	p.EnterOuterAlt(localctx, 1)
 	p.SetState(470)
 	p.GetErrorHandler().Sync(p)
+	if p.HasError() {
+		goto errorExit
+	}
 	_alt = 1 + 1
 	for ok := true; ok; ok = _alt != 1 && _alt != antlr.ATNInvalidAltNumber {
 		switch _alt {
@@ -5437,20 +5762,28 @@ func (p *SQLiteParser) Type_name() (localctx IType_nameContext) {
 			}
 
 		default:
-			panic(antlr.NewNoViableAltException(p, nil, nil, nil, nil, nil))
+			p.SetError(antlr.NewNoViableAltException(p, nil, nil, nil, nil, nil))
+			goto errorExit
 		}
 
 		p.SetState(472)
 		p.GetErrorHandler().Sync(p)
-		_alt = p.GetInterpreter().AdaptivePredict(p.GetTokenStream(), 42, p.GetParserRuleContext())
+		_alt = p.GetInterpreter().AdaptivePredict(p.BaseParser, p.GetTokenStream(), 42, p.GetParserRuleContext())
+		if p.HasError() {
+			goto errorExit
+		}
 	}
 	p.SetState(484)
 	p.GetErrorHandler().Sync(p)
 
-	if p.GetInterpreter().AdaptivePredict(p.GetTokenStream(), 43, p.GetParserRuleContext()) == 1 {
+	if p.GetInterpreter().AdaptivePredict(p.BaseParser, p.GetTokenStream(), 43, p.GetParserRuleContext()) == 1 {
 		{
 			p.SetState(474)
 			p.Match(SQLiteParserOPEN_PAR)
+			if p.HasError() {
+				// Recognition error - abort rule
+				goto errorExit
+			}
 		}
 		{
 			p.SetState(475)
@@ -5459,12 +5792,22 @@ func (p *SQLiteParser) Type_name() (localctx IType_nameContext) {
 		{
 			p.SetState(476)
 			p.Match(SQLiteParserCLOSE_PAR)
+			if p.HasError() {
+				// Recognition error - abort rule
+				goto errorExit
+			}
 		}
 
-	} else if p.GetInterpreter().AdaptivePredict(p.GetTokenStream(), 43, p.GetParserRuleContext()) == 2 {
+	} else if p.HasError() { // JIM
+		goto errorExit
+	} else if p.GetInterpreter().AdaptivePredict(p.BaseParser, p.GetTokenStream(), 43, p.GetParserRuleContext()) == 2 {
 		{
 			p.SetState(478)
 			p.Match(SQLiteParserOPEN_PAR)
+			if p.HasError() {
+				// Recognition error - abort rule
+				goto errorExit
+			}
 		}
 		{
 			p.SetState(479)
@@ -5473,6 +5816,10 @@ func (p *SQLiteParser) Type_name() (localctx IType_nameContext) {
 		{
 			p.SetState(480)
 			p.Match(SQLiteParserCOMMA)
+			if p.HasError() {
+				// Recognition error - abort rule
+				goto errorExit
+			}
 		}
 		{
 			p.SetState(481)
@@ -5481,11 +5828,27 @@ func (p *SQLiteParser) Type_name() (localctx IType_nameContext) {
 		{
 			p.SetState(482)
 			p.Match(SQLiteParserCLOSE_PAR)
+			if p.HasError() {
+				// Recognition error - abort rule
+				goto errorExit
+			}
 		}
 
+	} else if p.HasError() { // JIM
+		goto errorExit
 	}
 
+errorExit:
+	if p.HasError() {
+		v := p.GetError()
+		localctx.SetException(v)
+		p.GetErrorHandler().ReportError(p, v)
+		p.GetErrorHandler().Recover(p, v)
+		p.SetError(nil)
+	}
+	p.ExitRule()
 	return localctx
+	goto errorExit // Trick to prevent compiler error if the label is not used
 }
 
 // IColumn_constraintContext is an interface to support dynamic dispatch.
@@ -5527,15 +5890,20 @@ type IColumn_constraintContext interface {
 }
 
 type Column_constraintContext struct {
-	*antlr.BaseParserRuleContext
+	antlr.BaseParserRuleContext
 	parser antlr.Parser
 }
 
 func NewEmptyColumn_constraintContext() *Column_constraintContext {
 	var p = new(Column_constraintContext)
-	p.BaseParserRuleContext = antlr.NewBaseParserRuleContext(nil, -1)
+	antlr.InitBaseParserRuleContext(&p.BaseParserRuleContext, nil, -1)
 	p.RuleIndex = SQLiteParserRULE_column_constraint
 	return p
+}
+
+func InitEmptyColumn_constraintContext(p *Column_constraintContext) {
+	antlr.InitBaseParserRuleContext(&p.BaseParserRuleContext, nil, -1)
+	p.RuleIndex = SQLiteParserRULE_column_constraint
 }
 
 func (*Column_constraintContext) IsColumn_constraintContext() {}
@@ -5543,7 +5911,7 @@ func (*Column_constraintContext) IsColumn_constraintContext() {}
 func NewColumn_constraintContext(parser antlr.Parser, parent antlr.ParserRuleContext, invokingState int) *Column_constraintContext {
 	var p = new(Column_constraintContext)
 
-	p.BaseParserRuleContext = antlr.NewBaseParserRuleContext(parent, invokingState)
+	antlr.InitBaseParserRuleContext(&p.BaseParserRuleContext, parent, invokingState)
 
 	p.parser = parser
 	p.RuleIndex = SQLiteParserRULE_column_constraint
@@ -5770,38 +6138,26 @@ func (s *Column_constraintContext) ExitRule(listener antlr.ParseTreeListener) {
 }
 
 func (p *SQLiteParser) Column_constraint() (localctx IColumn_constraintContext) {
-	this := p
-	_ = this
-
 	localctx = NewColumn_constraintContext(p, p.GetParserRuleContext(), p.GetState())
 	p.EnterRule(localctx, 32, SQLiteParserRULE_column_constraint)
 	var _la int
 
-	defer func() {
-		p.ExitRule()
-	}()
-
-	defer func() {
-		if err := recover(); err != nil {
-			if v, ok := err.(antlr.RecognitionException); ok {
-				localctx.SetException(v)
-				p.GetErrorHandler().ReportError(p, v)
-				p.GetErrorHandler().Recover(p, v)
-			} else {
-				panic(err)
-			}
-		}
-	}()
-
 	p.EnterOuterAlt(localctx, 1)
 	p.SetState(488)
 	p.GetErrorHandler().Sync(p)
+	if p.HasError() {
+		goto errorExit
+	}
 	_la = p.GetTokenStream().LA(1)
 
 	if _la == SQLiteParserCONSTRAINT_ {
 		{
 			p.SetState(486)
 			p.Match(SQLiteParserCONSTRAINT_)
+			if p.HasError() {
+				// Recognition error - abort rule
+				goto errorExit
+			}
 		}
 		{
 			p.SetState(487)
@@ -5811,19 +6167,33 @@ func (p *SQLiteParser) Column_constraint() (localctx IColumn_constraintContext) 
 	}
 	p.SetState(539)
 	p.GetErrorHandler().Sync(p)
+	if p.HasError() {
+		goto errorExit
+	}
 
 	switch p.GetTokenStream().LA(1) {
 	case SQLiteParserPRIMARY_:
 		{
 			p.SetState(490)
 			p.Match(SQLiteParserPRIMARY_)
+			if p.HasError() {
+				// Recognition error - abort rule
+				goto errorExit
+			}
 		}
 		{
 			p.SetState(491)
 			p.Match(SQLiteParserKEY_)
+			if p.HasError() {
+				// Recognition error - abort rule
+				goto errorExit
+			}
 		}
 		p.SetState(493)
 		p.GetErrorHandler().Sync(p)
+		if p.HasError() {
+			goto errorExit
+		}
 		_la = p.GetTokenStream().LA(1)
 
 		if _la == SQLiteParserASC_ || _la == SQLiteParserDESC_ {
@@ -5835,6 +6205,9 @@ func (p *SQLiteParser) Column_constraint() (localctx IColumn_constraintContext) 
 		}
 		p.SetState(496)
 		p.GetErrorHandler().Sync(p)
+		if p.HasError() {
+			goto errorExit
+		}
 		_la = p.GetTokenStream().LA(1)
 
 		if _la == SQLiteParserON_ {
@@ -5846,12 +6219,19 @@ func (p *SQLiteParser) Column_constraint() (localctx IColumn_constraintContext) 
 		}
 		p.SetState(499)
 		p.GetErrorHandler().Sync(p)
+		if p.HasError() {
+			goto errorExit
+		}
 		_la = p.GetTokenStream().LA(1)
 
 		if _la == SQLiteParserAUTOINCREMENT_ {
 			{
 				p.SetState(498)
 				p.Match(SQLiteParserAUTOINCREMENT_)
+				if p.HasError() {
+					// Recognition error - abort rule
+					goto errorExit
+				}
 			}
 
 		}
@@ -5859,36 +6239,58 @@ func (p *SQLiteParser) Column_constraint() (localctx IColumn_constraintContext) 
 	case SQLiteParserNOT_, SQLiteParserNULL_, SQLiteParserUNIQUE_:
 		p.SetState(506)
 		p.GetErrorHandler().Sync(p)
+		if p.HasError() {
+			goto errorExit
+		}
 
 		switch p.GetTokenStream().LA(1) {
 		case SQLiteParserNOT_, SQLiteParserNULL_:
 			p.SetState(502)
 			p.GetErrorHandler().Sync(p)
+			if p.HasError() {
+				goto errorExit
+			}
 			_la = p.GetTokenStream().LA(1)
 
 			if _la == SQLiteParserNOT_ {
 				{
 					p.SetState(501)
 					p.Match(SQLiteParserNOT_)
+					if p.HasError() {
+						// Recognition error - abort rule
+						goto errorExit
+					}
 				}
 
 			}
 			{
 				p.SetState(504)
 				p.Match(SQLiteParserNULL_)
+				if p.HasError() {
+					// Recognition error - abort rule
+					goto errorExit
+				}
 			}
 
 		case SQLiteParserUNIQUE_:
 			{
 				p.SetState(505)
 				p.Match(SQLiteParserUNIQUE_)
+				if p.HasError() {
+					// Recognition error - abort rule
+					goto errorExit
+				}
 			}
 
 		default:
-			panic(antlr.NewNoViableAltException(p, nil, nil, nil, nil, nil))
+			p.SetError(antlr.NewNoViableAltException(p, nil, nil, nil, nil, nil))
+			goto errorExit
 		}
 		p.SetState(509)
 		p.GetErrorHandler().Sync(p)
+		if p.HasError() {
+			goto errorExit
+		}
 		_la = p.GetTokenStream().LA(1)
 
 		if _la == SQLiteParserON_ {
@@ -5903,10 +6305,18 @@ func (p *SQLiteParser) Column_constraint() (localctx IColumn_constraintContext) 
 		{
 			p.SetState(511)
 			p.Match(SQLiteParserCHECK_)
+			if p.HasError() {
+				// Recognition error - abort rule
+				goto errorExit
+			}
 		}
 		{
 			p.SetState(512)
 			p.Match(SQLiteParserOPEN_PAR)
+			if p.HasError() {
+				// Recognition error - abort rule
+				goto errorExit
+			}
 		}
 		{
 			p.SetState(513)
@@ -5915,16 +6325,28 @@ func (p *SQLiteParser) Column_constraint() (localctx IColumn_constraintContext) 
 		{
 			p.SetState(514)
 			p.Match(SQLiteParserCLOSE_PAR)
+			if p.HasError() {
+				// Recognition error - abort rule
+				goto errorExit
+			}
 		}
 
 	case SQLiteParserDEFAULT_:
 		{
 			p.SetState(516)
 			p.Match(SQLiteParserDEFAULT_)
+			if p.HasError() {
+				// Recognition error - abort rule
+				goto errorExit
+			}
 		}
 		p.SetState(523)
 		p.GetErrorHandler().Sync(p)
-		switch p.GetInterpreter().AdaptivePredict(p.GetTokenStream(), 51, p.GetParserRuleContext()) {
+		if p.HasError() {
+			goto errorExit
+		}
+
+		switch p.GetInterpreter().AdaptivePredict(p.BaseParser, p.GetTokenStream(), 51, p.GetParserRuleContext()) {
 		case 1:
 			{
 				p.SetState(517)
@@ -5941,6 +6363,10 @@ func (p *SQLiteParser) Column_constraint() (localctx IColumn_constraintContext) 
 			{
 				p.SetState(519)
 				p.Match(SQLiteParserOPEN_PAR)
+				if p.HasError() {
+					// Recognition error - abort rule
+					goto errorExit
+				}
 			}
 			{
 				p.SetState(520)
@@ -5949,14 +6375,24 @@ func (p *SQLiteParser) Column_constraint() (localctx IColumn_constraintContext) 
 			{
 				p.SetState(521)
 				p.Match(SQLiteParserCLOSE_PAR)
+				if p.HasError() {
+					// Recognition error - abort rule
+					goto errorExit
+				}
 			}
 
+		case antlr.ATNInvalidAltNumber:
+			goto errorExit
 		}
 
 	case SQLiteParserCOLLATE_:
 		{
 			p.SetState(525)
 			p.Match(SQLiteParserCOLLATE_)
+			if p.HasError() {
+				// Recognition error - abort rule
+				goto errorExit
+			}
 		}
 		{
 			p.SetState(526)
@@ -5972,26 +6408,45 @@ func (p *SQLiteParser) Column_constraint() (localctx IColumn_constraintContext) 
 	case SQLiteParserAS_, SQLiteParserGENERATED_:
 		p.SetState(530)
 		p.GetErrorHandler().Sync(p)
+		if p.HasError() {
+			goto errorExit
+		}
 		_la = p.GetTokenStream().LA(1)
 
 		if _la == SQLiteParserGENERATED_ {
 			{
 				p.SetState(528)
 				p.Match(SQLiteParserGENERATED_)
+				if p.HasError() {
+					// Recognition error - abort rule
+					goto errorExit
+				}
 			}
 			{
 				p.SetState(529)
 				p.Match(SQLiteParserALWAYS_)
+				if p.HasError() {
+					// Recognition error - abort rule
+					goto errorExit
+				}
 			}
 
 		}
 		{
 			p.SetState(532)
 			p.Match(SQLiteParserAS_)
+			if p.HasError() {
+				// Recognition error - abort rule
+				goto errorExit
+			}
 		}
 		{
 			p.SetState(533)
 			p.Match(SQLiteParserOPEN_PAR)
+			if p.HasError() {
+				// Recognition error - abort rule
+				goto errorExit
+			}
 		}
 		{
 			p.SetState(534)
@@ -6000,9 +6455,16 @@ func (p *SQLiteParser) Column_constraint() (localctx IColumn_constraintContext) 
 		{
 			p.SetState(535)
 			p.Match(SQLiteParserCLOSE_PAR)
+			if p.HasError() {
+				// Recognition error - abort rule
+				goto errorExit
+			}
 		}
 		p.SetState(537)
 		p.GetErrorHandler().Sync(p)
+		if p.HasError() {
+			goto errorExit
+		}
 		_la = p.GetTokenStream().LA(1)
 
 		if _la == SQLiteParserVIRTUAL_ || _la == SQLiteParserSTORED_ {
@@ -6021,10 +6483,21 @@ func (p *SQLiteParser) Column_constraint() (localctx IColumn_constraintContext) 
 		}
 
 	default:
-		panic(antlr.NewNoViableAltException(p, nil, nil, nil, nil, nil))
+		p.SetError(antlr.NewNoViableAltException(p, nil, nil, nil, nil, nil))
+		goto errorExit
 	}
 
+errorExit:
+	if p.HasError() {
+		v := p.GetError()
+		localctx.SetException(v)
+		p.GetErrorHandler().ReportError(p, v)
+		p.GetErrorHandler().Recover(p, v)
+		p.SetError(nil)
+	}
+	p.ExitRule()
 	return localctx
+	goto errorExit // Trick to prevent compiler error if the label is not used
 }
 
 // ISigned_numberContext is an interface to support dynamic dispatch.
@@ -6044,15 +6517,20 @@ type ISigned_numberContext interface {
 }
 
 type Signed_numberContext struct {
-	*antlr.BaseParserRuleContext
+	antlr.BaseParserRuleContext
 	parser antlr.Parser
 }
 
 func NewEmptySigned_numberContext() *Signed_numberContext {
 	var p = new(Signed_numberContext)
-	p.BaseParserRuleContext = antlr.NewBaseParserRuleContext(nil, -1)
+	antlr.InitBaseParserRuleContext(&p.BaseParserRuleContext, nil, -1)
 	p.RuleIndex = SQLiteParserRULE_signed_number
 	return p
+}
+
+func InitEmptySigned_numberContext(p *Signed_numberContext) {
+	antlr.InitBaseParserRuleContext(&p.BaseParserRuleContext, nil, -1)
+	p.RuleIndex = SQLiteParserRULE_signed_number
 }
 
 func (*Signed_numberContext) IsSigned_numberContext() {}
@@ -6060,7 +6538,7 @@ func (*Signed_numberContext) IsSigned_numberContext() {}
 func NewSigned_numberContext(parser antlr.Parser, parent antlr.ParserRuleContext, invokingState int) *Signed_numberContext {
 	var p = new(Signed_numberContext)
 
-	p.BaseParserRuleContext = antlr.NewBaseParserRuleContext(parent, invokingState)
+	antlr.InitBaseParserRuleContext(&p.BaseParserRuleContext, parent, invokingState)
 
 	p.parser = parser
 	p.RuleIndex = SQLiteParserRULE_signed_number
@@ -6103,32 +6581,16 @@ func (s *Signed_numberContext) ExitRule(listener antlr.ParseTreeListener) {
 }
 
 func (p *SQLiteParser) Signed_number() (localctx ISigned_numberContext) {
-	this := p
-	_ = this
-
 	localctx = NewSigned_numberContext(p, p.GetParserRuleContext(), p.GetState())
 	p.EnterRule(localctx, 34, SQLiteParserRULE_signed_number)
 	var _la int
 
-	defer func() {
-		p.ExitRule()
-	}()
-
-	defer func() {
-		if err := recover(); err != nil {
-			if v, ok := err.(antlr.RecognitionException); ok {
-				localctx.SetException(v)
-				p.GetErrorHandler().ReportError(p, v)
-				p.GetErrorHandler().Recover(p, v)
-			} else {
-				panic(err)
-			}
-		}
-	}()
-
 	p.EnterOuterAlt(localctx, 1)
 	p.SetState(542)
 	p.GetErrorHandler().Sync(p)
+	if p.HasError() {
+		goto errorExit
+	}
 	_la = p.GetTokenStream().LA(1)
 
 	if _la == SQLiteParserPLUS || _la == SQLiteParserMINUS {
@@ -6148,9 +6610,23 @@ func (p *SQLiteParser) Signed_number() (localctx ISigned_numberContext) {
 	{
 		p.SetState(544)
 		p.Match(SQLiteParserNUMERIC_LITERAL)
+		if p.HasError() {
+			// Recognition error - abort rule
+			goto errorExit
+		}
 	}
 
+errorExit:
+	if p.HasError() {
+		v := p.GetError()
+		localctx.SetException(v)
+		p.GetErrorHandler().ReportError(p, v)
+		p.GetErrorHandler().Recover(p, v)
+		p.SetError(nil)
+	}
+	p.ExitRule()
 	return localctx
+	goto errorExit // Trick to prevent compiler error if the label is not used
 }
 
 // ITable_constraintContext is an interface to support dynamic dispatch.
@@ -6185,15 +6661,20 @@ type ITable_constraintContext interface {
 }
 
 type Table_constraintContext struct {
-	*antlr.BaseParserRuleContext
+	antlr.BaseParserRuleContext
 	parser antlr.Parser
 }
 
 func NewEmptyTable_constraintContext() *Table_constraintContext {
 	var p = new(Table_constraintContext)
-	p.BaseParserRuleContext = antlr.NewBaseParserRuleContext(nil, -1)
+	antlr.InitBaseParserRuleContext(&p.BaseParserRuleContext, nil, -1)
 	p.RuleIndex = SQLiteParserRULE_table_constraint
 	return p
+}
+
+func InitEmptyTable_constraintContext(p *Table_constraintContext) {
+	antlr.InitBaseParserRuleContext(&p.BaseParserRuleContext, nil, -1)
+	p.RuleIndex = SQLiteParserRULE_table_constraint
 }
 
 func (*Table_constraintContext) IsTable_constraintContext() {}
@@ -6201,7 +6682,7 @@ func (*Table_constraintContext) IsTable_constraintContext() {}
 func NewTable_constraintContext(parser antlr.Parser, parent antlr.ParserRuleContext, invokingState int) *Table_constraintContext {
 	var p = new(Table_constraintContext)
 
-	p.BaseParserRuleContext = antlr.NewBaseParserRuleContext(parent, invokingState)
+	antlr.InitBaseParserRuleContext(&p.BaseParserRuleContext, parent, invokingState)
 
 	p.parser = parser
 	p.RuleIndex = SQLiteParserRULE_table_constraint
@@ -6418,38 +6899,26 @@ func (s *Table_constraintContext) ExitRule(listener antlr.ParseTreeListener) {
 }
 
 func (p *SQLiteParser) Table_constraint() (localctx ITable_constraintContext) {
-	this := p
-	_ = this
-
 	localctx = NewTable_constraintContext(p, p.GetParserRuleContext(), p.GetState())
 	p.EnterRule(localctx, 36, SQLiteParserRULE_table_constraint)
 	var _la int
 
-	defer func() {
-		p.ExitRule()
-	}()
-
-	defer func() {
-		if err := recover(); err != nil {
-			if v, ok := err.(antlr.RecognitionException); ok {
-				localctx.SetException(v)
-				p.GetErrorHandler().ReportError(p, v)
-				p.GetErrorHandler().Recover(p, v)
-			} else {
-				panic(err)
-			}
-		}
-	}()
-
 	p.EnterOuterAlt(localctx, 1)
 	p.SetState(548)
 	p.GetErrorHandler().Sync(p)
+	if p.HasError() {
+		goto errorExit
+	}
 	_la = p.GetTokenStream().LA(1)
 
 	if _la == SQLiteParserCONSTRAINT_ {
 		{
 			p.SetState(546)
 			p.Match(SQLiteParserCONSTRAINT_)
+			if p.HasError() {
+				// Recognition error - abort rule
+				goto errorExit
+			}
 		}
 		{
 			p.SetState(547)
@@ -6459,35 +6928,58 @@ func (p *SQLiteParser) Table_constraint() (localctx ITable_constraintContext) {
 	}
 	p.SetState(587)
 	p.GetErrorHandler().Sync(p)
+	if p.HasError() {
+		goto errorExit
+	}
 
 	switch p.GetTokenStream().LA(1) {
 	case SQLiteParserPRIMARY_, SQLiteParserUNIQUE_:
 		p.SetState(553)
 		p.GetErrorHandler().Sync(p)
+		if p.HasError() {
+			goto errorExit
+		}
 
 		switch p.GetTokenStream().LA(1) {
 		case SQLiteParserPRIMARY_:
 			{
 				p.SetState(550)
 				p.Match(SQLiteParserPRIMARY_)
+				if p.HasError() {
+					// Recognition error - abort rule
+					goto errorExit
+				}
 			}
 			{
 				p.SetState(551)
 				p.Match(SQLiteParserKEY_)
+				if p.HasError() {
+					// Recognition error - abort rule
+					goto errorExit
+				}
 			}
 
 		case SQLiteParserUNIQUE_:
 			{
 				p.SetState(552)
 				p.Match(SQLiteParserUNIQUE_)
+				if p.HasError() {
+					// Recognition error - abort rule
+					goto errorExit
+				}
 			}
 
 		default:
-			panic(antlr.NewNoViableAltException(p, nil, nil, nil, nil, nil))
+			p.SetError(antlr.NewNoViableAltException(p, nil, nil, nil, nil, nil))
+			goto errorExit
 		}
 		{
 			p.SetState(555)
 			p.Match(SQLiteParserOPEN_PAR)
+			if p.HasError() {
+				// Recognition error - abort rule
+				goto errorExit
+			}
 		}
 		{
 			p.SetState(556)
@@ -6495,12 +6987,19 @@ func (p *SQLiteParser) Table_constraint() (localctx ITable_constraintContext) {
 		}
 		p.SetState(561)
 		p.GetErrorHandler().Sync(p)
+		if p.HasError() {
+			goto errorExit
+		}
 		_la = p.GetTokenStream().LA(1)
 
 		for _la == SQLiteParserCOMMA {
 			{
 				p.SetState(557)
 				p.Match(SQLiteParserCOMMA)
+				if p.HasError() {
+					// Recognition error - abort rule
+					goto errorExit
+				}
 			}
 			{
 				p.SetState(558)
@@ -6509,14 +7008,24 @@ func (p *SQLiteParser) Table_constraint() (localctx ITable_constraintContext) {
 
 			p.SetState(563)
 			p.GetErrorHandler().Sync(p)
+			if p.HasError() {
+				goto errorExit
+			}
 			_la = p.GetTokenStream().LA(1)
 		}
 		{
 			p.SetState(564)
 			p.Match(SQLiteParserCLOSE_PAR)
+			if p.HasError() {
+				// Recognition error - abort rule
+				goto errorExit
+			}
 		}
 		p.SetState(566)
 		p.GetErrorHandler().Sync(p)
+		if p.HasError() {
+			goto errorExit
+		}
 		_la = p.GetTokenStream().LA(1)
 
 		if _la == SQLiteParserON_ {
@@ -6531,10 +7040,18 @@ func (p *SQLiteParser) Table_constraint() (localctx ITable_constraintContext) {
 		{
 			p.SetState(568)
 			p.Match(SQLiteParserCHECK_)
+			if p.HasError() {
+				// Recognition error - abort rule
+				goto errorExit
+			}
 		}
 		{
 			p.SetState(569)
 			p.Match(SQLiteParserOPEN_PAR)
+			if p.HasError() {
+				// Recognition error - abort rule
+				goto errorExit
+			}
 		}
 		{
 			p.SetState(570)
@@ -6543,20 +7060,36 @@ func (p *SQLiteParser) Table_constraint() (localctx ITable_constraintContext) {
 		{
 			p.SetState(571)
 			p.Match(SQLiteParserCLOSE_PAR)
+			if p.HasError() {
+				// Recognition error - abort rule
+				goto errorExit
+			}
 		}
 
 	case SQLiteParserFOREIGN_:
 		{
 			p.SetState(573)
 			p.Match(SQLiteParserFOREIGN_)
+			if p.HasError() {
+				// Recognition error - abort rule
+				goto errorExit
+			}
 		}
 		{
 			p.SetState(574)
 			p.Match(SQLiteParserKEY_)
+			if p.HasError() {
+				// Recognition error - abort rule
+				goto errorExit
+			}
 		}
 		{
 			p.SetState(575)
 			p.Match(SQLiteParserOPEN_PAR)
+			if p.HasError() {
+				// Recognition error - abort rule
+				goto errorExit
+			}
 		}
 		{
 			p.SetState(576)
@@ -6564,12 +7097,19 @@ func (p *SQLiteParser) Table_constraint() (localctx ITable_constraintContext) {
 		}
 		p.SetState(581)
 		p.GetErrorHandler().Sync(p)
+		if p.HasError() {
+			goto errorExit
+		}
 		_la = p.GetTokenStream().LA(1)
 
 		for _la == SQLiteParserCOMMA {
 			{
 				p.SetState(577)
 				p.Match(SQLiteParserCOMMA)
+				if p.HasError() {
+					// Recognition error - abort rule
+					goto errorExit
+				}
 			}
 			{
 				p.SetState(578)
@@ -6578,11 +7118,18 @@ func (p *SQLiteParser) Table_constraint() (localctx ITable_constraintContext) {
 
 			p.SetState(583)
 			p.GetErrorHandler().Sync(p)
+			if p.HasError() {
+				goto errorExit
+			}
 			_la = p.GetTokenStream().LA(1)
 		}
 		{
 			p.SetState(584)
 			p.Match(SQLiteParserCLOSE_PAR)
+			if p.HasError() {
+				// Recognition error - abort rule
+				goto errorExit
+			}
 		}
 		{
 			p.SetState(585)
@@ -6590,10 +7137,21 @@ func (p *SQLiteParser) Table_constraint() (localctx ITable_constraintContext) {
 		}
 
 	default:
-		panic(antlr.NewNoViableAltException(p, nil, nil, nil, nil, nil))
+		p.SetError(antlr.NewNoViableAltException(p, nil, nil, nil, nil, nil))
+		goto errorExit
 	}
 
+errorExit:
+	if p.HasError() {
+		v := p.GetError()
+		localctx.SetException(v)
+		p.GetErrorHandler().ReportError(p, v)
+		p.GetErrorHandler().Recover(p, v)
+		p.SetError(nil)
+	}
+	p.ExitRule()
 	return localctx
+	goto errorExit // Trick to prevent compiler error if the label is not used
 }
 
 // IForeign_key_clauseContext is an interface to support dynamic dispatch.
@@ -6647,15 +7205,20 @@ type IForeign_key_clauseContext interface {
 }
 
 type Foreign_key_clauseContext struct {
-	*antlr.BaseParserRuleContext
+	antlr.BaseParserRuleContext
 	parser antlr.Parser
 }
 
 func NewEmptyForeign_key_clauseContext() *Foreign_key_clauseContext {
 	var p = new(Foreign_key_clauseContext)
-	p.BaseParserRuleContext = antlr.NewBaseParserRuleContext(nil, -1)
+	antlr.InitBaseParserRuleContext(&p.BaseParserRuleContext, nil, -1)
 	p.RuleIndex = SQLiteParserRULE_foreign_key_clause
 	return p
+}
+
+func InitEmptyForeign_key_clauseContext(p *Foreign_key_clauseContext) {
+	antlr.InitBaseParserRuleContext(&p.BaseParserRuleContext, nil, -1)
+	p.RuleIndex = SQLiteParserRULE_foreign_key_clause
 }
 
 func (*Foreign_key_clauseContext) IsForeign_key_clauseContext() {}
@@ -6663,7 +7226,7 @@ func (*Foreign_key_clauseContext) IsForeign_key_clauseContext() {}
 func NewForeign_key_clauseContext(parser antlr.Parser, parent antlr.ParserRuleContext, invokingState int) *Foreign_key_clauseContext {
 	var p = new(Foreign_key_clauseContext)
 
-	p.BaseParserRuleContext = antlr.NewBaseParserRuleContext(parent, invokingState)
+	antlr.InitBaseParserRuleContext(&p.BaseParserRuleContext, parent, invokingState)
 
 	p.parser = parser
 	p.RuleIndex = SQLiteParserRULE_foreign_key_clause
@@ -6920,33 +7483,18 @@ func (s *Foreign_key_clauseContext) ExitRule(listener antlr.ParseTreeListener) {
 }
 
 func (p *SQLiteParser) Foreign_key_clause() (localctx IForeign_key_clauseContext) {
-	this := p
-	_ = this
-
 	localctx = NewForeign_key_clauseContext(p, p.GetParserRuleContext(), p.GetState())
 	p.EnterRule(localctx, 38, SQLiteParserRULE_foreign_key_clause)
 	var _la int
-
-	defer func() {
-		p.ExitRule()
-	}()
-
-	defer func() {
-		if err := recover(); err != nil {
-			if v, ok := err.(antlr.RecognitionException); ok {
-				localctx.SetException(v)
-				p.GetErrorHandler().ReportError(p, v)
-				p.GetErrorHandler().Recover(p, v)
-			} else {
-				panic(err)
-			}
-		}
-	}()
 
 	p.EnterOuterAlt(localctx, 1)
 	{
 		p.SetState(589)
 		p.Match(SQLiteParserREFERENCES_)
+		if p.HasError() {
+			// Recognition error - abort rule
+			goto errorExit
+		}
 	}
 	{
 		p.SetState(590)
@@ -6954,12 +7502,19 @@ func (p *SQLiteParser) Foreign_key_clause() (localctx IForeign_key_clauseContext
 	}
 	p.SetState(602)
 	p.GetErrorHandler().Sync(p)
+	if p.HasError() {
+		goto errorExit
+	}
 	_la = p.GetTokenStream().LA(1)
 
 	if _la == SQLiteParserOPEN_PAR {
 		{
 			p.SetState(591)
 			p.Match(SQLiteParserOPEN_PAR)
+			if p.HasError() {
+				// Recognition error - abort rule
+				goto errorExit
+			}
 		}
 		{
 			p.SetState(592)
@@ -6967,12 +7522,19 @@ func (p *SQLiteParser) Foreign_key_clause() (localctx IForeign_key_clauseContext
 		}
 		p.SetState(597)
 		p.GetErrorHandler().Sync(p)
+		if p.HasError() {
+			goto errorExit
+		}
 		_la = p.GetTokenStream().LA(1)
 
 		for _la == SQLiteParserCOMMA {
 			{
 				p.SetState(593)
 				p.Match(SQLiteParserCOMMA)
+				if p.HasError() {
+					// Recognition error - abort rule
+					goto errorExit
+				}
 			}
 			{
 				p.SetState(594)
@@ -6981,27 +7543,44 @@ func (p *SQLiteParser) Foreign_key_clause() (localctx IForeign_key_clauseContext
 
 			p.SetState(599)
 			p.GetErrorHandler().Sync(p)
+			if p.HasError() {
+				goto errorExit
+			}
 			_la = p.GetTokenStream().LA(1)
 		}
 		{
 			p.SetState(600)
 			p.Match(SQLiteParserCLOSE_PAR)
+			if p.HasError() {
+				// Recognition error - abort rule
+				goto errorExit
+			}
 		}
 
 	}
 	p.SetState(618)
 	p.GetErrorHandler().Sync(p)
+	if p.HasError() {
+		goto errorExit
+	}
 	_la = p.GetTokenStream().LA(1)
 
 	for _la == SQLiteParserMATCH_ || _la == SQLiteParserON_ {
 		p.SetState(616)
 		p.GetErrorHandler().Sync(p)
+		if p.HasError() {
+			goto errorExit
+		}
 
 		switch p.GetTokenStream().LA(1) {
 		case SQLiteParserON_:
 			{
 				p.SetState(604)
 				p.Match(SQLiteParserON_)
+				if p.HasError() {
+					// Recognition error - abort rule
+					goto errorExit
+				}
 			}
 			{
 				p.SetState(605)
@@ -7016,12 +7595,19 @@ func (p *SQLiteParser) Foreign_key_clause() (localctx IForeign_key_clauseContext
 			}
 			p.SetState(612)
 			p.GetErrorHandler().Sync(p)
+			if p.HasError() {
+				goto errorExit
+			}
 
 			switch p.GetTokenStream().LA(1) {
 			case SQLiteParserSET_:
 				{
 					p.SetState(606)
 					p.Match(SQLiteParserSET_)
+					if p.HasError() {
+						// Recognition error - abort rule
+						goto errorExit
+					}
 				}
 				{
 					p.SetState(607)
@@ -7039,32 +7625,53 @@ func (p *SQLiteParser) Foreign_key_clause() (localctx IForeign_key_clauseContext
 				{
 					p.SetState(608)
 					p.Match(SQLiteParserCASCADE_)
+					if p.HasError() {
+						// Recognition error - abort rule
+						goto errorExit
+					}
 				}
 
 			case SQLiteParserRESTRICT_:
 				{
 					p.SetState(609)
 					p.Match(SQLiteParserRESTRICT_)
+					if p.HasError() {
+						// Recognition error - abort rule
+						goto errorExit
+					}
 				}
 
 			case SQLiteParserNO_:
 				{
 					p.SetState(610)
 					p.Match(SQLiteParserNO_)
+					if p.HasError() {
+						// Recognition error - abort rule
+						goto errorExit
+					}
 				}
 				{
 					p.SetState(611)
 					p.Match(SQLiteParserACTION_)
+					if p.HasError() {
+						// Recognition error - abort rule
+						goto errorExit
+					}
 				}
 
 			default:
-				panic(antlr.NewNoViableAltException(p, nil, nil, nil, nil, nil))
+				p.SetError(antlr.NewNoViableAltException(p, nil, nil, nil, nil, nil))
+				goto errorExit
 			}
 
 		case SQLiteParserMATCH_:
 			{
 				p.SetState(614)
 				p.Match(SQLiteParserMATCH_)
+				if p.HasError() {
+					// Recognition error - abort rule
+					goto errorExit
+				}
 			}
 			{
 				p.SetState(615)
@@ -7072,40 +7679,62 @@ func (p *SQLiteParser) Foreign_key_clause() (localctx IForeign_key_clauseContext
 			}
 
 		default:
-			panic(antlr.NewNoViableAltException(p, nil, nil, nil, nil, nil))
+			p.SetError(antlr.NewNoViableAltException(p, nil, nil, nil, nil, nil))
+			goto errorExit
 		}
 
 		p.SetState(620)
 		p.GetErrorHandler().Sync(p)
+		if p.HasError() {
+			goto errorExit
+		}
 		_la = p.GetTokenStream().LA(1)
 	}
 	p.SetState(629)
 	p.GetErrorHandler().Sync(p)
 
-	if p.GetInterpreter().AdaptivePredict(p.GetTokenStream(), 69, p.GetParserRuleContext()) == 1 {
+	if p.GetInterpreter().AdaptivePredict(p.BaseParser, p.GetTokenStream(), 69, p.GetParserRuleContext()) == 1 {
 		p.SetState(622)
 		p.GetErrorHandler().Sync(p)
+		if p.HasError() {
+			goto errorExit
+		}
 		_la = p.GetTokenStream().LA(1)
 
 		if _la == SQLiteParserNOT_ {
 			{
 				p.SetState(621)
 				p.Match(SQLiteParserNOT_)
+				if p.HasError() {
+					// Recognition error - abort rule
+					goto errorExit
+				}
 			}
 
 		}
 		{
 			p.SetState(624)
 			p.Match(SQLiteParserDEFERRABLE_)
+			if p.HasError() {
+				// Recognition error - abort rule
+				goto errorExit
+			}
 		}
 		p.SetState(627)
 		p.GetErrorHandler().Sync(p)
+		if p.HasError() {
+			goto errorExit
+		}
 		_la = p.GetTokenStream().LA(1)
 
 		if _la == SQLiteParserINITIALLY_ {
 			{
 				p.SetState(625)
 				p.Match(SQLiteParserINITIALLY_)
+				if p.HasError() {
+					// Recognition error - abort rule
+					goto errorExit
+				}
 			}
 			{
 				p.SetState(626)
@@ -7121,9 +7750,21 @@ func (p *SQLiteParser) Foreign_key_clause() (localctx IForeign_key_clauseContext
 
 		}
 
+	} else if p.HasError() { // JIM
+		goto errorExit
 	}
 
+errorExit:
+	if p.HasError() {
+		v := p.GetError()
+		localctx.SetException(v)
+		p.GetErrorHandler().ReportError(p, v)
+		p.GetErrorHandler().Recover(p, v)
+		p.SetError(nil)
+	}
+	p.ExitRule()
 	return localctx
+	goto errorExit // Trick to prevent compiler error if the label is not used
 }
 
 // IConflict_clauseContext is an interface to support dynamic dispatch.
@@ -7147,15 +7788,20 @@ type IConflict_clauseContext interface {
 }
 
 type Conflict_clauseContext struct {
-	*antlr.BaseParserRuleContext
+	antlr.BaseParserRuleContext
 	parser antlr.Parser
 }
 
 func NewEmptyConflict_clauseContext() *Conflict_clauseContext {
 	var p = new(Conflict_clauseContext)
-	p.BaseParserRuleContext = antlr.NewBaseParserRuleContext(nil, -1)
+	antlr.InitBaseParserRuleContext(&p.BaseParserRuleContext, nil, -1)
 	p.RuleIndex = SQLiteParserRULE_conflict_clause
 	return p
+}
+
+func InitEmptyConflict_clauseContext(p *Conflict_clauseContext) {
+	antlr.InitBaseParserRuleContext(&p.BaseParserRuleContext, nil, -1)
+	p.RuleIndex = SQLiteParserRULE_conflict_clause
 }
 
 func (*Conflict_clauseContext) IsConflict_clauseContext() {}
@@ -7163,7 +7809,7 @@ func (*Conflict_clauseContext) IsConflict_clauseContext() {}
 func NewConflict_clauseContext(parser antlr.Parser, parent antlr.ParserRuleContext, invokingState int) *Conflict_clauseContext {
 	var p = new(Conflict_clauseContext)
 
-	p.BaseParserRuleContext = antlr.NewBaseParserRuleContext(parent, invokingState)
+	antlr.InitBaseParserRuleContext(&p.BaseParserRuleContext, parent, invokingState)
 
 	p.parser = parser
 	p.RuleIndex = SQLiteParserRULE_conflict_clause
@@ -7222,37 +7868,26 @@ func (s *Conflict_clauseContext) ExitRule(listener antlr.ParseTreeListener) {
 }
 
 func (p *SQLiteParser) Conflict_clause() (localctx IConflict_clauseContext) {
-	this := p
-	_ = this
-
 	localctx = NewConflict_clauseContext(p, p.GetParserRuleContext(), p.GetState())
 	p.EnterRule(localctx, 40, SQLiteParserRULE_conflict_clause)
 	var _la int
-
-	defer func() {
-		p.ExitRule()
-	}()
-
-	defer func() {
-		if err := recover(); err != nil {
-			if v, ok := err.(antlr.RecognitionException); ok {
-				localctx.SetException(v)
-				p.GetErrorHandler().ReportError(p, v)
-				p.GetErrorHandler().Recover(p, v)
-			} else {
-				panic(err)
-			}
-		}
-	}()
 
 	p.EnterOuterAlt(localctx, 1)
 	{
 		p.SetState(631)
 		p.Match(SQLiteParserON_)
+		if p.HasError() {
+			// Recognition error - abort rule
+			goto errorExit
+		}
 	}
 	{
 		p.SetState(632)
 		p.Match(SQLiteParserCONFLICT_)
+		if p.HasError() {
+			// Recognition error - abort rule
+			goto errorExit
+		}
 	}
 	{
 		p.SetState(633)
@@ -7266,7 +7901,17 @@ func (p *SQLiteParser) Conflict_clause() (localctx IConflict_clauseContext) {
 		}
 	}
 
+errorExit:
+	if p.HasError() {
+		v := p.GetError()
+		localctx.SetException(v)
+		p.GetErrorHandler().ReportError(p, v)
+		p.GetErrorHandler().Recover(p, v)
+		p.SetError(nil)
+	}
+	p.ExitRule()
 	return localctx
+	goto errorExit // Trick to prevent compiler error if the label is not used
 }
 
 // ICreate_trigger_stmtContext is an interface to support dynamic dispatch.
@@ -7324,15 +7969,20 @@ type ICreate_trigger_stmtContext interface {
 }
 
 type Create_trigger_stmtContext struct {
-	*antlr.BaseParserRuleContext
+	antlr.BaseParserRuleContext
 	parser antlr.Parser
 }
 
 func NewEmptyCreate_trigger_stmtContext() *Create_trigger_stmtContext {
 	var p = new(Create_trigger_stmtContext)
-	p.BaseParserRuleContext = antlr.NewBaseParserRuleContext(nil, -1)
+	antlr.InitBaseParserRuleContext(&p.BaseParserRuleContext, nil, -1)
 	p.RuleIndex = SQLiteParserRULE_create_trigger_stmt
 	return p
+}
+
+func InitEmptyCreate_trigger_stmtContext(p *Create_trigger_stmtContext) {
+	antlr.InitBaseParserRuleContext(&p.BaseParserRuleContext, nil, -1)
+	p.RuleIndex = SQLiteParserRULE_create_trigger_stmt
 }
 
 func (*Create_trigger_stmtContext) IsCreate_trigger_stmtContext() {}
@@ -7340,7 +7990,7 @@ func (*Create_trigger_stmtContext) IsCreate_trigger_stmtContext() {}
 func NewCreate_trigger_stmtContext(parser antlr.Parser, parent antlr.ParserRuleContext, invokingState int) *Create_trigger_stmtContext {
 	var p = new(Create_trigger_stmtContext)
 
-	p.BaseParserRuleContext = antlr.NewBaseParserRuleContext(parent, invokingState)
+	antlr.InitBaseParserRuleContext(&p.BaseParserRuleContext, parent, invokingState)
 
 	p.parser = parser
 	p.RuleIndex = SQLiteParserRULE_create_trigger_stmt
@@ -7748,36 +8398,24 @@ func (s *Create_trigger_stmtContext) ExitRule(listener antlr.ParseTreeListener) 
 }
 
 func (p *SQLiteParser) Create_trigger_stmt() (localctx ICreate_trigger_stmtContext) {
-	this := p
-	_ = this
-
 	localctx = NewCreate_trigger_stmtContext(p, p.GetParserRuleContext(), p.GetState())
 	p.EnterRule(localctx, 42, SQLiteParserRULE_create_trigger_stmt)
 	var _la int
-
-	defer func() {
-		p.ExitRule()
-	}()
-
-	defer func() {
-		if err := recover(); err != nil {
-			if v, ok := err.(antlr.RecognitionException); ok {
-				localctx.SetException(v)
-				p.GetErrorHandler().ReportError(p, v)
-				p.GetErrorHandler().Recover(p, v)
-			} else {
-				panic(err)
-			}
-		}
-	}()
 
 	p.EnterOuterAlt(localctx, 1)
 	{
 		p.SetState(635)
 		p.Match(SQLiteParserCREATE_)
+		if p.HasError() {
+			// Recognition error - abort rule
+			goto errorExit
+		}
 	}
 	p.SetState(637)
 	p.GetErrorHandler().Sync(p)
+	if p.HasError() {
+		goto errorExit
+	}
 	_la = p.GetTokenStream().LA(1)
 
 	if _la == SQLiteParserTEMP_ || _la == SQLiteParserTEMPORARY_ {
@@ -7797,29 +8435,47 @@ func (p *SQLiteParser) Create_trigger_stmt() (localctx ICreate_trigger_stmtConte
 	{
 		p.SetState(639)
 		p.Match(SQLiteParserTRIGGER_)
+		if p.HasError() {
+			// Recognition error - abort rule
+			goto errorExit
+		}
 	}
 	p.SetState(643)
 	p.GetErrorHandler().Sync(p)
 
-	if p.GetInterpreter().AdaptivePredict(p.GetTokenStream(), 71, p.GetParserRuleContext()) == 1 {
+	if p.GetInterpreter().AdaptivePredict(p.BaseParser, p.GetTokenStream(), 71, p.GetParserRuleContext()) == 1 {
 		{
 			p.SetState(640)
 			p.Match(SQLiteParserIF_)
+			if p.HasError() {
+				// Recognition error - abort rule
+				goto errorExit
+			}
 		}
 		{
 			p.SetState(641)
 			p.Match(SQLiteParserNOT_)
+			if p.HasError() {
+				// Recognition error - abort rule
+				goto errorExit
+			}
 		}
 		{
 			p.SetState(642)
 			p.Match(SQLiteParserEXISTS_)
+			if p.HasError() {
+				// Recognition error - abort rule
+				goto errorExit
+			}
 		}
 
+	} else if p.HasError() { // JIM
+		goto errorExit
 	}
 	p.SetState(648)
 	p.GetErrorHandler().Sync(p)
 
-	if p.GetInterpreter().AdaptivePredict(p.GetTokenStream(), 72, p.GetParserRuleContext()) == 1 {
+	if p.GetInterpreter().AdaptivePredict(p.BaseParser, p.GetTokenStream(), 72, p.GetParserRuleContext()) == 1 {
 		{
 			p.SetState(645)
 			p.Schema_name()
@@ -7827,8 +8483,14 @@ func (p *SQLiteParser) Create_trigger_stmt() (localctx ICreate_trigger_stmtConte
 		{
 			p.SetState(646)
 			p.Match(SQLiteParserDOT)
+			if p.HasError() {
+				// Recognition error - abort rule
+				goto errorExit
+			}
 		}
 
+	} else if p.HasError() { // JIM
+		goto errorExit
 	}
 	{
 		p.SetState(650)
@@ -7836,28 +8498,46 @@ func (p *SQLiteParser) Create_trigger_stmt() (localctx ICreate_trigger_stmtConte
 	}
 	p.SetState(655)
 	p.GetErrorHandler().Sync(p)
-
+	if p.HasError() {
+		goto errorExit
+	}
 	switch p.GetTokenStream().LA(1) {
 	case SQLiteParserBEFORE_:
 		{
 			p.SetState(651)
 			p.Match(SQLiteParserBEFORE_)
+			if p.HasError() {
+				// Recognition error - abort rule
+				goto errorExit
+			}
 		}
 
 	case SQLiteParserAFTER_:
 		{
 			p.SetState(652)
 			p.Match(SQLiteParserAFTER_)
+			if p.HasError() {
+				// Recognition error - abort rule
+				goto errorExit
+			}
 		}
 
 	case SQLiteParserINSTEAD_:
 		{
 			p.SetState(653)
 			p.Match(SQLiteParserINSTEAD_)
+			if p.HasError() {
+				// Recognition error - abort rule
+				goto errorExit
+			}
 		}
 		{
 			p.SetState(654)
 			p.Match(SQLiteParserOF_)
+			if p.HasError() {
+				// Recognition error - abort rule
+				goto errorExit
+			}
 		}
 
 	case SQLiteParserDELETE_, SQLiteParserINSERT_, SQLiteParserUPDATE_:
@@ -7866,33 +8546,55 @@ func (p *SQLiteParser) Create_trigger_stmt() (localctx ICreate_trigger_stmtConte
 	}
 	p.SetState(671)
 	p.GetErrorHandler().Sync(p)
+	if p.HasError() {
+		goto errorExit
+	}
 
 	switch p.GetTokenStream().LA(1) {
 	case SQLiteParserDELETE_:
 		{
 			p.SetState(657)
 			p.Match(SQLiteParserDELETE_)
+			if p.HasError() {
+				// Recognition error - abort rule
+				goto errorExit
+			}
 		}
 
 	case SQLiteParserINSERT_:
 		{
 			p.SetState(658)
 			p.Match(SQLiteParserINSERT_)
+			if p.HasError() {
+				// Recognition error - abort rule
+				goto errorExit
+			}
 		}
 
 	case SQLiteParserUPDATE_:
 		{
 			p.SetState(659)
 			p.Match(SQLiteParserUPDATE_)
+			if p.HasError() {
+				// Recognition error - abort rule
+				goto errorExit
+			}
 		}
 		p.SetState(669)
 		p.GetErrorHandler().Sync(p)
+		if p.HasError() {
+			goto errorExit
+		}
 		_la = p.GetTokenStream().LA(1)
 
 		if _la == SQLiteParserOF_ {
 			{
 				p.SetState(660)
 				p.Match(SQLiteParserOF_)
+				if p.HasError() {
+					// Recognition error - abort rule
+					goto errorExit
+				}
 			}
 			{
 				p.SetState(661)
@@ -7900,12 +8602,19 @@ func (p *SQLiteParser) Create_trigger_stmt() (localctx ICreate_trigger_stmtConte
 			}
 			p.SetState(666)
 			p.GetErrorHandler().Sync(p)
+			if p.HasError() {
+				goto errorExit
+			}
 			_la = p.GetTokenStream().LA(1)
 
 			for _la == SQLiteParserCOMMA {
 				{
 					p.SetState(662)
 					p.Match(SQLiteParserCOMMA)
+					if p.HasError() {
+						// Recognition error - abort rule
+						goto errorExit
+					}
 				}
 				{
 					p.SetState(663)
@@ -7914,17 +8623,25 @@ func (p *SQLiteParser) Create_trigger_stmt() (localctx ICreate_trigger_stmtConte
 
 				p.SetState(668)
 				p.GetErrorHandler().Sync(p)
+				if p.HasError() {
+					goto errorExit
+				}
 				_la = p.GetTokenStream().LA(1)
 			}
 
 		}
 
 	default:
-		panic(antlr.NewNoViableAltException(p, nil, nil, nil, nil, nil))
+		p.SetError(antlr.NewNoViableAltException(p, nil, nil, nil, nil, nil))
+		goto errorExit
 	}
 	{
 		p.SetState(673)
 		p.Match(SQLiteParserON_)
+		if p.HasError() {
+			// Recognition error - abort rule
+			goto errorExit
+		}
 	}
 	{
 		p.SetState(674)
@@ -7932,31 +8649,53 @@ func (p *SQLiteParser) Create_trigger_stmt() (localctx ICreate_trigger_stmtConte
 	}
 	p.SetState(678)
 	p.GetErrorHandler().Sync(p)
+	if p.HasError() {
+		goto errorExit
+	}
 	_la = p.GetTokenStream().LA(1)
 
 	if _la == SQLiteParserFOR_ {
 		{
 			p.SetState(675)
 			p.Match(SQLiteParserFOR_)
+			if p.HasError() {
+				// Recognition error - abort rule
+				goto errorExit
+			}
 		}
 		{
 			p.SetState(676)
 			p.Match(SQLiteParserEACH_)
+			if p.HasError() {
+				// Recognition error - abort rule
+				goto errorExit
+			}
 		}
 		{
 			p.SetState(677)
 			p.Match(SQLiteParserROW_)
+			if p.HasError() {
+				// Recognition error - abort rule
+				goto errorExit
+			}
 		}
 
 	}
 	p.SetState(682)
 	p.GetErrorHandler().Sync(p)
+	if p.HasError() {
+		goto errorExit
+	}
 	_la = p.GetTokenStream().LA(1)
 
 	if _la == SQLiteParserWHEN_ {
 		{
 			p.SetState(680)
 			p.Match(SQLiteParserWHEN_)
+			if p.HasError() {
+				// Recognition error - abort rule
+				goto errorExit
+			}
 		}
 		{
 			p.SetState(681)
@@ -7967,15 +8706,26 @@ func (p *SQLiteParser) Create_trigger_stmt() (localctx ICreate_trigger_stmtConte
 	{
 		p.SetState(684)
 		p.Match(SQLiteParserBEGIN_)
+		if p.HasError() {
+			// Recognition error - abort rule
+			goto errorExit
+		}
 	}
 	p.SetState(693)
 	p.GetErrorHandler().Sync(p)
+	if p.HasError() {
+		goto errorExit
+	}
 	_la = p.GetTokenStream().LA(1)
 
 	for ok := true; ok; ok = _la == SQLiteParserDELETE_ || ((int64((_la-88)) & ^0x3f) == 0 && ((int64(1)<<(_la-88))&2386912217732743169) != 0) {
 		p.SetState(689)
 		p.GetErrorHandler().Sync(p)
-		switch p.GetInterpreter().AdaptivePredict(p.GetTokenStream(), 79, p.GetParserRuleContext()) {
+		if p.HasError() {
+			goto errorExit
+		}
+
+		switch p.GetInterpreter().AdaptivePredict(p.BaseParser, p.GetTokenStream(), 79, p.GetParserRuleContext()) {
 		case 1:
 			{
 				p.SetState(685)
@@ -8000,22 +8750,45 @@ func (p *SQLiteParser) Create_trigger_stmt() (localctx ICreate_trigger_stmtConte
 				p.Select_stmt()
 			}
 
+		case antlr.ATNInvalidAltNumber:
+			goto errorExit
 		}
 		{
 			p.SetState(691)
 			p.Match(SQLiteParserSCOL)
+			if p.HasError() {
+				// Recognition error - abort rule
+				goto errorExit
+			}
 		}
 
 		p.SetState(695)
 		p.GetErrorHandler().Sync(p)
+		if p.HasError() {
+			goto errorExit
+		}
 		_la = p.GetTokenStream().LA(1)
 	}
 	{
 		p.SetState(697)
 		p.Match(SQLiteParserEND_)
+		if p.HasError() {
+			// Recognition error - abort rule
+			goto errorExit
+		}
 	}
 
+errorExit:
+	if p.HasError() {
+		v := p.GetError()
+		localctx.SetException(v)
+		p.GetErrorHandler().ReportError(p, v)
+		p.GetErrorHandler().Recover(p, v)
+		p.SetError(nil)
+	}
+	p.ExitRule()
 	return localctx
+	goto errorExit // Trick to prevent compiler error if the label is not used
 }
 
 // ICreate_view_stmtContext is an interface to support dynamic dispatch.
@@ -8050,15 +8823,20 @@ type ICreate_view_stmtContext interface {
 }
 
 type Create_view_stmtContext struct {
-	*antlr.BaseParserRuleContext
+	antlr.BaseParserRuleContext
 	parser antlr.Parser
 }
 
 func NewEmptyCreate_view_stmtContext() *Create_view_stmtContext {
 	var p = new(Create_view_stmtContext)
-	p.BaseParserRuleContext = antlr.NewBaseParserRuleContext(nil, -1)
+	antlr.InitBaseParserRuleContext(&p.BaseParserRuleContext, nil, -1)
 	p.RuleIndex = SQLiteParserRULE_create_view_stmt
 	return p
+}
+
+func InitEmptyCreate_view_stmtContext(p *Create_view_stmtContext) {
+	antlr.InitBaseParserRuleContext(&p.BaseParserRuleContext, nil, -1)
+	p.RuleIndex = SQLiteParserRULE_create_view_stmt
 }
 
 func (*Create_view_stmtContext) IsCreate_view_stmtContext() {}
@@ -8066,7 +8844,7 @@ func (*Create_view_stmtContext) IsCreate_view_stmtContext() {}
 func NewCreate_view_stmtContext(parser antlr.Parser, parent antlr.ParserRuleContext, invokingState int) *Create_view_stmtContext {
 	var p = new(Create_view_stmtContext)
 
-	p.BaseParserRuleContext = antlr.NewBaseParserRuleContext(parent, invokingState)
+	antlr.InitBaseParserRuleContext(&p.BaseParserRuleContext, parent, invokingState)
 
 	p.parser = parser
 	p.RuleIndex = SQLiteParserRULE_create_view_stmt
@@ -8238,36 +9016,24 @@ func (s *Create_view_stmtContext) ExitRule(listener antlr.ParseTreeListener) {
 }
 
 func (p *SQLiteParser) Create_view_stmt() (localctx ICreate_view_stmtContext) {
-	this := p
-	_ = this
-
 	localctx = NewCreate_view_stmtContext(p, p.GetParserRuleContext(), p.GetState())
 	p.EnterRule(localctx, 44, SQLiteParserRULE_create_view_stmt)
 	var _la int
-
-	defer func() {
-		p.ExitRule()
-	}()
-
-	defer func() {
-		if err := recover(); err != nil {
-			if v, ok := err.(antlr.RecognitionException); ok {
-				localctx.SetException(v)
-				p.GetErrorHandler().ReportError(p, v)
-				p.GetErrorHandler().Recover(p, v)
-			} else {
-				panic(err)
-			}
-		}
-	}()
 
 	p.EnterOuterAlt(localctx, 1)
 	{
 		p.SetState(699)
 		p.Match(SQLiteParserCREATE_)
+		if p.HasError() {
+			// Recognition error - abort rule
+			goto errorExit
+		}
 	}
 	p.SetState(701)
 	p.GetErrorHandler().Sync(p)
+	if p.HasError() {
+		goto errorExit
+	}
 	_la = p.GetTokenStream().LA(1)
 
 	if _la == SQLiteParserTEMP_ || _la == SQLiteParserTEMPORARY_ {
@@ -8287,29 +9053,47 @@ func (p *SQLiteParser) Create_view_stmt() (localctx ICreate_view_stmtContext) {
 	{
 		p.SetState(703)
 		p.Match(SQLiteParserVIEW_)
+		if p.HasError() {
+			// Recognition error - abort rule
+			goto errorExit
+		}
 	}
 	p.SetState(707)
 	p.GetErrorHandler().Sync(p)
 
-	if p.GetInterpreter().AdaptivePredict(p.GetTokenStream(), 82, p.GetParserRuleContext()) == 1 {
+	if p.GetInterpreter().AdaptivePredict(p.BaseParser, p.GetTokenStream(), 82, p.GetParserRuleContext()) == 1 {
 		{
 			p.SetState(704)
 			p.Match(SQLiteParserIF_)
+			if p.HasError() {
+				// Recognition error - abort rule
+				goto errorExit
+			}
 		}
 		{
 			p.SetState(705)
 			p.Match(SQLiteParserNOT_)
+			if p.HasError() {
+				// Recognition error - abort rule
+				goto errorExit
+			}
 		}
 		{
 			p.SetState(706)
 			p.Match(SQLiteParserEXISTS_)
+			if p.HasError() {
+				// Recognition error - abort rule
+				goto errorExit
+			}
 		}
 
+	} else if p.HasError() { // JIM
+		goto errorExit
 	}
 	p.SetState(712)
 	p.GetErrorHandler().Sync(p)
 
-	if p.GetInterpreter().AdaptivePredict(p.GetTokenStream(), 83, p.GetParserRuleContext()) == 1 {
+	if p.GetInterpreter().AdaptivePredict(p.BaseParser, p.GetTokenStream(), 83, p.GetParserRuleContext()) == 1 {
 		{
 			p.SetState(709)
 			p.Schema_name()
@@ -8317,8 +9101,14 @@ func (p *SQLiteParser) Create_view_stmt() (localctx ICreate_view_stmtContext) {
 		{
 			p.SetState(710)
 			p.Match(SQLiteParserDOT)
+			if p.HasError() {
+				// Recognition error - abort rule
+				goto errorExit
+			}
 		}
 
+	} else if p.HasError() { // JIM
+		goto errorExit
 	}
 	{
 		p.SetState(714)
@@ -8326,12 +9116,19 @@ func (p *SQLiteParser) Create_view_stmt() (localctx ICreate_view_stmtContext) {
 	}
 	p.SetState(726)
 	p.GetErrorHandler().Sync(p)
+	if p.HasError() {
+		goto errorExit
+	}
 	_la = p.GetTokenStream().LA(1)
 
 	if _la == SQLiteParserOPEN_PAR {
 		{
 			p.SetState(715)
 			p.Match(SQLiteParserOPEN_PAR)
+			if p.HasError() {
+				// Recognition error - abort rule
+				goto errorExit
+			}
 		}
 		{
 			p.SetState(716)
@@ -8339,12 +9136,19 @@ func (p *SQLiteParser) Create_view_stmt() (localctx ICreate_view_stmtContext) {
 		}
 		p.SetState(721)
 		p.GetErrorHandler().Sync(p)
+		if p.HasError() {
+			goto errorExit
+		}
 		_la = p.GetTokenStream().LA(1)
 
 		for _la == SQLiteParserCOMMA {
 			{
 				p.SetState(717)
 				p.Match(SQLiteParserCOMMA)
+				if p.HasError() {
+					// Recognition error - abort rule
+					goto errorExit
+				}
 			}
 			{
 				p.SetState(718)
@@ -8353,24 +9157,45 @@ func (p *SQLiteParser) Create_view_stmt() (localctx ICreate_view_stmtContext) {
 
 			p.SetState(723)
 			p.GetErrorHandler().Sync(p)
+			if p.HasError() {
+				goto errorExit
+			}
 			_la = p.GetTokenStream().LA(1)
 		}
 		{
 			p.SetState(724)
 			p.Match(SQLiteParserCLOSE_PAR)
+			if p.HasError() {
+				// Recognition error - abort rule
+				goto errorExit
+			}
 		}
 
 	}
 	{
 		p.SetState(728)
 		p.Match(SQLiteParserAS_)
+		if p.HasError() {
+			// Recognition error - abort rule
+			goto errorExit
+		}
 	}
 	{
 		p.SetState(729)
 		p.Select_stmt()
 	}
 
+errorExit:
+	if p.HasError() {
+		v := p.GetError()
+		localctx.SetException(v)
+		p.GetErrorHandler().ReportError(p, v)
+		p.GetErrorHandler().Recover(p, v)
+		p.SetError(nil)
+	}
+	p.ExitRule()
 	return localctx
+	goto errorExit // Trick to prevent compiler error if the label is not used
 }
 
 // ICreate_virtual_table_stmtContext is an interface to support dynamic dispatch.
@@ -8404,15 +9229,20 @@ type ICreate_virtual_table_stmtContext interface {
 }
 
 type Create_virtual_table_stmtContext struct {
-	*antlr.BaseParserRuleContext
+	antlr.BaseParserRuleContext
 	parser antlr.Parser
 }
 
 func NewEmptyCreate_virtual_table_stmtContext() *Create_virtual_table_stmtContext {
 	var p = new(Create_virtual_table_stmtContext)
-	p.BaseParserRuleContext = antlr.NewBaseParserRuleContext(nil, -1)
+	antlr.InitBaseParserRuleContext(&p.BaseParserRuleContext, nil, -1)
 	p.RuleIndex = SQLiteParserRULE_create_virtual_table_stmt
 	return p
+}
+
+func InitEmptyCreate_virtual_table_stmtContext(p *Create_virtual_table_stmtContext) {
+	antlr.InitBaseParserRuleContext(&p.BaseParserRuleContext, nil, -1)
+	p.RuleIndex = SQLiteParserRULE_create_virtual_table_stmt
 }
 
 func (*Create_virtual_table_stmtContext) IsCreate_virtual_table_stmtContext() {}
@@ -8420,7 +9250,7 @@ func (*Create_virtual_table_stmtContext) IsCreate_virtual_table_stmtContext() {}
 func NewCreate_virtual_table_stmtContext(parser antlr.Parser, parent antlr.ParserRuleContext, invokingState int) *Create_virtual_table_stmtContext {
 	var p = new(Create_virtual_table_stmtContext)
 
-	p.BaseParserRuleContext = antlr.NewBaseParserRuleContext(parent, invokingState)
+	antlr.InitBaseParserRuleContext(&p.BaseParserRuleContext, parent, invokingState)
 
 	p.parser = parser
 	p.RuleIndex = SQLiteParserRULE_create_virtual_table_stmt
@@ -8588,64 +9418,71 @@ func (s *Create_virtual_table_stmtContext) ExitRule(listener antlr.ParseTreeList
 }
 
 func (p *SQLiteParser) Create_virtual_table_stmt() (localctx ICreate_virtual_table_stmtContext) {
-	this := p
-	_ = this
-
 	localctx = NewCreate_virtual_table_stmtContext(p, p.GetParserRuleContext(), p.GetState())
 	p.EnterRule(localctx, 46, SQLiteParserRULE_create_virtual_table_stmt)
 	var _la int
-
-	defer func() {
-		p.ExitRule()
-	}()
-
-	defer func() {
-		if err := recover(); err != nil {
-			if v, ok := err.(antlr.RecognitionException); ok {
-				localctx.SetException(v)
-				p.GetErrorHandler().ReportError(p, v)
-				p.GetErrorHandler().Recover(p, v)
-			} else {
-				panic(err)
-			}
-		}
-	}()
 
 	p.EnterOuterAlt(localctx, 1)
 	{
 		p.SetState(731)
 		p.Match(SQLiteParserCREATE_)
+		if p.HasError() {
+			// Recognition error - abort rule
+			goto errorExit
+		}
 	}
 	{
 		p.SetState(732)
 		p.Match(SQLiteParserVIRTUAL_)
+		if p.HasError() {
+			// Recognition error - abort rule
+			goto errorExit
+		}
 	}
 	{
 		p.SetState(733)
 		p.Match(SQLiteParserTABLE_)
+		if p.HasError() {
+			// Recognition error - abort rule
+			goto errorExit
+		}
 	}
 	p.SetState(737)
 	p.GetErrorHandler().Sync(p)
 
-	if p.GetInterpreter().AdaptivePredict(p.GetTokenStream(), 86, p.GetParserRuleContext()) == 1 {
+	if p.GetInterpreter().AdaptivePredict(p.BaseParser, p.GetTokenStream(), 86, p.GetParserRuleContext()) == 1 {
 		{
 			p.SetState(734)
 			p.Match(SQLiteParserIF_)
+			if p.HasError() {
+				// Recognition error - abort rule
+				goto errorExit
+			}
 		}
 		{
 			p.SetState(735)
 			p.Match(SQLiteParserNOT_)
+			if p.HasError() {
+				// Recognition error - abort rule
+				goto errorExit
+			}
 		}
 		{
 			p.SetState(736)
 			p.Match(SQLiteParserEXISTS_)
+			if p.HasError() {
+				// Recognition error - abort rule
+				goto errorExit
+			}
 		}
 
+	} else if p.HasError() { // JIM
+		goto errorExit
 	}
 	p.SetState(742)
 	p.GetErrorHandler().Sync(p)
 
-	if p.GetInterpreter().AdaptivePredict(p.GetTokenStream(), 87, p.GetParserRuleContext()) == 1 {
+	if p.GetInterpreter().AdaptivePredict(p.BaseParser, p.GetTokenStream(), 87, p.GetParserRuleContext()) == 1 {
 		{
 			p.SetState(739)
 			p.Schema_name()
@@ -8653,8 +9490,14 @@ func (p *SQLiteParser) Create_virtual_table_stmt() (localctx ICreate_virtual_tab
 		{
 			p.SetState(740)
 			p.Match(SQLiteParserDOT)
+			if p.HasError() {
+				// Recognition error - abort rule
+				goto errorExit
+			}
 		}
 
+	} else if p.HasError() { // JIM
+		goto errorExit
 	}
 	{
 		p.SetState(744)
@@ -8663,6 +9506,10 @@ func (p *SQLiteParser) Create_virtual_table_stmt() (localctx ICreate_virtual_tab
 	{
 		p.SetState(745)
 		p.Match(SQLiteParserUSING_)
+		if p.HasError() {
+			// Recognition error - abort rule
+			goto errorExit
+		}
 	}
 	{
 		p.SetState(746)
@@ -8670,12 +9517,19 @@ func (p *SQLiteParser) Create_virtual_table_stmt() (localctx ICreate_virtual_tab
 	}
 	p.SetState(758)
 	p.GetErrorHandler().Sync(p)
+	if p.HasError() {
+		goto errorExit
+	}
 	_la = p.GetTokenStream().LA(1)
 
 	if _la == SQLiteParserOPEN_PAR {
 		{
 			p.SetState(747)
 			p.Match(SQLiteParserOPEN_PAR)
+			if p.HasError() {
+				// Recognition error - abort rule
+				goto errorExit
+			}
 		}
 		{
 			p.SetState(748)
@@ -8683,12 +9537,19 @@ func (p *SQLiteParser) Create_virtual_table_stmt() (localctx ICreate_virtual_tab
 		}
 		p.SetState(753)
 		p.GetErrorHandler().Sync(p)
+		if p.HasError() {
+			goto errorExit
+		}
 		_la = p.GetTokenStream().LA(1)
 
 		for _la == SQLiteParserCOMMA {
 			{
 				p.SetState(749)
 				p.Match(SQLiteParserCOMMA)
+				if p.HasError() {
+					// Recognition error - abort rule
+					goto errorExit
+				}
 			}
 			{
 				p.SetState(750)
@@ -8697,16 +9558,33 @@ func (p *SQLiteParser) Create_virtual_table_stmt() (localctx ICreate_virtual_tab
 
 			p.SetState(755)
 			p.GetErrorHandler().Sync(p)
+			if p.HasError() {
+				goto errorExit
+			}
 			_la = p.GetTokenStream().LA(1)
 		}
 		{
 			p.SetState(756)
 			p.Match(SQLiteParserCLOSE_PAR)
+			if p.HasError() {
+				// Recognition error - abort rule
+				goto errorExit
+			}
 		}
 
 	}
 
+errorExit:
+	if p.HasError() {
+		v := p.GetError()
+		localctx.SetException(v)
+		p.GetErrorHandler().ReportError(p, v)
+		p.GetErrorHandler().Recover(p, v)
+		p.SetError(nil)
+	}
+	p.ExitRule()
 	return localctx
+	goto errorExit // Trick to prevent compiler error if the label is not used
 }
 
 // IWith_clauseContext is an interface to support dynamic dispatch.
@@ -8737,15 +9615,20 @@ type IWith_clauseContext interface {
 }
 
 type With_clauseContext struct {
-	*antlr.BaseParserRuleContext
+	antlr.BaseParserRuleContext
 	parser antlr.Parser
 }
 
 func NewEmptyWith_clauseContext() *With_clauseContext {
 	var p = new(With_clauseContext)
-	p.BaseParserRuleContext = antlr.NewBaseParserRuleContext(nil, -1)
+	antlr.InitBaseParserRuleContext(&p.BaseParserRuleContext, nil, -1)
 	p.RuleIndex = SQLiteParserRULE_with_clause
 	return p
+}
+
+func InitEmptyWith_clauseContext(p *With_clauseContext) {
+	antlr.InitBaseParserRuleContext(&p.BaseParserRuleContext, nil, -1)
+	p.RuleIndex = SQLiteParserRULE_with_clause
 }
 
 func (*With_clauseContext) IsWith_clauseContext() {}
@@ -8753,7 +9636,7 @@ func (*With_clauseContext) IsWith_clauseContext() {}
 func NewWith_clauseContext(parser antlr.Parser, parent antlr.ParserRuleContext, invokingState int) *With_clauseContext {
 	var p = new(With_clauseContext)
 
-	p.BaseParserRuleContext = antlr.NewBaseParserRuleContext(parent, invokingState)
+	antlr.InitBaseParserRuleContext(&p.BaseParserRuleContext, parent, invokingState)
 
 	p.parser = parser
 	p.RuleIndex = SQLiteParserRULE_with_clause
@@ -8906,43 +9789,34 @@ func (s *With_clauseContext) ExitRule(listener antlr.ParseTreeListener) {
 }
 
 func (p *SQLiteParser) With_clause() (localctx IWith_clauseContext) {
-	this := p
-	_ = this
-
 	localctx = NewWith_clauseContext(p, p.GetParserRuleContext(), p.GetState())
 	p.EnterRule(localctx, 48, SQLiteParserRULE_with_clause)
 	var _la int
-
-	defer func() {
-		p.ExitRule()
-	}()
-
-	defer func() {
-		if err := recover(); err != nil {
-			if v, ok := err.(antlr.RecognitionException); ok {
-				localctx.SetException(v)
-				p.GetErrorHandler().ReportError(p, v)
-				p.GetErrorHandler().Recover(p, v)
-			} else {
-				panic(err)
-			}
-		}
-	}()
 
 	p.EnterOuterAlt(localctx, 1)
 	{
 		p.SetState(760)
 		p.Match(SQLiteParserWITH_)
+		if p.HasError() {
+			// Recognition error - abort rule
+			goto errorExit
+		}
 	}
 	p.SetState(762)
 	p.GetErrorHandler().Sync(p)
 
-	if p.GetInterpreter().AdaptivePredict(p.GetTokenStream(), 90, p.GetParserRuleContext()) == 1 {
+	if p.GetInterpreter().AdaptivePredict(p.BaseParser, p.GetTokenStream(), 90, p.GetParserRuleContext()) == 1 {
 		{
 			p.SetState(761)
 			p.Match(SQLiteParserRECURSIVE_)
+			if p.HasError() {
+				// Recognition error - abort rule
+				goto errorExit
+			}
 		}
 
+	} else if p.HasError() { // JIM
+		goto errorExit
 	}
 	{
 		p.SetState(764)
@@ -8951,10 +9825,18 @@ func (p *SQLiteParser) With_clause() (localctx IWith_clauseContext) {
 	{
 		p.SetState(765)
 		p.Match(SQLiteParserAS_)
+		if p.HasError() {
+			// Recognition error - abort rule
+			goto errorExit
+		}
 	}
 	{
 		p.SetState(766)
 		p.Match(SQLiteParserOPEN_PAR)
+		if p.HasError() {
+			// Recognition error - abort rule
+			goto errorExit
+		}
 	}
 	{
 		p.SetState(767)
@@ -8963,15 +9845,26 @@ func (p *SQLiteParser) With_clause() (localctx IWith_clauseContext) {
 	{
 		p.SetState(768)
 		p.Match(SQLiteParserCLOSE_PAR)
+		if p.HasError() {
+			// Recognition error - abort rule
+			goto errorExit
+		}
 	}
 	p.SetState(778)
 	p.GetErrorHandler().Sync(p)
+	if p.HasError() {
+		goto errorExit
+	}
 	_la = p.GetTokenStream().LA(1)
 
 	for _la == SQLiteParserCOMMA {
 		{
 			p.SetState(769)
 			p.Match(SQLiteParserCOMMA)
+			if p.HasError() {
+				// Recognition error - abort rule
+				goto errorExit
+			}
 		}
 		{
 			p.SetState(770)
@@ -8980,10 +9873,18 @@ func (p *SQLiteParser) With_clause() (localctx IWith_clauseContext) {
 		{
 			p.SetState(771)
 			p.Match(SQLiteParserAS_)
+			if p.HasError() {
+				// Recognition error - abort rule
+				goto errorExit
+			}
 		}
 		{
 			p.SetState(772)
 			p.Match(SQLiteParserOPEN_PAR)
+			if p.HasError() {
+				// Recognition error - abort rule
+				goto errorExit
+			}
 		}
 		{
 			p.SetState(773)
@@ -8992,14 +9893,31 @@ func (p *SQLiteParser) With_clause() (localctx IWith_clauseContext) {
 		{
 			p.SetState(774)
 			p.Match(SQLiteParserCLOSE_PAR)
+			if p.HasError() {
+				// Recognition error - abort rule
+				goto errorExit
+			}
 		}
 
 		p.SetState(780)
 		p.GetErrorHandler().Sync(p)
+		if p.HasError() {
+			goto errorExit
+		}
 		_la = p.GetTokenStream().LA(1)
 	}
 
+errorExit:
+	if p.HasError() {
+		v := p.GetError()
+		localctx.SetException(v)
+		p.GetErrorHandler().ReportError(p, v)
+		p.GetErrorHandler().Recover(p, v)
+		p.SetError(nil)
+	}
+	p.ExitRule()
 	return localctx
+	goto errorExit // Trick to prevent compiler error if the label is not used
 }
 
 // ICte_table_nameContext is an interface to support dynamic dispatch.
@@ -9023,15 +9941,20 @@ type ICte_table_nameContext interface {
 }
 
 type Cte_table_nameContext struct {
-	*antlr.BaseParserRuleContext
+	antlr.BaseParserRuleContext
 	parser antlr.Parser
 }
 
 func NewEmptyCte_table_nameContext() *Cte_table_nameContext {
 	var p = new(Cte_table_nameContext)
-	p.BaseParserRuleContext = antlr.NewBaseParserRuleContext(nil, -1)
+	antlr.InitBaseParserRuleContext(&p.BaseParserRuleContext, nil, -1)
 	p.RuleIndex = SQLiteParserRULE_cte_table_name
 	return p
+}
+
+func InitEmptyCte_table_nameContext(p *Cte_table_nameContext) {
+	antlr.InitBaseParserRuleContext(&p.BaseParserRuleContext, nil, -1)
+	p.RuleIndex = SQLiteParserRULE_cte_table_name
 }
 
 func (*Cte_table_nameContext) IsCte_table_nameContext() {}
@@ -9039,7 +9962,7 @@ func (*Cte_table_nameContext) IsCte_table_nameContext() {}
 func NewCte_table_nameContext(parser antlr.Parser, parent antlr.ParserRuleContext, invokingState int) *Cte_table_nameContext {
 	var p = new(Cte_table_nameContext)
 
-	p.BaseParserRuleContext = antlr.NewBaseParserRuleContext(parent, invokingState)
+	antlr.InitBaseParserRuleContext(&p.BaseParserRuleContext, parent, invokingState)
 
 	p.parser = parser
 	p.RuleIndex = SQLiteParserRULE_cte_table_name
@@ -9143,28 +10066,9 @@ func (s *Cte_table_nameContext) ExitRule(listener antlr.ParseTreeListener) {
 }
 
 func (p *SQLiteParser) Cte_table_name() (localctx ICte_table_nameContext) {
-	this := p
-	_ = this
-
 	localctx = NewCte_table_nameContext(p, p.GetParserRuleContext(), p.GetState())
 	p.EnterRule(localctx, 50, SQLiteParserRULE_cte_table_name)
 	var _la int
-
-	defer func() {
-		p.ExitRule()
-	}()
-
-	defer func() {
-		if err := recover(); err != nil {
-			if v, ok := err.(antlr.RecognitionException); ok {
-				localctx.SetException(v)
-				p.GetErrorHandler().ReportError(p, v)
-				p.GetErrorHandler().Recover(p, v)
-			} else {
-				panic(err)
-			}
-		}
-	}()
 
 	p.EnterOuterAlt(localctx, 1)
 	{
@@ -9173,12 +10077,19 @@ func (p *SQLiteParser) Cte_table_name() (localctx ICte_table_nameContext) {
 	}
 	p.SetState(793)
 	p.GetErrorHandler().Sync(p)
+	if p.HasError() {
+		goto errorExit
+	}
 	_la = p.GetTokenStream().LA(1)
 
 	if _la == SQLiteParserOPEN_PAR {
 		{
 			p.SetState(782)
 			p.Match(SQLiteParserOPEN_PAR)
+			if p.HasError() {
+				// Recognition error - abort rule
+				goto errorExit
+			}
 		}
 		{
 			p.SetState(783)
@@ -9186,12 +10097,19 @@ func (p *SQLiteParser) Cte_table_name() (localctx ICte_table_nameContext) {
 		}
 		p.SetState(788)
 		p.GetErrorHandler().Sync(p)
+		if p.HasError() {
+			goto errorExit
+		}
 		_la = p.GetTokenStream().LA(1)
 
 		for _la == SQLiteParserCOMMA {
 			{
 				p.SetState(784)
 				p.Match(SQLiteParserCOMMA)
+				if p.HasError() {
+					// Recognition error - abort rule
+					goto errorExit
+				}
 			}
 			{
 				p.SetState(785)
@@ -9200,16 +10118,33 @@ func (p *SQLiteParser) Cte_table_name() (localctx ICte_table_nameContext) {
 
 			p.SetState(790)
 			p.GetErrorHandler().Sync(p)
+			if p.HasError() {
+				goto errorExit
+			}
 			_la = p.GetTokenStream().LA(1)
 		}
 		{
 			p.SetState(791)
 			p.Match(SQLiteParserCLOSE_PAR)
+			if p.HasError() {
+				// Recognition error - abort rule
+				goto errorExit
+			}
 		}
 
 	}
 
+errorExit:
+	if p.HasError() {
+		v := p.GetError()
+		localctx.SetException(v)
+		p.GetErrorHandler().ReportError(p, v)
+		p.GetErrorHandler().Recover(p, v)
+		p.SetError(nil)
+	}
+	p.ExitRule()
 	return localctx
+	goto errorExit // Trick to prevent compiler error if the label is not used
 }
 
 // IRecursive_cteContext is an interface to support dynamic dispatch.
@@ -9234,15 +10169,20 @@ type IRecursive_cteContext interface {
 }
 
 type Recursive_cteContext struct {
-	*antlr.BaseParserRuleContext
+	antlr.BaseParserRuleContext
 	parser antlr.Parser
 }
 
 func NewEmptyRecursive_cteContext() *Recursive_cteContext {
 	var p = new(Recursive_cteContext)
-	p.BaseParserRuleContext = antlr.NewBaseParserRuleContext(nil, -1)
+	antlr.InitBaseParserRuleContext(&p.BaseParserRuleContext, nil, -1)
 	p.RuleIndex = SQLiteParserRULE_recursive_cte
 	return p
+}
+
+func InitEmptyRecursive_cteContext(p *Recursive_cteContext) {
+	antlr.InitBaseParserRuleContext(&p.BaseParserRuleContext, nil, -1)
+	p.RuleIndex = SQLiteParserRULE_recursive_cte
 }
 
 func (*Recursive_cteContext) IsRecursive_cteContext() {}
@@ -9250,7 +10190,7 @@ func (*Recursive_cteContext) IsRecursive_cteContext() {}
 func NewRecursive_cteContext(parser antlr.Parser, parent antlr.ParserRuleContext, invokingState int) *Recursive_cteContext {
 	var p = new(Recursive_cteContext)
 
-	p.BaseParserRuleContext = antlr.NewBaseParserRuleContext(parent, invokingState)
+	antlr.InitBaseParserRuleContext(&p.BaseParserRuleContext, parent, invokingState)
 
 	p.parser = parser
 	p.RuleIndex = SQLiteParserRULE_recursive_cte
@@ -9349,28 +10289,9 @@ func (s *Recursive_cteContext) ExitRule(listener antlr.ParseTreeListener) {
 }
 
 func (p *SQLiteParser) Recursive_cte() (localctx IRecursive_cteContext) {
-	this := p
-	_ = this
-
 	localctx = NewRecursive_cteContext(p, p.GetParserRuleContext(), p.GetState())
 	p.EnterRule(localctx, 52, SQLiteParserRULE_recursive_cte)
 	var _la int
-
-	defer func() {
-		p.ExitRule()
-	}()
-
-	defer func() {
-		if err := recover(); err != nil {
-			if v, ok := err.(antlr.RecognitionException); ok {
-				localctx.SetException(v)
-				p.GetErrorHandler().ReportError(p, v)
-				p.GetErrorHandler().Recover(p, v)
-			} else {
-				panic(err)
-			}
-		}
-	}()
 
 	p.EnterOuterAlt(localctx, 1)
 	{
@@ -9380,10 +10301,18 @@ func (p *SQLiteParser) Recursive_cte() (localctx IRecursive_cteContext) {
 	{
 		p.SetState(796)
 		p.Match(SQLiteParserAS_)
+		if p.HasError() {
+			// Recognition error - abort rule
+			goto errorExit
+		}
 	}
 	{
 		p.SetState(797)
 		p.Match(SQLiteParserOPEN_PAR)
+		if p.HasError() {
+			// Recognition error - abort rule
+			goto errorExit
+		}
 	}
 	{
 		p.SetState(798)
@@ -9392,15 +10321,26 @@ func (p *SQLiteParser) Recursive_cte() (localctx IRecursive_cteContext) {
 	{
 		p.SetState(799)
 		p.Match(SQLiteParserUNION_)
+		if p.HasError() {
+			// Recognition error - abort rule
+			goto errorExit
+		}
 	}
 	p.SetState(801)
 	p.GetErrorHandler().Sync(p)
+	if p.HasError() {
+		goto errorExit
+	}
 	_la = p.GetTokenStream().LA(1)
 
 	if _la == SQLiteParserALL_ {
 		{
 			p.SetState(800)
 			p.Match(SQLiteParserALL_)
+			if p.HasError() {
+				// Recognition error - abort rule
+				goto errorExit
+			}
 		}
 
 	}
@@ -9411,9 +10351,23 @@ func (p *SQLiteParser) Recursive_cte() (localctx IRecursive_cteContext) {
 	{
 		p.SetState(804)
 		p.Match(SQLiteParserCLOSE_PAR)
+		if p.HasError() {
+			// Recognition error - abort rule
+			goto errorExit
+		}
 	}
 
+errorExit:
+	if p.HasError() {
+		v := p.GetError()
+		localctx.SetException(v)
+		p.GetErrorHandler().ReportError(p, v)
+		p.GetErrorHandler().Recover(p, v)
+		p.SetError(nil)
+	}
+	p.ExitRule()
 	return localctx
+	goto errorExit // Trick to prevent compiler error if the label is not used
 }
 
 // ICommon_table_expressionContext is an interface to support dynamic dispatch.
@@ -9441,15 +10395,20 @@ type ICommon_table_expressionContext interface {
 }
 
 type Common_table_expressionContext struct {
-	*antlr.BaseParserRuleContext
+	antlr.BaseParserRuleContext
 	parser antlr.Parser
 }
 
 func NewEmptyCommon_table_expressionContext() *Common_table_expressionContext {
 	var p = new(Common_table_expressionContext)
-	p.BaseParserRuleContext = antlr.NewBaseParserRuleContext(nil, -1)
+	antlr.InitBaseParserRuleContext(&p.BaseParserRuleContext, nil, -1)
 	p.RuleIndex = SQLiteParserRULE_common_table_expression
 	return p
+}
+
+func InitEmptyCommon_table_expressionContext(p *Common_table_expressionContext) {
+	antlr.InitBaseParserRuleContext(&p.BaseParserRuleContext, nil, -1)
+	p.RuleIndex = SQLiteParserRULE_common_table_expression
 }
 
 func (*Common_table_expressionContext) IsCommon_table_expressionContext() {}
@@ -9457,7 +10416,7 @@ func (*Common_table_expressionContext) IsCommon_table_expressionContext() {}
 func NewCommon_table_expressionContext(parser antlr.Parser, parent antlr.ParserRuleContext, invokingState int) *Common_table_expressionContext {
 	var p = new(Common_table_expressionContext)
 
-	p.BaseParserRuleContext = antlr.NewBaseParserRuleContext(parent, invokingState)
+	antlr.InitBaseParserRuleContext(&p.BaseParserRuleContext, parent, invokingState)
 
 	p.parser = parser
 	p.RuleIndex = SQLiteParserRULE_common_table_expression
@@ -9589,28 +10548,9 @@ func (s *Common_table_expressionContext) ExitRule(listener antlr.ParseTreeListen
 }
 
 func (p *SQLiteParser) Common_table_expression() (localctx ICommon_table_expressionContext) {
-	this := p
-	_ = this
-
 	localctx = NewCommon_table_expressionContext(p, p.GetParserRuleContext(), p.GetState())
 	p.EnterRule(localctx, 54, SQLiteParserRULE_common_table_expression)
 	var _la int
-
-	defer func() {
-		p.ExitRule()
-	}()
-
-	defer func() {
-		if err := recover(); err != nil {
-			if v, ok := err.(antlr.RecognitionException); ok {
-				localctx.SetException(v)
-				p.GetErrorHandler().ReportError(p, v)
-				p.GetErrorHandler().Recover(p, v)
-			} else {
-				panic(err)
-			}
-		}
-	}()
 
 	p.EnterOuterAlt(localctx, 1)
 	{
@@ -9619,12 +10559,19 @@ func (p *SQLiteParser) Common_table_expression() (localctx ICommon_table_express
 	}
 	p.SetState(818)
 	p.GetErrorHandler().Sync(p)
+	if p.HasError() {
+		goto errorExit
+	}
 	_la = p.GetTokenStream().LA(1)
 
 	if _la == SQLiteParserOPEN_PAR {
 		{
 			p.SetState(807)
 			p.Match(SQLiteParserOPEN_PAR)
+			if p.HasError() {
+				// Recognition error - abort rule
+				goto errorExit
+			}
 		}
 		{
 			p.SetState(808)
@@ -9632,12 +10579,19 @@ func (p *SQLiteParser) Common_table_expression() (localctx ICommon_table_express
 		}
 		p.SetState(813)
 		p.GetErrorHandler().Sync(p)
+		if p.HasError() {
+			goto errorExit
+		}
 		_la = p.GetTokenStream().LA(1)
 
 		for _la == SQLiteParserCOMMA {
 			{
 				p.SetState(809)
 				p.Match(SQLiteParserCOMMA)
+				if p.HasError() {
+					// Recognition error - abort rule
+					goto errorExit
+				}
 			}
 			{
 				p.SetState(810)
@@ -9646,21 +10600,36 @@ func (p *SQLiteParser) Common_table_expression() (localctx ICommon_table_express
 
 			p.SetState(815)
 			p.GetErrorHandler().Sync(p)
+			if p.HasError() {
+				goto errorExit
+			}
 			_la = p.GetTokenStream().LA(1)
 		}
 		{
 			p.SetState(816)
 			p.Match(SQLiteParserCLOSE_PAR)
+			if p.HasError() {
+				// Recognition error - abort rule
+				goto errorExit
+			}
 		}
 
 	}
 	{
 		p.SetState(820)
 		p.Match(SQLiteParserAS_)
+		if p.HasError() {
+			// Recognition error - abort rule
+			goto errorExit
+		}
 	}
 	{
 		p.SetState(821)
 		p.Match(SQLiteParserOPEN_PAR)
+		if p.HasError() {
+			// Recognition error - abort rule
+			goto errorExit
+		}
 	}
 	{
 		p.SetState(822)
@@ -9669,9 +10638,23 @@ func (p *SQLiteParser) Common_table_expression() (localctx ICommon_table_express
 	{
 		p.SetState(823)
 		p.Match(SQLiteParserCLOSE_PAR)
+		if p.HasError() {
+			// Recognition error - abort rule
+			goto errorExit
+		}
 	}
 
+errorExit:
+	if p.HasError() {
+		v := p.GetError()
+		localctx.SetException(v)
+		p.GetErrorHandler().ReportError(p, v)
+		p.GetErrorHandler().Recover(p, v)
+		p.SetError(nil)
+	}
+	p.ExitRule()
 	return localctx
+	goto errorExit // Trick to prevent compiler error if the label is not used
 }
 
 // IDelete_stmtContext is an interface to support dynamic dispatch.
@@ -9695,15 +10678,20 @@ type IDelete_stmtContext interface {
 }
 
 type Delete_stmtContext struct {
-	*antlr.BaseParserRuleContext
+	antlr.BaseParserRuleContext
 	parser antlr.Parser
 }
 
 func NewEmptyDelete_stmtContext() *Delete_stmtContext {
 	var p = new(Delete_stmtContext)
-	p.BaseParserRuleContext = antlr.NewBaseParserRuleContext(nil, -1)
+	antlr.InitBaseParserRuleContext(&p.BaseParserRuleContext, nil, -1)
 	p.RuleIndex = SQLiteParserRULE_delete_stmt
 	return p
+}
+
+func InitEmptyDelete_stmtContext(p *Delete_stmtContext) {
+	antlr.InitBaseParserRuleContext(&p.BaseParserRuleContext, nil, -1)
+	p.RuleIndex = SQLiteParserRULE_delete_stmt
 }
 
 func (*Delete_stmtContext) IsDelete_stmtContext() {}
@@ -9711,7 +10699,7 @@ func (*Delete_stmtContext) IsDelete_stmtContext() {}
 func NewDelete_stmtContext(parser antlr.Parser, parent antlr.ParserRuleContext, invokingState int) *Delete_stmtContext {
 	var p = new(Delete_stmtContext)
 
-	p.BaseParserRuleContext = antlr.NewBaseParserRuleContext(parent, invokingState)
+	antlr.InitBaseParserRuleContext(&p.BaseParserRuleContext, parent, invokingState)
 
 	p.parser = parser
 	p.RuleIndex = SQLiteParserRULE_delete_stmt
@@ -9818,32 +10806,16 @@ func (s *Delete_stmtContext) ExitRule(listener antlr.ParseTreeListener) {
 }
 
 func (p *SQLiteParser) Delete_stmt() (localctx IDelete_stmtContext) {
-	this := p
-	_ = this
-
 	localctx = NewDelete_stmtContext(p, p.GetParserRuleContext(), p.GetState())
 	p.EnterRule(localctx, 56, SQLiteParserRULE_delete_stmt)
 	var _la int
 
-	defer func() {
-		p.ExitRule()
-	}()
-
-	defer func() {
-		if err := recover(); err != nil {
-			if v, ok := err.(antlr.RecognitionException); ok {
-				localctx.SetException(v)
-				p.GetErrorHandler().ReportError(p, v)
-				p.GetErrorHandler().Recover(p, v)
-			} else {
-				panic(err)
-			}
-		}
-	}()
-
 	p.EnterOuterAlt(localctx, 1)
 	p.SetState(826)
 	p.GetErrorHandler().Sync(p)
+	if p.HasError() {
+		goto errorExit
+	}
 	_la = p.GetTokenStream().LA(1)
 
 	if _la == SQLiteParserWITH_ {
@@ -9856,10 +10828,18 @@ func (p *SQLiteParser) Delete_stmt() (localctx IDelete_stmtContext) {
 	{
 		p.SetState(828)
 		p.Match(SQLiteParserDELETE_)
+		if p.HasError() {
+			// Recognition error - abort rule
+			goto errorExit
+		}
 	}
 	{
 		p.SetState(829)
 		p.Match(SQLiteParserFROM_)
+		if p.HasError() {
+			// Recognition error - abort rule
+			goto errorExit
+		}
 	}
 	{
 		p.SetState(830)
@@ -9867,12 +10847,19 @@ func (p *SQLiteParser) Delete_stmt() (localctx IDelete_stmtContext) {
 	}
 	p.SetState(833)
 	p.GetErrorHandler().Sync(p)
+	if p.HasError() {
+		goto errorExit
+	}
 	_la = p.GetTokenStream().LA(1)
 
 	if _la == SQLiteParserWHERE_ {
 		{
 			p.SetState(831)
 			p.Match(SQLiteParserWHERE_)
+			if p.HasError() {
+				// Recognition error - abort rule
+				goto errorExit
+			}
 		}
 		{
 			p.SetState(832)
@@ -9882,6 +10869,9 @@ func (p *SQLiteParser) Delete_stmt() (localctx IDelete_stmtContext) {
 	}
 	p.SetState(836)
 	p.GetErrorHandler().Sync(p)
+	if p.HasError() {
+		goto errorExit
+	}
 	_la = p.GetTokenStream().LA(1)
 
 	if _la == SQLiteParserRETURNING_ {
@@ -9892,7 +10882,17 @@ func (p *SQLiteParser) Delete_stmt() (localctx IDelete_stmtContext) {
 
 	}
 
+errorExit:
+	if p.HasError() {
+		v := p.GetError()
+		localctx.SetException(v)
+		p.GetErrorHandler().ReportError(p, v)
+		p.GetErrorHandler().Recover(p, v)
+		p.SetError(nil)
+	}
+	p.ExitRule()
 	return localctx
+	goto errorExit // Trick to prevent compiler error if the label is not used
 }
 
 // IDelete_stmt_limitedContext is an interface to support dynamic dispatch.
@@ -9918,15 +10918,20 @@ type IDelete_stmt_limitedContext interface {
 }
 
 type Delete_stmt_limitedContext struct {
-	*antlr.BaseParserRuleContext
+	antlr.BaseParserRuleContext
 	parser antlr.Parser
 }
 
 func NewEmptyDelete_stmt_limitedContext() *Delete_stmt_limitedContext {
 	var p = new(Delete_stmt_limitedContext)
-	p.BaseParserRuleContext = antlr.NewBaseParserRuleContext(nil, -1)
+	antlr.InitBaseParserRuleContext(&p.BaseParserRuleContext, nil, -1)
 	p.RuleIndex = SQLiteParserRULE_delete_stmt_limited
 	return p
+}
+
+func InitEmptyDelete_stmt_limitedContext(p *Delete_stmt_limitedContext) {
+	antlr.InitBaseParserRuleContext(&p.BaseParserRuleContext, nil, -1)
+	p.RuleIndex = SQLiteParserRULE_delete_stmt_limited
 }
 
 func (*Delete_stmt_limitedContext) IsDelete_stmt_limitedContext() {}
@@ -9934,7 +10939,7 @@ func (*Delete_stmt_limitedContext) IsDelete_stmt_limitedContext() {}
 func NewDelete_stmt_limitedContext(parser antlr.Parser, parent antlr.ParserRuleContext, invokingState int) *Delete_stmt_limitedContext {
 	var p = new(Delete_stmt_limitedContext)
 
-	p.BaseParserRuleContext = antlr.NewBaseParserRuleContext(parent, invokingState)
+	antlr.InitBaseParserRuleContext(&p.BaseParserRuleContext, parent, invokingState)
 
 	p.parser = parser
 	p.RuleIndex = SQLiteParserRULE_delete_stmt_limited
@@ -10073,32 +11078,16 @@ func (s *Delete_stmt_limitedContext) ExitRule(listener antlr.ParseTreeListener) 
 }
 
 func (p *SQLiteParser) Delete_stmt_limited() (localctx IDelete_stmt_limitedContext) {
-	this := p
-	_ = this
-
 	localctx = NewDelete_stmt_limitedContext(p, p.GetParserRuleContext(), p.GetState())
 	p.EnterRule(localctx, 58, SQLiteParserRULE_delete_stmt_limited)
 	var _la int
 
-	defer func() {
-		p.ExitRule()
-	}()
-
-	defer func() {
-		if err := recover(); err != nil {
-			if v, ok := err.(antlr.RecognitionException); ok {
-				localctx.SetException(v)
-				p.GetErrorHandler().ReportError(p, v)
-				p.GetErrorHandler().Recover(p, v)
-			} else {
-				panic(err)
-			}
-		}
-	}()
-
 	p.EnterOuterAlt(localctx, 1)
 	p.SetState(839)
 	p.GetErrorHandler().Sync(p)
+	if p.HasError() {
+		goto errorExit
+	}
 	_la = p.GetTokenStream().LA(1)
 
 	if _la == SQLiteParserWITH_ {
@@ -10111,10 +11100,18 @@ func (p *SQLiteParser) Delete_stmt_limited() (localctx IDelete_stmt_limitedConte
 	{
 		p.SetState(841)
 		p.Match(SQLiteParserDELETE_)
+		if p.HasError() {
+			// Recognition error - abort rule
+			goto errorExit
+		}
 	}
 	{
 		p.SetState(842)
 		p.Match(SQLiteParserFROM_)
+		if p.HasError() {
+			// Recognition error - abort rule
+			goto errorExit
+		}
 	}
 	{
 		p.SetState(843)
@@ -10122,12 +11119,19 @@ func (p *SQLiteParser) Delete_stmt_limited() (localctx IDelete_stmt_limitedConte
 	}
 	p.SetState(846)
 	p.GetErrorHandler().Sync(p)
+	if p.HasError() {
+		goto errorExit
+	}
 	_la = p.GetTokenStream().LA(1)
 
 	if _la == SQLiteParserWHERE_ {
 		{
 			p.SetState(844)
 			p.Match(SQLiteParserWHERE_)
+			if p.HasError() {
+				// Recognition error - abort rule
+				goto errorExit
+			}
 		}
 		{
 			p.SetState(845)
@@ -10137,6 +11141,9 @@ func (p *SQLiteParser) Delete_stmt_limited() (localctx IDelete_stmt_limitedConte
 	}
 	p.SetState(849)
 	p.GetErrorHandler().Sync(p)
+	if p.HasError() {
+		goto errorExit
+	}
 	_la = p.GetTokenStream().LA(1)
 
 	if _la == SQLiteParserRETURNING_ {
@@ -10148,11 +11155,17 @@ func (p *SQLiteParser) Delete_stmt_limited() (localctx IDelete_stmt_limitedConte
 	}
 	p.SetState(855)
 	p.GetErrorHandler().Sync(p)
+	if p.HasError() {
+		goto errorExit
+	}
 	_la = p.GetTokenStream().LA(1)
 
 	if _la == SQLiteParserLIMIT_ || _la == SQLiteParserORDER_ {
 		p.SetState(852)
 		p.GetErrorHandler().Sync(p)
+		if p.HasError() {
+			goto errorExit
+		}
 		_la = p.GetTokenStream().LA(1)
 
 		if _la == SQLiteParserORDER_ {
@@ -10169,7 +11182,17 @@ func (p *SQLiteParser) Delete_stmt_limited() (localctx IDelete_stmt_limitedConte
 
 	}
 
+errorExit:
+	if p.HasError() {
+		v := p.GetError()
+		localctx.SetException(v)
+		p.GetErrorHandler().ReportError(p, v)
+		p.GetErrorHandler().Recover(p, v)
+		p.SetError(nil)
+	}
+	p.ExitRule()
 	return localctx
+	goto errorExit // Trick to prevent compiler error if the label is not used
 }
 
 // IDetach_stmtContext is an interface to support dynamic dispatch.
@@ -10189,15 +11212,20 @@ type IDetach_stmtContext interface {
 }
 
 type Detach_stmtContext struct {
-	*antlr.BaseParserRuleContext
+	antlr.BaseParserRuleContext
 	parser antlr.Parser
 }
 
 func NewEmptyDetach_stmtContext() *Detach_stmtContext {
 	var p = new(Detach_stmtContext)
-	p.BaseParserRuleContext = antlr.NewBaseParserRuleContext(nil, -1)
+	antlr.InitBaseParserRuleContext(&p.BaseParserRuleContext, nil, -1)
 	p.RuleIndex = SQLiteParserRULE_detach_stmt
 	return p
+}
+
+func InitEmptyDetach_stmtContext(p *Detach_stmtContext) {
+	antlr.InitBaseParserRuleContext(&p.BaseParserRuleContext, nil, -1)
+	p.RuleIndex = SQLiteParserRULE_detach_stmt
 }
 
 func (*Detach_stmtContext) IsDetach_stmtContext() {}
@@ -10205,7 +11233,7 @@ func (*Detach_stmtContext) IsDetach_stmtContext() {}
 func NewDetach_stmtContext(parser antlr.Parser, parent antlr.ParserRuleContext, invokingState int) *Detach_stmtContext {
 	var p = new(Detach_stmtContext)
 
-	p.BaseParserRuleContext = antlr.NewBaseParserRuleContext(parent, invokingState)
+	antlr.InitBaseParserRuleContext(&p.BaseParserRuleContext, parent, invokingState)
 
 	p.parser = parser
 	p.RuleIndex = SQLiteParserRULE_detach_stmt
@@ -10260,49 +11288,49 @@ func (s *Detach_stmtContext) ExitRule(listener antlr.ParseTreeListener) {
 }
 
 func (p *SQLiteParser) Detach_stmt() (localctx IDetach_stmtContext) {
-	this := p
-	_ = this
-
 	localctx = NewDetach_stmtContext(p, p.GetParserRuleContext(), p.GetState())
 	p.EnterRule(localctx, 60, SQLiteParserRULE_detach_stmt)
-
-	defer func() {
-		p.ExitRule()
-	}()
-
-	defer func() {
-		if err := recover(); err != nil {
-			if v, ok := err.(antlr.RecognitionException); ok {
-				localctx.SetException(v)
-				p.GetErrorHandler().ReportError(p, v)
-				p.GetErrorHandler().Recover(p, v)
-			} else {
-				panic(err)
-			}
-		}
-	}()
-
 	p.EnterOuterAlt(localctx, 1)
 	{
 		p.SetState(857)
 		p.Match(SQLiteParserDETACH_)
+		if p.HasError() {
+			// Recognition error - abort rule
+			goto errorExit
+		}
 	}
 	p.SetState(859)
 	p.GetErrorHandler().Sync(p)
 
-	if p.GetInterpreter().AdaptivePredict(p.GetTokenStream(), 105, p.GetParserRuleContext()) == 1 {
+	if p.GetInterpreter().AdaptivePredict(p.BaseParser, p.GetTokenStream(), 105, p.GetParserRuleContext()) == 1 {
 		{
 			p.SetState(858)
 			p.Match(SQLiteParserDATABASE_)
+			if p.HasError() {
+				// Recognition error - abort rule
+				goto errorExit
+			}
 		}
 
+	} else if p.HasError() { // JIM
+		goto errorExit
 	}
 	{
 		p.SetState(861)
 		p.Schema_name()
 	}
 
+errorExit:
+	if p.HasError() {
+		v := p.GetError()
+		localctx.SetException(v)
+		p.GetErrorHandler().ReportError(p, v)
+		p.GetErrorHandler().Recover(p, v)
+		p.SetError(nil)
+	}
+	p.ExitRule()
 	return localctx
+	goto errorExit // Trick to prevent compiler error if the label is not used
 }
 
 // IDrop_stmtContext is an interface to support dynamic dispatch.
@@ -10335,16 +11363,21 @@ type IDrop_stmtContext interface {
 }
 
 type Drop_stmtContext struct {
-	*antlr.BaseParserRuleContext
+	antlr.BaseParserRuleContext
 	parser antlr.Parser
 	object antlr.Token
 }
 
 func NewEmptyDrop_stmtContext() *Drop_stmtContext {
 	var p = new(Drop_stmtContext)
-	p.BaseParserRuleContext = antlr.NewBaseParserRuleContext(nil, -1)
+	antlr.InitBaseParserRuleContext(&p.BaseParserRuleContext, nil, -1)
 	p.RuleIndex = SQLiteParserRULE_drop_stmt
 	return p
+}
+
+func InitEmptyDrop_stmtContext(p *Drop_stmtContext) {
+	antlr.InitBaseParserRuleContext(&p.BaseParserRuleContext, nil, -1)
+	p.RuleIndex = SQLiteParserRULE_drop_stmt
 }
 
 func (*Drop_stmtContext) IsDrop_stmtContext() {}
@@ -10352,7 +11385,7 @@ func (*Drop_stmtContext) IsDrop_stmtContext() {}
 func NewDrop_stmtContext(parser antlr.Parser, parent antlr.ParserRuleContext, invokingState int) *Drop_stmtContext {
 	var p = new(Drop_stmtContext)
 
-	p.BaseParserRuleContext = antlr.NewBaseParserRuleContext(parent, invokingState)
+	antlr.InitBaseParserRuleContext(&p.BaseParserRuleContext, parent, invokingState)
 
 	p.parser = parser
 	p.RuleIndex = SQLiteParserRULE_drop_stmt
@@ -10451,33 +11484,18 @@ func (s *Drop_stmtContext) ExitRule(listener antlr.ParseTreeListener) {
 }
 
 func (p *SQLiteParser) Drop_stmt() (localctx IDrop_stmtContext) {
-	this := p
-	_ = this
-
 	localctx = NewDrop_stmtContext(p, p.GetParserRuleContext(), p.GetState())
 	p.EnterRule(localctx, 62, SQLiteParserRULE_drop_stmt)
 	var _la int
-
-	defer func() {
-		p.ExitRule()
-	}()
-
-	defer func() {
-		if err := recover(); err != nil {
-			if v, ok := err.(antlr.RecognitionException); ok {
-				localctx.SetException(v)
-				p.GetErrorHandler().ReportError(p, v)
-				p.GetErrorHandler().Recover(p, v)
-			} else {
-				panic(err)
-			}
-		}
-	}()
 
 	p.EnterOuterAlt(localctx, 1)
 	{
 		p.SetState(863)
 		p.Match(SQLiteParserDROP_)
+		if p.HasError() {
+			// Recognition error - abort rule
+			goto errorExit
+		}
 	}
 	{
 		p.SetState(864)
@@ -10500,21 +11518,31 @@ func (p *SQLiteParser) Drop_stmt() (localctx IDrop_stmtContext) {
 	p.SetState(867)
 	p.GetErrorHandler().Sync(p)
 
-	if p.GetInterpreter().AdaptivePredict(p.GetTokenStream(), 106, p.GetParserRuleContext()) == 1 {
+	if p.GetInterpreter().AdaptivePredict(p.BaseParser, p.GetTokenStream(), 106, p.GetParserRuleContext()) == 1 {
 		{
 			p.SetState(865)
 			p.Match(SQLiteParserIF_)
+			if p.HasError() {
+				// Recognition error - abort rule
+				goto errorExit
+			}
 		}
 		{
 			p.SetState(866)
 			p.Match(SQLiteParserEXISTS_)
+			if p.HasError() {
+				// Recognition error - abort rule
+				goto errorExit
+			}
 		}
 
+	} else if p.HasError() { // JIM
+		goto errorExit
 	}
 	p.SetState(872)
 	p.GetErrorHandler().Sync(p)
 
-	if p.GetInterpreter().AdaptivePredict(p.GetTokenStream(), 107, p.GetParserRuleContext()) == 1 {
+	if p.GetInterpreter().AdaptivePredict(p.BaseParser, p.GetTokenStream(), 107, p.GetParserRuleContext()) == 1 {
 		{
 			p.SetState(869)
 			p.Schema_name()
@@ -10522,15 +11550,31 @@ func (p *SQLiteParser) Drop_stmt() (localctx IDrop_stmtContext) {
 		{
 			p.SetState(870)
 			p.Match(SQLiteParserDOT)
+			if p.HasError() {
+				// Recognition error - abort rule
+				goto errorExit
+			}
 		}
 
+	} else if p.HasError() { // JIM
+		goto errorExit
 	}
 	{
 		p.SetState(874)
 		p.Any_name()
 	}
 
+errorExit:
+	if p.HasError() {
+		v := p.GetError()
+		localctx.SetException(v)
+		p.GetErrorHandler().ReportError(p, v)
+		p.GetErrorHandler().Recover(p, v)
+		p.SetError(nil)
+	}
+	p.ExitRule()
 	return localctx
+	goto errorExit // Trick to prevent compiler error if the label is not used
 }
 
 // IExprContext is an interface to support dynamic dispatch.
@@ -10613,15 +11657,20 @@ type IExprContext interface {
 }
 
 type ExprContext struct {
-	*antlr.BaseParserRuleContext
+	antlr.BaseParserRuleContext
 	parser antlr.Parser
 }
 
 func NewEmptyExprContext() *ExprContext {
 	var p = new(ExprContext)
-	p.BaseParserRuleContext = antlr.NewBaseParserRuleContext(nil, -1)
+	antlr.InitBaseParserRuleContext(&p.BaseParserRuleContext, nil, -1)
 	p.RuleIndex = SQLiteParserRULE_expr
 	return p
+}
+
+func InitEmptyExprContext(p *ExprContext) {
+	antlr.InitBaseParserRuleContext(&p.BaseParserRuleContext, nil, -1)
+	p.RuleIndex = SQLiteParserRULE_expr
 }
 
 func (*ExprContext) IsExprContext() {}
@@ -10629,7 +11678,7 @@ func (*ExprContext) IsExprContext() {}
 func NewExprContext(parser antlr.Parser, parent antlr.ParserRuleContext, invokingState int) *ExprContext {
 	var p = new(ExprContext)
 
-	p.BaseParserRuleContext = antlr.NewBaseParserRuleContext(parent, invokingState)
+	antlr.InitBaseParserRuleContext(&p.BaseParserRuleContext, parent, invokingState)
 
 	p.parser = parser
 	p.RuleIndex = SQLiteParserRULE_expr
@@ -11117,10 +12166,8 @@ func (p *SQLiteParser) Expr() (localctx IExprContext) {
 }
 
 func (p *SQLiteParser) expr(_p int) (localctx IExprContext) {
-	this := p
-	_ = this
-
 	var _parentctx antlr.ParserRuleContext = p.GetParserRuleContext()
+
 	_parentState := p.GetState()
 	localctx = NewExprContext(p, p.GetParserRuleContext(), _parentState)
 	var _prevctx IExprContext = localctx
@@ -11129,28 +12176,16 @@ func (p *SQLiteParser) expr(_p int) (localctx IExprContext) {
 	p.EnterRecursionRule(localctx, 64, SQLiteParserRULE_expr, _p)
 	var _la int
 
-	defer func() {
-		p.UnrollRecursionContexts(_parentctx)
-	}()
-
-	defer func() {
-		if err := recover(); err != nil {
-			if v, ok := err.(antlr.RecognitionException); ok {
-				localctx.SetException(v)
-				p.GetErrorHandler().ReportError(p, v)
-				p.GetErrorHandler().Recover(p, v)
-			} else {
-				panic(err)
-			}
-		}
-	}()
-
 	var _alt int
 
 	p.EnterOuterAlt(localctx, 1)
 	p.SetState(964)
 	p.GetErrorHandler().Sync(p)
-	switch p.GetInterpreter().AdaptivePredict(p.GetTokenStream(), 121, p.GetParserRuleContext()) {
+	if p.HasError() {
+		goto errorExit
+	}
+
+	switch p.GetInterpreter().AdaptivePredict(p.BaseParser, p.GetTokenStream(), 121, p.GetParserRuleContext()) {
 	case 1:
 		{
 			p.SetState(877)
@@ -11161,17 +12196,21 @@ func (p *SQLiteParser) expr(_p int) (localctx IExprContext) {
 		{
 			p.SetState(878)
 			p.Match(SQLiteParserBIND_PARAMETER)
+			if p.HasError() {
+				// Recognition error - abort rule
+				goto errorExit
+			}
 		}
 
 	case 3:
 		p.SetState(887)
 		p.GetErrorHandler().Sync(p)
 
-		if p.GetInterpreter().AdaptivePredict(p.GetTokenStream(), 109, p.GetParserRuleContext()) == 1 {
+		if p.GetInterpreter().AdaptivePredict(p.BaseParser, p.GetTokenStream(), 109, p.GetParserRuleContext()) == 1 {
 			p.SetState(882)
 			p.GetErrorHandler().Sync(p)
 
-			if p.GetInterpreter().AdaptivePredict(p.GetTokenStream(), 108, p.GetParserRuleContext()) == 1 {
+			if p.GetInterpreter().AdaptivePredict(p.BaseParser, p.GetTokenStream(), 108, p.GetParserRuleContext()) == 1 {
 				{
 					p.SetState(879)
 					p.Schema_name()
@@ -11179,8 +12218,14 @@ func (p *SQLiteParser) expr(_p int) (localctx IExprContext) {
 				{
 					p.SetState(880)
 					p.Match(SQLiteParserDOT)
+					if p.HasError() {
+						// Recognition error - abort rule
+						goto errorExit
+					}
 				}
 
+			} else if p.HasError() { // JIM
+				goto errorExit
 			}
 			{
 				p.SetState(884)
@@ -11189,8 +12234,14 @@ func (p *SQLiteParser) expr(_p int) (localctx IExprContext) {
 			{
 				p.SetState(885)
 				p.Match(SQLiteParserDOT)
+				if p.HasError() {
+					// Recognition error - abort rule
+					goto errorExit
+				}
 			}
 
+		} else if p.HasError() { // JIM
+			goto errorExit
 		}
 		{
 			p.SetState(889)
@@ -11215,21 +12266,33 @@ func (p *SQLiteParser) expr(_p int) (localctx IExprContext) {
 		{
 			p.SetState(894)
 			p.Match(SQLiteParserOPEN_PAR)
+			if p.HasError() {
+				// Recognition error - abort rule
+				goto errorExit
+			}
 		}
 		p.SetState(907)
 		p.GetErrorHandler().Sync(p)
-
+		if p.HasError() {
+			goto errorExit
+		}
 		switch p.GetTokenStream().LA(1) {
 		case SQLiteParserOPEN_PAR, SQLiteParserPLUS, SQLiteParserMINUS, SQLiteParserTILDE, SQLiteParserABORT_, SQLiteParserACTION_, SQLiteParserADD_, SQLiteParserAFTER_, SQLiteParserALL_, SQLiteParserALTER_, SQLiteParserANALYZE_, SQLiteParserAND_, SQLiteParserAS_, SQLiteParserASC_, SQLiteParserATTACH_, SQLiteParserAUTOINCREMENT_, SQLiteParserBEFORE_, SQLiteParserBEGIN_, SQLiteParserBETWEEN_, SQLiteParserBY_, SQLiteParserCASCADE_, SQLiteParserCASE_, SQLiteParserCAST_, SQLiteParserCHECK_, SQLiteParserCOLLATE_, SQLiteParserCOLUMN_, SQLiteParserCOMMIT_, SQLiteParserCONFLICT_, SQLiteParserCONSTRAINT_, SQLiteParserCREATE_, SQLiteParserCROSS_, SQLiteParserCURRENT_DATE_, SQLiteParserCURRENT_TIME_, SQLiteParserCURRENT_TIMESTAMP_, SQLiteParserDATABASE_, SQLiteParserDEFAULT_, SQLiteParserDEFERRABLE_, SQLiteParserDEFERRED_, SQLiteParserDELETE_, SQLiteParserDESC_, SQLiteParserDETACH_, SQLiteParserDISTINCT_, SQLiteParserDROP_, SQLiteParserEACH_, SQLiteParserELSE_, SQLiteParserEND_, SQLiteParserESCAPE_, SQLiteParserEXCEPT_, SQLiteParserEXCLUSIVE_, SQLiteParserEXISTS_, SQLiteParserEXPLAIN_, SQLiteParserFAIL_, SQLiteParserFOR_, SQLiteParserFOREIGN_, SQLiteParserFROM_, SQLiteParserFULL_, SQLiteParserGLOB_, SQLiteParserGROUP_, SQLiteParserHAVING_, SQLiteParserIF_, SQLiteParserIGNORE_, SQLiteParserIMMEDIATE_, SQLiteParserIN_, SQLiteParserINDEX_, SQLiteParserINDEXED_, SQLiteParserINITIALLY_, SQLiteParserINNER_, SQLiteParserINSERT_, SQLiteParserINSTEAD_, SQLiteParserINTERSECT_, SQLiteParserINTO_, SQLiteParserIS_, SQLiteParserISNULL_, SQLiteParserJOIN_, SQLiteParserKEY_, SQLiteParserLEFT_, SQLiteParserLIKE_, SQLiteParserLIMIT_, SQLiteParserMATCH_, SQLiteParserNATURAL_, SQLiteParserNO_, SQLiteParserNOT_, SQLiteParserNOTNULL_, SQLiteParserNULL_, SQLiteParserOF_, SQLiteParserOFFSET_, SQLiteParserON_, SQLiteParserOR_, SQLiteParserORDER_, SQLiteParserOUTER_, SQLiteParserPLAN_, SQLiteParserPRAGMA_, SQLiteParserPRIMARY_, SQLiteParserQUERY_, SQLiteParserRAISE_, SQLiteParserRECURSIVE_, SQLiteParserREFERENCES_, SQLiteParserREGEXP_, SQLiteParserREINDEX_, SQLiteParserRELEASE_, SQLiteParserRENAME_, SQLiteParserREPLACE_, SQLiteParserRESTRICT_, SQLiteParserRIGHT_, SQLiteParserROLLBACK_, SQLiteParserROW_, SQLiteParserROWS_, SQLiteParserSAVEPOINT_, SQLiteParserSELECT_, SQLiteParserSET_, SQLiteParserTABLE_, SQLiteParserTEMP_, SQLiteParserTEMPORARY_, SQLiteParserTHEN_, SQLiteParserTO_, SQLiteParserTRANSACTION_, SQLiteParserTRIGGER_, SQLiteParserUNION_, SQLiteParserUNIQUE_, SQLiteParserUPDATE_, SQLiteParserUSING_, SQLiteParserVACUUM_, SQLiteParserVALUES_, SQLiteParserVIEW_, SQLiteParserVIRTUAL_, SQLiteParserWHEN_, SQLiteParserWHERE_, SQLiteParserWITH_, SQLiteParserWITHOUT_, SQLiteParserFIRST_VALUE_, SQLiteParserOVER_, SQLiteParserPARTITION_, SQLiteParserRANGE_, SQLiteParserPRECEDING_, SQLiteParserUNBOUNDED_, SQLiteParserCURRENT_, SQLiteParserFOLLOWING_, SQLiteParserCUME_DIST_, SQLiteParserDENSE_RANK_, SQLiteParserLAG_, SQLiteParserLAST_VALUE_, SQLiteParserLEAD_, SQLiteParserNTH_VALUE_, SQLiteParserNTILE_, SQLiteParserPERCENT_RANK_, SQLiteParserRANK_, SQLiteParserROW_NUMBER_, SQLiteParserGENERATED_, SQLiteParserALWAYS_, SQLiteParserSTORED_, SQLiteParserTRUE_, SQLiteParserFALSE_, SQLiteParserWINDOW_, SQLiteParserNULLS_, SQLiteParserFIRST_, SQLiteParserLAST_, SQLiteParserFILTER_, SQLiteParserGROUPS_, SQLiteParserEXCLUDE_, SQLiteParserIDENTIFIER, SQLiteParserNUMERIC_LITERAL, SQLiteParserBIND_PARAMETER, SQLiteParserSTRING_LITERAL, SQLiteParserBLOB_LITERAL:
 			p.SetState(896)
 			p.GetErrorHandler().Sync(p)
 
-			if p.GetInterpreter().AdaptivePredict(p.GetTokenStream(), 110, p.GetParserRuleContext()) == 1 {
+			if p.GetInterpreter().AdaptivePredict(p.BaseParser, p.GetTokenStream(), 110, p.GetParserRuleContext()) == 1 {
 				{
 					p.SetState(895)
 					p.Match(SQLiteParserDISTINCT_)
+					if p.HasError() {
+						// Recognition error - abort rule
+						goto errorExit
+					}
 				}
 
+			} else if p.HasError() { // JIM
+				goto errorExit
 			}
 			{
 				p.SetState(898)
@@ -11237,12 +12300,19 @@ func (p *SQLiteParser) expr(_p int) (localctx IExprContext) {
 			}
 			p.SetState(903)
 			p.GetErrorHandler().Sync(p)
+			if p.HasError() {
+				goto errorExit
+			}
 			_la = p.GetTokenStream().LA(1)
 
 			for _la == SQLiteParserCOMMA {
 				{
 					p.SetState(899)
 					p.Match(SQLiteParserCOMMA)
+					if p.HasError() {
+						// Recognition error - abort rule
+						goto errorExit
+					}
 				}
 				{
 					p.SetState(900)
@@ -11251,6 +12321,9 @@ func (p *SQLiteParser) expr(_p int) (localctx IExprContext) {
 
 				p.SetState(905)
 				p.GetErrorHandler().Sync(p)
+				if p.HasError() {
+					goto errorExit
+				}
 				_la = p.GetTokenStream().LA(1)
 			}
 
@@ -11258,6 +12331,10 @@ func (p *SQLiteParser) expr(_p int) (localctx IExprContext) {
 			{
 				p.SetState(906)
 				p.Match(SQLiteParserSTAR)
+				if p.HasError() {
+					// Recognition error - abort rule
+					goto errorExit
+				}
 			}
 
 		case SQLiteParserCLOSE_PAR:
@@ -11267,32 +12344,44 @@ func (p *SQLiteParser) expr(_p int) (localctx IExprContext) {
 		{
 			p.SetState(909)
 			p.Match(SQLiteParserCLOSE_PAR)
+			if p.HasError() {
+				// Recognition error - abort rule
+				goto errorExit
+			}
 		}
 		p.SetState(911)
 		p.GetErrorHandler().Sync(p)
 
-		if p.GetInterpreter().AdaptivePredict(p.GetTokenStream(), 113, p.GetParserRuleContext()) == 1 {
+		if p.GetInterpreter().AdaptivePredict(p.BaseParser, p.GetTokenStream(), 113, p.GetParserRuleContext()) == 1 {
 			{
 				p.SetState(910)
 				p.Filter_clause()
 			}
 
+		} else if p.HasError() { // JIM
+			goto errorExit
 		}
 		p.SetState(914)
 		p.GetErrorHandler().Sync(p)
 
-		if p.GetInterpreter().AdaptivePredict(p.GetTokenStream(), 114, p.GetParserRuleContext()) == 1 {
+		if p.GetInterpreter().AdaptivePredict(p.BaseParser, p.GetTokenStream(), 114, p.GetParserRuleContext()) == 1 {
 			{
 				p.SetState(913)
 				p.Over_clause()
 			}
 
+		} else if p.HasError() { // JIM
+			goto errorExit
 		}
 
 	case 6:
 		{
 			p.SetState(916)
 			p.Match(SQLiteParserOPEN_PAR)
+			if p.HasError() {
+				// Recognition error - abort rule
+				goto errorExit
+			}
 		}
 		{
 			p.SetState(917)
@@ -11300,12 +12389,19 @@ func (p *SQLiteParser) expr(_p int) (localctx IExprContext) {
 		}
 		p.SetState(922)
 		p.GetErrorHandler().Sync(p)
+		if p.HasError() {
+			goto errorExit
+		}
 		_la = p.GetTokenStream().LA(1)
 
 		for _la == SQLiteParserCOMMA {
 			{
 				p.SetState(918)
 				p.Match(SQLiteParserCOMMA)
+				if p.HasError() {
+					// Recognition error - abort rule
+					goto errorExit
+				}
 			}
 			{
 				p.SetState(919)
@@ -11314,21 +12410,36 @@ func (p *SQLiteParser) expr(_p int) (localctx IExprContext) {
 
 			p.SetState(924)
 			p.GetErrorHandler().Sync(p)
+			if p.HasError() {
+				goto errorExit
+			}
 			_la = p.GetTokenStream().LA(1)
 		}
 		{
 			p.SetState(925)
 			p.Match(SQLiteParserCLOSE_PAR)
+			if p.HasError() {
+				// Recognition error - abort rule
+				goto errorExit
+			}
 		}
 
 	case 7:
 		{
 			p.SetState(927)
 			p.Match(SQLiteParserCAST_)
+			if p.HasError() {
+				// Recognition error - abort rule
+				goto errorExit
+			}
 		}
 		{
 			p.SetState(928)
 			p.Match(SQLiteParserOPEN_PAR)
+			if p.HasError() {
+				// Recognition error - abort rule
+				goto errorExit
+			}
 		}
 		{
 			p.SetState(929)
@@ -11337,6 +12448,10 @@ func (p *SQLiteParser) expr(_p int) (localctx IExprContext) {
 		{
 			p.SetState(930)
 			p.Match(SQLiteParserAS_)
+			if p.HasError() {
+				// Recognition error - abort rule
+				goto errorExit
+			}
 		}
 		{
 			p.SetState(931)
@@ -11345,34 +12460,56 @@ func (p *SQLiteParser) expr(_p int) (localctx IExprContext) {
 		{
 			p.SetState(932)
 			p.Match(SQLiteParserCLOSE_PAR)
+			if p.HasError() {
+				// Recognition error - abort rule
+				goto errorExit
+			}
 		}
 
 	case 8:
 		p.SetState(938)
 		p.GetErrorHandler().Sync(p)
+		if p.HasError() {
+			goto errorExit
+		}
 		_la = p.GetTokenStream().LA(1)
 
 		if _la == SQLiteParserEXISTS_ || _la == SQLiteParserNOT_ {
 			p.SetState(935)
 			p.GetErrorHandler().Sync(p)
+			if p.HasError() {
+				goto errorExit
+			}
 			_la = p.GetTokenStream().LA(1)
 
 			if _la == SQLiteParserNOT_ {
 				{
 					p.SetState(934)
 					p.Match(SQLiteParserNOT_)
+					if p.HasError() {
+						// Recognition error - abort rule
+						goto errorExit
+					}
 				}
 
 			}
 			{
 				p.SetState(937)
 				p.Match(SQLiteParserEXISTS_)
+				if p.HasError() {
+					// Recognition error - abort rule
+					goto errorExit
+				}
 			}
 
 		}
 		{
 			p.SetState(940)
 			p.Match(SQLiteParserOPEN_PAR)
+			if p.HasError() {
+				// Recognition error - abort rule
+				goto errorExit
+			}
 		}
 		{
 			p.SetState(941)
@@ -11381,31 +12518,48 @@ func (p *SQLiteParser) expr(_p int) (localctx IExprContext) {
 		{
 			p.SetState(942)
 			p.Match(SQLiteParserCLOSE_PAR)
+			if p.HasError() {
+				// Recognition error - abort rule
+				goto errorExit
+			}
 		}
 
 	case 9:
 		{
 			p.SetState(944)
 			p.Match(SQLiteParserCASE_)
+			if p.HasError() {
+				// Recognition error - abort rule
+				goto errorExit
+			}
 		}
 		p.SetState(946)
 		p.GetErrorHandler().Sync(p)
 
-		if p.GetInterpreter().AdaptivePredict(p.GetTokenStream(), 118, p.GetParserRuleContext()) == 1 {
+		if p.GetInterpreter().AdaptivePredict(p.BaseParser, p.GetTokenStream(), 118, p.GetParserRuleContext()) == 1 {
 			{
 				p.SetState(945)
 				p.expr(0)
 			}
 
+		} else if p.HasError() { // JIM
+			goto errorExit
 		}
 		p.SetState(953)
 		p.GetErrorHandler().Sync(p)
+		if p.HasError() {
+			goto errorExit
+		}
 		_la = p.GetTokenStream().LA(1)
 
 		for ok := true; ok; ok = _la == SQLiteParserWHEN_ {
 			{
 				p.SetState(948)
 				p.Match(SQLiteParserWHEN_)
+				if p.HasError() {
+					// Recognition error - abort rule
+					goto errorExit
+				}
 			}
 			{
 				p.SetState(949)
@@ -11414,6 +12568,10 @@ func (p *SQLiteParser) expr(_p int) (localctx IExprContext) {
 			{
 				p.SetState(950)
 				p.Match(SQLiteParserTHEN_)
+				if p.HasError() {
+					// Recognition error - abort rule
+					goto errorExit
+				}
 			}
 			{
 				p.SetState(951)
@@ -11422,16 +12580,26 @@ func (p *SQLiteParser) expr(_p int) (localctx IExprContext) {
 
 			p.SetState(955)
 			p.GetErrorHandler().Sync(p)
+			if p.HasError() {
+				goto errorExit
+			}
 			_la = p.GetTokenStream().LA(1)
 		}
 		p.SetState(959)
 		p.GetErrorHandler().Sync(p)
+		if p.HasError() {
+			goto errorExit
+		}
 		_la = p.GetTokenStream().LA(1)
 
 		if _la == SQLiteParserELSE_ {
 			{
 				p.SetState(957)
 				p.Match(SQLiteParserELSE_)
+				if p.HasError() {
+					// Recognition error - abort rule
+					goto errorExit
+				}
 			}
 			{
 				p.SetState(958)
@@ -11442,6 +12610,10 @@ func (p *SQLiteParser) expr(_p int) (localctx IExprContext) {
 		{
 			p.SetState(961)
 			p.Match(SQLiteParserEND_)
+			if p.HasError() {
+				// Recognition error - abort rule
+				goto errorExit
+			}
 		}
 
 	case 10:
@@ -11450,12 +12622,19 @@ func (p *SQLiteParser) expr(_p int) (localctx IExprContext) {
 			p.Raise_function()
 		}
 
+	case antlr.ATNInvalidAltNumber:
+		goto errorExit
 	}
 	p.GetParserRuleContext().SetStop(p.GetTokenStream().LT(-1))
 	p.SetState(1085)
 	p.GetErrorHandler().Sync(p)
-	_alt = p.GetInterpreter().AdaptivePredict(p.GetTokenStream(), 137, p.GetParserRuleContext())
-
+	if p.HasError() {
+		goto errorExit
+	}
+	_alt = p.GetInterpreter().AdaptivePredict(p.BaseParser, p.GetTokenStream(), 137, p.GetParserRuleContext())
+	if p.HasError() {
+		goto errorExit
+	}
 	for _alt != 2 && _alt != antlr.ATNInvalidAltNumber {
 		if _alt == 1 {
 			if p.GetParseListeners() != nil {
@@ -11464,18 +12643,27 @@ func (p *SQLiteParser) expr(_p int) (localctx IExprContext) {
 			_prevctx = localctx
 			p.SetState(1083)
 			p.GetErrorHandler().Sync(p)
-			switch p.GetInterpreter().AdaptivePredict(p.GetTokenStream(), 136, p.GetParserRuleContext()) {
+			if p.HasError() {
+				goto errorExit
+			}
+
+			switch p.GetInterpreter().AdaptivePredict(p.BaseParser, p.GetTokenStream(), 136, p.GetParserRuleContext()) {
 			case 1:
 				localctx = NewExprContext(p, _parentctx, _parentState)
 				p.PushNewRecursionContext(localctx, _startState, SQLiteParserRULE_expr)
 				p.SetState(966)
 
 				if !(p.Precpred(p.GetParserRuleContext(), 20)) {
-					panic(antlr.NewFailedPredicateException(p, "p.Precpred(p.GetParserRuleContext(), 20)", ""))
+					p.SetError(antlr.NewFailedPredicateException(p, "p.Precpred(p.GetParserRuleContext(), 20)", ""))
+					goto errorExit
 				}
 				{
 					p.SetState(967)
 					p.Match(SQLiteParserPIPE2)
+					if p.HasError() {
+						// Recognition error - abort rule
+						goto errorExit
+					}
 				}
 				{
 					p.SetState(968)
@@ -11488,7 +12676,8 @@ func (p *SQLiteParser) expr(_p int) (localctx IExprContext) {
 				p.SetState(969)
 
 				if !(p.Precpred(p.GetParserRuleContext(), 19)) {
-					panic(antlr.NewFailedPredicateException(p, "p.Precpred(p.GetParserRuleContext(), 19)", ""))
+					p.SetError(antlr.NewFailedPredicateException(p, "p.Precpred(p.GetParserRuleContext(), 19)", ""))
+					goto errorExit
 				}
 				{
 					p.SetState(970)
@@ -11512,7 +12701,8 @@ func (p *SQLiteParser) expr(_p int) (localctx IExprContext) {
 				p.SetState(972)
 
 				if !(p.Precpred(p.GetParserRuleContext(), 18)) {
-					panic(antlr.NewFailedPredicateException(p, "p.Precpred(p.GetParserRuleContext(), 18)", ""))
+					p.SetError(antlr.NewFailedPredicateException(p, "p.Precpred(p.GetParserRuleContext(), 18)", ""))
+					goto errorExit
 				}
 				{
 					p.SetState(973)
@@ -11536,7 +12726,8 @@ func (p *SQLiteParser) expr(_p int) (localctx IExprContext) {
 				p.SetState(975)
 
 				if !(p.Precpred(p.GetParserRuleContext(), 17)) {
-					panic(antlr.NewFailedPredicateException(p, "p.Precpred(p.GetParserRuleContext(), 17)", ""))
+					p.SetError(antlr.NewFailedPredicateException(p, "p.Precpred(p.GetParserRuleContext(), 17)", ""))
+					goto errorExit
 				}
 				{
 					p.SetState(976)
@@ -11560,7 +12751,8 @@ func (p *SQLiteParser) expr(_p int) (localctx IExprContext) {
 				p.SetState(978)
 
 				if !(p.Precpred(p.GetParserRuleContext(), 16)) {
-					panic(antlr.NewFailedPredicateException(p, "p.Precpred(p.GetParserRuleContext(), 16)", ""))
+					p.SetError(antlr.NewFailedPredicateException(p, "p.Precpred(p.GetParserRuleContext(), 16)", ""))
+					goto errorExit
 				}
 				{
 					p.SetState(979)
@@ -11584,81 +12776,136 @@ func (p *SQLiteParser) expr(_p int) (localctx IExprContext) {
 				p.SetState(981)
 
 				if !(p.Precpred(p.GetParserRuleContext(), 15)) {
-					panic(antlr.NewFailedPredicateException(p, "p.Precpred(p.GetParserRuleContext(), 15)", ""))
+					p.SetError(antlr.NewFailedPredicateException(p, "p.Precpred(p.GetParserRuleContext(), 15)", ""))
+					goto errorExit
 				}
 				p.SetState(994)
 				p.GetErrorHandler().Sync(p)
-				switch p.GetInterpreter().AdaptivePredict(p.GetTokenStream(), 122, p.GetParserRuleContext()) {
+				if p.HasError() {
+					goto errorExit
+				}
+
+				switch p.GetInterpreter().AdaptivePredict(p.BaseParser, p.GetTokenStream(), 122, p.GetParserRuleContext()) {
 				case 1:
 					{
 						p.SetState(982)
 						p.Match(SQLiteParserASSIGN)
+						if p.HasError() {
+							// Recognition error - abort rule
+							goto errorExit
+						}
 					}
 
 				case 2:
 					{
 						p.SetState(983)
 						p.Match(SQLiteParserEQ)
+						if p.HasError() {
+							// Recognition error - abort rule
+							goto errorExit
+						}
 					}
 
 				case 3:
 					{
 						p.SetState(984)
 						p.Match(SQLiteParserNOT_EQ1)
+						if p.HasError() {
+							// Recognition error - abort rule
+							goto errorExit
+						}
 					}
 
 				case 4:
 					{
 						p.SetState(985)
 						p.Match(SQLiteParserNOT_EQ2)
+						if p.HasError() {
+							// Recognition error - abort rule
+							goto errorExit
+						}
 					}
 
 				case 5:
 					{
 						p.SetState(986)
 						p.Match(SQLiteParserIS_)
+						if p.HasError() {
+							// Recognition error - abort rule
+							goto errorExit
+						}
 					}
 
 				case 6:
 					{
 						p.SetState(987)
 						p.Match(SQLiteParserIS_)
+						if p.HasError() {
+							// Recognition error - abort rule
+							goto errorExit
+						}
 					}
 					{
 						p.SetState(988)
 						p.Match(SQLiteParserNOT_)
+						if p.HasError() {
+							// Recognition error - abort rule
+							goto errorExit
+						}
 					}
 
 				case 7:
 					{
 						p.SetState(989)
 						p.Match(SQLiteParserIN_)
+						if p.HasError() {
+							// Recognition error - abort rule
+							goto errorExit
+						}
 					}
 
 				case 8:
 					{
 						p.SetState(990)
 						p.Match(SQLiteParserLIKE_)
+						if p.HasError() {
+							// Recognition error - abort rule
+							goto errorExit
+						}
 					}
 
 				case 9:
 					{
 						p.SetState(991)
 						p.Match(SQLiteParserGLOB_)
+						if p.HasError() {
+							// Recognition error - abort rule
+							goto errorExit
+						}
 					}
 
 				case 10:
 					{
 						p.SetState(992)
 						p.Match(SQLiteParserMATCH_)
+						if p.HasError() {
+							// Recognition error - abort rule
+							goto errorExit
+						}
 					}
 
 				case 11:
 					{
 						p.SetState(993)
 						p.Match(SQLiteParserREGEXP_)
+						if p.HasError() {
+							// Recognition error - abort rule
+							goto errorExit
+						}
 					}
 
+				case antlr.ATNInvalidAltNumber:
+					goto errorExit
 				}
 				{
 					p.SetState(996)
@@ -11671,11 +12918,16 @@ func (p *SQLiteParser) expr(_p int) (localctx IExprContext) {
 				p.SetState(997)
 
 				if !(p.Precpred(p.GetParserRuleContext(), 14)) {
-					panic(antlr.NewFailedPredicateException(p, "p.Precpred(p.GetParserRuleContext(), 14)", ""))
+					p.SetError(antlr.NewFailedPredicateException(p, "p.Precpred(p.GetParserRuleContext(), 14)", ""))
+					goto errorExit
 				}
 				{
 					p.SetState(998)
 					p.Match(SQLiteParserAND_)
+					if p.HasError() {
+						// Recognition error - abort rule
+						goto errorExit
+					}
 				}
 				{
 					p.SetState(999)
@@ -11688,11 +12940,16 @@ func (p *SQLiteParser) expr(_p int) (localctx IExprContext) {
 				p.SetState(1000)
 
 				if !(p.Precpred(p.GetParserRuleContext(), 13)) {
-					panic(antlr.NewFailedPredicateException(p, "p.Precpred(p.GetParserRuleContext(), 13)", ""))
+					p.SetError(antlr.NewFailedPredicateException(p, "p.Precpred(p.GetParserRuleContext(), 13)", ""))
+					goto errorExit
 				}
 				{
 					p.SetState(1001)
 					p.Match(SQLiteParserOR_)
+					if p.HasError() {
+						// Recognition error - abort rule
+						goto errorExit
+					}
 				}
 				{
 					p.SetState(1002)
@@ -11705,21 +12962,32 @@ func (p *SQLiteParser) expr(_p int) (localctx IExprContext) {
 				p.SetState(1003)
 
 				if !(p.Precpred(p.GetParserRuleContext(), 6)) {
-					panic(antlr.NewFailedPredicateException(p, "p.Precpred(p.GetParserRuleContext(), 6)", ""))
+					p.SetError(antlr.NewFailedPredicateException(p, "p.Precpred(p.GetParserRuleContext(), 6)", ""))
+					goto errorExit
 				}
 				{
 					p.SetState(1004)
 					p.Match(SQLiteParserIS_)
+					if p.HasError() {
+						// Recognition error - abort rule
+						goto errorExit
+					}
 				}
 				p.SetState(1006)
 				p.GetErrorHandler().Sync(p)
 
-				if p.GetInterpreter().AdaptivePredict(p.GetTokenStream(), 123, p.GetParserRuleContext()) == 1 {
+				if p.GetInterpreter().AdaptivePredict(p.BaseParser, p.GetTokenStream(), 123, p.GetParserRuleContext()) == 1 {
 					{
 						p.SetState(1005)
 						p.Match(SQLiteParserNOT_)
+						if p.HasError() {
+							// Recognition error - abort rule
+							goto errorExit
+						}
 					}
 
+				} else if p.HasError() { // JIM
+					goto errorExit
 				}
 				{
 					p.SetState(1008)
@@ -11732,22 +13000,34 @@ func (p *SQLiteParser) expr(_p int) (localctx IExprContext) {
 				p.SetState(1009)
 
 				if !(p.Precpred(p.GetParserRuleContext(), 5)) {
-					panic(antlr.NewFailedPredicateException(p, "p.Precpred(p.GetParserRuleContext(), 5)", ""))
+					p.SetError(antlr.NewFailedPredicateException(p, "p.Precpred(p.GetParserRuleContext(), 5)", ""))
+					goto errorExit
 				}
 				p.SetState(1011)
 				p.GetErrorHandler().Sync(p)
+				if p.HasError() {
+					goto errorExit
+				}
 				_la = p.GetTokenStream().LA(1)
 
 				if _la == SQLiteParserNOT_ {
 					{
 						p.SetState(1010)
 						p.Match(SQLiteParserNOT_)
+						if p.HasError() {
+							// Recognition error - abort rule
+							goto errorExit
+						}
 					}
 
 				}
 				{
 					p.SetState(1013)
 					p.Match(SQLiteParserBETWEEN_)
+					if p.HasError() {
+						// Recognition error - abort rule
+						goto errorExit
+					}
 				}
 				{
 					p.SetState(1014)
@@ -11756,6 +13036,10 @@ func (p *SQLiteParser) expr(_p int) (localctx IExprContext) {
 				{
 					p.SetState(1015)
 					p.Match(SQLiteParserAND_)
+					if p.HasError() {
+						// Recognition error - abort rule
+						goto errorExit
+					}
 				}
 				{
 					p.SetState(1016)
@@ -11768,11 +13052,16 @@ func (p *SQLiteParser) expr(_p int) (localctx IExprContext) {
 				p.SetState(1018)
 
 				if !(p.Precpred(p.GetParserRuleContext(), 9)) {
-					panic(antlr.NewFailedPredicateException(p, "p.Precpred(p.GetParserRuleContext(), 9)", ""))
+					p.SetError(antlr.NewFailedPredicateException(p, "p.Precpred(p.GetParserRuleContext(), 9)", ""))
+					goto errorExit
 				}
 				{
 					p.SetState(1019)
 					p.Match(SQLiteParserCOLLATE_)
+					if p.HasError() {
+						// Recognition error - abort rule
+						goto errorExit
+					}
 				}
 				{
 					p.SetState(1020)
@@ -11785,16 +13074,24 @@ func (p *SQLiteParser) expr(_p int) (localctx IExprContext) {
 				p.SetState(1021)
 
 				if !(p.Precpred(p.GetParserRuleContext(), 8)) {
-					panic(antlr.NewFailedPredicateException(p, "p.Precpred(p.GetParserRuleContext(), 8)", ""))
+					p.SetError(antlr.NewFailedPredicateException(p, "p.Precpred(p.GetParserRuleContext(), 8)", ""))
+					goto errorExit
 				}
 				p.SetState(1023)
 				p.GetErrorHandler().Sync(p)
+				if p.HasError() {
+					goto errorExit
+				}
 				_la = p.GetTokenStream().LA(1)
 
 				if _la == SQLiteParserNOT_ {
 					{
 						p.SetState(1022)
 						p.Match(SQLiteParserNOT_)
+						if p.HasError() {
+							// Recognition error - abort rule
+							goto errorExit
+						}
 					}
 
 				}
@@ -11816,16 +13113,22 @@ func (p *SQLiteParser) expr(_p int) (localctx IExprContext) {
 				p.SetState(1029)
 				p.GetErrorHandler().Sync(p)
 
-				if p.GetInterpreter().AdaptivePredict(p.GetTokenStream(), 126, p.GetParserRuleContext()) == 1 {
+				if p.GetInterpreter().AdaptivePredict(p.BaseParser, p.GetTokenStream(), 126, p.GetParserRuleContext()) == 1 {
 					{
 						p.SetState(1027)
 						p.Match(SQLiteParserESCAPE_)
+						if p.HasError() {
+							// Recognition error - abort rule
+							goto errorExit
+						}
 					}
 					{
 						p.SetState(1028)
 						p.expr(0)
 					}
 
+				} else if p.HasError() { // JIM
+					goto errorExit
 				}
 
 			case 13:
@@ -11834,36 +13137,57 @@ func (p *SQLiteParser) expr(_p int) (localctx IExprContext) {
 				p.SetState(1031)
 
 				if !(p.Precpred(p.GetParserRuleContext(), 7)) {
-					panic(antlr.NewFailedPredicateException(p, "p.Precpred(p.GetParserRuleContext(), 7)", ""))
+					p.SetError(antlr.NewFailedPredicateException(p, "p.Precpred(p.GetParserRuleContext(), 7)", ""))
+					goto errorExit
 				}
 				p.SetState(1036)
 				p.GetErrorHandler().Sync(p)
+				if p.HasError() {
+					goto errorExit
+				}
 
 				switch p.GetTokenStream().LA(1) {
 				case SQLiteParserISNULL_:
 					{
 						p.SetState(1032)
 						p.Match(SQLiteParserISNULL_)
+						if p.HasError() {
+							// Recognition error - abort rule
+							goto errorExit
+						}
 					}
 
 				case SQLiteParserNOTNULL_:
 					{
 						p.SetState(1033)
 						p.Match(SQLiteParserNOTNULL_)
+						if p.HasError() {
+							// Recognition error - abort rule
+							goto errorExit
+						}
 					}
 
 				case SQLiteParserNOT_:
 					{
 						p.SetState(1034)
 						p.Match(SQLiteParserNOT_)
+						if p.HasError() {
+							// Recognition error - abort rule
+							goto errorExit
+						}
 					}
 					{
 						p.SetState(1035)
 						p.Match(SQLiteParserNULL_)
+						if p.HasError() {
+							// Recognition error - abort rule
+							goto errorExit
+						}
 					}
 
 				default:
-					panic(antlr.NewNoViableAltException(p, nil, nil, nil, nil, nil))
+					p.SetError(antlr.NewNoViableAltException(p, nil, nil, nil, nil, nil))
+					goto errorExit
 				}
 
 			case 14:
@@ -11872,53 +13196,82 @@ func (p *SQLiteParser) expr(_p int) (localctx IExprContext) {
 				p.SetState(1038)
 
 				if !(p.Precpred(p.GetParserRuleContext(), 4)) {
-					panic(antlr.NewFailedPredicateException(p, "p.Precpred(p.GetParserRuleContext(), 4)", ""))
+					p.SetError(antlr.NewFailedPredicateException(p, "p.Precpred(p.GetParserRuleContext(), 4)", ""))
+					goto errorExit
 				}
 				p.SetState(1040)
 				p.GetErrorHandler().Sync(p)
+				if p.HasError() {
+					goto errorExit
+				}
 				_la = p.GetTokenStream().LA(1)
 
 				if _la == SQLiteParserNOT_ {
 					{
 						p.SetState(1039)
 						p.Match(SQLiteParserNOT_)
+						if p.HasError() {
+							// Recognition error - abort rule
+							goto errorExit
+						}
 					}
 
 				}
 				{
 					p.SetState(1042)
 					p.Match(SQLiteParserIN_)
+					if p.HasError() {
+						// Recognition error - abort rule
+						goto errorExit
+					}
 				}
 				p.SetState(1081)
 				p.GetErrorHandler().Sync(p)
-				switch p.GetInterpreter().AdaptivePredict(p.GetTokenStream(), 135, p.GetParserRuleContext()) {
+				if p.HasError() {
+					goto errorExit
+				}
+
+				switch p.GetInterpreter().AdaptivePredict(p.BaseParser, p.GetTokenStream(), 135, p.GetParserRuleContext()) {
 				case 1:
 					{
 						p.SetState(1043)
 						p.Match(SQLiteParserOPEN_PAR)
+						if p.HasError() {
+							// Recognition error - abort rule
+							goto errorExit
+						}
 					}
 					p.SetState(1053)
 					p.GetErrorHandler().Sync(p)
 
-					if p.GetInterpreter().AdaptivePredict(p.GetTokenStream(), 130, p.GetParserRuleContext()) == 1 {
+					if p.GetInterpreter().AdaptivePredict(p.BaseParser, p.GetTokenStream(), 130, p.GetParserRuleContext()) == 1 {
 						{
 							p.SetState(1044)
 							p.Select_stmt()
 						}
 
-					} else if p.GetInterpreter().AdaptivePredict(p.GetTokenStream(), 130, p.GetParserRuleContext()) == 2 {
+					} else if p.HasError() { // JIM
+						goto errorExit
+					} else if p.GetInterpreter().AdaptivePredict(p.BaseParser, p.GetTokenStream(), 130, p.GetParserRuleContext()) == 2 {
 						{
 							p.SetState(1045)
 							p.expr(0)
 						}
 						p.SetState(1050)
 						p.GetErrorHandler().Sync(p)
+						if p.HasError() {
+							goto errorExit
+						}
 						_la = p.GetTokenStream().LA(1)
 
 						for _la == SQLiteParserCOMMA {
 							{
 								p.SetState(1046)
 								p.Match(SQLiteParserCOMMA)
+								if p.HasError() {
+									// Recognition error - abort rule
+									goto errorExit
+								}
 							}
 							{
 								p.SetState(1047)
@@ -11927,20 +13280,29 @@ func (p *SQLiteParser) expr(_p int) (localctx IExprContext) {
 
 							p.SetState(1052)
 							p.GetErrorHandler().Sync(p)
+							if p.HasError() {
+								goto errorExit
+							}
 							_la = p.GetTokenStream().LA(1)
 						}
 
+					} else if p.HasError() { // JIM
+						goto errorExit
 					}
 					{
 						p.SetState(1055)
 						p.Match(SQLiteParserCLOSE_PAR)
+						if p.HasError() {
+							// Recognition error - abort rule
+							goto errorExit
+						}
 					}
 
 				case 2:
 					p.SetState(1059)
 					p.GetErrorHandler().Sync(p)
 
-					if p.GetInterpreter().AdaptivePredict(p.GetTokenStream(), 131, p.GetParserRuleContext()) == 1 {
+					if p.GetInterpreter().AdaptivePredict(p.BaseParser, p.GetTokenStream(), 131, p.GetParserRuleContext()) == 1 {
 						{
 							p.SetState(1056)
 							p.Schema_name()
@@ -11948,8 +13310,14 @@ func (p *SQLiteParser) expr(_p int) (localctx IExprContext) {
 						{
 							p.SetState(1057)
 							p.Match(SQLiteParserDOT)
+							if p.HasError() {
+								// Recognition error - abort rule
+								goto errorExit
+							}
 						}
 
+					} else if p.HasError() { // JIM
+						goto errorExit
 					}
 					{
 						p.SetState(1061)
@@ -11960,7 +13328,7 @@ func (p *SQLiteParser) expr(_p int) (localctx IExprContext) {
 					p.SetState(1065)
 					p.GetErrorHandler().Sync(p)
 
-					if p.GetInterpreter().AdaptivePredict(p.GetTokenStream(), 132, p.GetParserRuleContext()) == 1 {
+					if p.GetInterpreter().AdaptivePredict(p.BaseParser, p.GetTokenStream(), 132, p.GetParserRuleContext()) == 1 {
 						{
 							p.SetState(1062)
 							p.Schema_name()
@@ -11968,8 +13336,14 @@ func (p *SQLiteParser) expr(_p int) (localctx IExprContext) {
 						{
 							p.SetState(1063)
 							p.Match(SQLiteParserDOT)
+							if p.HasError() {
+								// Recognition error - abort rule
+								goto errorExit
+							}
 						}
 
+					} else if p.HasError() { // JIM
+						goto errorExit
 					}
 					{
 						p.SetState(1067)
@@ -11978,9 +13352,16 @@ func (p *SQLiteParser) expr(_p int) (localctx IExprContext) {
 					{
 						p.SetState(1068)
 						p.Match(SQLiteParserOPEN_PAR)
+						if p.HasError() {
+							// Recognition error - abort rule
+							goto errorExit
+						}
 					}
 					p.SetState(1077)
 					p.GetErrorHandler().Sync(p)
+					if p.HasError() {
+						goto errorExit
+					}
 					_la = p.GetTokenStream().LA(1)
 
 					if ((int64(_la) & ^0x3f) == 0 && ((int64(1)<<_la)&-33552632) != 0) || ((int64((_la-64)) & ^0x3f) == 0 && ((int64(1)<<(_la-64))&-1152921504606846977) != 0) || ((int64((_la-128)) & ^0x3f) == 0 && ((int64(1)<<(_la-128))&4476578029606273023) != 0) {
@@ -11990,12 +13371,19 @@ func (p *SQLiteParser) expr(_p int) (localctx IExprContext) {
 						}
 						p.SetState(1074)
 						p.GetErrorHandler().Sync(p)
+						if p.HasError() {
+							goto errorExit
+						}
 						_la = p.GetTokenStream().LA(1)
 
 						for _la == SQLiteParserCOMMA {
 							{
 								p.SetState(1070)
 								p.Match(SQLiteParserCOMMA)
+								if p.HasError() {
+									// Recognition error - abort rule
+									goto errorExit
+								}
 							}
 							{
 								p.SetState(1071)
@@ -12004,6 +13392,9 @@ func (p *SQLiteParser) expr(_p int) (localctx IExprContext) {
 
 							p.SetState(1076)
 							p.GetErrorHandler().Sync(p)
+							if p.HasError() {
+								goto errorExit
+							}
 							_la = p.GetTokenStream().LA(1)
 						}
 
@@ -12011,19 +13402,43 @@ func (p *SQLiteParser) expr(_p int) (localctx IExprContext) {
 					{
 						p.SetState(1079)
 						p.Match(SQLiteParserCLOSE_PAR)
+						if p.HasError() {
+							// Recognition error - abort rule
+							goto errorExit
+						}
 					}
 
+				case antlr.ATNInvalidAltNumber:
+					goto errorExit
 				}
 
+			case antlr.ATNInvalidAltNumber:
+				goto errorExit
 			}
 
 		}
 		p.SetState(1087)
 		p.GetErrorHandler().Sync(p)
-		_alt = p.GetInterpreter().AdaptivePredict(p.GetTokenStream(), 137, p.GetParserRuleContext())
+		if p.HasError() {
+			goto errorExit
+		}
+		_alt = p.GetInterpreter().AdaptivePredict(p.BaseParser, p.GetTokenStream(), 137, p.GetParserRuleContext())
+		if p.HasError() {
+			goto errorExit
+		}
 	}
 
+errorExit:
+	if p.HasError() {
+		v := p.GetError()
+		localctx.SetException(v)
+		p.GetErrorHandler().ReportError(p, v)
+		p.GetErrorHandler().Recover(p, v)
+		p.SetError(nil)
+	}
+	p.UnrollRecursionContexts(_parentctx)
 	return localctx
+	goto errorExit // Trick to prevent compiler error if the label is not used
 }
 
 // IRaise_functionContext is an interface to support dynamic dispatch.
@@ -12049,15 +13464,20 @@ type IRaise_functionContext interface {
 }
 
 type Raise_functionContext struct {
-	*antlr.BaseParserRuleContext
+	antlr.BaseParserRuleContext
 	parser antlr.Parser
 }
 
 func NewEmptyRaise_functionContext() *Raise_functionContext {
 	var p = new(Raise_functionContext)
-	p.BaseParserRuleContext = antlr.NewBaseParserRuleContext(nil, -1)
+	antlr.InitBaseParserRuleContext(&p.BaseParserRuleContext, nil, -1)
 	p.RuleIndex = SQLiteParserRULE_raise_function
 	return p
+}
+
+func InitEmptyRaise_functionContext(p *Raise_functionContext) {
+	antlr.InitBaseParserRuleContext(&p.BaseParserRuleContext, nil, -1)
+	p.RuleIndex = SQLiteParserRULE_raise_function
 }
 
 func (*Raise_functionContext) IsRaise_functionContext() {}
@@ -12065,7 +13485,7 @@ func (*Raise_functionContext) IsRaise_functionContext() {}
 func NewRaise_functionContext(parser antlr.Parser, parent antlr.ParserRuleContext, invokingState int) *Raise_functionContext {
 	var p = new(Raise_functionContext)
 
-	p.BaseParserRuleContext = antlr.NewBaseParserRuleContext(parent, invokingState)
+	antlr.InitBaseParserRuleContext(&p.BaseParserRuleContext, parent, invokingState)
 
 	p.parser = parser
 	p.RuleIndex = SQLiteParserRULE_raise_function
@@ -12144,46 +13564,42 @@ func (s *Raise_functionContext) ExitRule(listener antlr.ParseTreeListener) {
 }
 
 func (p *SQLiteParser) Raise_function() (localctx IRaise_functionContext) {
-	this := p
-	_ = this
-
 	localctx = NewRaise_functionContext(p, p.GetParserRuleContext(), p.GetState())
 	p.EnterRule(localctx, 66, SQLiteParserRULE_raise_function)
 	var _la int
-
-	defer func() {
-		p.ExitRule()
-	}()
-
-	defer func() {
-		if err := recover(); err != nil {
-			if v, ok := err.(antlr.RecognitionException); ok {
-				localctx.SetException(v)
-				p.GetErrorHandler().ReportError(p, v)
-				p.GetErrorHandler().Recover(p, v)
-			} else {
-				panic(err)
-			}
-		}
-	}()
 
 	p.EnterOuterAlt(localctx, 1)
 	{
 		p.SetState(1088)
 		p.Match(SQLiteParserRAISE_)
+		if p.HasError() {
+			// Recognition error - abort rule
+			goto errorExit
+		}
 	}
 	{
 		p.SetState(1089)
 		p.Match(SQLiteParserOPEN_PAR)
+		if p.HasError() {
+			// Recognition error - abort rule
+			goto errorExit
+		}
 	}
 	p.SetState(1094)
 	p.GetErrorHandler().Sync(p)
+	if p.HasError() {
+		goto errorExit
+	}
 
 	switch p.GetTokenStream().LA(1) {
 	case SQLiteParserIGNORE_:
 		{
 			p.SetState(1090)
 			p.Match(SQLiteParserIGNORE_)
+			if p.HasError() {
+				// Recognition error - abort rule
+				goto errorExit
+			}
 		}
 
 	case SQLiteParserABORT_, SQLiteParserFAIL_, SQLiteParserROLLBACK_:
@@ -12201,6 +13617,10 @@ func (p *SQLiteParser) Raise_function() (localctx IRaise_functionContext) {
 		{
 			p.SetState(1092)
 			p.Match(SQLiteParserCOMMA)
+			if p.HasError() {
+				// Recognition error - abort rule
+				goto errorExit
+			}
 		}
 		{
 			p.SetState(1093)
@@ -12208,14 +13628,29 @@ func (p *SQLiteParser) Raise_function() (localctx IRaise_functionContext) {
 		}
 
 	default:
-		panic(antlr.NewNoViableAltException(p, nil, nil, nil, nil, nil))
+		p.SetError(antlr.NewNoViableAltException(p, nil, nil, nil, nil, nil))
+		goto errorExit
 	}
 	{
 		p.SetState(1096)
 		p.Match(SQLiteParserCLOSE_PAR)
+		if p.HasError() {
+			// Recognition error - abort rule
+			goto errorExit
+		}
 	}
 
+errorExit:
+	if p.HasError() {
+		v := p.GetError()
+		localctx.SetException(v)
+		p.GetErrorHandler().ReportError(p, v)
+		p.GetErrorHandler().Recover(p, v)
+		p.SetError(nil)
+	}
+	p.ExitRule()
 	return localctx
+	goto errorExit // Trick to prevent compiler error if the label is not used
 }
 
 // ILiteral_valueContext is an interface to support dynamic dispatch.
@@ -12241,15 +13676,20 @@ type ILiteral_valueContext interface {
 }
 
 type Literal_valueContext struct {
-	*antlr.BaseParserRuleContext
+	antlr.BaseParserRuleContext
 	parser antlr.Parser
 }
 
 func NewEmptyLiteral_valueContext() *Literal_valueContext {
 	var p = new(Literal_valueContext)
-	p.BaseParserRuleContext = antlr.NewBaseParserRuleContext(nil, -1)
+	antlr.InitBaseParserRuleContext(&p.BaseParserRuleContext, nil, -1)
 	p.RuleIndex = SQLiteParserRULE_literal_value
 	return p
+}
+
+func InitEmptyLiteral_valueContext(p *Literal_valueContext) {
+	antlr.InitBaseParserRuleContext(&p.BaseParserRuleContext, nil, -1)
+	p.RuleIndex = SQLiteParserRULE_literal_value
 }
 
 func (*Literal_valueContext) IsLiteral_valueContext() {}
@@ -12257,7 +13697,7 @@ func (*Literal_valueContext) IsLiteral_valueContext() {}
 func NewLiteral_valueContext(parser antlr.Parser, parent antlr.ParserRuleContext, invokingState int) *Literal_valueContext {
 	var p = new(Literal_valueContext)
 
-	p.BaseParserRuleContext = antlr.NewBaseParserRuleContext(parent, invokingState)
+	antlr.InitBaseParserRuleContext(&p.BaseParserRuleContext, parent, invokingState)
 
 	p.parser = parser
 	p.RuleIndex = SQLiteParserRULE_literal_value
@@ -12324,28 +13764,9 @@ func (s *Literal_valueContext) ExitRule(listener antlr.ParseTreeListener) {
 }
 
 func (p *SQLiteParser) Literal_value() (localctx ILiteral_valueContext) {
-	this := p
-	_ = this
-
 	localctx = NewLiteral_valueContext(p, p.GetParserRuleContext(), p.GetState())
 	p.EnterRule(localctx, 68, SQLiteParserRULE_literal_value)
 	var _la int
-
-	defer func() {
-		p.ExitRule()
-	}()
-
-	defer func() {
-		if err := recover(); err != nil {
-			if v, ok := err.(antlr.RecognitionException); ok {
-				localctx.SetException(v)
-				p.GetErrorHandler().ReportError(p, v)
-				p.GetErrorHandler().Recover(p, v)
-			} else {
-				panic(err)
-			}
-		}
-	}()
 
 	p.EnterOuterAlt(localctx, 1)
 	{
@@ -12360,7 +13781,17 @@ func (p *SQLiteParser) Literal_value() (localctx ILiteral_valueContext) {
 		}
 	}
 
+errorExit:
+	if p.HasError() {
+		v := p.GetError()
+		localctx.SetException(v)
+		p.GetErrorHandler().ReportError(p, v)
+		p.GetErrorHandler().Recover(p, v)
+		p.SetError(nil)
+	}
+	p.ExitRule()
 	return localctx
+	goto errorExit // Trick to prevent compiler error if the label is not used
 }
 
 // IValue_rowContext is an interface to support dynamic dispatch.
@@ -12383,15 +13814,20 @@ type IValue_rowContext interface {
 }
 
 type Value_rowContext struct {
-	*antlr.BaseParserRuleContext
+	antlr.BaseParserRuleContext
 	parser antlr.Parser
 }
 
 func NewEmptyValue_rowContext() *Value_rowContext {
 	var p = new(Value_rowContext)
-	p.BaseParserRuleContext = antlr.NewBaseParserRuleContext(nil, -1)
+	antlr.InitBaseParserRuleContext(&p.BaseParserRuleContext, nil, -1)
 	p.RuleIndex = SQLiteParserRULE_value_row
 	return p
+}
+
+func InitEmptyValue_rowContext(p *Value_rowContext) {
+	antlr.InitBaseParserRuleContext(&p.BaseParserRuleContext, nil, -1)
+	p.RuleIndex = SQLiteParserRULE_value_row
 }
 
 func (*Value_rowContext) IsValue_rowContext() {}
@@ -12399,7 +13835,7 @@ func (*Value_rowContext) IsValue_rowContext() {}
 func NewValue_rowContext(parser antlr.Parser, parent antlr.ParserRuleContext, invokingState int) *Value_rowContext {
 	var p = new(Value_rowContext)
 
-	p.BaseParserRuleContext = antlr.NewBaseParserRuleContext(parent, invokingState)
+	antlr.InitBaseParserRuleContext(&p.BaseParserRuleContext, parent, invokingState)
 
 	p.parser = parser
 	p.RuleIndex = SQLiteParserRULE_value_row
@@ -12487,33 +13923,18 @@ func (s *Value_rowContext) ExitRule(listener antlr.ParseTreeListener) {
 }
 
 func (p *SQLiteParser) Value_row() (localctx IValue_rowContext) {
-	this := p
-	_ = this
-
 	localctx = NewValue_rowContext(p, p.GetParserRuleContext(), p.GetState())
 	p.EnterRule(localctx, 70, SQLiteParserRULE_value_row)
 	var _la int
-
-	defer func() {
-		p.ExitRule()
-	}()
-
-	defer func() {
-		if err := recover(); err != nil {
-			if v, ok := err.(antlr.RecognitionException); ok {
-				localctx.SetException(v)
-				p.GetErrorHandler().ReportError(p, v)
-				p.GetErrorHandler().Recover(p, v)
-			} else {
-				panic(err)
-			}
-		}
-	}()
 
 	p.EnterOuterAlt(localctx, 1)
 	{
 		p.SetState(1100)
 		p.Match(SQLiteParserOPEN_PAR)
+		if p.HasError() {
+			// Recognition error - abort rule
+			goto errorExit
+		}
 	}
 	{
 		p.SetState(1101)
@@ -12521,12 +13942,19 @@ func (p *SQLiteParser) Value_row() (localctx IValue_rowContext) {
 	}
 	p.SetState(1106)
 	p.GetErrorHandler().Sync(p)
+	if p.HasError() {
+		goto errorExit
+	}
 	_la = p.GetTokenStream().LA(1)
 
 	for _la == SQLiteParserCOMMA {
 		{
 			p.SetState(1102)
 			p.Match(SQLiteParserCOMMA)
+			if p.HasError() {
+				// Recognition error - abort rule
+				goto errorExit
+			}
 		}
 		{
 			p.SetState(1103)
@@ -12535,14 +13963,31 @@ func (p *SQLiteParser) Value_row() (localctx IValue_rowContext) {
 
 		p.SetState(1108)
 		p.GetErrorHandler().Sync(p)
+		if p.HasError() {
+			goto errorExit
+		}
 		_la = p.GetTokenStream().LA(1)
 	}
 	{
 		p.SetState(1109)
 		p.Match(SQLiteParserCLOSE_PAR)
+		if p.HasError() {
+			// Recognition error - abort rule
+			goto errorExit
+		}
 	}
 
+errorExit:
+	if p.HasError() {
+		v := p.GetError()
+		localctx.SetException(v)
+		p.GetErrorHandler().ReportError(p, v)
+		p.GetErrorHandler().Recover(p, v)
+		p.SetError(nil)
+	}
+	p.ExitRule()
 	return localctx
+	goto errorExit // Trick to prevent compiler error if the label is not used
 }
 
 // IValues_clauseContext is an interface to support dynamic dispatch.
@@ -12564,15 +14009,20 @@ type IValues_clauseContext interface {
 }
 
 type Values_clauseContext struct {
-	*antlr.BaseParserRuleContext
+	antlr.BaseParserRuleContext
 	parser antlr.Parser
 }
 
 func NewEmptyValues_clauseContext() *Values_clauseContext {
 	var p = new(Values_clauseContext)
-	p.BaseParserRuleContext = antlr.NewBaseParserRuleContext(nil, -1)
+	antlr.InitBaseParserRuleContext(&p.BaseParserRuleContext, nil, -1)
 	p.RuleIndex = SQLiteParserRULE_values_clause
 	return p
+}
+
+func InitEmptyValues_clauseContext(p *Values_clauseContext) {
+	antlr.InitBaseParserRuleContext(&p.BaseParserRuleContext, nil, -1)
+	p.RuleIndex = SQLiteParserRULE_values_clause
 }
 
 func (*Values_clauseContext) IsValues_clauseContext() {}
@@ -12580,7 +14030,7 @@ func (*Values_clauseContext) IsValues_clauseContext() {}
 func NewValues_clauseContext(parser antlr.Parser, parent antlr.ParserRuleContext, invokingState int) *Values_clauseContext {
 	var p = new(Values_clauseContext)
 
-	p.BaseParserRuleContext = antlr.NewBaseParserRuleContext(parent, invokingState)
+	antlr.InitBaseParserRuleContext(&p.BaseParserRuleContext, parent, invokingState)
 
 	p.parser = parser
 	p.RuleIndex = SQLiteParserRULE_values_clause
@@ -12664,33 +14114,18 @@ func (s *Values_clauseContext) ExitRule(listener antlr.ParseTreeListener) {
 }
 
 func (p *SQLiteParser) Values_clause() (localctx IValues_clauseContext) {
-	this := p
-	_ = this
-
 	localctx = NewValues_clauseContext(p, p.GetParserRuleContext(), p.GetState())
 	p.EnterRule(localctx, 72, SQLiteParserRULE_values_clause)
 	var _la int
-
-	defer func() {
-		p.ExitRule()
-	}()
-
-	defer func() {
-		if err := recover(); err != nil {
-			if v, ok := err.(antlr.RecognitionException); ok {
-				localctx.SetException(v)
-				p.GetErrorHandler().ReportError(p, v)
-				p.GetErrorHandler().Recover(p, v)
-			} else {
-				panic(err)
-			}
-		}
-	}()
 
 	p.EnterOuterAlt(localctx, 1)
 	{
 		p.SetState(1111)
 		p.Match(SQLiteParserVALUES_)
+		if p.HasError() {
+			// Recognition error - abort rule
+			goto errorExit
+		}
 	}
 	{
 		p.SetState(1112)
@@ -12698,12 +14133,19 @@ func (p *SQLiteParser) Values_clause() (localctx IValues_clauseContext) {
 	}
 	p.SetState(1117)
 	p.GetErrorHandler().Sync(p)
+	if p.HasError() {
+		goto errorExit
+	}
 	_la = p.GetTokenStream().LA(1)
 
 	for _la == SQLiteParserCOMMA {
 		{
 			p.SetState(1113)
 			p.Match(SQLiteParserCOMMA)
+			if p.HasError() {
+				// Recognition error - abort rule
+				goto errorExit
+			}
 		}
 		{
 			p.SetState(1114)
@@ -12712,10 +14154,23 @@ func (p *SQLiteParser) Values_clause() (localctx IValues_clauseContext) {
 
 		p.SetState(1119)
 		p.GetErrorHandler().Sync(p)
+		if p.HasError() {
+			goto errorExit
+		}
 		_la = p.GetTokenStream().LA(1)
 	}
 
+errorExit:
+	if p.HasError() {
+		v := p.GetError()
+		localctx.SetException(v)
+		p.GetErrorHandler().ReportError(p, v)
+		p.GetErrorHandler().Recover(p, v)
+		p.SetError(nil)
+	}
+	p.ExitRule()
 	return localctx
+	goto errorExit // Trick to prevent compiler error if the label is not used
 }
 
 // IInsert_stmtContext is an interface to support dynamic dispatch.
@@ -12758,15 +14213,20 @@ type IInsert_stmtContext interface {
 }
 
 type Insert_stmtContext struct {
-	*antlr.BaseParserRuleContext
+	antlr.BaseParserRuleContext
 	parser antlr.Parser
 }
 
 func NewEmptyInsert_stmtContext() *Insert_stmtContext {
 	var p = new(Insert_stmtContext)
-	p.BaseParserRuleContext = antlr.NewBaseParserRuleContext(nil, -1)
+	antlr.InitBaseParserRuleContext(&p.BaseParserRuleContext, nil, -1)
 	p.RuleIndex = SQLiteParserRULE_insert_stmt
 	return p
+}
+
+func InitEmptyInsert_stmtContext(p *Insert_stmtContext) {
+	antlr.InitBaseParserRuleContext(&p.BaseParserRuleContext, nil, -1)
+	p.RuleIndex = SQLiteParserRULE_insert_stmt
 }
 
 func (*Insert_stmtContext) IsInsert_stmtContext() {}
@@ -12774,7 +14234,7 @@ func (*Insert_stmtContext) IsInsert_stmtContext() {}
 func NewInsert_stmtContext(parser antlr.Parser, parent antlr.ParserRuleContext, invokingState int) *Insert_stmtContext {
 	var p = new(Insert_stmtContext)
 
-	p.BaseParserRuleContext = antlr.NewBaseParserRuleContext(parent, invokingState)
+	antlr.InitBaseParserRuleContext(&p.BaseParserRuleContext, parent, invokingState)
 
 	p.parser = parser
 	p.RuleIndex = SQLiteParserRULE_insert_stmt
@@ -13038,32 +14498,16 @@ func (s *Insert_stmtContext) ExitRule(listener antlr.ParseTreeListener) {
 }
 
 func (p *SQLiteParser) Insert_stmt() (localctx IInsert_stmtContext) {
-	this := p
-	_ = this
-
 	localctx = NewInsert_stmtContext(p, p.GetParserRuleContext(), p.GetState())
 	p.EnterRule(localctx, 74, SQLiteParserRULE_insert_stmt)
 	var _la int
 
-	defer func() {
-		p.ExitRule()
-	}()
-
-	defer func() {
-		if err := recover(); err != nil {
-			if v, ok := err.(antlr.RecognitionException); ok {
-				localctx.SetException(v)
-				p.GetErrorHandler().ReportError(p, v)
-				p.GetErrorHandler().Recover(p, v)
-			} else {
-				panic(err)
-			}
-		}
-	}()
-
 	p.EnterOuterAlt(localctx, 1)
 	p.SetState(1121)
 	p.GetErrorHandler().Sync(p)
+	if p.HasError() {
+		goto errorExit
+	}
 	_la = p.GetTokenStream().LA(1)
 
 	if _la == SQLiteParserWITH_ {
@@ -13075,27 +14519,47 @@ func (p *SQLiteParser) Insert_stmt() (localctx IInsert_stmtContext) {
 	}
 	p.SetState(1128)
 	p.GetErrorHandler().Sync(p)
-	switch p.GetInterpreter().AdaptivePredict(p.GetTokenStream(), 142, p.GetParserRuleContext()) {
+	if p.HasError() {
+		goto errorExit
+	}
+
+	switch p.GetInterpreter().AdaptivePredict(p.BaseParser, p.GetTokenStream(), 142, p.GetParserRuleContext()) {
 	case 1:
 		{
 			p.SetState(1123)
 			p.Match(SQLiteParserINSERT_)
+			if p.HasError() {
+				// Recognition error - abort rule
+				goto errorExit
+			}
 		}
 
 	case 2:
 		{
 			p.SetState(1124)
 			p.Match(SQLiteParserREPLACE_)
+			if p.HasError() {
+				// Recognition error - abort rule
+				goto errorExit
+			}
 		}
 
 	case 3:
 		{
 			p.SetState(1125)
 			p.Match(SQLiteParserINSERT_)
+			if p.HasError() {
+				// Recognition error - abort rule
+				goto errorExit
+			}
 		}
 		{
 			p.SetState(1126)
 			p.Match(SQLiteParserOR_)
+			if p.HasError() {
+				// Recognition error - abort rule
+				goto errorExit
+			}
 		}
 		{
 			p.SetState(1127)
@@ -13109,15 +14573,21 @@ func (p *SQLiteParser) Insert_stmt() (localctx IInsert_stmtContext) {
 			}
 		}
 
+	case antlr.ATNInvalidAltNumber:
+		goto errorExit
 	}
 	{
 		p.SetState(1130)
 		p.Match(SQLiteParserINTO_)
+		if p.HasError() {
+			// Recognition error - abort rule
+			goto errorExit
+		}
 	}
 	p.SetState(1134)
 	p.GetErrorHandler().Sync(p)
 
-	if p.GetInterpreter().AdaptivePredict(p.GetTokenStream(), 143, p.GetParserRuleContext()) == 1 {
+	if p.GetInterpreter().AdaptivePredict(p.BaseParser, p.GetTokenStream(), 143, p.GetParserRuleContext()) == 1 {
 		{
 			p.SetState(1131)
 			p.Schema_name()
@@ -13125,8 +14595,14 @@ func (p *SQLiteParser) Insert_stmt() (localctx IInsert_stmtContext) {
 		{
 			p.SetState(1132)
 			p.Match(SQLiteParserDOT)
+			if p.HasError() {
+				// Recognition error - abort rule
+				goto errorExit
+			}
 		}
 
+	} else if p.HasError() { // JIM
+		goto errorExit
 	}
 	{
 		p.SetState(1136)
@@ -13134,12 +14610,19 @@ func (p *SQLiteParser) Insert_stmt() (localctx IInsert_stmtContext) {
 	}
 	p.SetState(1139)
 	p.GetErrorHandler().Sync(p)
+	if p.HasError() {
+		goto errorExit
+	}
 	_la = p.GetTokenStream().LA(1)
 
 	if _la == SQLiteParserAS_ {
 		{
 			p.SetState(1137)
 			p.Match(SQLiteParserAS_)
+			if p.HasError() {
+				// Recognition error - abort rule
+				goto errorExit
+			}
 		}
 		{
 			p.SetState(1138)
@@ -13149,12 +14632,19 @@ func (p *SQLiteParser) Insert_stmt() (localctx IInsert_stmtContext) {
 	}
 	p.SetState(1152)
 	p.GetErrorHandler().Sync(p)
+	if p.HasError() {
+		goto errorExit
+	}
 	_la = p.GetTokenStream().LA(1)
 
 	if _la == SQLiteParserOPEN_PAR {
 		{
 			p.SetState(1141)
 			p.Match(SQLiteParserOPEN_PAR)
+			if p.HasError() {
+				// Recognition error - abort rule
+				goto errorExit
+			}
 		}
 		{
 			p.SetState(1142)
@@ -13162,12 +14652,19 @@ func (p *SQLiteParser) Insert_stmt() (localctx IInsert_stmtContext) {
 		}
 		p.SetState(1147)
 		p.GetErrorHandler().Sync(p)
+		if p.HasError() {
+			goto errorExit
+		}
 		_la = p.GetTokenStream().LA(1)
 
 		for _la == SQLiteParserCOMMA {
 			{
 				p.SetState(1143)
 				p.Match(SQLiteParserCOMMA)
+				if p.HasError() {
+					// Recognition error - abort rule
+					goto errorExit
+				}
 			}
 			{
 				p.SetState(1144)
@@ -13176,22 +14673,36 @@ func (p *SQLiteParser) Insert_stmt() (localctx IInsert_stmtContext) {
 
 			p.SetState(1149)
 			p.GetErrorHandler().Sync(p)
+			if p.HasError() {
+				goto errorExit
+			}
 			_la = p.GetTokenStream().LA(1)
 		}
 		{
 			p.SetState(1150)
 			p.Match(SQLiteParserCLOSE_PAR)
+			if p.HasError() {
+				// Recognition error - abort rule
+				goto errorExit
+			}
 		}
 
 	}
 	p.SetState(1163)
 	p.GetErrorHandler().Sync(p)
+	if p.HasError() {
+		goto errorExit
+	}
 
 	switch p.GetTokenStream().LA(1) {
 	case SQLiteParserSELECT_, SQLiteParserVALUES_, SQLiteParserWITH_:
 		p.SetState(1156)
 		p.GetErrorHandler().Sync(p)
-		switch p.GetInterpreter().AdaptivePredict(p.GetTokenStream(), 147, p.GetParserRuleContext()) {
+		if p.HasError() {
+			goto errorExit
+		}
+
+		switch p.GetInterpreter().AdaptivePredict(p.BaseParser, p.GetTokenStream(), 147, p.GetParserRuleContext()) {
 		case 1:
 			{
 				p.SetState(1154)
@@ -13204,9 +14715,14 @@ func (p *SQLiteParser) Insert_stmt() (localctx IInsert_stmtContext) {
 				p.Select_stmt()
 			}
 
+		case antlr.ATNInvalidAltNumber:
+			goto errorExit
 		}
 		p.SetState(1159)
 		p.GetErrorHandler().Sync(p)
+		if p.HasError() {
+			goto errorExit
+		}
 		_la = p.GetTokenStream().LA(1)
 
 		if _la == SQLiteParserON_ {
@@ -13221,17 +14737,29 @@ func (p *SQLiteParser) Insert_stmt() (localctx IInsert_stmtContext) {
 		{
 			p.SetState(1161)
 			p.Match(SQLiteParserDEFAULT_)
+			if p.HasError() {
+				// Recognition error - abort rule
+				goto errorExit
+			}
 		}
 		{
 			p.SetState(1162)
 			p.Match(SQLiteParserVALUES_)
+			if p.HasError() {
+				// Recognition error - abort rule
+				goto errorExit
+			}
 		}
 
 	default:
-		panic(antlr.NewNoViableAltException(p, nil, nil, nil, nil, nil))
+		p.SetError(antlr.NewNoViableAltException(p, nil, nil, nil, nil, nil))
+		goto errorExit
 	}
 	p.SetState(1166)
 	p.GetErrorHandler().Sync(p)
+	if p.HasError() {
+		goto errorExit
+	}
 	_la = p.GetTokenStream().LA(1)
 
 	if _la == SQLiteParserRETURNING_ {
@@ -13242,7 +14770,17 @@ func (p *SQLiteParser) Insert_stmt() (localctx IInsert_stmtContext) {
 
 	}
 
+errorExit:
+	if p.HasError() {
+		v := p.GetError()
+		localctx.SetException(v)
+		p.GetErrorHandler().ReportError(p, v)
+		p.GetErrorHandler().Recover(p, v)
+		p.SetError(nil)
+	}
+	p.ExitRule()
 	return localctx
+	goto errorExit // Trick to prevent compiler error if the label is not used
 }
 
 // IReturning_clauseContext is an interface to support dynamic dispatch.
@@ -13264,15 +14802,20 @@ type IReturning_clauseContext interface {
 }
 
 type Returning_clauseContext struct {
-	*antlr.BaseParserRuleContext
+	antlr.BaseParserRuleContext
 	parser antlr.Parser
 }
 
 func NewEmptyReturning_clauseContext() *Returning_clauseContext {
 	var p = new(Returning_clauseContext)
-	p.BaseParserRuleContext = antlr.NewBaseParserRuleContext(nil, -1)
+	antlr.InitBaseParserRuleContext(&p.BaseParserRuleContext, nil, -1)
 	p.RuleIndex = SQLiteParserRULE_returning_clause
 	return p
+}
+
+func InitEmptyReturning_clauseContext(p *Returning_clauseContext) {
+	antlr.InitBaseParserRuleContext(&p.BaseParserRuleContext, nil, -1)
+	p.RuleIndex = SQLiteParserRULE_returning_clause
 }
 
 func (*Returning_clauseContext) IsReturning_clauseContext() {}
@@ -13280,7 +14823,7 @@ func (*Returning_clauseContext) IsReturning_clauseContext() {}
 func NewReturning_clauseContext(parser antlr.Parser, parent antlr.ParserRuleContext, invokingState int) *Returning_clauseContext {
 	var p = new(Returning_clauseContext)
 
-	p.BaseParserRuleContext = antlr.NewBaseParserRuleContext(parent, invokingState)
+	antlr.InitBaseParserRuleContext(&p.BaseParserRuleContext, parent, invokingState)
 
 	p.parser = parser
 	p.RuleIndex = SQLiteParserRULE_returning_clause
@@ -13364,33 +14907,18 @@ func (s *Returning_clauseContext) ExitRule(listener antlr.ParseTreeListener) {
 }
 
 func (p *SQLiteParser) Returning_clause() (localctx IReturning_clauseContext) {
-	this := p
-	_ = this
-
 	localctx = NewReturning_clauseContext(p, p.GetParserRuleContext(), p.GetState())
 	p.EnterRule(localctx, 76, SQLiteParserRULE_returning_clause)
 	var _la int
-
-	defer func() {
-		p.ExitRule()
-	}()
-
-	defer func() {
-		if err := recover(); err != nil {
-			if v, ok := err.(antlr.RecognitionException); ok {
-				localctx.SetException(v)
-				p.GetErrorHandler().ReportError(p, v)
-				p.GetErrorHandler().Recover(p, v)
-			} else {
-				panic(err)
-			}
-		}
-	}()
 
 	p.EnterOuterAlt(localctx, 1)
 	{
 		p.SetState(1168)
 		p.Match(SQLiteParserRETURNING_)
+		if p.HasError() {
+			// Recognition error - abort rule
+			goto errorExit
+		}
 	}
 	{
 		p.SetState(1169)
@@ -13398,12 +14926,19 @@ func (p *SQLiteParser) Returning_clause() (localctx IReturning_clauseContext) {
 	}
 	p.SetState(1174)
 	p.GetErrorHandler().Sync(p)
+	if p.HasError() {
+		goto errorExit
+	}
 	_la = p.GetTokenStream().LA(1)
 
 	for _la == SQLiteParserCOMMA {
 		{
 			p.SetState(1170)
 			p.Match(SQLiteParserCOMMA)
+			if p.HasError() {
+				// Recognition error - abort rule
+				goto errorExit
+			}
 		}
 		{
 			p.SetState(1171)
@@ -13412,10 +14947,23 @@ func (p *SQLiteParser) Returning_clause() (localctx IReturning_clauseContext) {
 
 		p.SetState(1176)
 		p.GetErrorHandler().Sync(p)
+		if p.HasError() {
+			goto errorExit
+		}
 		_la = p.GetTokenStream().LA(1)
 	}
 
+errorExit:
+	if p.HasError() {
+		v := p.GetError()
+		localctx.SetException(v)
+		p.GetErrorHandler().ReportError(p, v)
+		p.GetErrorHandler().Recover(p, v)
+		p.SetError(nil)
+	}
+	p.ExitRule()
 	return localctx
+	goto errorExit // Trick to prevent compiler error if the label is not used
 }
 
 // IUpsert_clauseContext is an interface to support dynamic dispatch.
@@ -13454,15 +15002,20 @@ type IUpsert_clauseContext interface {
 }
 
 type Upsert_clauseContext struct {
-	*antlr.BaseParserRuleContext
+	antlr.BaseParserRuleContext
 	parser antlr.Parser
 }
 
 func NewEmptyUpsert_clauseContext() *Upsert_clauseContext {
 	var p = new(Upsert_clauseContext)
-	p.BaseParserRuleContext = antlr.NewBaseParserRuleContext(nil, -1)
+	antlr.InitBaseParserRuleContext(&p.BaseParserRuleContext, nil, -1)
 	p.RuleIndex = SQLiteParserRULE_upsert_clause
 	return p
+}
+
+func InitEmptyUpsert_clauseContext(p *Upsert_clauseContext) {
+	antlr.InitBaseParserRuleContext(&p.BaseParserRuleContext, nil, -1)
+	p.RuleIndex = SQLiteParserRULE_upsert_clause
 }
 
 func (*Upsert_clauseContext) IsUpsert_clauseContext() {}
@@ -13470,7 +15023,7 @@ func (*Upsert_clauseContext) IsUpsert_clauseContext() {}
 func NewUpsert_clauseContext(parser antlr.Parser, parent antlr.ParserRuleContext, invokingState int) *Upsert_clauseContext {
 	var p = new(Upsert_clauseContext)
 
-	p.BaseParserRuleContext = antlr.NewBaseParserRuleContext(parent, invokingState)
+	antlr.InitBaseParserRuleContext(&p.BaseParserRuleContext, parent, invokingState)
 
 	p.parser = parser
 	p.RuleIndex = SQLiteParserRULE_upsert_clause
@@ -13721,46 +15274,42 @@ func (s *Upsert_clauseContext) ExitRule(listener antlr.ParseTreeListener) {
 }
 
 func (p *SQLiteParser) Upsert_clause() (localctx IUpsert_clauseContext) {
-	this := p
-	_ = this
-
 	localctx = NewUpsert_clauseContext(p, p.GetParserRuleContext(), p.GetState())
 	p.EnterRule(localctx, 78, SQLiteParserRULE_upsert_clause)
 	var _la int
-
-	defer func() {
-		p.ExitRule()
-	}()
-
-	defer func() {
-		if err := recover(); err != nil {
-			if v, ok := err.(antlr.RecognitionException); ok {
-				localctx.SetException(v)
-				p.GetErrorHandler().ReportError(p, v)
-				p.GetErrorHandler().Recover(p, v)
-			} else {
-				panic(err)
-			}
-		}
-	}()
 
 	p.EnterOuterAlt(localctx, 1)
 	{
 		p.SetState(1177)
 		p.Match(SQLiteParserON_)
+		if p.HasError() {
+			// Recognition error - abort rule
+			goto errorExit
+		}
 	}
 	{
 		p.SetState(1178)
 		p.Match(SQLiteParserCONFLICT_)
+		if p.HasError() {
+			// Recognition error - abort rule
+			goto errorExit
+		}
 	}
 	p.SetState(1193)
 	p.GetErrorHandler().Sync(p)
+	if p.HasError() {
+		goto errorExit
+	}
 	_la = p.GetTokenStream().LA(1)
 
 	if _la == SQLiteParserOPEN_PAR {
 		{
 			p.SetState(1179)
 			p.Match(SQLiteParserOPEN_PAR)
+			if p.HasError() {
+				// Recognition error - abort rule
+				goto errorExit
+			}
 		}
 		{
 			p.SetState(1180)
@@ -13768,12 +15317,19 @@ func (p *SQLiteParser) Upsert_clause() (localctx IUpsert_clauseContext) {
 		}
 		p.SetState(1185)
 		p.GetErrorHandler().Sync(p)
+		if p.HasError() {
+			goto errorExit
+		}
 		_la = p.GetTokenStream().LA(1)
 
 		for _la == SQLiteParserCOMMA {
 			{
 				p.SetState(1181)
 				p.Match(SQLiteParserCOMMA)
+				if p.HasError() {
+					// Recognition error - abort rule
+					goto errorExit
+				}
 			}
 			{
 				p.SetState(1182)
@@ -13782,20 +15338,34 @@ func (p *SQLiteParser) Upsert_clause() (localctx IUpsert_clauseContext) {
 
 			p.SetState(1187)
 			p.GetErrorHandler().Sync(p)
+			if p.HasError() {
+				goto errorExit
+			}
 			_la = p.GetTokenStream().LA(1)
 		}
 		{
 			p.SetState(1188)
 			p.Match(SQLiteParserCLOSE_PAR)
+			if p.HasError() {
+				// Recognition error - abort rule
+				goto errorExit
+			}
 		}
 		p.SetState(1191)
 		p.GetErrorHandler().Sync(p)
+		if p.HasError() {
+			goto errorExit
+		}
 		_la = p.GetTokenStream().LA(1)
 
 		if _la == SQLiteParserWHERE_ {
 			{
 				p.SetState(1189)
 				p.Match(SQLiteParserWHERE_)
+				if p.HasError() {
+					// Recognition error - abort rule
+					goto errorExit
+				}
 			}
 			{
 				p.SetState(1190)
@@ -13808,30 +15378,53 @@ func (p *SQLiteParser) Upsert_clause() (localctx IUpsert_clauseContext) {
 	{
 		p.SetState(1195)
 		p.Match(SQLiteParserDO_)
+		if p.HasError() {
+			// Recognition error - abort rule
+			goto errorExit
+		}
 	}
 	p.SetState(1222)
 	p.GetErrorHandler().Sync(p)
+	if p.HasError() {
+		goto errorExit
+	}
 
 	switch p.GetTokenStream().LA(1) {
 	case SQLiteParserNOTHING_:
 		{
 			p.SetState(1196)
 			p.Match(SQLiteParserNOTHING_)
+			if p.HasError() {
+				// Recognition error - abort rule
+				goto errorExit
+			}
 		}
 
 	case SQLiteParserUPDATE_:
 		{
 			p.SetState(1197)
 			p.Match(SQLiteParserUPDATE_)
+			if p.HasError() {
+				// Recognition error - abort rule
+				goto errorExit
+			}
 		}
 		{
 			p.SetState(1198)
 			p.Match(SQLiteParserSET_)
+			if p.HasError() {
+				// Recognition error - abort rule
+				goto errorExit
+			}
 		}
 
 		p.SetState(1201)
 		p.GetErrorHandler().Sync(p)
-		switch p.GetInterpreter().AdaptivePredict(p.GetTokenStream(), 155, p.GetParserRuleContext()) {
+		if p.HasError() {
+			goto errorExit
+		}
+
+		switch p.GetInterpreter().AdaptivePredict(p.BaseParser, p.GetTokenStream(), 155, p.GetParserRuleContext()) {
 		case 1:
 			{
 				p.SetState(1199)
@@ -13844,10 +15437,16 @@ func (p *SQLiteParser) Upsert_clause() (localctx IUpsert_clauseContext) {
 				p.Column_name_list()
 			}
 
+		case antlr.ATNInvalidAltNumber:
+			goto errorExit
 		}
 		{
 			p.SetState(1203)
 			p.Match(SQLiteParserASSIGN)
+			if p.HasError() {
+				// Recognition error - abort rule
+				goto errorExit
+			}
 		}
 		{
 			p.SetState(1204)
@@ -13855,16 +15454,27 @@ func (p *SQLiteParser) Upsert_clause() (localctx IUpsert_clauseContext) {
 		}
 		p.SetState(1215)
 		p.GetErrorHandler().Sync(p)
+		if p.HasError() {
+			goto errorExit
+		}
 		_la = p.GetTokenStream().LA(1)
 
 		for _la == SQLiteParserCOMMA {
 			{
 				p.SetState(1205)
 				p.Match(SQLiteParserCOMMA)
+				if p.HasError() {
+					// Recognition error - abort rule
+					goto errorExit
+				}
 			}
 			p.SetState(1208)
 			p.GetErrorHandler().Sync(p)
-			switch p.GetInterpreter().AdaptivePredict(p.GetTokenStream(), 156, p.GetParserRuleContext()) {
+			if p.HasError() {
+				goto errorExit
+			}
+
+			switch p.GetInterpreter().AdaptivePredict(p.BaseParser, p.GetTokenStream(), 156, p.GetParserRuleContext()) {
 			case 1:
 				{
 					p.SetState(1206)
@@ -13877,10 +15487,16 @@ func (p *SQLiteParser) Upsert_clause() (localctx IUpsert_clauseContext) {
 					p.Column_name_list()
 				}
 
+			case antlr.ATNInvalidAltNumber:
+				goto errorExit
 			}
 			{
 				p.SetState(1210)
 				p.Match(SQLiteParserASSIGN)
+				if p.HasError() {
+					// Recognition error - abort rule
+					goto errorExit
+				}
 			}
 			{
 				p.SetState(1211)
@@ -13889,16 +15505,26 @@ func (p *SQLiteParser) Upsert_clause() (localctx IUpsert_clauseContext) {
 
 			p.SetState(1217)
 			p.GetErrorHandler().Sync(p)
+			if p.HasError() {
+				goto errorExit
+			}
 			_la = p.GetTokenStream().LA(1)
 		}
 		p.SetState(1220)
 		p.GetErrorHandler().Sync(p)
+		if p.HasError() {
+			goto errorExit
+		}
 		_la = p.GetTokenStream().LA(1)
 
 		if _la == SQLiteParserWHERE_ {
 			{
 				p.SetState(1218)
 				p.Match(SQLiteParserWHERE_)
+				if p.HasError() {
+					// Recognition error - abort rule
+					goto errorExit
+				}
 			}
 			{
 				p.SetState(1219)
@@ -13908,10 +15534,21 @@ func (p *SQLiteParser) Upsert_clause() (localctx IUpsert_clauseContext) {
 		}
 
 	default:
-		panic(antlr.NewNoViableAltException(p, nil, nil, nil, nil, nil))
+		p.SetError(antlr.NewNoViableAltException(p, nil, nil, nil, nil, nil))
+		goto errorExit
 	}
 
+errorExit:
+	if p.HasError() {
+		v := p.GetError()
+		localctx.SetException(v)
+		p.GetErrorHandler().ReportError(p, v)
+		p.GetErrorHandler().Recover(p, v)
+		p.SetError(nil)
+	}
+	p.ExitRule()
 	return localctx
+	goto errorExit // Trick to prevent compiler error if the label is not used
 }
 
 // IPragma_stmtContext is an interface to support dynamic dispatch.
@@ -13936,15 +15573,20 @@ type IPragma_stmtContext interface {
 }
 
 type Pragma_stmtContext struct {
-	*antlr.BaseParserRuleContext
+	antlr.BaseParserRuleContext
 	parser antlr.Parser
 }
 
 func NewEmptyPragma_stmtContext() *Pragma_stmtContext {
 	var p = new(Pragma_stmtContext)
-	p.BaseParserRuleContext = antlr.NewBaseParserRuleContext(nil, -1)
+	antlr.InitBaseParserRuleContext(&p.BaseParserRuleContext, nil, -1)
 	p.RuleIndex = SQLiteParserRULE_pragma_stmt
 	return p
+}
+
+func InitEmptyPragma_stmtContext(p *Pragma_stmtContext) {
+	antlr.InitBaseParserRuleContext(&p.BaseParserRuleContext, nil, -1)
+	p.RuleIndex = SQLiteParserRULE_pragma_stmt
 }
 
 func (*Pragma_stmtContext) IsPragma_stmtContext() {}
@@ -13952,7 +15594,7 @@ func (*Pragma_stmtContext) IsPragma_stmtContext() {}
 func NewPragma_stmtContext(parser antlr.Parser, parent antlr.ParserRuleContext, invokingState int) *Pragma_stmtContext {
 	var p = new(Pragma_stmtContext)
 
-	p.BaseParserRuleContext = antlr.NewBaseParserRuleContext(parent, invokingState)
+	antlr.InitBaseParserRuleContext(&p.BaseParserRuleContext, parent, invokingState)
 
 	p.parser = parser
 	p.RuleIndex = SQLiteParserRULE_pragma_stmt
@@ -14051,37 +15693,21 @@ func (s *Pragma_stmtContext) ExitRule(listener antlr.ParseTreeListener) {
 }
 
 func (p *SQLiteParser) Pragma_stmt() (localctx IPragma_stmtContext) {
-	this := p
-	_ = this
-
 	localctx = NewPragma_stmtContext(p, p.GetParserRuleContext(), p.GetState())
 	p.EnterRule(localctx, 80, SQLiteParserRULE_pragma_stmt)
-
-	defer func() {
-		p.ExitRule()
-	}()
-
-	defer func() {
-		if err := recover(); err != nil {
-			if v, ok := err.(antlr.RecognitionException); ok {
-				localctx.SetException(v)
-				p.GetErrorHandler().ReportError(p, v)
-				p.GetErrorHandler().Recover(p, v)
-			} else {
-				panic(err)
-			}
-		}
-	}()
-
 	p.EnterOuterAlt(localctx, 1)
 	{
 		p.SetState(1224)
 		p.Match(SQLiteParserPRAGMA_)
+		if p.HasError() {
+			// Recognition error - abort rule
+			goto errorExit
+		}
 	}
 	p.SetState(1228)
 	p.GetErrorHandler().Sync(p)
 
-	if p.GetInterpreter().AdaptivePredict(p.GetTokenStream(), 160, p.GetParserRuleContext()) == 1 {
+	if p.GetInterpreter().AdaptivePredict(p.BaseParser, p.GetTokenStream(), 160, p.GetParserRuleContext()) == 1 {
 		{
 			p.SetState(1225)
 			p.Schema_name()
@@ -14089,8 +15715,14 @@ func (p *SQLiteParser) Pragma_stmt() (localctx IPragma_stmtContext) {
 		{
 			p.SetState(1226)
 			p.Match(SQLiteParserDOT)
+			if p.HasError() {
+				// Recognition error - abort rule
+				goto errorExit
+			}
 		}
 
+	} else if p.HasError() { // JIM
+		goto errorExit
 	}
 	{
 		p.SetState(1230)
@@ -14098,12 +15730,18 @@ func (p *SQLiteParser) Pragma_stmt() (localctx IPragma_stmtContext) {
 	}
 	p.SetState(1237)
 	p.GetErrorHandler().Sync(p)
-
+	if p.HasError() {
+		goto errorExit
+	}
 	switch p.GetTokenStream().LA(1) {
 	case SQLiteParserASSIGN:
 		{
 			p.SetState(1231)
 			p.Match(SQLiteParserASSIGN)
+			if p.HasError() {
+				// Recognition error - abort rule
+				goto errorExit
+			}
 		}
 		{
 			p.SetState(1232)
@@ -14114,6 +15752,10 @@ func (p *SQLiteParser) Pragma_stmt() (localctx IPragma_stmtContext) {
 		{
 			p.SetState(1233)
 			p.Match(SQLiteParserOPEN_PAR)
+			if p.HasError() {
+				// Recognition error - abort rule
+				goto errorExit
+			}
 		}
 		{
 			p.SetState(1234)
@@ -14122,6 +15764,10 @@ func (p *SQLiteParser) Pragma_stmt() (localctx IPragma_stmtContext) {
 		{
 			p.SetState(1235)
 			p.Match(SQLiteParserCLOSE_PAR)
+			if p.HasError() {
+				// Recognition error - abort rule
+				goto errorExit
+			}
 		}
 
 	case SQLiteParserEOF, SQLiteParserSCOL, SQLiteParserALTER_, SQLiteParserANALYZE_, SQLiteParserATTACH_, SQLiteParserBEGIN_, SQLiteParserCOMMIT_, SQLiteParserCREATE_, SQLiteParserDELETE_, SQLiteParserDETACH_, SQLiteParserDROP_, SQLiteParserEND_, SQLiteParserEXPLAIN_, SQLiteParserINSERT_, SQLiteParserPRAGMA_, SQLiteParserREINDEX_, SQLiteParserRELEASE_, SQLiteParserREPLACE_, SQLiteParserROLLBACK_, SQLiteParserSAVEPOINT_, SQLiteParserSELECT_, SQLiteParserUPDATE_, SQLiteParserVACUUM_, SQLiteParserVALUES_, SQLiteParserWITH_:
@@ -14129,7 +15775,17 @@ func (p *SQLiteParser) Pragma_stmt() (localctx IPragma_stmtContext) {
 	default:
 	}
 
+errorExit:
+	if p.HasError() {
+		v := p.GetError()
+		localctx.SetException(v)
+		p.GetErrorHandler().ReportError(p, v)
+		p.GetErrorHandler().Recover(p, v)
+		p.SetError(nil)
+	}
+	p.ExitRule()
 	return localctx
+	goto errorExit // Trick to prevent compiler error if the label is not used
 }
 
 // IPragma_valueContext is an interface to support dynamic dispatch.
@@ -14149,15 +15805,20 @@ type IPragma_valueContext interface {
 }
 
 type Pragma_valueContext struct {
-	*antlr.BaseParserRuleContext
+	antlr.BaseParserRuleContext
 	parser antlr.Parser
 }
 
 func NewEmptyPragma_valueContext() *Pragma_valueContext {
 	var p = new(Pragma_valueContext)
-	p.BaseParserRuleContext = antlr.NewBaseParserRuleContext(nil, -1)
+	antlr.InitBaseParserRuleContext(&p.BaseParserRuleContext, nil, -1)
 	p.RuleIndex = SQLiteParserRULE_pragma_value
 	return p
+}
+
+func InitEmptyPragma_valueContext(p *Pragma_valueContext) {
+	antlr.InitBaseParserRuleContext(&p.BaseParserRuleContext, nil, -1)
+	p.RuleIndex = SQLiteParserRULE_pragma_value
 }
 
 func (*Pragma_valueContext) IsPragma_valueContext() {}
@@ -14165,7 +15826,7 @@ func (*Pragma_valueContext) IsPragma_valueContext() {}
 func NewPragma_valueContext(parser antlr.Parser, parent antlr.ParserRuleContext, invokingState int) *Pragma_valueContext {
 	var p = new(Pragma_valueContext)
 
-	p.BaseParserRuleContext = antlr.NewBaseParserRuleContext(parent, invokingState)
+	antlr.InitBaseParserRuleContext(&p.BaseParserRuleContext, parent, invokingState)
 
 	p.parser = parser
 	p.RuleIndex = SQLiteParserRULE_pragma_value
@@ -14232,31 +15893,15 @@ func (s *Pragma_valueContext) ExitRule(listener antlr.ParseTreeListener) {
 }
 
 func (p *SQLiteParser) Pragma_value() (localctx IPragma_valueContext) {
-	this := p
-	_ = this
-
 	localctx = NewPragma_valueContext(p, p.GetParserRuleContext(), p.GetState())
 	p.EnterRule(localctx, 82, SQLiteParserRULE_pragma_value)
-
-	defer func() {
-		p.ExitRule()
-	}()
-
-	defer func() {
-		if err := recover(); err != nil {
-			if v, ok := err.(antlr.RecognitionException); ok {
-				localctx.SetException(v)
-				p.GetErrorHandler().ReportError(p, v)
-				p.GetErrorHandler().Recover(p, v)
-			} else {
-				panic(err)
-			}
-		}
-	}()
-
 	p.SetState(1242)
 	p.GetErrorHandler().Sync(p)
-	switch p.GetInterpreter().AdaptivePredict(p.GetTokenStream(), 162, p.GetParserRuleContext()) {
+	if p.HasError() {
+		goto errorExit
+	}
+
+	switch p.GetInterpreter().AdaptivePredict(p.BaseParser, p.GetTokenStream(), 162, p.GetParserRuleContext()) {
 	case 1:
 		p.EnterOuterAlt(localctx, 1)
 		{
@@ -14276,11 +15921,27 @@ func (p *SQLiteParser) Pragma_value() (localctx IPragma_valueContext) {
 		{
 			p.SetState(1241)
 			p.Match(SQLiteParserSTRING_LITERAL)
+			if p.HasError() {
+				// Recognition error - abort rule
+				goto errorExit
+			}
 		}
 
+	case antlr.ATNInvalidAltNumber:
+		goto errorExit
 	}
 
+errorExit:
+	if p.HasError() {
+		v := p.GetError()
+		localctx.SetException(v)
+		p.GetErrorHandler().ReportError(p, v)
+		p.GetErrorHandler().Recover(p, v)
+		p.SetError(nil)
+	}
+	p.ExitRule()
 	return localctx
+	goto errorExit // Trick to prevent compiler error if the label is not used
 }
 
 // IReindex_stmtContext is an interface to support dynamic dispatch.
@@ -14303,15 +15964,20 @@ type IReindex_stmtContext interface {
 }
 
 type Reindex_stmtContext struct {
-	*antlr.BaseParserRuleContext
+	antlr.BaseParserRuleContext
 	parser antlr.Parser
 }
 
 func NewEmptyReindex_stmtContext() *Reindex_stmtContext {
 	var p = new(Reindex_stmtContext)
-	p.BaseParserRuleContext = antlr.NewBaseParserRuleContext(nil, -1)
+	antlr.InitBaseParserRuleContext(&p.BaseParserRuleContext, nil, -1)
 	p.RuleIndex = SQLiteParserRULE_reindex_stmt
 	return p
+}
+
+func InitEmptyReindex_stmtContext(p *Reindex_stmtContext) {
+	antlr.InitBaseParserRuleContext(&p.BaseParserRuleContext, nil, -1)
+	p.RuleIndex = SQLiteParserRULE_reindex_stmt
 }
 
 func (*Reindex_stmtContext) IsReindex_stmtContext() {}
@@ -14319,7 +15985,7 @@ func (*Reindex_stmtContext) IsReindex_stmtContext() {}
 func NewReindex_stmtContext(parser antlr.Parser, parent antlr.ParserRuleContext, invokingState int) *Reindex_stmtContext {
 	var p = new(Reindex_stmtContext)
 
-	p.BaseParserRuleContext = antlr.NewBaseParserRuleContext(parent, invokingState)
+	antlr.InitBaseParserRuleContext(&p.BaseParserRuleContext, parent, invokingState)
 
 	p.parser = parser
 	p.RuleIndex = SQLiteParserRULE_reindex_stmt
@@ -14422,47 +16088,33 @@ func (s *Reindex_stmtContext) ExitRule(listener antlr.ParseTreeListener) {
 }
 
 func (p *SQLiteParser) Reindex_stmt() (localctx IReindex_stmtContext) {
-	this := p
-	_ = this
-
 	localctx = NewReindex_stmtContext(p, p.GetParserRuleContext(), p.GetState())
 	p.EnterRule(localctx, 84, SQLiteParserRULE_reindex_stmt)
-
-	defer func() {
-		p.ExitRule()
-	}()
-
-	defer func() {
-		if err := recover(); err != nil {
-			if v, ok := err.(antlr.RecognitionException); ok {
-				localctx.SetException(v)
-				p.GetErrorHandler().ReportError(p, v)
-				p.GetErrorHandler().Recover(p, v)
-			} else {
-				panic(err)
-			}
-		}
-	}()
-
 	p.EnterOuterAlt(localctx, 1)
 	{
 		p.SetState(1244)
 		p.Match(SQLiteParserREINDEX_)
+		if p.HasError() {
+			// Recognition error - abort rule
+			goto errorExit
+		}
 	}
 	p.SetState(1255)
 	p.GetErrorHandler().Sync(p)
 
-	if p.GetInterpreter().AdaptivePredict(p.GetTokenStream(), 165, p.GetParserRuleContext()) == 1 {
+	if p.GetInterpreter().AdaptivePredict(p.BaseParser, p.GetTokenStream(), 165, p.GetParserRuleContext()) == 1 {
 		{
 			p.SetState(1245)
 			p.Collation_name()
 		}
 
-	} else if p.GetInterpreter().AdaptivePredict(p.GetTokenStream(), 165, p.GetParserRuleContext()) == 2 {
+	} else if p.HasError() { // JIM
+		goto errorExit
+	} else if p.GetInterpreter().AdaptivePredict(p.BaseParser, p.GetTokenStream(), 165, p.GetParserRuleContext()) == 2 {
 		p.SetState(1249)
 		p.GetErrorHandler().Sync(p)
 
-		if p.GetInterpreter().AdaptivePredict(p.GetTokenStream(), 163, p.GetParserRuleContext()) == 1 {
+		if p.GetInterpreter().AdaptivePredict(p.BaseParser, p.GetTokenStream(), 163, p.GetParserRuleContext()) == 1 {
 			{
 				p.SetState(1246)
 				p.Schema_name()
@@ -14470,12 +16122,22 @@ func (p *SQLiteParser) Reindex_stmt() (localctx IReindex_stmtContext) {
 			{
 				p.SetState(1247)
 				p.Match(SQLiteParserDOT)
+				if p.HasError() {
+					// Recognition error - abort rule
+					goto errorExit
+				}
 			}
 
+		} else if p.HasError() { // JIM
+			goto errorExit
 		}
 		p.SetState(1253)
 		p.GetErrorHandler().Sync(p)
-		switch p.GetInterpreter().AdaptivePredict(p.GetTokenStream(), 164, p.GetParserRuleContext()) {
+		if p.HasError() {
+			goto errorExit
+		}
+
+		switch p.GetInterpreter().AdaptivePredict(p.BaseParser, p.GetTokenStream(), 164, p.GetParserRuleContext()) {
 		case 1:
 			{
 				p.SetState(1251)
@@ -14488,11 +16150,25 @@ func (p *SQLiteParser) Reindex_stmt() (localctx IReindex_stmtContext) {
 				p.Index_name()
 			}
 
+		case antlr.ATNInvalidAltNumber:
+			goto errorExit
 		}
 
+	} else if p.HasError() { // JIM
+		goto errorExit
 	}
 
+errorExit:
+	if p.HasError() {
+		v := p.GetError()
+		localctx.SetException(v)
+		p.GetErrorHandler().ReportError(p, v)
+		p.GetErrorHandler().Recover(p, v)
+		p.SetError(nil)
+	}
+	p.ExitRule()
 	return localctx
+	goto errorExit // Trick to prevent compiler error if the label is not used
 }
 
 // ISelect_stmtContext is an interface to support dynamic dispatch.
@@ -14516,15 +16192,20 @@ type ISelect_stmtContext interface {
 }
 
 type Select_stmtContext struct {
-	*antlr.BaseParserRuleContext
+	antlr.BaseParserRuleContext
 	parser antlr.Parser
 }
 
 func NewEmptySelect_stmtContext() *Select_stmtContext {
 	var p = new(Select_stmtContext)
-	p.BaseParserRuleContext = antlr.NewBaseParserRuleContext(nil, -1)
+	antlr.InitBaseParserRuleContext(&p.BaseParserRuleContext, nil, -1)
 	p.RuleIndex = SQLiteParserRULE_select_stmt
 	return p
+}
+
+func InitEmptySelect_stmtContext(p *Select_stmtContext) {
+	antlr.InitBaseParserRuleContext(&p.BaseParserRuleContext, nil, -1)
+	p.RuleIndex = SQLiteParserRULE_select_stmt
 }
 
 func (*Select_stmtContext) IsSelect_stmtContext() {}
@@ -14532,7 +16213,7 @@ func (*Select_stmtContext) IsSelect_stmtContext() {}
 func NewSelect_stmtContext(parser antlr.Parser, parent antlr.ParserRuleContext, invokingState int) *Select_stmtContext {
 	var p = new(Select_stmtContext)
 
-	p.BaseParserRuleContext = antlr.NewBaseParserRuleContext(parent, invokingState)
+	antlr.InitBaseParserRuleContext(&p.BaseParserRuleContext, parent, invokingState)
 
 	p.parser = parser
 	p.RuleIndex = SQLiteParserRULE_select_stmt
@@ -14693,34 +16374,18 @@ func (s *Select_stmtContext) ExitRule(listener antlr.ParseTreeListener) {
 }
 
 func (p *SQLiteParser) Select_stmt() (localctx ISelect_stmtContext) {
-	this := p
-	_ = this
-
 	localctx = NewSelect_stmtContext(p, p.GetParserRuleContext(), p.GetState())
 	p.EnterRule(localctx, 86, SQLiteParserRULE_select_stmt)
 	var _la int
-
-	defer func() {
-		p.ExitRule()
-	}()
-
-	defer func() {
-		if err := recover(); err != nil {
-			if v, ok := err.(antlr.RecognitionException); ok {
-				localctx.SetException(v)
-				p.GetErrorHandler().ReportError(p, v)
-				p.GetErrorHandler().Recover(p, v)
-			} else {
-				panic(err)
-			}
-		}
-	}()
 
 	var _alt int
 
 	p.EnterOuterAlt(localctx, 1)
 	p.SetState(1258)
 	p.GetErrorHandler().Sync(p)
+	if p.HasError() {
+		goto errorExit
+	}
 	_la = p.GetTokenStream().LA(1)
 
 	if _la == SQLiteParserWITH_ {
@@ -14736,8 +16401,13 @@ func (p *SQLiteParser) Select_stmt() (localctx ISelect_stmtContext) {
 	}
 	p.SetState(1266)
 	p.GetErrorHandler().Sync(p)
-	_alt = p.GetInterpreter().AdaptivePredict(p.GetTokenStream(), 167, p.GetParserRuleContext())
-
+	if p.HasError() {
+		goto errorExit
+	}
+	_alt = p.GetInterpreter().AdaptivePredict(p.BaseParser, p.GetTokenStream(), 167, p.GetParserRuleContext())
+	if p.HasError() {
+		goto errorExit
+	}
 	for _alt != 2 && _alt != antlr.ATNInvalidAltNumber {
 		if _alt == 1 {
 			{
@@ -14752,10 +16422,19 @@ func (p *SQLiteParser) Select_stmt() (localctx ISelect_stmtContext) {
 		}
 		p.SetState(1268)
 		p.GetErrorHandler().Sync(p)
-		_alt = p.GetInterpreter().AdaptivePredict(p.GetTokenStream(), 167, p.GetParserRuleContext())
+		if p.HasError() {
+			goto errorExit
+		}
+		_alt = p.GetInterpreter().AdaptivePredict(p.BaseParser, p.GetTokenStream(), 167, p.GetParserRuleContext())
+		if p.HasError() {
+			goto errorExit
+		}
 	}
 	p.SetState(1270)
 	p.GetErrorHandler().Sync(p)
+	if p.HasError() {
+		goto errorExit
+	}
 	_la = p.GetTokenStream().LA(1)
 
 	if _la == SQLiteParserORDER_ {
@@ -14767,6 +16446,9 @@ func (p *SQLiteParser) Select_stmt() (localctx ISelect_stmtContext) {
 	}
 	p.SetState(1273)
 	p.GetErrorHandler().Sync(p)
+	if p.HasError() {
+		goto errorExit
+	}
 	_la = p.GetTokenStream().LA(1)
 
 	if _la == SQLiteParserLIMIT_ {
@@ -14777,7 +16459,17 @@ func (p *SQLiteParser) Select_stmt() (localctx ISelect_stmtContext) {
 
 	}
 
+errorExit:
+	if p.HasError() {
+		v := p.GetError()
+		localctx.SetException(v)
+		p.GetErrorHandler().ReportError(p, v)
+		p.GetErrorHandler().Recover(p, v)
+		p.SetError(nil)
+	}
+	p.ExitRule()
 	return localctx
+	goto errorExit // Trick to prevent compiler error if the label is not used
 }
 
 // IJoin_clauseContext is an interface to support dynamic dispatch.
@@ -14800,15 +16492,20 @@ type IJoin_clauseContext interface {
 }
 
 type Join_clauseContext struct {
-	*antlr.BaseParserRuleContext
+	antlr.BaseParserRuleContext
 	parser antlr.Parser
 }
 
 func NewEmptyJoin_clauseContext() *Join_clauseContext {
 	var p = new(Join_clauseContext)
-	p.BaseParserRuleContext = antlr.NewBaseParserRuleContext(nil, -1)
+	antlr.InitBaseParserRuleContext(&p.BaseParserRuleContext, nil, -1)
 	p.RuleIndex = SQLiteParserRULE_join_clause
 	return p
+}
+
+func InitEmptyJoin_clauseContext(p *Join_clauseContext) {
+	antlr.InitBaseParserRuleContext(&p.BaseParserRuleContext, nil, -1)
+	p.RuleIndex = SQLiteParserRULE_join_clause
 }
 
 func (*Join_clauseContext) IsJoin_clauseContext() {}
@@ -14816,7 +16513,7 @@ func (*Join_clauseContext) IsJoin_clauseContext() {}
 func NewJoin_clauseContext(parser antlr.Parser, parent antlr.ParserRuleContext, invokingState int) *Join_clauseContext {
 	var p = new(Join_clauseContext)
 
-	p.BaseParserRuleContext = antlr.NewBaseParserRuleContext(parent, invokingState)
+	antlr.InitBaseParserRuleContext(&p.BaseParserRuleContext, parent, invokingState)
 
 	p.parser = parser
 	p.RuleIndex = SQLiteParserRULE_join_clause
@@ -14970,28 +16667,9 @@ func (s *Join_clauseContext) ExitRule(listener antlr.ParseTreeListener) {
 }
 
 func (p *SQLiteParser) Join_clause() (localctx IJoin_clauseContext) {
-	this := p
-	_ = this
-
 	localctx = NewJoin_clauseContext(p, p.GetParserRuleContext(), p.GetState())
 	p.EnterRule(localctx, 88, SQLiteParserRULE_join_clause)
 	var _la int
-
-	defer func() {
-		p.ExitRule()
-	}()
-
-	defer func() {
-		if err := recover(); err != nil {
-			if v, ok := err.(antlr.RecognitionException); ok {
-				localctx.SetException(v)
-				p.GetErrorHandler().ReportError(p, v)
-				p.GetErrorHandler().Recover(p, v)
-			} else {
-				panic(err)
-			}
-		}
-	}()
 
 	p.EnterOuterAlt(localctx, 1)
 	{
@@ -15000,6 +16678,9 @@ func (p *SQLiteParser) Join_clause() (localctx IJoin_clauseContext) {
 	}
 	p.SetState(1283)
 	p.GetErrorHandler().Sync(p)
+	if p.HasError() {
+		goto errorExit
+	}
 	_la = p.GetTokenStream().LA(1)
 
 	for _la == SQLiteParserCOMMA || _la == SQLiteParserCROSS_ || ((int64((_la-87)) & ^0x3f) == 0 && ((int64(1)<<(_la-87))&8833) != 0) {
@@ -15014,20 +16695,35 @@ func (p *SQLiteParser) Join_clause() (localctx IJoin_clauseContext) {
 		p.SetState(1279)
 		p.GetErrorHandler().Sync(p)
 
-		if p.GetInterpreter().AdaptivePredict(p.GetTokenStream(), 170, p.GetParserRuleContext()) == 1 {
+		if p.GetInterpreter().AdaptivePredict(p.BaseParser, p.GetTokenStream(), 170, p.GetParserRuleContext()) == 1 {
 			{
 				p.SetState(1278)
 				p.Join_constraint()
 			}
 
+		} else if p.HasError() { // JIM
+			goto errorExit
 		}
 
 		p.SetState(1285)
 		p.GetErrorHandler().Sync(p)
+		if p.HasError() {
+			goto errorExit
+		}
 		_la = p.GetTokenStream().LA(1)
 	}
 
+errorExit:
+	if p.HasError() {
+		v := p.GetError()
+		localctx.SetException(v)
+		p.GetErrorHandler().ReportError(p, v)
+		p.GetErrorHandler().Recover(p, v)
+		p.SetError(nil)
+	}
+	p.ExitRule()
 	return localctx
+	goto errorExit // Trick to prevent compiler error if the label is not used
 }
 
 // ISelect_coreContext is an interface to support dynamic dispatch.
@@ -15093,7 +16789,7 @@ type ISelect_coreContext interface {
 }
 
 type Select_coreContext struct {
-	*antlr.BaseParserRuleContext
+	antlr.BaseParserRuleContext
 	parser      antlr.Parser
 	whereExpr   IExprContext
 	_expr       IExprContext
@@ -15103,9 +16799,14 @@ type Select_coreContext struct {
 
 func NewEmptySelect_coreContext() *Select_coreContext {
 	var p = new(Select_coreContext)
-	p.BaseParserRuleContext = antlr.NewBaseParserRuleContext(nil, -1)
+	antlr.InitBaseParserRuleContext(&p.BaseParserRuleContext, nil, -1)
 	p.RuleIndex = SQLiteParserRULE_select_core
 	return p
+}
+
+func InitEmptySelect_coreContext(p *Select_coreContext) {
+	antlr.InitBaseParserRuleContext(&p.BaseParserRuleContext, nil, -1)
+	p.RuleIndex = SQLiteParserRULE_select_core
 }
 
 func (*Select_coreContext) IsSelect_coreContext() {}
@@ -15113,7 +16814,7 @@ func (*Select_coreContext) IsSelect_coreContext() {}
 func NewSelect_coreContext(parser antlr.Parser, parent antlr.ParserRuleContext, invokingState int) *Select_coreContext {
 	var p = new(Select_coreContext)
 
-	p.BaseParserRuleContext = antlr.NewBaseParserRuleContext(parent, invokingState)
+	antlr.InitBaseParserRuleContext(&p.BaseParserRuleContext, parent, invokingState)
 
 	p.parser = parser
 	p.RuleIndex = SQLiteParserRULE_select_core
@@ -15449,31 +17150,15 @@ func (s *Select_coreContext) ExitRule(listener antlr.ParseTreeListener) {
 }
 
 func (p *SQLiteParser) Select_core() (localctx ISelect_coreContext) {
-	this := p
-	_ = this
-
 	localctx = NewSelect_coreContext(p, p.GetParserRuleContext(), p.GetState())
 	p.EnterRule(localctx, 90, SQLiteParserRULE_select_core)
 	var _la int
 
-	defer func() {
-		p.ExitRule()
-	}()
-
-	defer func() {
-		if err := recover(); err != nil {
-			if v, ok := err.(antlr.RecognitionException); ok {
-				localctx.SetException(v)
-				p.GetErrorHandler().ReportError(p, v)
-				p.GetErrorHandler().Recover(p, v)
-			} else {
-				panic(err)
-			}
-		}
-	}()
-
 	p.SetState(1349)
 	p.GetErrorHandler().Sync(p)
+	if p.HasError() {
+		goto errorExit
+	}
 
 	switch p.GetTokenStream().LA(1) {
 	case SQLiteParserSELECT_:
@@ -15481,11 +17166,15 @@ func (p *SQLiteParser) Select_core() (localctx ISelect_coreContext) {
 		{
 			p.SetState(1286)
 			p.Match(SQLiteParserSELECT_)
+			if p.HasError() {
+				// Recognition error - abort rule
+				goto errorExit
+			}
 		}
 		p.SetState(1288)
 		p.GetErrorHandler().Sync(p)
 
-		if p.GetInterpreter().AdaptivePredict(p.GetTokenStream(), 172, p.GetParserRuleContext()) == 1 {
+		if p.GetInterpreter().AdaptivePredict(p.BaseParser, p.GetTokenStream(), 172, p.GetParserRuleContext()) == 1 {
 			{
 				p.SetState(1287)
 				_la = p.GetTokenStream().LA(1)
@@ -15498,6 +17187,8 @@ func (p *SQLiteParser) Select_core() (localctx ISelect_coreContext) {
 				}
 			}
 
+		} else if p.HasError() { // JIM
+			goto errorExit
 		}
 		{
 			p.SetState(1290)
@@ -15505,12 +17196,19 @@ func (p *SQLiteParser) Select_core() (localctx ISelect_coreContext) {
 		}
 		p.SetState(1295)
 		p.GetErrorHandler().Sync(p)
+		if p.HasError() {
+			goto errorExit
+		}
 		_la = p.GetTokenStream().LA(1)
 
 		for _la == SQLiteParserCOMMA {
 			{
 				p.SetState(1291)
 				p.Match(SQLiteParserCOMMA)
+				if p.HasError() {
+					// Recognition error - abort rule
+					goto errorExit
+				}
 			}
 			{
 				p.SetState(1292)
@@ -15519,20 +17217,34 @@ func (p *SQLiteParser) Select_core() (localctx ISelect_coreContext) {
 
 			p.SetState(1297)
 			p.GetErrorHandler().Sync(p)
+			if p.HasError() {
+				goto errorExit
+			}
 			_la = p.GetTokenStream().LA(1)
 		}
 		p.SetState(1310)
 		p.GetErrorHandler().Sync(p)
+		if p.HasError() {
+			goto errorExit
+		}
 		_la = p.GetTokenStream().LA(1)
 
 		if _la == SQLiteParserFROM_ {
 			{
 				p.SetState(1298)
 				p.Match(SQLiteParserFROM_)
+				if p.HasError() {
+					// Recognition error - abort rule
+					goto errorExit
+				}
 			}
 			p.SetState(1308)
 			p.GetErrorHandler().Sync(p)
-			switch p.GetInterpreter().AdaptivePredict(p.GetTokenStream(), 175, p.GetParserRuleContext()) {
+			if p.HasError() {
+				goto errorExit
+			}
+
+			switch p.GetInterpreter().AdaptivePredict(p.BaseParser, p.GetTokenStream(), 175, p.GetParserRuleContext()) {
 			case 1:
 				{
 					p.SetState(1299)
@@ -15540,12 +17252,19 @@ func (p *SQLiteParser) Select_core() (localctx ISelect_coreContext) {
 				}
 				p.SetState(1304)
 				p.GetErrorHandler().Sync(p)
+				if p.HasError() {
+					goto errorExit
+				}
 				_la = p.GetTokenStream().LA(1)
 
 				for _la == SQLiteParserCOMMA {
 					{
 						p.SetState(1300)
 						p.Match(SQLiteParserCOMMA)
+						if p.HasError() {
+							// Recognition error - abort rule
+							goto errorExit
+						}
 					}
 					{
 						p.SetState(1301)
@@ -15554,6 +17273,9 @@ func (p *SQLiteParser) Select_core() (localctx ISelect_coreContext) {
 
 					p.SetState(1306)
 					p.GetErrorHandler().Sync(p)
+					if p.HasError() {
+						goto errorExit
+					}
 					_la = p.GetTokenStream().LA(1)
 				}
 
@@ -15563,17 +17285,26 @@ func (p *SQLiteParser) Select_core() (localctx ISelect_coreContext) {
 					p.Join_clause()
 				}
 
+			case antlr.ATNInvalidAltNumber:
+				goto errorExit
 			}
 
 		}
 		p.SetState(1314)
 		p.GetErrorHandler().Sync(p)
+		if p.HasError() {
+			goto errorExit
+		}
 		_la = p.GetTokenStream().LA(1)
 
 		if _la == SQLiteParserWHERE_ {
 			{
 				p.SetState(1312)
 				p.Match(SQLiteParserWHERE_)
+				if p.HasError() {
+					// Recognition error - abort rule
+					goto errorExit
+				}
 			}
 			{
 				p.SetState(1313)
@@ -15586,16 +17317,27 @@ func (p *SQLiteParser) Select_core() (localctx ISelect_coreContext) {
 		}
 		p.SetState(1330)
 		p.GetErrorHandler().Sync(p)
+		if p.HasError() {
+			goto errorExit
+		}
 		_la = p.GetTokenStream().LA(1)
 
 		if _la == SQLiteParserGROUP_ {
 			{
 				p.SetState(1316)
 				p.Match(SQLiteParserGROUP_)
+				if p.HasError() {
+					// Recognition error - abort rule
+					goto errorExit
+				}
 			}
 			{
 				p.SetState(1317)
 				p.Match(SQLiteParserBY_)
+				if p.HasError() {
+					// Recognition error - abort rule
+					goto errorExit
+				}
 			}
 			{
 				p.SetState(1318)
@@ -15607,12 +17349,19 @@ func (p *SQLiteParser) Select_core() (localctx ISelect_coreContext) {
 			localctx.(*Select_coreContext).groupByExpr = append(localctx.(*Select_coreContext).groupByExpr, localctx.(*Select_coreContext)._expr)
 			p.SetState(1323)
 			p.GetErrorHandler().Sync(p)
+			if p.HasError() {
+				goto errorExit
+			}
 			_la = p.GetTokenStream().LA(1)
 
 			for _la == SQLiteParserCOMMA {
 				{
 					p.SetState(1319)
 					p.Match(SQLiteParserCOMMA)
+					if p.HasError() {
+						// Recognition error - abort rule
+						goto errorExit
+					}
 				}
 				{
 					p.SetState(1320)
@@ -15625,16 +17374,26 @@ func (p *SQLiteParser) Select_core() (localctx ISelect_coreContext) {
 
 				p.SetState(1325)
 				p.GetErrorHandler().Sync(p)
+				if p.HasError() {
+					goto errorExit
+				}
 				_la = p.GetTokenStream().LA(1)
 			}
 			p.SetState(1328)
 			p.GetErrorHandler().Sync(p)
+			if p.HasError() {
+				goto errorExit
+			}
 			_la = p.GetTokenStream().LA(1)
 
 			if _la == SQLiteParserHAVING_ {
 				{
 					p.SetState(1326)
 					p.Match(SQLiteParserHAVING_)
+					if p.HasError() {
+						// Recognition error - abort rule
+						goto errorExit
+					}
 				}
 				{
 					p.SetState(1327)
@@ -15649,12 +17408,19 @@ func (p *SQLiteParser) Select_core() (localctx ISelect_coreContext) {
 		}
 		p.SetState(1346)
 		p.GetErrorHandler().Sync(p)
+		if p.HasError() {
+			goto errorExit
+		}
 		_la = p.GetTokenStream().LA(1)
 
 		if _la == SQLiteParserWINDOW_ {
 			{
 				p.SetState(1332)
 				p.Match(SQLiteParserWINDOW_)
+				if p.HasError() {
+					// Recognition error - abort rule
+					goto errorExit
+				}
 			}
 			{
 				p.SetState(1333)
@@ -15663,6 +17429,10 @@ func (p *SQLiteParser) Select_core() (localctx ISelect_coreContext) {
 			{
 				p.SetState(1334)
 				p.Match(SQLiteParserAS_)
+				if p.HasError() {
+					// Recognition error - abort rule
+					goto errorExit
+				}
 			}
 			{
 				p.SetState(1335)
@@ -15670,12 +17440,19 @@ func (p *SQLiteParser) Select_core() (localctx ISelect_coreContext) {
 			}
 			p.SetState(1343)
 			p.GetErrorHandler().Sync(p)
+			if p.HasError() {
+				goto errorExit
+			}
 			_la = p.GetTokenStream().LA(1)
 
 			for _la == SQLiteParserCOMMA {
 				{
 					p.SetState(1336)
 					p.Match(SQLiteParserCOMMA)
+					if p.HasError() {
+						// Recognition error - abort rule
+						goto errorExit
+					}
 				}
 				{
 					p.SetState(1337)
@@ -15684,6 +17461,10 @@ func (p *SQLiteParser) Select_core() (localctx ISelect_coreContext) {
 				{
 					p.SetState(1338)
 					p.Match(SQLiteParserAS_)
+					if p.HasError() {
+						// Recognition error - abort rule
+						goto errorExit
+					}
 				}
 				{
 					p.SetState(1339)
@@ -15692,6 +17473,9 @@ func (p *SQLiteParser) Select_core() (localctx ISelect_coreContext) {
 
 				p.SetState(1345)
 				p.GetErrorHandler().Sync(p)
+				if p.HasError() {
+					goto errorExit
+				}
 				_la = p.GetTokenStream().LA(1)
 			}
 
@@ -15705,10 +17489,21 @@ func (p *SQLiteParser) Select_core() (localctx ISelect_coreContext) {
 		}
 
 	default:
-		panic(antlr.NewNoViableAltException(p, nil, nil, nil, nil, nil))
+		p.SetError(antlr.NewNoViableAltException(p, nil, nil, nil, nil, nil))
+		goto errorExit
 	}
 
+errorExit:
+	if p.HasError() {
+		v := p.GetError()
+		localctx.SetException(v)
+		p.GetErrorHandler().ReportError(p, v)
+		p.GetErrorHandler().Recover(p, v)
+		p.SetError(nil)
+	}
+	p.ExitRule()
 	return localctx
+	goto errorExit // Trick to prevent compiler error if the label is not used
 }
 
 // IFactored_select_stmtContext is an interface to support dynamic dispatch.
@@ -15726,15 +17521,20 @@ type IFactored_select_stmtContext interface {
 }
 
 type Factored_select_stmtContext struct {
-	*antlr.BaseParserRuleContext
+	antlr.BaseParserRuleContext
 	parser antlr.Parser
 }
 
 func NewEmptyFactored_select_stmtContext() *Factored_select_stmtContext {
 	var p = new(Factored_select_stmtContext)
-	p.BaseParserRuleContext = antlr.NewBaseParserRuleContext(nil, -1)
+	antlr.InitBaseParserRuleContext(&p.BaseParserRuleContext, nil, -1)
 	p.RuleIndex = SQLiteParserRULE_factored_select_stmt
 	return p
+}
+
+func InitEmptyFactored_select_stmtContext(p *Factored_select_stmtContext) {
+	antlr.InitBaseParserRuleContext(&p.BaseParserRuleContext, nil, -1)
+	p.RuleIndex = SQLiteParserRULE_factored_select_stmt
 }
 
 func (*Factored_select_stmtContext) IsFactored_select_stmtContext() {}
@@ -15742,7 +17542,7 @@ func (*Factored_select_stmtContext) IsFactored_select_stmtContext() {}
 func NewFactored_select_stmtContext(parser antlr.Parser, parent antlr.ParserRuleContext, invokingState int) *Factored_select_stmtContext {
 	var p = new(Factored_select_stmtContext)
 
-	p.BaseParserRuleContext = antlr.NewBaseParserRuleContext(parent, invokingState)
+	antlr.InitBaseParserRuleContext(&p.BaseParserRuleContext, parent, invokingState)
 
 	p.parser = parser
 	p.RuleIndex = SQLiteParserRULE_factored_select_stmt
@@ -15789,35 +17589,25 @@ func (s *Factored_select_stmtContext) ExitRule(listener antlr.ParseTreeListener)
 }
 
 func (p *SQLiteParser) Factored_select_stmt() (localctx IFactored_select_stmtContext) {
-	this := p
-	_ = this
-
 	localctx = NewFactored_select_stmtContext(p, p.GetParserRuleContext(), p.GetState())
 	p.EnterRule(localctx, 92, SQLiteParserRULE_factored_select_stmt)
-
-	defer func() {
-		p.ExitRule()
-	}()
-
-	defer func() {
-		if err := recover(); err != nil {
-			if v, ok := err.(antlr.RecognitionException); ok {
-				localctx.SetException(v)
-				p.GetErrorHandler().ReportError(p, v)
-				p.GetErrorHandler().Recover(p, v)
-			} else {
-				panic(err)
-			}
-		}
-	}()
-
 	p.EnterOuterAlt(localctx, 1)
 	{
 		p.SetState(1351)
 		p.Select_stmt()
 	}
 
+errorExit:
+	if p.HasError() {
+		v := p.GetError()
+		localctx.SetException(v)
+		p.GetErrorHandler().ReportError(p, v)
+		p.GetErrorHandler().Recover(p, v)
+		p.SetError(nil)
+	}
+	p.ExitRule()
 	return localctx
+	goto errorExit // Trick to prevent compiler error if the label is not used
 }
 
 // ISimple_select_stmtContext is an interface to support dynamic dispatch.
@@ -15838,15 +17628,20 @@ type ISimple_select_stmtContext interface {
 }
 
 type Simple_select_stmtContext struct {
-	*antlr.BaseParserRuleContext
+	antlr.BaseParserRuleContext
 	parser antlr.Parser
 }
 
 func NewEmptySimple_select_stmtContext() *Simple_select_stmtContext {
 	var p = new(Simple_select_stmtContext)
-	p.BaseParserRuleContext = antlr.NewBaseParserRuleContext(nil, -1)
+	antlr.InitBaseParserRuleContext(&p.BaseParserRuleContext, nil, -1)
 	p.RuleIndex = SQLiteParserRULE_simple_select_stmt
 	return p
+}
+
+func InitEmptySimple_select_stmtContext(p *Simple_select_stmtContext) {
+	antlr.InitBaseParserRuleContext(&p.BaseParserRuleContext, nil, -1)
+	p.RuleIndex = SQLiteParserRULE_simple_select_stmt
 }
 
 func (*Simple_select_stmtContext) IsSimple_select_stmtContext() {}
@@ -15854,7 +17649,7 @@ func (*Simple_select_stmtContext) IsSimple_select_stmtContext() {}
 func NewSimple_select_stmtContext(parser antlr.Parser, parent antlr.ParserRuleContext, invokingState int) *Simple_select_stmtContext {
 	var p = new(Simple_select_stmtContext)
 
-	p.BaseParserRuleContext = antlr.NewBaseParserRuleContext(parent, invokingState)
+	antlr.InitBaseParserRuleContext(&p.BaseParserRuleContext, parent, invokingState)
 
 	p.parser = parser
 	p.RuleIndex = SQLiteParserRULE_simple_select_stmt
@@ -15949,32 +17744,16 @@ func (s *Simple_select_stmtContext) ExitRule(listener antlr.ParseTreeListener) {
 }
 
 func (p *SQLiteParser) Simple_select_stmt() (localctx ISimple_select_stmtContext) {
-	this := p
-	_ = this
-
 	localctx = NewSimple_select_stmtContext(p, p.GetParserRuleContext(), p.GetState())
 	p.EnterRule(localctx, 94, SQLiteParserRULE_simple_select_stmt)
 	var _la int
 
-	defer func() {
-		p.ExitRule()
-	}()
-
-	defer func() {
-		if err := recover(); err != nil {
-			if v, ok := err.(antlr.RecognitionException); ok {
-				localctx.SetException(v)
-				p.GetErrorHandler().ReportError(p, v)
-				p.GetErrorHandler().Recover(p, v)
-			} else {
-				panic(err)
-			}
-		}
-	}()
-
 	p.EnterOuterAlt(localctx, 1)
 	p.SetState(1354)
 	p.GetErrorHandler().Sync(p)
+	if p.HasError() {
+		goto errorExit
+	}
 	_la = p.GetTokenStream().LA(1)
 
 	if _la == SQLiteParserWITH_ {
@@ -15990,6 +17769,9 @@ func (p *SQLiteParser) Simple_select_stmt() (localctx ISimple_select_stmtContext
 	}
 	p.SetState(1358)
 	p.GetErrorHandler().Sync(p)
+	if p.HasError() {
+		goto errorExit
+	}
 	_la = p.GetTokenStream().LA(1)
 
 	if _la == SQLiteParserORDER_ {
@@ -16001,6 +17783,9 @@ func (p *SQLiteParser) Simple_select_stmt() (localctx ISimple_select_stmtContext
 	}
 	p.SetState(1361)
 	p.GetErrorHandler().Sync(p)
+	if p.HasError() {
+		goto errorExit
+	}
 	_la = p.GetTokenStream().LA(1)
 
 	if _la == SQLiteParserLIMIT_ {
@@ -16011,7 +17796,17 @@ func (p *SQLiteParser) Simple_select_stmt() (localctx ISimple_select_stmtContext
 
 	}
 
+errorExit:
+	if p.HasError() {
+		v := p.GetError()
+		localctx.SetException(v)
+		p.GetErrorHandler().ReportError(p, v)
+		p.GetErrorHandler().Recover(p, v)
+		p.SetError(nil)
+	}
+	p.ExitRule()
 	return localctx
+	goto errorExit // Trick to prevent compiler error if the label is not used
 }
 
 // ICompound_select_stmtContext is an interface to support dynamic dispatch.
@@ -16041,15 +17836,20 @@ type ICompound_select_stmtContext interface {
 }
 
 type Compound_select_stmtContext struct {
-	*antlr.BaseParserRuleContext
+	antlr.BaseParserRuleContext
 	parser antlr.Parser
 }
 
 func NewEmptyCompound_select_stmtContext() *Compound_select_stmtContext {
 	var p = new(Compound_select_stmtContext)
-	p.BaseParserRuleContext = antlr.NewBaseParserRuleContext(nil, -1)
+	antlr.InitBaseParserRuleContext(&p.BaseParserRuleContext, nil, -1)
 	p.RuleIndex = SQLiteParserRULE_compound_select_stmt
 	return p
+}
+
+func InitEmptyCompound_select_stmtContext(p *Compound_select_stmtContext) {
+	antlr.InitBaseParserRuleContext(&p.BaseParserRuleContext, nil, -1)
+	p.RuleIndex = SQLiteParserRULE_compound_select_stmt
 }
 
 func (*Compound_select_stmtContext) IsCompound_select_stmtContext() {}
@@ -16057,7 +17857,7 @@ func (*Compound_select_stmtContext) IsCompound_select_stmtContext() {}
 func NewCompound_select_stmtContext(parser antlr.Parser, parent antlr.ParserRuleContext, invokingState int) *Compound_select_stmtContext {
 	var p = new(Compound_select_stmtContext)
 
-	p.BaseParserRuleContext = antlr.NewBaseParserRuleContext(parent, invokingState)
+	antlr.InitBaseParserRuleContext(&p.BaseParserRuleContext, parent, invokingState)
 
 	p.parser = parser
 	p.RuleIndex = SQLiteParserRULE_compound_select_stmt
@@ -16209,32 +18009,16 @@ func (s *Compound_select_stmtContext) ExitRule(listener antlr.ParseTreeListener)
 }
 
 func (p *SQLiteParser) Compound_select_stmt() (localctx ICompound_select_stmtContext) {
-	this := p
-	_ = this
-
 	localctx = NewCompound_select_stmtContext(p, p.GetParserRuleContext(), p.GetState())
 	p.EnterRule(localctx, 96, SQLiteParserRULE_compound_select_stmt)
 	var _la int
 
-	defer func() {
-		p.ExitRule()
-	}()
-
-	defer func() {
-		if err := recover(); err != nil {
-			if v, ok := err.(antlr.RecognitionException); ok {
-				localctx.SetException(v)
-				p.GetErrorHandler().ReportError(p, v)
-				p.GetErrorHandler().Recover(p, v)
-			} else {
-				panic(err)
-			}
-		}
-	}()
-
 	p.EnterOuterAlt(localctx, 1)
 	p.SetState(1364)
 	p.GetErrorHandler().Sync(p)
+	if p.HasError() {
+		goto errorExit
+	}
 	_la = p.GetTokenStream().LA(1)
 
 	if _la == SQLiteParserWITH_ {
@@ -16250,26 +18034,43 @@ func (p *SQLiteParser) Compound_select_stmt() (localctx ICompound_select_stmtCon
 	}
 	p.SetState(1376)
 	p.GetErrorHandler().Sync(p)
+	if p.HasError() {
+		goto errorExit
+	}
 	_la = p.GetTokenStream().LA(1)
 
 	for ok := true; ok; ok = _la == SQLiteParserEXCEPT_ || _la == SQLiteParserINTERSECT_ || _la == SQLiteParserUNION_ {
 		p.SetState(1373)
 		p.GetErrorHandler().Sync(p)
+		if p.HasError() {
+			goto errorExit
+		}
 
 		switch p.GetTokenStream().LA(1) {
 		case SQLiteParserUNION_:
 			{
 				p.SetState(1367)
 				p.Match(SQLiteParserUNION_)
+				if p.HasError() {
+					// Recognition error - abort rule
+					goto errorExit
+				}
 			}
 			p.SetState(1369)
 			p.GetErrorHandler().Sync(p)
+			if p.HasError() {
+				goto errorExit
+			}
 			_la = p.GetTokenStream().LA(1)
 
 			if _la == SQLiteParserALL_ {
 				{
 					p.SetState(1368)
 					p.Match(SQLiteParserALL_)
+					if p.HasError() {
+						// Recognition error - abort rule
+						goto errorExit
+					}
 				}
 
 			}
@@ -16278,16 +18079,25 @@ func (p *SQLiteParser) Compound_select_stmt() (localctx ICompound_select_stmtCon
 			{
 				p.SetState(1371)
 				p.Match(SQLiteParserINTERSECT_)
+				if p.HasError() {
+					// Recognition error - abort rule
+					goto errorExit
+				}
 			}
 
 		case SQLiteParserEXCEPT_:
 			{
 				p.SetState(1372)
 				p.Match(SQLiteParserEXCEPT_)
+				if p.HasError() {
+					// Recognition error - abort rule
+					goto errorExit
+				}
 			}
 
 		default:
-			panic(antlr.NewNoViableAltException(p, nil, nil, nil, nil, nil))
+			p.SetError(antlr.NewNoViableAltException(p, nil, nil, nil, nil, nil))
+			goto errorExit
 		}
 		{
 			p.SetState(1375)
@@ -16296,10 +18106,16 @@ func (p *SQLiteParser) Compound_select_stmt() (localctx ICompound_select_stmtCon
 
 		p.SetState(1378)
 		p.GetErrorHandler().Sync(p)
+		if p.HasError() {
+			goto errorExit
+		}
 		_la = p.GetTokenStream().LA(1)
 	}
 	p.SetState(1381)
 	p.GetErrorHandler().Sync(p)
+	if p.HasError() {
+		goto errorExit
+	}
 	_la = p.GetTokenStream().LA(1)
 
 	if _la == SQLiteParserORDER_ {
@@ -16311,6 +18127,9 @@ func (p *SQLiteParser) Compound_select_stmt() (localctx ICompound_select_stmtCon
 	}
 	p.SetState(1384)
 	p.GetErrorHandler().Sync(p)
+	if p.HasError() {
+		goto errorExit
+	}
 	_la = p.GetTokenStream().LA(1)
 
 	if _la == SQLiteParserLIMIT_ {
@@ -16321,7 +18140,17 @@ func (p *SQLiteParser) Compound_select_stmt() (localctx ICompound_select_stmtCon
 
 	}
 
+errorExit:
+	if p.HasError() {
+		v := p.GetError()
+		localctx.SetException(v)
+		p.GetErrorHandler().ReportError(p, v)
+		p.GetErrorHandler().Recover(p, v)
+		p.SetError(nil)
+	}
+	p.ExitRule()
 	return localctx
+	goto errorExit // Trick to prevent compiler error if the label is not used
 }
 
 // ITable_or_subqueryContext is an interface to support dynamic dispatch.
@@ -16358,15 +18187,20 @@ type ITable_or_subqueryContext interface {
 }
 
 type Table_or_subqueryContext struct {
-	*antlr.BaseParserRuleContext
+	antlr.BaseParserRuleContext
 	parser antlr.Parser
 }
 
 func NewEmptyTable_or_subqueryContext() *Table_or_subqueryContext {
 	var p = new(Table_or_subqueryContext)
-	p.BaseParserRuleContext = antlr.NewBaseParserRuleContext(nil, -1)
+	antlr.InitBaseParserRuleContext(&p.BaseParserRuleContext, nil, -1)
 	p.RuleIndex = SQLiteParserRULE_table_or_subquery
 	return p
+}
+
+func InitEmptyTable_or_subqueryContext(p *Table_or_subqueryContext) {
+	antlr.InitBaseParserRuleContext(&p.BaseParserRuleContext, nil, -1)
+	p.RuleIndex = SQLiteParserRULE_table_or_subquery
 }
 
 func (*Table_or_subqueryContext) IsTable_or_subqueryContext() {}
@@ -16374,7 +18208,7 @@ func (*Table_or_subqueryContext) IsTable_or_subqueryContext() {}
 func NewTable_or_subqueryContext(parser antlr.Parser, parent antlr.ParserRuleContext, invokingState int) *Table_or_subqueryContext {
 	var p = new(Table_or_subqueryContext)
 
-	p.BaseParserRuleContext = antlr.NewBaseParserRuleContext(parent, invokingState)
+	antlr.InitBaseParserRuleContext(&p.BaseParserRuleContext, parent, invokingState)
 
 	p.parser = parser
 	p.RuleIndex = SQLiteParserRULE_table_or_subquery
@@ -16635,38 +18469,23 @@ func (s *Table_or_subqueryContext) ExitRule(listener antlr.ParseTreeListener) {
 }
 
 func (p *SQLiteParser) Table_or_subquery() (localctx ITable_or_subqueryContext) {
-	this := p
-	_ = this
-
 	localctx = NewTable_or_subqueryContext(p, p.GetParserRuleContext(), p.GetState())
 	p.EnterRule(localctx, 98, SQLiteParserRULE_table_or_subquery)
 	var _la int
 
-	defer func() {
-		p.ExitRule()
-	}()
-
-	defer func() {
-		if err := recover(); err != nil {
-			if v, ok := err.(antlr.RecognitionException); ok {
-				localctx.SetException(v)
-				p.GetErrorHandler().ReportError(p, v)
-				p.GetErrorHandler().Recover(p, v)
-			} else {
-				panic(err)
-			}
-		}
-	}()
-
 	p.SetState(1450)
 	p.GetErrorHandler().Sync(p)
-	switch p.GetInterpreter().AdaptivePredict(p.GetTokenStream(), 205, p.GetParserRuleContext()) {
+	if p.HasError() {
+		goto errorExit
+	}
+
+	switch p.GetInterpreter().AdaptivePredict(p.BaseParser, p.GetTokenStream(), 205, p.GetParserRuleContext()) {
 	case 1:
 		p.EnterOuterAlt(localctx, 1)
 		p.SetState(1389)
 		p.GetErrorHandler().Sync(p)
 
-		if p.GetInterpreter().AdaptivePredict(p.GetTokenStream(), 193, p.GetParserRuleContext()) == 1 {
+		if p.GetInterpreter().AdaptivePredict(p.BaseParser, p.GetTokenStream(), 193, p.GetParserRuleContext()) == 1 {
 			{
 				p.SetState(1386)
 				p.Schema_name()
@@ -16674,8 +18493,14 @@ func (p *SQLiteParser) Table_or_subquery() (localctx ITable_or_subqueryContext) 
 			{
 				p.SetState(1387)
 				p.Match(SQLiteParserDOT)
+				if p.HasError() {
+					// Recognition error - abort rule
+					goto errorExit
+				}
 			}
 
+		} else if p.HasError() { // JIM
+			goto errorExit
 		}
 		{
 			p.SetState(1391)
@@ -16684,35 +18509,53 @@ func (p *SQLiteParser) Table_or_subquery() (localctx ITable_or_subqueryContext) 
 		p.SetState(1396)
 		p.GetErrorHandler().Sync(p)
 
-		if p.GetInterpreter().AdaptivePredict(p.GetTokenStream(), 195, p.GetParserRuleContext()) == 1 {
+		if p.GetInterpreter().AdaptivePredict(p.BaseParser, p.GetTokenStream(), 195, p.GetParserRuleContext()) == 1 {
 			p.SetState(1393)
 			p.GetErrorHandler().Sync(p)
 
-			if p.GetInterpreter().AdaptivePredict(p.GetTokenStream(), 194, p.GetParserRuleContext()) == 1 {
+			if p.GetInterpreter().AdaptivePredict(p.BaseParser, p.GetTokenStream(), 194, p.GetParserRuleContext()) == 1 {
 				{
 					p.SetState(1392)
 					p.Match(SQLiteParserAS_)
+					if p.HasError() {
+						// Recognition error - abort rule
+						goto errorExit
+					}
 				}
 
+			} else if p.HasError() { // JIM
+				goto errorExit
 			}
 			{
 				p.SetState(1395)
 				p.Table_alias()
 			}
 
+		} else if p.HasError() { // JIM
+			goto errorExit
 		}
 		p.SetState(1403)
 		p.GetErrorHandler().Sync(p)
-
+		if p.HasError() {
+			goto errorExit
+		}
 		switch p.GetTokenStream().LA(1) {
 		case SQLiteParserINDEXED_:
 			{
 				p.SetState(1398)
 				p.Match(SQLiteParserINDEXED_)
+				if p.HasError() {
+					// Recognition error - abort rule
+					goto errorExit
+				}
 			}
 			{
 				p.SetState(1399)
 				p.Match(SQLiteParserBY_)
+				if p.HasError() {
+					// Recognition error - abort rule
+					goto errorExit
+				}
 			}
 			{
 				p.SetState(1400)
@@ -16723,10 +18566,18 @@ func (p *SQLiteParser) Table_or_subquery() (localctx ITable_or_subqueryContext) 
 			{
 				p.SetState(1401)
 				p.Match(SQLiteParserNOT_)
+				if p.HasError() {
+					// Recognition error - abort rule
+					goto errorExit
+				}
 			}
 			{
 				p.SetState(1402)
 				p.Match(SQLiteParserINDEXED_)
+				if p.HasError() {
+					// Recognition error - abort rule
+					goto errorExit
+				}
 			}
 
 		case SQLiteParserEOF, SQLiteParserSCOL, SQLiteParserCLOSE_PAR, SQLiteParserCOMMA, SQLiteParserALTER_, SQLiteParserANALYZE_, SQLiteParserATTACH_, SQLiteParserBEGIN_, SQLiteParserCOMMIT_, SQLiteParserCREATE_, SQLiteParserCROSS_, SQLiteParserDELETE_, SQLiteParserDETACH_, SQLiteParserDROP_, SQLiteParserEND_, SQLiteParserEXCEPT_, SQLiteParserEXPLAIN_, SQLiteParserGROUP_, SQLiteParserINNER_, SQLiteParserINSERT_, SQLiteParserINTERSECT_, SQLiteParserJOIN_, SQLiteParserLEFT_, SQLiteParserLIMIT_, SQLiteParserNATURAL_, SQLiteParserON_, SQLiteParserORDER_, SQLiteParserPRAGMA_, SQLiteParserREINDEX_, SQLiteParserRELEASE_, SQLiteParserREPLACE_, SQLiteParserRETURNING_, SQLiteParserROLLBACK_, SQLiteParserSAVEPOINT_, SQLiteParserSELECT_, SQLiteParserUNION_, SQLiteParserUPDATE_, SQLiteParserUSING_, SQLiteParserVACUUM_, SQLiteParserVALUES_, SQLiteParserWHERE_, SQLiteParserWITH_, SQLiteParserWINDOW_:
@@ -16739,7 +18590,7 @@ func (p *SQLiteParser) Table_or_subquery() (localctx ITable_or_subqueryContext) 
 		p.SetState(1408)
 		p.GetErrorHandler().Sync(p)
 
-		if p.GetInterpreter().AdaptivePredict(p.GetTokenStream(), 197, p.GetParserRuleContext()) == 1 {
+		if p.GetInterpreter().AdaptivePredict(p.BaseParser, p.GetTokenStream(), 197, p.GetParserRuleContext()) == 1 {
 			{
 				p.SetState(1405)
 				p.Schema_name()
@@ -16747,8 +18598,14 @@ func (p *SQLiteParser) Table_or_subquery() (localctx ITable_or_subqueryContext) 
 			{
 				p.SetState(1406)
 				p.Match(SQLiteParserDOT)
+				if p.HasError() {
+					// Recognition error - abort rule
+					goto errorExit
+				}
 			}
 
+		} else if p.HasError() { // JIM
+			goto errorExit
 		}
 		{
 			p.SetState(1410)
@@ -16757,6 +18614,10 @@ func (p *SQLiteParser) Table_or_subquery() (localctx ITable_or_subqueryContext) 
 		{
 			p.SetState(1411)
 			p.Match(SQLiteParserOPEN_PAR)
+			if p.HasError() {
+				// Recognition error - abort rule
+				goto errorExit
+			}
 		}
 		{
 			p.SetState(1412)
@@ -16764,12 +18625,19 @@ func (p *SQLiteParser) Table_or_subquery() (localctx ITable_or_subqueryContext) 
 		}
 		p.SetState(1417)
 		p.GetErrorHandler().Sync(p)
+		if p.HasError() {
+			goto errorExit
+		}
 		_la = p.GetTokenStream().LA(1)
 
 		for _la == SQLiteParserCOMMA {
 			{
 				p.SetState(1413)
 				p.Match(SQLiteParserCOMMA)
+				if p.HasError() {
+					// Recognition error - abort rule
+					goto errorExit
+				}
 			}
 			{
 				p.SetState(1414)
@@ -16778,31 +18646,46 @@ func (p *SQLiteParser) Table_or_subquery() (localctx ITable_or_subqueryContext) 
 
 			p.SetState(1419)
 			p.GetErrorHandler().Sync(p)
+			if p.HasError() {
+				goto errorExit
+			}
 			_la = p.GetTokenStream().LA(1)
 		}
 		{
 			p.SetState(1420)
 			p.Match(SQLiteParserCLOSE_PAR)
+			if p.HasError() {
+				// Recognition error - abort rule
+				goto errorExit
+			}
 		}
 		p.SetState(1425)
 		p.GetErrorHandler().Sync(p)
 
-		if p.GetInterpreter().AdaptivePredict(p.GetTokenStream(), 200, p.GetParserRuleContext()) == 1 {
+		if p.GetInterpreter().AdaptivePredict(p.BaseParser, p.GetTokenStream(), 200, p.GetParserRuleContext()) == 1 {
 			p.SetState(1422)
 			p.GetErrorHandler().Sync(p)
 
-			if p.GetInterpreter().AdaptivePredict(p.GetTokenStream(), 199, p.GetParserRuleContext()) == 1 {
+			if p.GetInterpreter().AdaptivePredict(p.BaseParser, p.GetTokenStream(), 199, p.GetParserRuleContext()) == 1 {
 				{
 					p.SetState(1421)
 					p.Match(SQLiteParserAS_)
+					if p.HasError() {
+						// Recognition error - abort rule
+						goto errorExit
+					}
 				}
 
+			} else if p.HasError() { // JIM
+				goto errorExit
 			}
 			{
 				p.SetState(1424)
 				p.Table_alias()
 			}
 
+		} else if p.HasError() { // JIM
+			goto errorExit
 		}
 
 	case 3:
@@ -16810,10 +18693,18 @@ func (p *SQLiteParser) Table_or_subquery() (localctx ITable_or_subqueryContext) 
 		{
 			p.SetState(1427)
 			p.Match(SQLiteParserOPEN_PAR)
+			if p.HasError() {
+				// Recognition error - abort rule
+				goto errorExit
+			}
 		}
 		p.SetState(1437)
 		p.GetErrorHandler().Sync(p)
-		switch p.GetInterpreter().AdaptivePredict(p.GetTokenStream(), 202, p.GetParserRuleContext()) {
+		if p.HasError() {
+			goto errorExit
+		}
+
+		switch p.GetInterpreter().AdaptivePredict(p.BaseParser, p.GetTokenStream(), 202, p.GetParserRuleContext()) {
 		case 1:
 			{
 				p.SetState(1428)
@@ -16821,12 +18712,19 @@ func (p *SQLiteParser) Table_or_subquery() (localctx ITable_or_subqueryContext) 
 			}
 			p.SetState(1433)
 			p.GetErrorHandler().Sync(p)
+			if p.HasError() {
+				goto errorExit
+			}
 			_la = p.GetTokenStream().LA(1)
 
 			for _la == SQLiteParserCOMMA {
 				{
 					p.SetState(1429)
 					p.Match(SQLiteParserCOMMA)
+					if p.HasError() {
+						// Recognition error - abort rule
+						goto errorExit
+					}
 				}
 				{
 					p.SetState(1430)
@@ -16835,6 +18733,9 @@ func (p *SQLiteParser) Table_or_subquery() (localctx ITable_or_subqueryContext) 
 
 				p.SetState(1435)
 				p.GetErrorHandler().Sync(p)
+				if p.HasError() {
+					goto errorExit
+				}
 				_la = p.GetTokenStream().LA(1)
 			}
 
@@ -16844,10 +18745,16 @@ func (p *SQLiteParser) Table_or_subquery() (localctx ITable_or_subqueryContext) 
 				p.Join_clause()
 			}
 
+		case antlr.ATNInvalidAltNumber:
+			goto errorExit
 		}
 		{
 			p.SetState(1439)
 			p.Match(SQLiteParserCLOSE_PAR)
+			if p.HasError() {
+				// Recognition error - abort rule
+				goto errorExit
+			}
 		}
 
 	case 4:
@@ -16855,6 +18762,10 @@ func (p *SQLiteParser) Table_or_subquery() (localctx ITable_or_subqueryContext) 
 		{
 			p.SetState(1441)
 			p.Match(SQLiteParserOPEN_PAR)
+			if p.HasError() {
+				// Recognition error - abort rule
+				goto errorExit
+			}
 		}
 		{
 			p.SetState(1442)
@@ -16863,31 +18774,55 @@ func (p *SQLiteParser) Table_or_subquery() (localctx ITable_or_subqueryContext) 
 		{
 			p.SetState(1443)
 			p.Match(SQLiteParserCLOSE_PAR)
+			if p.HasError() {
+				// Recognition error - abort rule
+				goto errorExit
+			}
 		}
 		p.SetState(1448)
 		p.GetErrorHandler().Sync(p)
 
-		if p.GetInterpreter().AdaptivePredict(p.GetTokenStream(), 204, p.GetParserRuleContext()) == 1 {
+		if p.GetInterpreter().AdaptivePredict(p.BaseParser, p.GetTokenStream(), 204, p.GetParserRuleContext()) == 1 {
 			p.SetState(1445)
 			p.GetErrorHandler().Sync(p)
 
-			if p.GetInterpreter().AdaptivePredict(p.GetTokenStream(), 203, p.GetParserRuleContext()) == 1 {
+			if p.GetInterpreter().AdaptivePredict(p.BaseParser, p.GetTokenStream(), 203, p.GetParserRuleContext()) == 1 {
 				{
 					p.SetState(1444)
 					p.Match(SQLiteParserAS_)
+					if p.HasError() {
+						// Recognition error - abort rule
+						goto errorExit
+					}
 				}
 
+			} else if p.HasError() { // JIM
+				goto errorExit
 			}
 			{
 				p.SetState(1447)
 				p.Table_alias()
 			}
 
+		} else if p.HasError() { // JIM
+			goto errorExit
 		}
 
+	case antlr.ATNInvalidAltNumber:
+		goto errorExit
 	}
 
+errorExit:
+	if p.HasError() {
+		v := p.GetError()
+		localctx.SetException(v)
+		p.GetErrorHandler().ReportError(p, v)
+		p.GetErrorHandler().Recover(p, v)
+		p.SetError(nil)
+	}
+	p.ExitRule()
 	return localctx
+	goto errorExit // Trick to prevent compiler error if the label is not used
 }
 
 // IResult_columnContext is an interface to support dynamic dispatch.
@@ -16910,15 +18845,20 @@ type IResult_columnContext interface {
 }
 
 type Result_columnContext struct {
-	*antlr.BaseParserRuleContext
+	antlr.BaseParserRuleContext
 	parser antlr.Parser
 }
 
 func NewEmptyResult_columnContext() *Result_columnContext {
 	var p = new(Result_columnContext)
-	p.BaseParserRuleContext = antlr.NewBaseParserRuleContext(nil, -1)
+	antlr.InitBaseParserRuleContext(&p.BaseParserRuleContext, nil, -1)
 	p.RuleIndex = SQLiteParserRULE_result_column
 	return p
+}
+
+func InitEmptyResult_columnContext(p *Result_columnContext) {
+	antlr.InitBaseParserRuleContext(&p.BaseParserRuleContext, nil, -1)
+	p.RuleIndex = SQLiteParserRULE_result_column
 }
 
 func (*Result_columnContext) IsResult_columnContext() {}
@@ -16926,7 +18866,7 @@ func (*Result_columnContext) IsResult_columnContext() {}
 func NewResult_columnContext(parser antlr.Parser, parent antlr.ParserRuleContext, invokingState int) *Result_columnContext {
 	var p = new(Result_columnContext)
 
-	p.BaseParserRuleContext = antlr.NewBaseParserRuleContext(parent, invokingState)
+	antlr.InitBaseParserRuleContext(&p.BaseParserRuleContext, parent, invokingState)
 
 	p.parser = parser
 	p.RuleIndex = SQLiteParserRULE_result_column
@@ -17017,37 +18957,26 @@ func (s *Result_columnContext) ExitRule(listener antlr.ParseTreeListener) {
 }
 
 func (p *SQLiteParser) Result_column() (localctx IResult_columnContext) {
-	this := p
-	_ = this
-
 	localctx = NewResult_columnContext(p, p.GetParserRuleContext(), p.GetState())
 	p.EnterRule(localctx, 100, SQLiteParserRULE_result_column)
 	var _la int
 
-	defer func() {
-		p.ExitRule()
-	}()
-
-	defer func() {
-		if err := recover(); err != nil {
-			if v, ok := err.(antlr.RecognitionException); ok {
-				localctx.SetException(v)
-				p.GetErrorHandler().ReportError(p, v)
-				p.GetErrorHandler().Recover(p, v)
-			} else {
-				panic(err)
-			}
-		}
-	}()
-
 	p.SetState(1464)
 	p.GetErrorHandler().Sync(p)
-	switch p.GetInterpreter().AdaptivePredict(p.GetTokenStream(), 208, p.GetParserRuleContext()) {
+	if p.HasError() {
+		goto errorExit
+	}
+
+	switch p.GetInterpreter().AdaptivePredict(p.BaseParser, p.GetTokenStream(), 208, p.GetParserRuleContext()) {
 	case 1:
 		p.EnterOuterAlt(localctx, 1)
 		{
 			p.SetState(1452)
 			p.Match(SQLiteParserSTAR)
+			if p.HasError() {
+				// Recognition error - abort rule
+				goto errorExit
+			}
 		}
 
 	case 2:
@@ -17059,10 +18988,18 @@ func (p *SQLiteParser) Result_column() (localctx IResult_columnContext) {
 		{
 			p.SetState(1454)
 			p.Match(SQLiteParserDOT)
+			if p.HasError() {
+				// Recognition error - abort rule
+				goto errorExit
+			}
 		}
 		{
 			p.SetState(1455)
 			p.Match(SQLiteParserSTAR)
+			if p.HasError() {
+				// Recognition error - abort rule
+				goto errorExit
+			}
 		}
 
 	case 3:
@@ -17073,17 +19010,27 @@ func (p *SQLiteParser) Result_column() (localctx IResult_columnContext) {
 		}
 		p.SetState(1462)
 		p.GetErrorHandler().Sync(p)
+		if p.HasError() {
+			goto errorExit
+		}
 		_la = p.GetTokenStream().LA(1)
 
 		if _la == SQLiteParserAS_ || _la == SQLiteParserIDENTIFIER || _la == SQLiteParserSTRING_LITERAL {
 			p.SetState(1459)
 			p.GetErrorHandler().Sync(p)
+			if p.HasError() {
+				goto errorExit
+			}
 			_la = p.GetTokenStream().LA(1)
 
 			if _la == SQLiteParserAS_ {
 				{
 					p.SetState(1458)
 					p.Match(SQLiteParserAS_)
+					if p.HasError() {
+						// Recognition error - abort rule
+						goto errorExit
+					}
 				}
 
 			}
@@ -17094,9 +19041,21 @@ func (p *SQLiteParser) Result_column() (localctx IResult_columnContext) {
 
 		}
 
+	case antlr.ATNInvalidAltNumber:
+		goto errorExit
 	}
 
+errorExit:
+	if p.HasError() {
+		v := p.GetError()
+		localctx.SetException(v)
+		p.GetErrorHandler().ReportError(p, v)
+		p.GetErrorHandler().Recover(p, v)
+		p.SetError(nil)
+	}
+	p.ExitRule()
 	return localctx
+	goto errorExit // Trick to prevent compiler error if the label is not used
 }
 
 // IJoin_operatorContext is an interface to support dynamic dispatch.
@@ -17120,15 +19079,20 @@ type IJoin_operatorContext interface {
 }
 
 type Join_operatorContext struct {
-	*antlr.BaseParserRuleContext
+	antlr.BaseParserRuleContext
 	parser antlr.Parser
 }
 
 func NewEmptyJoin_operatorContext() *Join_operatorContext {
 	var p = new(Join_operatorContext)
-	p.BaseParserRuleContext = antlr.NewBaseParserRuleContext(nil, -1)
+	antlr.InitBaseParserRuleContext(&p.BaseParserRuleContext, nil, -1)
 	p.RuleIndex = SQLiteParserRULE_join_operator
 	return p
+}
+
+func InitEmptyJoin_operatorContext(p *Join_operatorContext) {
+	antlr.InitBaseParserRuleContext(&p.BaseParserRuleContext, nil, -1)
+	p.RuleIndex = SQLiteParserRULE_join_operator
 }
 
 func (*Join_operatorContext) IsJoin_operatorContext() {}
@@ -17136,7 +19100,7 @@ func (*Join_operatorContext) IsJoin_operatorContext() {}
 func NewJoin_operatorContext(parser antlr.Parser, parent antlr.ParserRuleContext, invokingState int) *Join_operatorContext {
 	var p = new(Join_operatorContext)
 
-	p.BaseParserRuleContext = antlr.NewBaseParserRuleContext(parent, invokingState)
+	antlr.InitBaseParserRuleContext(&p.BaseParserRuleContext, parent, invokingState)
 
 	p.parser = parser
 	p.RuleIndex = SQLiteParserRULE_join_operator
@@ -17195,31 +19159,15 @@ func (s *Join_operatorContext) ExitRule(listener antlr.ParseTreeListener) {
 }
 
 func (p *SQLiteParser) Join_operator() (localctx IJoin_operatorContext) {
-	this := p
-	_ = this
-
 	localctx = NewJoin_operatorContext(p, p.GetParserRuleContext(), p.GetState())
 	p.EnterRule(localctx, 102, SQLiteParserRULE_join_operator)
 	var _la int
 
-	defer func() {
-		p.ExitRule()
-	}()
-
-	defer func() {
-		if err := recover(); err != nil {
-			if v, ok := err.(antlr.RecognitionException); ok {
-				localctx.SetException(v)
-				p.GetErrorHandler().ReportError(p, v)
-				p.GetErrorHandler().Recover(p, v)
-			} else {
-				panic(err)
-			}
-		}
-	}()
-
 	p.SetState(1479)
 	p.GetErrorHandler().Sync(p)
+	if p.HasError() {
+		goto errorExit
+	}
 
 	switch p.GetTokenStream().LA(1) {
 	case SQLiteParserCOMMA:
@@ -17227,38 +19175,62 @@ func (p *SQLiteParser) Join_operator() (localctx IJoin_operatorContext) {
 		{
 			p.SetState(1466)
 			p.Match(SQLiteParserCOMMA)
+			if p.HasError() {
+				// Recognition error - abort rule
+				goto errorExit
+			}
 		}
 
 	case SQLiteParserCROSS_, SQLiteParserINNER_, SQLiteParserJOIN_, SQLiteParserLEFT_, SQLiteParserNATURAL_:
 		p.EnterOuterAlt(localctx, 2)
 		p.SetState(1468)
 		p.GetErrorHandler().Sync(p)
+		if p.HasError() {
+			goto errorExit
+		}
 		_la = p.GetTokenStream().LA(1)
 
 		if _la == SQLiteParserNATURAL_ {
 			{
 				p.SetState(1467)
 				p.Match(SQLiteParserNATURAL_)
+				if p.HasError() {
+					// Recognition error - abort rule
+					goto errorExit
+				}
 			}
 
 		}
 		p.SetState(1476)
 		p.GetErrorHandler().Sync(p)
-
+		if p.HasError() {
+			goto errorExit
+		}
 		switch p.GetTokenStream().LA(1) {
 		case SQLiteParserLEFT_:
 			{
 				p.SetState(1470)
 				p.Match(SQLiteParserLEFT_)
+				if p.HasError() {
+					// Recognition error - abort rule
+					goto errorExit
+				}
 			}
 			p.SetState(1472)
 			p.GetErrorHandler().Sync(p)
+			if p.HasError() {
+				goto errorExit
+			}
 			_la = p.GetTokenStream().LA(1)
 
 			if _la == SQLiteParserOUTER_ {
 				{
 					p.SetState(1471)
 					p.Match(SQLiteParserOUTER_)
+					if p.HasError() {
+						// Recognition error - abort rule
+						goto errorExit
+					}
 				}
 
 			}
@@ -17267,12 +19239,20 @@ func (p *SQLiteParser) Join_operator() (localctx IJoin_operatorContext) {
 			{
 				p.SetState(1474)
 				p.Match(SQLiteParserINNER_)
+				if p.HasError() {
+					// Recognition error - abort rule
+					goto errorExit
+				}
 			}
 
 		case SQLiteParserCROSS_:
 			{
 				p.SetState(1475)
 				p.Match(SQLiteParserCROSS_)
+				if p.HasError() {
+					// Recognition error - abort rule
+					goto errorExit
+				}
 			}
 
 		case SQLiteParserJOIN_:
@@ -17282,13 +19262,28 @@ func (p *SQLiteParser) Join_operator() (localctx IJoin_operatorContext) {
 		{
 			p.SetState(1478)
 			p.Match(SQLiteParserJOIN_)
+			if p.HasError() {
+				// Recognition error - abort rule
+				goto errorExit
+			}
 		}
 
 	default:
-		panic(antlr.NewNoViableAltException(p, nil, nil, nil, nil, nil))
+		p.SetError(antlr.NewNoViableAltException(p, nil, nil, nil, nil, nil))
+		goto errorExit
 	}
 
+errorExit:
+	if p.HasError() {
+		v := p.GetError()
+		localctx.SetException(v)
+		p.GetErrorHandler().ReportError(p, v)
+		p.GetErrorHandler().Recover(p, v)
+		p.SetError(nil)
+	}
+	p.ExitRule()
 	return localctx
+	goto errorExit // Trick to prevent compiler error if the label is not used
 }
 
 // IJoin_constraintContext is an interface to support dynamic dispatch.
@@ -17314,15 +19309,20 @@ type IJoin_constraintContext interface {
 }
 
 type Join_constraintContext struct {
-	*antlr.BaseParserRuleContext
+	antlr.BaseParserRuleContext
 	parser antlr.Parser
 }
 
 func NewEmptyJoin_constraintContext() *Join_constraintContext {
 	var p = new(Join_constraintContext)
-	p.BaseParserRuleContext = antlr.NewBaseParserRuleContext(nil, -1)
+	antlr.InitBaseParserRuleContext(&p.BaseParserRuleContext, nil, -1)
 	p.RuleIndex = SQLiteParserRULE_join_constraint
 	return p
+}
+
+func InitEmptyJoin_constraintContext(p *Join_constraintContext) {
+	antlr.InitBaseParserRuleContext(&p.BaseParserRuleContext, nil, -1)
+	p.RuleIndex = SQLiteParserRULE_join_constraint
 }
 
 func (*Join_constraintContext) IsJoin_constraintContext() {}
@@ -17330,7 +19330,7 @@ func (*Join_constraintContext) IsJoin_constraintContext() {}
 func NewJoin_constraintContext(parser antlr.Parser, parent antlr.ParserRuleContext, invokingState int) *Join_constraintContext {
 	var p = new(Join_constraintContext)
 
-	p.BaseParserRuleContext = antlr.NewBaseParserRuleContext(parent, invokingState)
+	antlr.InitBaseParserRuleContext(&p.BaseParserRuleContext, parent, invokingState)
 
 	p.parser = parser
 	p.RuleIndex = SQLiteParserRULE_join_constraint
@@ -17442,31 +19442,15 @@ func (s *Join_constraintContext) ExitRule(listener antlr.ParseTreeListener) {
 }
 
 func (p *SQLiteParser) Join_constraint() (localctx IJoin_constraintContext) {
-	this := p
-	_ = this
-
 	localctx = NewJoin_constraintContext(p, p.GetParserRuleContext(), p.GetState())
 	p.EnterRule(localctx, 104, SQLiteParserRULE_join_constraint)
 	var _la int
 
-	defer func() {
-		p.ExitRule()
-	}()
-
-	defer func() {
-		if err := recover(); err != nil {
-			if v, ok := err.(antlr.RecognitionException); ok {
-				localctx.SetException(v)
-				p.GetErrorHandler().ReportError(p, v)
-				p.GetErrorHandler().Recover(p, v)
-			} else {
-				panic(err)
-			}
-		}
-	}()
-
 	p.SetState(1495)
 	p.GetErrorHandler().Sync(p)
+	if p.HasError() {
+		goto errorExit
+	}
 
 	switch p.GetTokenStream().LA(1) {
 	case SQLiteParserON_:
@@ -17474,6 +19458,10 @@ func (p *SQLiteParser) Join_constraint() (localctx IJoin_constraintContext) {
 		{
 			p.SetState(1481)
 			p.Match(SQLiteParserON_)
+			if p.HasError() {
+				// Recognition error - abort rule
+				goto errorExit
+			}
 		}
 		{
 			p.SetState(1482)
@@ -17485,10 +19473,18 @@ func (p *SQLiteParser) Join_constraint() (localctx IJoin_constraintContext) {
 		{
 			p.SetState(1483)
 			p.Match(SQLiteParserUSING_)
+			if p.HasError() {
+				// Recognition error - abort rule
+				goto errorExit
+			}
 		}
 		{
 			p.SetState(1484)
 			p.Match(SQLiteParserOPEN_PAR)
+			if p.HasError() {
+				// Recognition error - abort rule
+				goto errorExit
+			}
 		}
 		{
 			p.SetState(1485)
@@ -17496,12 +19492,19 @@ func (p *SQLiteParser) Join_constraint() (localctx IJoin_constraintContext) {
 		}
 		p.SetState(1490)
 		p.GetErrorHandler().Sync(p)
+		if p.HasError() {
+			goto errorExit
+		}
 		_la = p.GetTokenStream().LA(1)
 
 		for _la == SQLiteParserCOMMA {
 			{
 				p.SetState(1486)
 				p.Match(SQLiteParserCOMMA)
+				if p.HasError() {
+					// Recognition error - abort rule
+					goto errorExit
+				}
 			}
 			{
 				p.SetState(1487)
@@ -17510,18 +19513,36 @@ func (p *SQLiteParser) Join_constraint() (localctx IJoin_constraintContext) {
 
 			p.SetState(1492)
 			p.GetErrorHandler().Sync(p)
+			if p.HasError() {
+				goto errorExit
+			}
 			_la = p.GetTokenStream().LA(1)
 		}
 		{
 			p.SetState(1493)
 			p.Match(SQLiteParserCLOSE_PAR)
+			if p.HasError() {
+				// Recognition error - abort rule
+				goto errorExit
+			}
 		}
 
 	default:
-		panic(antlr.NewNoViableAltException(p, nil, nil, nil, nil, nil))
+		p.SetError(antlr.NewNoViableAltException(p, nil, nil, nil, nil, nil))
+		goto errorExit
 	}
 
+errorExit:
+	if p.HasError() {
+		v := p.GetError()
+		localctx.SetException(v)
+		p.GetErrorHandler().ReportError(p, v)
+		p.GetErrorHandler().Recover(p, v)
+		p.SetError(nil)
+	}
+	p.ExitRule()
 	return localctx
+	goto errorExit // Trick to prevent compiler error if the label is not used
 }
 
 // ICompound_operatorContext is an interface to support dynamic dispatch.
@@ -17542,15 +19563,20 @@ type ICompound_operatorContext interface {
 }
 
 type Compound_operatorContext struct {
-	*antlr.BaseParserRuleContext
+	antlr.BaseParserRuleContext
 	parser antlr.Parser
 }
 
 func NewEmptyCompound_operatorContext() *Compound_operatorContext {
 	var p = new(Compound_operatorContext)
-	p.BaseParserRuleContext = antlr.NewBaseParserRuleContext(nil, -1)
+	antlr.InitBaseParserRuleContext(&p.BaseParserRuleContext, nil, -1)
 	p.RuleIndex = SQLiteParserRULE_compound_operator
 	return p
+}
+
+func InitEmptyCompound_operatorContext(p *Compound_operatorContext) {
+	antlr.InitBaseParserRuleContext(&p.BaseParserRuleContext, nil, -1)
+	p.RuleIndex = SQLiteParserRULE_compound_operator
 }
 
 func (*Compound_operatorContext) IsCompound_operatorContext() {}
@@ -17558,7 +19584,7 @@ func (*Compound_operatorContext) IsCompound_operatorContext() {}
 func NewCompound_operatorContext(parser antlr.Parser, parent antlr.ParserRuleContext, invokingState int) *Compound_operatorContext {
 	var p = new(Compound_operatorContext)
 
-	p.BaseParserRuleContext = antlr.NewBaseParserRuleContext(parent, invokingState)
+	antlr.InitBaseParserRuleContext(&p.BaseParserRuleContext, parent, invokingState)
 
 	p.parser = parser
 	p.RuleIndex = SQLiteParserRULE_compound_operator
@@ -17605,31 +19631,15 @@ func (s *Compound_operatorContext) ExitRule(listener antlr.ParseTreeListener) {
 }
 
 func (p *SQLiteParser) Compound_operator() (localctx ICompound_operatorContext) {
-	this := p
-	_ = this
-
 	localctx = NewCompound_operatorContext(p, p.GetParserRuleContext(), p.GetState())
 	p.EnterRule(localctx, 106, SQLiteParserRULE_compound_operator)
 	var _la int
 
-	defer func() {
-		p.ExitRule()
-	}()
-
-	defer func() {
-		if err := recover(); err != nil {
-			if v, ok := err.(antlr.RecognitionException); ok {
-				localctx.SetException(v)
-				p.GetErrorHandler().ReportError(p, v)
-				p.GetErrorHandler().Recover(p, v)
-			} else {
-				panic(err)
-			}
-		}
-	}()
-
 	p.SetState(1503)
 	p.GetErrorHandler().Sync(p)
+	if p.HasError() {
+		goto errorExit
+	}
 
 	switch p.GetTokenStream().LA(1) {
 	case SQLiteParserUNION_:
@@ -17637,15 +19647,26 @@ func (p *SQLiteParser) Compound_operator() (localctx ICompound_operatorContext) 
 		{
 			p.SetState(1497)
 			p.Match(SQLiteParserUNION_)
+			if p.HasError() {
+				// Recognition error - abort rule
+				goto errorExit
+			}
 		}
 		p.SetState(1499)
 		p.GetErrorHandler().Sync(p)
+		if p.HasError() {
+			goto errorExit
+		}
 		_la = p.GetTokenStream().LA(1)
 
 		if _la == SQLiteParserALL_ {
 			{
 				p.SetState(1498)
 				p.Match(SQLiteParserALL_)
+				if p.HasError() {
+					// Recognition error - abort rule
+					goto errorExit
+				}
 			}
 
 		}
@@ -17655,6 +19676,10 @@ func (p *SQLiteParser) Compound_operator() (localctx ICompound_operatorContext) 
 		{
 			p.SetState(1501)
 			p.Match(SQLiteParserINTERSECT_)
+			if p.HasError() {
+				// Recognition error - abort rule
+				goto errorExit
+			}
 		}
 
 	case SQLiteParserEXCEPT_:
@@ -17662,13 +19687,28 @@ func (p *SQLiteParser) Compound_operator() (localctx ICompound_operatorContext) 
 		{
 			p.SetState(1502)
 			p.Match(SQLiteParserEXCEPT_)
+			if p.HasError() {
+				// Recognition error - abort rule
+				goto errorExit
+			}
 		}
 
 	default:
-		panic(antlr.NewNoViableAltException(p, nil, nil, nil, nil, nil))
+		p.SetError(antlr.NewNoViableAltException(p, nil, nil, nil, nil, nil))
+		goto errorExit
 	}
 
+errorExit:
+	if p.HasError() {
+		v := p.GetError()
+		localctx.SetException(v)
+		p.GetErrorHandler().ReportError(p, v)
+		p.GetErrorHandler().Recover(p, v)
+		p.SetError(nil)
+	}
+	p.ExitRule()
 	return localctx
+	goto errorExit // Trick to prevent compiler error if the label is not used
 }
 
 // IUpdate_stmtContext is an interface to support dynamic dispatch.
@@ -17711,15 +19751,20 @@ type IUpdate_stmtContext interface {
 }
 
 type Update_stmtContext struct {
-	*antlr.BaseParserRuleContext
+	antlr.BaseParserRuleContext
 	parser antlr.Parser
 }
 
 func NewEmptyUpdate_stmtContext() *Update_stmtContext {
 	var p = new(Update_stmtContext)
-	p.BaseParserRuleContext = antlr.NewBaseParserRuleContext(nil, -1)
+	antlr.InitBaseParserRuleContext(&p.BaseParserRuleContext, nil, -1)
 	p.RuleIndex = SQLiteParserRULE_update_stmt
 	return p
+}
+
+func InitEmptyUpdate_stmtContext(p *Update_stmtContext) {
+	antlr.InitBaseParserRuleContext(&p.BaseParserRuleContext, nil, -1)
+	p.RuleIndex = SQLiteParserRULE_update_stmt
 }
 
 func (*Update_stmtContext) IsUpdate_stmtContext() {}
@@ -17727,7 +19772,7 @@ func (*Update_stmtContext) IsUpdate_stmtContext() {}
 func NewUpdate_stmtContext(parser antlr.Parser, parent antlr.ParserRuleContext, invokingState int) *Update_stmtContext {
 	var p = new(Update_stmtContext)
 
-	p.BaseParserRuleContext = antlr.NewBaseParserRuleContext(parent, invokingState)
+	antlr.InitBaseParserRuleContext(&p.BaseParserRuleContext, parent, invokingState)
 
 	p.parser = parser
 	p.RuleIndex = SQLiteParserRULE_update_stmt
@@ -18042,32 +20087,16 @@ func (s *Update_stmtContext) ExitRule(listener antlr.ParseTreeListener) {
 }
 
 func (p *SQLiteParser) Update_stmt() (localctx IUpdate_stmtContext) {
-	this := p
-	_ = this
-
 	localctx = NewUpdate_stmtContext(p, p.GetParserRuleContext(), p.GetState())
 	p.EnterRule(localctx, 108, SQLiteParserRULE_update_stmt)
 	var _la int
 
-	defer func() {
-		p.ExitRule()
-	}()
-
-	defer func() {
-		if err := recover(); err != nil {
-			if v, ok := err.(antlr.RecognitionException); ok {
-				localctx.SetException(v)
-				p.GetErrorHandler().ReportError(p, v)
-				p.GetErrorHandler().Recover(p, v)
-			} else {
-				panic(err)
-			}
-		}
-	}()
-
 	p.EnterOuterAlt(localctx, 1)
 	p.SetState(1506)
 	p.GetErrorHandler().Sync(p)
+	if p.HasError() {
+		goto errorExit
+	}
 	_la = p.GetTokenStream().LA(1)
 
 	if _la == SQLiteParserWITH_ {
@@ -18080,14 +20109,22 @@ func (p *SQLiteParser) Update_stmt() (localctx IUpdate_stmtContext) {
 	{
 		p.SetState(1508)
 		p.Match(SQLiteParserUPDATE_)
+		if p.HasError() {
+			// Recognition error - abort rule
+			goto errorExit
+		}
 	}
 	p.SetState(1511)
 	p.GetErrorHandler().Sync(p)
 
-	if p.GetInterpreter().AdaptivePredict(p.GetTokenStream(), 218, p.GetParserRuleContext()) == 1 {
+	if p.GetInterpreter().AdaptivePredict(p.BaseParser, p.GetTokenStream(), 218, p.GetParserRuleContext()) == 1 {
 		{
 			p.SetState(1509)
 			p.Match(SQLiteParserOR_)
+			if p.HasError() {
+				// Recognition error - abort rule
+				goto errorExit
+			}
 		}
 		{
 			p.SetState(1510)
@@ -18101,6 +20138,8 @@ func (p *SQLiteParser) Update_stmt() (localctx IUpdate_stmtContext) {
 			}
 		}
 
+	} else if p.HasError() { // JIM
+		goto errorExit
 	}
 	{
 		p.SetState(1513)
@@ -18109,10 +20148,18 @@ func (p *SQLiteParser) Update_stmt() (localctx IUpdate_stmtContext) {
 	{
 		p.SetState(1514)
 		p.Match(SQLiteParserSET_)
+		if p.HasError() {
+			// Recognition error - abort rule
+			goto errorExit
+		}
 	}
 	p.SetState(1517)
 	p.GetErrorHandler().Sync(p)
-	switch p.GetInterpreter().AdaptivePredict(p.GetTokenStream(), 219, p.GetParserRuleContext()) {
+	if p.HasError() {
+		goto errorExit
+	}
+
+	switch p.GetInterpreter().AdaptivePredict(p.BaseParser, p.GetTokenStream(), 219, p.GetParserRuleContext()) {
 	case 1:
 		{
 			p.SetState(1515)
@@ -18125,10 +20172,16 @@ func (p *SQLiteParser) Update_stmt() (localctx IUpdate_stmtContext) {
 			p.Column_name_list()
 		}
 
+	case antlr.ATNInvalidAltNumber:
+		goto errorExit
 	}
 	{
 		p.SetState(1519)
 		p.Match(SQLiteParserASSIGN)
+		if p.HasError() {
+			// Recognition error - abort rule
+			goto errorExit
+		}
 	}
 	{
 		p.SetState(1520)
@@ -18136,16 +20189,27 @@ func (p *SQLiteParser) Update_stmt() (localctx IUpdate_stmtContext) {
 	}
 	p.SetState(1531)
 	p.GetErrorHandler().Sync(p)
+	if p.HasError() {
+		goto errorExit
+	}
 	_la = p.GetTokenStream().LA(1)
 
 	for _la == SQLiteParserCOMMA {
 		{
 			p.SetState(1521)
 			p.Match(SQLiteParserCOMMA)
+			if p.HasError() {
+				// Recognition error - abort rule
+				goto errorExit
+			}
 		}
 		p.SetState(1524)
 		p.GetErrorHandler().Sync(p)
-		switch p.GetInterpreter().AdaptivePredict(p.GetTokenStream(), 220, p.GetParserRuleContext()) {
+		if p.HasError() {
+			goto errorExit
+		}
+
+		switch p.GetInterpreter().AdaptivePredict(p.BaseParser, p.GetTokenStream(), 220, p.GetParserRuleContext()) {
 		case 1:
 			{
 				p.SetState(1522)
@@ -18158,10 +20222,16 @@ func (p *SQLiteParser) Update_stmt() (localctx IUpdate_stmtContext) {
 				p.Column_name_list()
 			}
 
+		case antlr.ATNInvalidAltNumber:
+			goto errorExit
 		}
 		{
 			p.SetState(1526)
 			p.Match(SQLiteParserASSIGN)
+			if p.HasError() {
+				// Recognition error - abort rule
+				goto errorExit
+			}
 		}
 		{
 			p.SetState(1527)
@@ -18170,20 +20240,34 @@ func (p *SQLiteParser) Update_stmt() (localctx IUpdate_stmtContext) {
 
 		p.SetState(1533)
 		p.GetErrorHandler().Sync(p)
+		if p.HasError() {
+			goto errorExit
+		}
 		_la = p.GetTokenStream().LA(1)
 	}
 	p.SetState(1546)
 	p.GetErrorHandler().Sync(p)
+	if p.HasError() {
+		goto errorExit
+	}
 	_la = p.GetTokenStream().LA(1)
 
 	if _la == SQLiteParserFROM_ {
 		{
 			p.SetState(1534)
 			p.Match(SQLiteParserFROM_)
+			if p.HasError() {
+				// Recognition error - abort rule
+				goto errorExit
+			}
 		}
 		p.SetState(1544)
 		p.GetErrorHandler().Sync(p)
-		switch p.GetInterpreter().AdaptivePredict(p.GetTokenStream(), 223, p.GetParserRuleContext()) {
+		if p.HasError() {
+			goto errorExit
+		}
+
+		switch p.GetInterpreter().AdaptivePredict(p.BaseParser, p.GetTokenStream(), 223, p.GetParserRuleContext()) {
 		case 1:
 			{
 				p.SetState(1535)
@@ -18191,12 +20275,19 @@ func (p *SQLiteParser) Update_stmt() (localctx IUpdate_stmtContext) {
 			}
 			p.SetState(1540)
 			p.GetErrorHandler().Sync(p)
+			if p.HasError() {
+				goto errorExit
+			}
 			_la = p.GetTokenStream().LA(1)
 
 			for _la == SQLiteParserCOMMA {
 				{
 					p.SetState(1536)
 					p.Match(SQLiteParserCOMMA)
+					if p.HasError() {
+						// Recognition error - abort rule
+						goto errorExit
+					}
 				}
 				{
 					p.SetState(1537)
@@ -18205,6 +20296,9 @@ func (p *SQLiteParser) Update_stmt() (localctx IUpdate_stmtContext) {
 
 				p.SetState(1542)
 				p.GetErrorHandler().Sync(p)
+				if p.HasError() {
+					goto errorExit
+				}
 				_la = p.GetTokenStream().LA(1)
 			}
 
@@ -18214,17 +20308,26 @@ func (p *SQLiteParser) Update_stmt() (localctx IUpdate_stmtContext) {
 				p.Join_clause()
 			}
 
+		case antlr.ATNInvalidAltNumber:
+			goto errorExit
 		}
 
 	}
 	p.SetState(1550)
 	p.GetErrorHandler().Sync(p)
+	if p.HasError() {
+		goto errorExit
+	}
 	_la = p.GetTokenStream().LA(1)
 
 	if _la == SQLiteParserWHERE_ {
 		{
 			p.SetState(1548)
 			p.Match(SQLiteParserWHERE_)
+			if p.HasError() {
+				// Recognition error - abort rule
+				goto errorExit
+			}
 		}
 		{
 			p.SetState(1549)
@@ -18234,6 +20337,9 @@ func (p *SQLiteParser) Update_stmt() (localctx IUpdate_stmtContext) {
 	}
 	p.SetState(1553)
 	p.GetErrorHandler().Sync(p)
+	if p.HasError() {
+		goto errorExit
+	}
 	_la = p.GetTokenStream().LA(1)
 
 	if _la == SQLiteParserRETURNING_ {
@@ -18244,7 +20350,17 @@ func (p *SQLiteParser) Update_stmt() (localctx IUpdate_stmtContext) {
 
 	}
 
+errorExit:
+	if p.HasError() {
+		v := p.GetError()
+		localctx.SetException(v)
+		p.GetErrorHandler().ReportError(p, v)
+		p.GetErrorHandler().Recover(p, v)
+		p.SetError(nil)
+	}
+	p.ExitRule()
 	return localctx
+	goto errorExit // Trick to prevent compiler error if the label is not used
 }
 
 // IColumn_name_listContext is an interface to support dynamic dispatch.
@@ -18267,15 +20383,20 @@ type IColumn_name_listContext interface {
 }
 
 type Column_name_listContext struct {
-	*antlr.BaseParserRuleContext
+	antlr.BaseParserRuleContext
 	parser antlr.Parser
 }
 
 func NewEmptyColumn_name_listContext() *Column_name_listContext {
 	var p = new(Column_name_listContext)
-	p.BaseParserRuleContext = antlr.NewBaseParserRuleContext(nil, -1)
+	antlr.InitBaseParserRuleContext(&p.BaseParserRuleContext, nil, -1)
 	p.RuleIndex = SQLiteParserRULE_column_name_list
 	return p
+}
+
+func InitEmptyColumn_name_listContext(p *Column_name_listContext) {
+	antlr.InitBaseParserRuleContext(&p.BaseParserRuleContext, nil, -1)
+	p.RuleIndex = SQLiteParserRULE_column_name_list
 }
 
 func (*Column_name_listContext) IsColumn_name_listContext() {}
@@ -18283,7 +20404,7 @@ func (*Column_name_listContext) IsColumn_name_listContext() {}
 func NewColumn_name_listContext(parser antlr.Parser, parent antlr.ParserRuleContext, invokingState int) *Column_name_listContext {
 	var p = new(Column_name_listContext)
 
-	p.BaseParserRuleContext = antlr.NewBaseParserRuleContext(parent, invokingState)
+	antlr.InitBaseParserRuleContext(&p.BaseParserRuleContext, parent, invokingState)
 
 	p.parser = parser
 	p.RuleIndex = SQLiteParserRULE_column_name_list
@@ -18371,33 +20492,18 @@ func (s *Column_name_listContext) ExitRule(listener antlr.ParseTreeListener) {
 }
 
 func (p *SQLiteParser) Column_name_list() (localctx IColumn_name_listContext) {
-	this := p
-	_ = this
-
 	localctx = NewColumn_name_listContext(p, p.GetParserRuleContext(), p.GetState())
 	p.EnterRule(localctx, 110, SQLiteParserRULE_column_name_list)
 	var _la int
-
-	defer func() {
-		p.ExitRule()
-	}()
-
-	defer func() {
-		if err := recover(); err != nil {
-			if v, ok := err.(antlr.RecognitionException); ok {
-				localctx.SetException(v)
-				p.GetErrorHandler().ReportError(p, v)
-				p.GetErrorHandler().Recover(p, v)
-			} else {
-				panic(err)
-			}
-		}
-	}()
 
 	p.EnterOuterAlt(localctx, 1)
 	{
 		p.SetState(1555)
 		p.Match(SQLiteParserOPEN_PAR)
+		if p.HasError() {
+			// Recognition error - abort rule
+			goto errorExit
+		}
 	}
 	{
 		p.SetState(1556)
@@ -18405,12 +20511,19 @@ func (p *SQLiteParser) Column_name_list() (localctx IColumn_name_listContext) {
 	}
 	p.SetState(1561)
 	p.GetErrorHandler().Sync(p)
+	if p.HasError() {
+		goto errorExit
+	}
 	_la = p.GetTokenStream().LA(1)
 
 	for _la == SQLiteParserCOMMA {
 		{
 			p.SetState(1557)
 			p.Match(SQLiteParserCOMMA)
+			if p.HasError() {
+				// Recognition error - abort rule
+				goto errorExit
+			}
 		}
 		{
 			p.SetState(1558)
@@ -18419,14 +20532,31 @@ func (p *SQLiteParser) Column_name_list() (localctx IColumn_name_listContext) {
 
 		p.SetState(1563)
 		p.GetErrorHandler().Sync(p)
+		if p.HasError() {
+			goto errorExit
+		}
 		_la = p.GetTokenStream().LA(1)
 	}
 	{
 		p.SetState(1564)
 		p.Match(SQLiteParserCLOSE_PAR)
+		if p.HasError() {
+			// Recognition error - abort rule
+			goto errorExit
+		}
 	}
 
+errorExit:
+	if p.HasError() {
+		v := p.GetError()
+		localctx.SetException(v)
+		p.GetErrorHandler().ReportError(p, v)
+		p.GetErrorHandler().Recover(p, v)
+		p.SetError(nil)
+	}
+	p.ExitRule()
 	return localctx
+	goto errorExit // Trick to prevent compiler error if the label is not used
 }
 
 // IUpdate_stmt_limitedContext is an interface to support dynamic dispatch.
@@ -18467,15 +20597,20 @@ type IUpdate_stmt_limitedContext interface {
 }
 
 type Update_stmt_limitedContext struct {
-	*antlr.BaseParserRuleContext
+	antlr.BaseParserRuleContext
 	parser antlr.Parser
 }
 
 func NewEmptyUpdate_stmt_limitedContext() *Update_stmt_limitedContext {
 	var p = new(Update_stmt_limitedContext)
-	p.BaseParserRuleContext = antlr.NewBaseParserRuleContext(nil, -1)
+	antlr.InitBaseParserRuleContext(&p.BaseParserRuleContext, nil, -1)
 	p.RuleIndex = SQLiteParserRULE_update_stmt_limited
 	return p
+}
+
+func InitEmptyUpdate_stmt_limitedContext(p *Update_stmt_limitedContext) {
+	antlr.InitBaseParserRuleContext(&p.BaseParserRuleContext, nil, -1)
+	p.RuleIndex = SQLiteParserRULE_update_stmt_limited
 }
 
 func (*Update_stmt_limitedContext) IsUpdate_stmt_limitedContext() {}
@@ -18483,7 +20618,7 @@ func (*Update_stmt_limitedContext) IsUpdate_stmt_limitedContext() {}
 func NewUpdate_stmt_limitedContext(parser antlr.Parser, parent antlr.ParserRuleContext, invokingState int) *Update_stmt_limitedContext {
 	var p = new(Update_stmt_limitedContext)
 
-	p.BaseParserRuleContext = antlr.NewBaseParserRuleContext(parent, invokingState)
+	antlr.InitBaseParserRuleContext(&p.BaseParserRuleContext, parent, invokingState)
 
 	p.parser = parser
 	p.RuleIndex = SQLiteParserRULE_update_stmt_limited
@@ -18769,32 +20904,16 @@ func (s *Update_stmt_limitedContext) ExitRule(listener antlr.ParseTreeListener) 
 }
 
 func (p *SQLiteParser) Update_stmt_limited() (localctx IUpdate_stmt_limitedContext) {
-	this := p
-	_ = this
-
 	localctx = NewUpdate_stmt_limitedContext(p, p.GetParserRuleContext(), p.GetState())
 	p.EnterRule(localctx, 112, SQLiteParserRULE_update_stmt_limited)
 	var _la int
 
-	defer func() {
-		p.ExitRule()
-	}()
-
-	defer func() {
-		if err := recover(); err != nil {
-			if v, ok := err.(antlr.RecognitionException); ok {
-				localctx.SetException(v)
-				p.GetErrorHandler().ReportError(p, v)
-				p.GetErrorHandler().Recover(p, v)
-			} else {
-				panic(err)
-			}
-		}
-	}()
-
 	p.EnterOuterAlt(localctx, 1)
 	p.SetState(1567)
 	p.GetErrorHandler().Sync(p)
+	if p.HasError() {
+		goto errorExit
+	}
 	_la = p.GetTokenStream().LA(1)
 
 	if _la == SQLiteParserWITH_ {
@@ -18807,14 +20926,22 @@ func (p *SQLiteParser) Update_stmt_limited() (localctx IUpdate_stmt_limitedConte
 	{
 		p.SetState(1569)
 		p.Match(SQLiteParserUPDATE_)
+		if p.HasError() {
+			// Recognition error - abort rule
+			goto errorExit
+		}
 	}
 	p.SetState(1572)
 	p.GetErrorHandler().Sync(p)
 
-	if p.GetInterpreter().AdaptivePredict(p.GetTokenStream(), 229, p.GetParserRuleContext()) == 1 {
+	if p.GetInterpreter().AdaptivePredict(p.BaseParser, p.GetTokenStream(), 229, p.GetParserRuleContext()) == 1 {
 		{
 			p.SetState(1570)
 			p.Match(SQLiteParserOR_)
+			if p.HasError() {
+				// Recognition error - abort rule
+				goto errorExit
+			}
 		}
 		{
 			p.SetState(1571)
@@ -18828,6 +20955,8 @@ func (p *SQLiteParser) Update_stmt_limited() (localctx IUpdate_stmt_limitedConte
 			}
 		}
 
+	} else if p.HasError() { // JIM
+		goto errorExit
 	}
 	{
 		p.SetState(1574)
@@ -18836,10 +20965,18 @@ func (p *SQLiteParser) Update_stmt_limited() (localctx IUpdate_stmt_limitedConte
 	{
 		p.SetState(1575)
 		p.Match(SQLiteParserSET_)
+		if p.HasError() {
+			// Recognition error - abort rule
+			goto errorExit
+		}
 	}
 	p.SetState(1578)
 	p.GetErrorHandler().Sync(p)
-	switch p.GetInterpreter().AdaptivePredict(p.GetTokenStream(), 230, p.GetParserRuleContext()) {
+	if p.HasError() {
+		goto errorExit
+	}
+
+	switch p.GetInterpreter().AdaptivePredict(p.BaseParser, p.GetTokenStream(), 230, p.GetParserRuleContext()) {
 	case 1:
 		{
 			p.SetState(1576)
@@ -18852,10 +20989,16 @@ func (p *SQLiteParser) Update_stmt_limited() (localctx IUpdate_stmt_limitedConte
 			p.Column_name_list()
 		}
 
+	case antlr.ATNInvalidAltNumber:
+		goto errorExit
 	}
 	{
 		p.SetState(1580)
 		p.Match(SQLiteParserASSIGN)
+		if p.HasError() {
+			// Recognition error - abort rule
+			goto errorExit
+		}
 	}
 	{
 		p.SetState(1581)
@@ -18863,16 +21006,27 @@ func (p *SQLiteParser) Update_stmt_limited() (localctx IUpdate_stmt_limitedConte
 	}
 	p.SetState(1592)
 	p.GetErrorHandler().Sync(p)
+	if p.HasError() {
+		goto errorExit
+	}
 	_la = p.GetTokenStream().LA(1)
 
 	for _la == SQLiteParserCOMMA {
 		{
 			p.SetState(1582)
 			p.Match(SQLiteParserCOMMA)
+			if p.HasError() {
+				// Recognition error - abort rule
+				goto errorExit
+			}
 		}
 		p.SetState(1585)
 		p.GetErrorHandler().Sync(p)
-		switch p.GetInterpreter().AdaptivePredict(p.GetTokenStream(), 231, p.GetParserRuleContext()) {
+		if p.HasError() {
+			goto errorExit
+		}
+
+		switch p.GetInterpreter().AdaptivePredict(p.BaseParser, p.GetTokenStream(), 231, p.GetParserRuleContext()) {
 		case 1:
 			{
 				p.SetState(1583)
@@ -18885,10 +21039,16 @@ func (p *SQLiteParser) Update_stmt_limited() (localctx IUpdate_stmt_limitedConte
 				p.Column_name_list()
 			}
 
+		case antlr.ATNInvalidAltNumber:
+			goto errorExit
 		}
 		{
 			p.SetState(1587)
 			p.Match(SQLiteParserASSIGN)
+			if p.HasError() {
+				// Recognition error - abort rule
+				goto errorExit
+			}
 		}
 		{
 			p.SetState(1588)
@@ -18897,16 +21057,26 @@ func (p *SQLiteParser) Update_stmt_limited() (localctx IUpdate_stmt_limitedConte
 
 		p.SetState(1594)
 		p.GetErrorHandler().Sync(p)
+		if p.HasError() {
+			goto errorExit
+		}
 		_la = p.GetTokenStream().LA(1)
 	}
 	p.SetState(1597)
 	p.GetErrorHandler().Sync(p)
+	if p.HasError() {
+		goto errorExit
+	}
 	_la = p.GetTokenStream().LA(1)
 
 	if _la == SQLiteParserWHERE_ {
 		{
 			p.SetState(1595)
 			p.Match(SQLiteParserWHERE_)
+			if p.HasError() {
+				// Recognition error - abort rule
+				goto errorExit
+			}
 		}
 		{
 			p.SetState(1596)
@@ -18916,6 +21086,9 @@ func (p *SQLiteParser) Update_stmt_limited() (localctx IUpdate_stmt_limitedConte
 	}
 	p.SetState(1600)
 	p.GetErrorHandler().Sync(p)
+	if p.HasError() {
+		goto errorExit
+	}
 	_la = p.GetTokenStream().LA(1)
 
 	if _la == SQLiteParserRETURNING_ {
@@ -18927,11 +21100,17 @@ func (p *SQLiteParser) Update_stmt_limited() (localctx IUpdate_stmt_limitedConte
 	}
 	p.SetState(1606)
 	p.GetErrorHandler().Sync(p)
+	if p.HasError() {
+		goto errorExit
+	}
 	_la = p.GetTokenStream().LA(1)
 
 	if _la == SQLiteParserLIMIT_ || _la == SQLiteParserORDER_ {
 		p.SetState(1603)
 		p.GetErrorHandler().Sync(p)
+		if p.HasError() {
+			goto errorExit
+		}
 		_la = p.GetTokenStream().LA(1)
 
 		if _la == SQLiteParserORDER_ {
@@ -18948,7 +21127,17 @@ func (p *SQLiteParser) Update_stmt_limited() (localctx IUpdate_stmt_limitedConte
 
 	}
 
+errorExit:
+	if p.HasError() {
+		v := p.GetError()
+		localctx.SetException(v)
+		p.GetErrorHandler().ReportError(p, v)
+		p.GetErrorHandler().Recover(p, v)
+		p.SetError(nil)
+	}
+	p.ExitRule()
 	return localctx
+	goto errorExit // Trick to prevent compiler error if the label is not used
 }
 
 // IQualified_table_nameContext is an interface to support dynamic dispatch.
@@ -18974,15 +21163,20 @@ type IQualified_table_nameContext interface {
 }
 
 type Qualified_table_nameContext struct {
-	*antlr.BaseParserRuleContext
+	antlr.BaseParserRuleContext
 	parser antlr.Parser
 }
 
 func NewEmptyQualified_table_nameContext() *Qualified_table_nameContext {
 	var p = new(Qualified_table_nameContext)
-	p.BaseParserRuleContext = antlr.NewBaseParserRuleContext(nil, -1)
+	antlr.InitBaseParserRuleContext(&p.BaseParserRuleContext, nil, -1)
 	p.RuleIndex = SQLiteParserRULE_qualified_table_name
 	return p
+}
+
+func InitEmptyQualified_table_nameContext(p *Qualified_table_nameContext) {
+	antlr.InitBaseParserRuleContext(&p.BaseParserRuleContext, nil, -1)
+	p.RuleIndex = SQLiteParserRULE_qualified_table_name
 }
 
 func (*Qualified_table_nameContext) IsQualified_table_nameContext() {}
@@ -18990,7 +21184,7 @@ func (*Qualified_table_nameContext) IsQualified_table_nameContext() {}
 func NewQualified_table_nameContext(parser antlr.Parser, parent antlr.ParserRuleContext, invokingState int) *Qualified_table_nameContext {
 	var p = new(Qualified_table_nameContext)
 
-	p.BaseParserRuleContext = antlr.NewBaseParserRuleContext(parent, invokingState)
+	antlr.InitBaseParserRuleContext(&p.BaseParserRuleContext, parent, invokingState)
 
 	p.parser = parser
 	p.RuleIndex = SQLiteParserRULE_qualified_table_name
@@ -19105,34 +21299,15 @@ func (s *Qualified_table_nameContext) ExitRule(listener antlr.ParseTreeListener)
 }
 
 func (p *SQLiteParser) Qualified_table_name() (localctx IQualified_table_nameContext) {
-	this := p
-	_ = this
-
 	localctx = NewQualified_table_nameContext(p, p.GetParserRuleContext(), p.GetState())
 	p.EnterRule(localctx, 114, SQLiteParserRULE_qualified_table_name)
 	var _la int
-
-	defer func() {
-		p.ExitRule()
-	}()
-
-	defer func() {
-		if err := recover(); err != nil {
-			if v, ok := err.(antlr.RecognitionException); ok {
-				localctx.SetException(v)
-				p.GetErrorHandler().ReportError(p, v)
-				p.GetErrorHandler().Recover(p, v)
-			} else {
-				panic(err)
-			}
-		}
-	}()
 
 	p.EnterOuterAlt(localctx, 1)
 	p.SetState(1611)
 	p.GetErrorHandler().Sync(p)
 
-	if p.GetInterpreter().AdaptivePredict(p.GetTokenStream(), 237, p.GetParserRuleContext()) == 1 {
+	if p.GetInterpreter().AdaptivePredict(p.BaseParser, p.GetTokenStream(), 237, p.GetParserRuleContext()) == 1 {
 		{
 			p.SetState(1608)
 			p.Schema_name()
@@ -19140,8 +21315,14 @@ func (p *SQLiteParser) Qualified_table_name() (localctx IQualified_table_nameCon
 		{
 			p.SetState(1609)
 			p.Match(SQLiteParserDOT)
+			if p.HasError() {
+				// Recognition error - abort rule
+				goto errorExit
+			}
 		}
 
+	} else if p.HasError() { // JIM
+		goto errorExit
 	}
 	{
 		p.SetState(1613)
@@ -19149,12 +21330,19 @@ func (p *SQLiteParser) Qualified_table_name() (localctx IQualified_table_nameCon
 	}
 	p.SetState(1616)
 	p.GetErrorHandler().Sync(p)
+	if p.HasError() {
+		goto errorExit
+	}
 	_la = p.GetTokenStream().LA(1)
 
 	if _la == SQLiteParserAS_ {
 		{
 			p.SetState(1614)
 			p.Match(SQLiteParserAS_)
+			if p.HasError() {
+				// Recognition error - abort rule
+				goto errorExit
+			}
 		}
 		{
 			p.SetState(1615)
@@ -19164,16 +21352,26 @@ func (p *SQLiteParser) Qualified_table_name() (localctx IQualified_table_nameCon
 	}
 	p.SetState(1623)
 	p.GetErrorHandler().Sync(p)
-
+	if p.HasError() {
+		goto errorExit
+	}
 	switch p.GetTokenStream().LA(1) {
 	case SQLiteParserINDEXED_:
 		{
 			p.SetState(1618)
 			p.Match(SQLiteParserINDEXED_)
+			if p.HasError() {
+				// Recognition error - abort rule
+				goto errorExit
+			}
 		}
 		{
 			p.SetState(1619)
 			p.Match(SQLiteParserBY_)
+			if p.HasError() {
+				// Recognition error - abort rule
+				goto errorExit
+			}
 		}
 		{
 			p.SetState(1620)
@@ -19184,10 +21382,18 @@ func (p *SQLiteParser) Qualified_table_name() (localctx IQualified_table_nameCon
 		{
 			p.SetState(1621)
 			p.Match(SQLiteParserNOT_)
+			if p.HasError() {
+				// Recognition error - abort rule
+				goto errorExit
+			}
 		}
 		{
 			p.SetState(1622)
 			p.Match(SQLiteParserINDEXED_)
+			if p.HasError() {
+				// Recognition error - abort rule
+				goto errorExit
+			}
 		}
 
 	case SQLiteParserEOF, SQLiteParserSCOL, SQLiteParserALTER_, SQLiteParserANALYZE_, SQLiteParserATTACH_, SQLiteParserBEGIN_, SQLiteParserCOMMIT_, SQLiteParserCREATE_, SQLiteParserDELETE_, SQLiteParserDETACH_, SQLiteParserDROP_, SQLiteParserEND_, SQLiteParserEXPLAIN_, SQLiteParserINSERT_, SQLiteParserLIMIT_, SQLiteParserORDER_, SQLiteParserPRAGMA_, SQLiteParserREINDEX_, SQLiteParserRELEASE_, SQLiteParserREPLACE_, SQLiteParserRETURNING_, SQLiteParserROLLBACK_, SQLiteParserSAVEPOINT_, SQLiteParserSELECT_, SQLiteParserSET_, SQLiteParserUPDATE_, SQLiteParserVACUUM_, SQLiteParserVALUES_, SQLiteParserWHERE_, SQLiteParserWITH_:
@@ -19195,7 +21401,17 @@ func (p *SQLiteParser) Qualified_table_name() (localctx IQualified_table_nameCon
 	default:
 	}
 
+errorExit:
+	if p.HasError() {
+		v := p.GetError()
+		localctx.SetException(v)
+		p.GetErrorHandler().ReportError(p, v)
+		p.GetErrorHandler().Recover(p, v)
+		p.SetError(nil)
+	}
+	p.ExitRule()
 	return localctx
+	goto errorExit // Trick to prevent compiler error if the label is not used
 }
 
 // IVacuum_stmtContext is an interface to support dynamic dispatch.
@@ -19216,15 +21432,20 @@ type IVacuum_stmtContext interface {
 }
 
 type Vacuum_stmtContext struct {
-	*antlr.BaseParserRuleContext
+	antlr.BaseParserRuleContext
 	parser antlr.Parser
 }
 
 func NewEmptyVacuum_stmtContext() *Vacuum_stmtContext {
 	var p = new(Vacuum_stmtContext)
-	p.BaseParserRuleContext = antlr.NewBaseParserRuleContext(nil, -1)
+	antlr.InitBaseParserRuleContext(&p.BaseParserRuleContext, nil, -1)
 	p.RuleIndex = SQLiteParserRULE_vacuum_stmt
 	return p
+}
+
+func InitEmptyVacuum_stmtContext(p *Vacuum_stmtContext) {
+	antlr.InitBaseParserRuleContext(&p.BaseParserRuleContext, nil, -1)
+	p.RuleIndex = SQLiteParserRULE_vacuum_stmt
 }
 
 func (*Vacuum_stmtContext) IsVacuum_stmtContext() {}
@@ -19232,7 +21453,7 @@ func (*Vacuum_stmtContext) IsVacuum_stmtContext() {}
 func NewVacuum_stmtContext(parser antlr.Parser, parent antlr.ParserRuleContext, invokingState int) *Vacuum_stmtContext {
 	var p = new(Vacuum_stmtContext)
 
-	p.BaseParserRuleContext = antlr.NewBaseParserRuleContext(parent, invokingState)
+	antlr.InitBaseParserRuleContext(&p.BaseParserRuleContext, parent, invokingState)
 
 	p.parser = parser
 	p.RuleIndex = SQLiteParserRULE_vacuum_stmt
@@ -19303,52 +21524,46 @@ func (s *Vacuum_stmtContext) ExitRule(listener antlr.ParseTreeListener) {
 }
 
 func (p *SQLiteParser) Vacuum_stmt() (localctx IVacuum_stmtContext) {
-	this := p
-	_ = this
-
 	localctx = NewVacuum_stmtContext(p, p.GetParserRuleContext(), p.GetState())
 	p.EnterRule(localctx, 116, SQLiteParserRULE_vacuum_stmt)
 	var _la int
-
-	defer func() {
-		p.ExitRule()
-	}()
-
-	defer func() {
-		if err := recover(); err != nil {
-			if v, ok := err.(antlr.RecognitionException); ok {
-				localctx.SetException(v)
-				p.GetErrorHandler().ReportError(p, v)
-				p.GetErrorHandler().Recover(p, v)
-			} else {
-				panic(err)
-			}
-		}
-	}()
 
 	p.EnterOuterAlt(localctx, 1)
 	{
 		p.SetState(1625)
 		p.Match(SQLiteParserVACUUM_)
+		if p.HasError() {
+			// Recognition error - abort rule
+			goto errorExit
+		}
 	}
 	p.SetState(1627)
 	p.GetErrorHandler().Sync(p)
 
-	if p.GetInterpreter().AdaptivePredict(p.GetTokenStream(), 240, p.GetParserRuleContext()) == 1 {
+	if p.GetInterpreter().AdaptivePredict(p.BaseParser, p.GetTokenStream(), 240, p.GetParserRuleContext()) == 1 {
 		{
 			p.SetState(1626)
 			p.Schema_name()
 		}
 
+	} else if p.HasError() { // JIM
+		goto errorExit
 	}
 	p.SetState(1631)
 	p.GetErrorHandler().Sync(p)
+	if p.HasError() {
+		goto errorExit
+	}
 	_la = p.GetTokenStream().LA(1)
 
 	if _la == SQLiteParserINTO_ {
 		{
 			p.SetState(1629)
 			p.Match(SQLiteParserINTO_)
+			if p.HasError() {
+				// Recognition error - abort rule
+				goto errorExit
+			}
 		}
 		{
 			p.SetState(1630)
@@ -19357,7 +21572,17 @@ func (p *SQLiteParser) Vacuum_stmt() (localctx IVacuum_stmtContext) {
 
 	}
 
+errorExit:
+	if p.HasError() {
+		v := p.GetError()
+		localctx.SetException(v)
+		p.GetErrorHandler().ReportError(p, v)
+		p.GetErrorHandler().Recover(p, v)
+		p.SetError(nil)
+	}
+	p.ExitRule()
 	return localctx
+	goto errorExit // Trick to prevent compiler error if the label is not used
 }
 
 // IFilter_clauseContext is an interface to support dynamic dispatch.
@@ -19379,15 +21604,20 @@ type IFilter_clauseContext interface {
 }
 
 type Filter_clauseContext struct {
-	*antlr.BaseParserRuleContext
+	antlr.BaseParserRuleContext
 	parser antlr.Parser
 }
 
 func NewEmptyFilter_clauseContext() *Filter_clauseContext {
 	var p = new(Filter_clauseContext)
-	p.BaseParserRuleContext = antlr.NewBaseParserRuleContext(nil, -1)
+	antlr.InitBaseParserRuleContext(&p.BaseParserRuleContext, nil, -1)
 	p.RuleIndex = SQLiteParserRULE_filter_clause
 	return p
+}
+
+func InitEmptyFilter_clauseContext(p *Filter_clauseContext) {
+	antlr.InitBaseParserRuleContext(&p.BaseParserRuleContext, nil, -1)
+	p.RuleIndex = SQLiteParserRULE_filter_clause
 }
 
 func (*Filter_clauseContext) IsFilter_clauseContext() {}
@@ -19395,7 +21625,7 @@ func (*Filter_clauseContext) IsFilter_clauseContext() {}
 func NewFilter_clauseContext(parser antlr.Parser, parent antlr.ParserRuleContext, invokingState int) *Filter_clauseContext {
 	var p = new(Filter_clauseContext)
 
-	p.BaseParserRuleContext = antlr.NewBaseParserRuleContext(parent, invokingState)
+	antlr.InitBaseParserRuleContext(&p.BaseParserRuleContext, parent, invokingState)
 
 	p.parser = parser
 	p.RuleIndex = SQLiteParserRULE_filter_clause
@@ -19458,40 +21688,32 @@ func (s *Filter_clauseContext) ExitRule(listener antlr.ParseTreeListener) {
 }
 
 func (p *SQLiteParser) Filter_clause() (localctx IFilter_clauseContext) {
-	this := p
-	_ = this
-
 	localctx = NewFilter_clauseContext(p, p.GetParserRuleContext(), p.GetState())
 	p.EnterRule(localctx, 118, SQLiteParserRULE_filter_clause)
-
-	defer func() {
-		p.ExitRule()
-	}()
-
-	defer func() {
-		if err := recover(); err != nil {
-			if v, ok := err.(antlr.RecognitionException); ok {
-				localctx.SetException(v)
-				p.GetErrorHandler().ReportError(p, v)
-				p.GetErrorHandler().Recover(p, v)
-			} else {
-				panic(err)
-			}
-		}
-	}()
-
 	p.EnterOuterAlt(localctx, 1)
 	{
 		p.SetState(1633)
 		p.Match(SQLiteParserFILTER_)
+		if p.HasError() {
+			// Recognition error - abort rule
+			goto errorExit
+		}
 	}
 	{
 		p.SetState(1634)
 		p.Match(SQLiteParserOPEN_PAR)
+		if p.HasError() {
+			// Recognition error - abort rule
+			goto errorExit
+		}
 	}
 	{
 		p.SetState(1635)
 		p.Match(SQLiteParserWHERE_)
+		if p.HasError() {
+			// Recognition error - abort rule
+			goto errorExit
+		}
 	}
 	{
 		p.SetState(1636)
@@ -19500,9 +21722,23 @@ func (p *SQLiteParser) Filter_clause() (localctx IFilter_clauseContext) {
 	{
 		p.SetState(1637)
 		p.Match(SQLiteParserCLOSE_PAR)
+		if p.HasError() {
+			// Recognition error - abort rule
+			goto errorExit
+		}
 	}
 
+errorExit:
+	if p.HasError() {
+		v := p.GetError()
+		localctx.SetException(v)
+		p.GetErrorHandler().ReportError(p, v)
+		p.GetErrorHandler().Recover(p, v)
+		p.SetError(nil)
+	}
+	p.ExitRule()
 	return localctx
+	goto errorExit // Trick to prevent compiler error if the label is not used
 }
 
 // IWindow_defnContext is an interface to support dynamic dispatch.
@@ -19533,15 +21769,20 @@ type IWindow_defnContext interface {
 }
 
 type Window_defnContext struct {
-	*antlr.BaseParserRuleContext
+	antlr.BaseParserRuleContext
 	parser antlr.Parser
 }
 
 func NewEmptyWindow_defnContext() *Window_defnContext {
 	var p = new(Window_defnContext)
-	p.BaseParserRuleContext = antlr.NewBaseParserRuleContext(nil, -1)
+	antlr.InitBaseParserRuleContext(&p.BaseParserRuleContext, nil, -1)
 	p.RuleIndex = SQLiteParserRULE_window_defn
 	return p
+}
+
+func InitEmptyWindow_defnContext(p *Window_defnContext) {
+	antlr.InitBaseParserRuleContext(&p.BaseParserRuleContext, nil, -1)
+	p.RuleIndex = SQLiteParserRULE_window_defn
 }
 
 func (*Window_defnContext) IsWindow_defnContext() {}
@@ -19549,7 +21790,7 @@ func (*Window_defnContext) IsWindow_defnContext() {}
 func NewWindow_defnContext(parser antlr.Parser, parent antlr.ParserRuleContext, invokingState int) *Window_defnContext {
 	var p = new(Window_defnContext)
 
-	p.BaseParserRuleContext = antlr.NewBaseParserRuleContext(parent, invokingState)
+	antlr.InitBaseParserRuleContext(&p.BaseParserRuleContext, parent, invokingState)
 
 	p.parser = parser
 	p.RuleIndex = SQLiteParserRULE_window_defn
@@ -19726,56 +21967,54 @@ func (s *Window_defnContext) ExitRule(listener antlr.ParseTreeListener) {
 }
 
 func (p *SQLiteParser) Window_defn() (localctx IWindow_defnContext) {
-	this := p
-	_ = this
-
 	localctx = NewWindow_defnContext(p, p.GetParserRuleContext(), p.GetState())
 	p.EnterRule(localctx, 120, SQLiteParserRULE_window_defn)
 	var _la int
-
-	defer func() {
-		p.ExitRule()
-	}()
-
-	defer func() {
-		if err := recover(); err != nil {
-			if v, ok := err.(antlr.RecognitionException); ok {
-				localctx.SetException(v)
-				p.GetErrorHandler().ReportError(p, v)
-				p.GetErrorHandler().Recover(p, v)
-			} else {
-				panic(err)
-			}
-		}
-	}()
 
 	p.EnterOuterAlt(localctx, 1)
 	{
 		p.SetState(1639)
 		p.Match(SQLiteParserOPEN_PAR)
+		if p.HasError() {
+			// Recognition error - abort rule
+			goto errorExit
+		}
 	}
 	p.SetState(1641)
 	p.GetErrorHandler().Sync(p)
 
-	if p.GetInterpreter().AdaptivePredict(p.GetTokenStream(), 242, p.GetParserRuleContext()) == 1 {
+	if p.GetInterpreter().AdaptivePredict(p.BaseParser, p.GetTokenStream(), 242, p.GetParserRuleContext()) == 1 {
 		{
 			p.SetState(1640)
 			p.Base_window_name()
 		}
 
+	} else if p.HasError() { // JIM
+		goto errorExit
 	}
 	p.SetState(1653)
 	p.GetErrorHandler().Sync(p)
+	if p.HasError() {
+		goto errorExit
+	}
 	_la = p.GetTokenStream().LA(1)
 
 	if _la == SQLiteParserPARTITION_ {
 		{
 			p.SetState(1643)
 			p.Match(SQLiteParserPARTITION_)
+			if p.HasError() {
+				// Recognition error - abort rule
+				goto errorExit
+			}
 		}
 		{
 			p.SetState(1644)
 			p.Match(SQLiteParserBY_)
+			if p.HasError() {
+				// Recognition error - abort rule
+				goto errorExit
+			}
 		}
 		{
 			p.SetState(1645)
@@ -19783,12 +22022,19 @@ func (p *SQLiteParser) Window_defn() (localctx IWindow_defnContext) {
 		}
 		p.SetState(1650)
 		p.GetErrorHandler().Sync(p)
+		if p.HasError() {
+			goto errorExit
+		}
 		_la = p.GetTokenStream().LA(1)
 
 		for _la == SQLiteParserCOMMA {
 			{
 				p.SetState(1646)
 				p.Match(SQLiteParserCOMMA)
+				if p.HasError() {
+					// Recognition error - abort rule
+					goto errorExit
+				}
 			}
 			{
 				p.SetState(1647)
@@ -19797,6 +22043,9 @@ func (p *SQLiteParser) Window_defn() (localctx IWindow_defnContext) {
 
 			p.SetState(1652)
 			p.GetErrorHandler().Sync(p)
+			if p.HasError() {
+				goto errorExit
+			}
 			_la = p.GetTokenStream().LA(1)
 		}
 
@@ -19805,10 +22054,18 @@ func (p *SQLiteParser) Window_defn() (localctx IWindow_defnContext) {
 	{
 		p.SetState(1655)
 		p.Match(SQLiteParserORDER_)
+		if p.HasError() {
+			// Recognition error - abort rule
+			goto errorExit
+		}
 	}
 	{
 		p.SetState(1656)
 		p.Match(SQLiteParserBY_)
+		if p.HasError() {
+			// Recognition error - abort rule
+			goto errorExit
+		}
 	}
 	{
 		p.SetState(1657)
@@ -19816,12 +22073,19 @@ func (p *SQLiteParser) Window_defn() (localctx IWindow_defnContext) {
 	}
 	p.SetState(1662)
 	p.GetErrorHandler().Sync(p)
+	if p.HasError() {
+		goto errorExit
+	}
 	_la = p.GetTokenStream().LA(1)
 
 	for _la == SQLiteParserCOMMA {
 		{
 			p.SetState(1658)
 			p.Match(SQLiteParserCOMMA)
+			if p.HasError() {
+				// Recognition error - abort rule
+				goto errorExit
+			}
 		}
 		{
 			p.SetState(1659)
@@ -19830,11 +22094,17 @@ func (p *SQLiteParser) Window_defn() (localctx IWindow_defnContext) {
 
 		p.SetState(1664)
 		p.GetErrorHandler().Sync(p)
+		if p.HasError() {
+			goto errorExit
+		}
 		_la = p.GetTokenStream().LA(1)
 	}
 
 	p.SetState(1666)
 	p.GetErrorHandler().Sync(p)
+	if p.HasError() {
+		goto errorExit
+	}
 	_la = p.GetTokenStream().LA(1)
 
 	if (int64((_la-128)) & ^0x3f) == 0 && ((int64(1)<<(_la-128))&2251799880794113) != 0 {
@@ -19847,9 +22117,23 @@ func (p *SQLiteParser) Window_defn() (localctx IWindow_defnContext) {
 	{
 		p.SetState(1668)
 		p.Match(SQLiteParserCLOSE_PAR)
+		if p.HasError() {
+			// Recognition error - abort rule
+			goto errorExit
+		}
 	}
 
+errorExit:
+	if p.HasError() {
+		v := p.GetError()
+		localctx.SetException(v)
+		p.GetErrorHandler().ReportError(p, v)
+		p.GetErrorHandler().Recover(p, v)
+		p.SetError(nil)
+	}
+	p.ExitRule()
 	return localctx
+	goto errorExit // Trick to prevent compiler error if the label is not used
 }
 
 // IOver_clauseContext is an interface to support dynamic dispatch.
@@ -19882,15 +22166,20 @@ type IOver_clauseContext interface {
 }
 
 type Over_clauseContext struct {
-	*antlr.BaseParserRuleContext
+	antlr.BaseParserRuleContext
 	parser antlr.Parser
 }
 
 func NewEmptyOver_clauseContext() *Over_clauseContext {
 	var p = new(Over_clauseContext)
-	p.BaseParserRuleContext = antlr.NewBaseParserRuleContext(nil, -1)
+	antlr.InitBaseParserRuleContext(&p.BaseParserRuleContext, nil, -1)
 	p.RuleIndex = SQLiteParserRULE_over_clause
 	return p
+}
+
+func InitEmptyOver_clauseContext(p *Over_clauseContext) {
+	antlr.InitBaseParserRuleContext(&p.BaseParserRuleContext, nil, -1)
+	p.RuleIndex = SQLiteParserRULE_over_clause
 }
 
 func (*Over_clauseContext) IsOver_clauseContext() {}
@@ -19898,7 +22187,7 @@ func (*Over_clauseContext) IsOver_clauseContext() {}
 func NewOver_clauseContext(parser antlr.Parser, parent antlr.ParserRuleContext, invokingState int) *Over_clauseContext {
 	var p = new(Over_clauseContext)
 
-	p.BaseParserRuleContext = antlr.NewBaseParserRuleContext(parent, invokingState)
+	antlr.InitBaseParserRuleContext(&p.BaseParserRuleContext, parent, invokingState)
 
 	p.parser = parser
 	p.RuleIndex = SQLiteParserRULE_over_clause
@@ -20095,37 +22384,26 @@ func (s *Over_clauseContext) ExitRule(listener antlr.ParseTreeListener) {
 }
 
 func (p *SQLiteParser) Over_clause() (localctx IOver_clauseContext) {
-	this := p
-	_ = this
-
 	localctx = NewOver_clauseContext(p, p.GetParserRuleContext(), p.GetState())
 	p.EnterRule(localctx, 122, SQLiteParserRULE_over_clause)
 	var _la int
-
-	defer func() {
-		p.ExitRule()
-	}()
-
-	defer func() {
-		if err := recover(); err != nil {
-			if v, ok := err.(antlr.RecognitionException); ok {
-				localctx.SetException(v)
-				p.GetErrorHandler().ReportError(p, v)
-				p.GetErrorHandler().Recover(p, v)
-			} else {
-				panic(err)
-			}
-		}
-	}()
 
 	p.EnterOuterAlt(localctx, 1)
 	{
 		p.SetState(1670)
 		p.Match(SQLiteParserOVER_)
+		if p.HasError() {
+			// Recognition error - abort rule
+			goto errorExit
+		}
 	}
 	p.SetState(1704)
 	p.GetErrorHandler().Sync(p)
-	switch p.GetInterpreter().AdaptivePredict(p.GetTokenStream(), 253, p.GetParserRuleContext()) {
+	if p.HasError() {
+		goto errorExit
+	}
+
+	switch p.GetInterpreter().AdaptivePredict(p.BaseParser, p.GetTokenStream(), 253, p.GetParserRuleContext()) {
 	case 1:
 		{
 			p.SetState(1671)
@@ -20136,29 +22414,46 @@ func (p *SQLiteParser) Over_clause() (localctx IOver_clauseContext) {
 		{
 			p.SetState(1672)
 			p.Match(SQLiteParserOPEN_PAR)
+			if p.HasError() {
+				// Recognition error - abort rule
+				goto errorExit
+			}
 		}
 		p.SetState(1674)
 		p.GetErrorHandler().Sync(p)
 
-		if p.GetInterpreter().AdaptivePredict(p.GetTokenStream(), 247, p.GetParserRuleContext()) == 1 {
+		if p.GetInterpreter().AdaptivePredict(p.BaseParser, p.GetTokenStream(), 247, p.GetParserRuleContext()) == 1 {
 			{
 				p.SetState(1673)
 				p.Base_window_name()
 			}
 
+		} else if p.HasError() { // JIM
+			goto errorExit
 		}
 		p.SetState(1686)
 		p.GetErrorHandler().Sync(p)
+		if p.HasError() {
+			goto errorExit
+		}
 		_la = p.GetTokenStream().LA(1)
 
 		if _la == SQLiteParserPARTITION_ {
 			{
 				p.SetState(1676)
 				p.Match(SQLiteParserPARTITION_)
+				if p.HasError() {
+					// Recognition error - abort rule
+					goto errorExit
+				}
 			}
 			{
 				p.SetState(1677)
 				p.Match(SQLiteParserBY_)
+				if p.HasError() {
+					// Recognition error - abort rule
+					goto errorExit
+				}
 			}
 			{
 				p.SetState(1678)
@@ -20166,12 +22461,19 @@ func (p *SQLiteParser) Over_clause() (localctx IOver_clauseContext) {
 			}
 			p.SetState(1683)
 			p.GetErrorHandler().Sync(p)
+			if p.HasError() {
+				goto errorExit
+			}
 			_la = p.GetTokenStream().LA(1)
 
 			for _la == SQLiteParserCOMMA {
 				{
 					p.SetState(1679)
 					p.Match(SQLiteParserCOMMA)
+					if p.HasError() {
+						// Recognition error - abort rule
+						goto errorExit
+					}
 				}
 				{
 					p.SetState(1680)
@@ -20180,22 +22482,36 @@ func (p *SQLiteParser) Over_clause() (localctx IOver_clauseContext) {
 
 				p.SetState(1685)
 				p.GetErrorHandler().Sync(p)
+				if p.HasError() {
+					goto errorExit
+				}
 				_la = p.GetTokenStream().LA(1)
 			}
 
 		}
 		p.SetState(1698)
 		p.GetErrorHandler().Sync(p)
+		if p.HasError() {
+			goto errorExit
+		}
 		_la = p.GetTokenStream().LA(1)
 
 		if _la == SQLiteParserORDER_ {
 			{
 				p.SetState(1688)
 				p.Match(SQLiteParserORDER_)
+				if p.HasError() {
+					// Recognition error - abort rule
+					goto errorExit
+				}
 			}
 			{
 				p.SetState(1689)
 				p.Match(SQLiteParserBY_)
+				if p.HasError() {
+					// Recognition error - abort rule
+					goto errorExit
+				}
 			}
 			{
 				p.SetState(1690)
@@ -20203,12 +22519,19 @@ func (p *SQLiteParser) Over_clause() (localctx IOver_clauseContext) {
 			}
 			p.SetState(1695)
 			p.GetErrorHandler().Sync(p)
+			if p.HasError() {
+				goto errorExit
+			}
 			_la = p.GetTokenStream().LA(1)
 
 			for _la == SQLiteParserCOMMA {
 				{
 					p.SetState(1691)
 					p.Match(SQLiteParserCOMMA)
+					if p.HasError() {
+						// Recognition error - abort rule
+						goto errorExit
+					}
 				}
 				{
 					p.SetState(1692)
@@ -20217,12 +22540,18 @@ func (p *SQLiteParser) Over_clause() (localctx IOver_clauseContext) {
 
 				p.SetState(1697)
 				p.GetErrorHandler().Sync(p)
+				if p.HasError() {
+					goto errorExit
+				}
 				_la = p.GetTokenStream().LA(1)
 			}
 
 		}
 		p.SetState(1701)
 		p.GetErrorHandler().Sync(p)
+		if p.HasError() {
+			goto errorExit
+		}
 		_la = p.GetTokenStream().LA(1)
 
 		if (int64((_la-128)) & ^0x3f) == 0 && ((int64(1)<<(_la-128))&2251799880794113) != 0 {
@@ -20235,11 +22564,27 @@ func (p *SQLiteParser) Over_clause() (localctx IOver_clauseContext) {
 		{
 			p.SetState(1703)
 			p.Match(SQLiteParserCLOSE_PAR)
+			if p.HasError() {
+				// Recognition error - abort rule
+				goto errorExit
+			}
 		}
 
+	case antlr.ATNInvalidAltNumber:
+		goto errorExit
 	}
 
+errorExit:
+	if p.HasError() {
+		v := p.GetError()
+		localctx.SetException(v)
+		p.GetErrorHandler().ReportError(p, v)
+		p.GetErrorHandler().Recover(p, v)
+		p.SetError(nil)
+	}
+	p.ExitRule()
 	return localctx
+	goto errorExit // Trick to prevent compiler error if the label is not used
 }
 
 // IFrame_specContext is an interface to support dynamic dispatch.
@@ -20264,15 +22609,20 @@ type IFrame_specContext interface {
 }
 
 type Frame_specContext struct {
-	*antlr.BaseParserRuleContext
+	antlr.BaseParserRuleContext
 	parser antlr.Parser
 }
 
 func NewEmptyFrame_specContext() *Frame_specContext {
 	var p = new(Frame_specContext)
-	p.BaseParserRuleContext = antlr.NewBaseParserRuleContext(nil, -1)
+	antlr.InitBaseParserRuleContext(&p.BaseParserRuleContext, nil, -1)
 	p.RuleIndex = SQLiteParserRULE_frame_spec
 	return p
+}
+
+func InitEmptyFrame_specContext(p *Frame_specContext) {
+	antlr.InitBaseParserRuleContext(&p.BaseParserRuleContext, nil, -1)
+	p.RuleIndex = SQLiteParserRULE_frame_spec
 }
 
 func (*Frame_specContext) IsFrame_specContext() {}
@@ -20280,7 +22630,7 @@ func (*Frame_specContext) IsFrame_specContext() {}
 func NewFrame_specContext(parser antlr.Parser, parent antlr.ParserRuleContext, invokingState int) *Frame_specContext {
 	var p = new(Frame_specContext)
 
-	p.BaseParserRuleContext = antlr.NewBaseParserRuleContext(parent, invokingState)
+	antlr.InitBaseParserRuleContext(&p.BaseParserRuleContext, parent, invokingState)
 
 	p.parser = parser
 	p.RuleIndex = SQLiteParserRULE_frame_spec
@@ -20355,28 +22705,9 @@ func (s *Frame_specContext) ExitRule(listener antlr.ParseTreeListener) {
 }
 
 func (p *SQLiteParser) Frame_spec() (localctx IFrame_specContext) {
-	this := p
-	_ = this
-
 	localctx = NewFrame_specContext(p, p.GetParserRuleContext(), p.GetState())
 	p.EnterRule(localctx, 124, SQLiteParserRULE_frame_spec)
 	var _la int
-
-	defer func() {
-		p.ExitRule()
-	}()
-
-	defer func() {
-		if err := recover(); err != nil {
-			if v, ok := err.(antlr.RecognitionException); ok {
-				localctx.SetException(v)
-				p.GetErrorHandler().ReportError(p, v)
-				p.GetErrorHandler().Recover(p, v)
-			} else {
-				panic(err)
-			}
-		}
-	}()
 
 	p.EnterOuterAlt(localctx, 1)
 	{
@@ -20385,56 +22716,101 @@ func (p *SQLiteParser) Frame_spec() (localctx IFrame_specContext) {
 	}
 	p.SetState(1716)
 	p.GetErrorHandler().Sync(p)
+	if p.HasError() {
+		goto errorExit
+	}
 	_la = p.GetTokenStream().LA(1)
 
 	if _la == SQLiteParserEXCLUDE_ {
 		{
 			p.SetState(1707)
 			p.Match(SQLiteParserEXCLUDE_)
+			if p.HasError() {
+				// Recognition error - abort rule
+				goto errorExit
+			}
 		}
 		p.SetState(1714)
 		p.GetErrorHandler().Sync(p)
+		if p.HasError() {
+			goto errorExit
+		}
 
 		switch p.GetTokenStream().LA(1) {
 		case SQLiteParserNO_:
 			{
 				p.SetState(1708)
 				p.Match(SQLiteParserNO_)
+				if p.HasError() {
+					// Recognition error - abort rule
+					goto errorExit
+				}
 			}
 			{
 				p.SetState(1709)
 				p.Match(SQLiteParserOTHERS_)
+				if p.HasError() {
+					// Recognition error - abort rule
+					goto errorExit
+				}
 			}
 
 		case SQLiteParserCURRENT_:
 			{
 				p.SetState(1710)
 				p.Match(SQLiteParserCURRENT_)
+				if p.HasError() {
+					// Recognition error - abort rule
+					goto errorExit
+				}
 			}
 			{
 				p.SetState(1711)
 				p.Match(SQLiteParserROW_)
+				if p.HasError() {
+					// Recognition error - abort rule
+					goto errorExit
+				}
 			}
 
 		case SQLiteParserGROUP_:
 			{
 				p.SetState(1712)
 				p.Match(SQLiteParserGROUP_)
+				if p.HasError() {
+					// Recognition error - abort rule
+					goto errorExit
+				}
 			}
 
 		case SQLiteParserTIES_:
 			{
 				p.SetState(1713)
 				p.Match(SQLiteParserTIES_)
+				if p.HasError() {
+					// Recognition error - abort rule
+					goto errorExit
+				}
 			}
 
 		default:
-			panic(antlr.NewNoViableAltException(p, nil, nil, nil, nil, nil))
+			p.SetError(antlr.NewNoViableAltException(p, nil, nil, nil, nil, nil))
+			goto errorExit
 		}
 
 	}
 
+errorExit:
+	if p.HasError() {
+		v := p.GetError()
+		localctx.SetException(v)
+		p.GetErrorHandler().ReportError(p, v)
+		p.GetErrorHandler().Recover(p, v)
+		p.SetError(nil)
+	}
+	p.ExitRule()
 	return localctx
+	goto errorExit // Trick to prevent compiler error if the label is not used
 }
 
 // IFrame_clauseContext is an interface to support dynamic dispatch.
@@ -20459,15 +22835,20 @@ type IFrame_clauseContext interface {
 }
 
 type Frame_clauseContext struct {
-	*antlr.BaseParserRuleContext
+	antlr.BaseParserRuleContext
 	parser antlr.Parser
 }
 
 func NewEmptyFrame_clauseContext() *Frame_clauseContext {
 	var p = new(Frame_clauseContext)
-	p.BaseParserRuleContext = antlr.NewBaseParserRuleContext(nil, -1)
+	antlr.InitBaseParserRuleContext(&p.BaseParserRuleContext, nil, -1)
 	p.RuleIndex = SQLiteParserRULE_frame_clause
 	return p
+}
+
+func InitEmptyFrame_clauseContext(p *Frame_clauseContext) {
+	antlr.InitBaseParserRuleContext(&p.BaseParserRuleContext, nil, -1)
+	p.RuleIndex = SQLiteParserRULE_frame_clause
 }
 
 func (*Frame_clauseContext) IsFrame_clauseContext() {}
@@ -20475,7 +22856,7 @@ func (*Frame_clauseContext) IsFrame_clauseContext() {}
 func NewFrame_clauseContext(parser antlr.Parser, parent antlr.ParserRuleContext, invokingState int) *Frame_clauseContext {
 	var p = new(Frame_clauseContext)
 
-	p.BaseParserRuleContext = antlr.NewBaseParserRuleContext(parent, invokingState)
+	antlr.InitBaseParserRuleContext(&p.BaseParserRuleContext, parent, invokingState)
 
 	p.parser = parser
 	p.RuleIndex = SQLiteParserRULE_frame_clause
@@ -20574,28 +22955,9 @@ func (s *Frame_clauseContext) ExitRule(listener antlr.ParseTreeListener) {
 }
 
 func (p *SQLiteParser) Frame_clause() (localctx IFrame_clauseContext) {
-	this := p
-	_ = this
-
 	localctx = NewFrame_clauseContext(p, p.GetParserRuleContext(), p.GetState())
 	p.EnterRule(localctx, 126, SQLiteParserRULE_frame_clause)
 	var _la int
-
-	defer func() {
-		p.ExitRule()
-	}()
-
-	defer func() {
-		if err := recover(); err != nil {
-			if v, ok := err.(antlr.RecognitionException); ok {
-				localctx.SetException(v)
-				p.GetErrorHandler().ReportError(p, v)
-				p.GetErrorHandler().Recover(p, v)
-			} else {
-				panic(err)
-			}
-		}
-	}()
 
 	p.EnterOuterAlt(localctx, 1)
 	{
@@ -20611,7 +22973,11 @@ func (p *SQLiteParser) Frame_clause() (localctx IFrame_clauseContext) {
 	}
 	p.SetState(1725)
 	p.GetErrorHandler().Sync(p)
-	switch p.GetInterpreter().AdaptivePredict(p.GetTokenStream(), 256, p.GetParserRuleContext()) {
+	if p.HasError() {
+		goto errorExit
+	}
+
+	switch p.GetInterpreter().AdaptivePredict(p.BaseParser, p.GetTokenStream(), 256, p.GetParserRuleContext()) {
 	case 1:
 		{
 			p.SetState(1719)
@@ -20622,6 +22988,10 @@ func (p *SQLiteParser) Frame_clause() (localctx IFrame_clauseContext) {
 		{
 			p.SetState(1720)
 			p.Match(SQLiteParserBETWEEN_)
+			if p.HasError() {
+				// Recognition error - abort rule
+				goto errorExit
+			}
 		}
 		{
 			p.SetState(1721)
@@ -20630,15 +23000,31 @@ func (p *SQLiteParser) Frame_clause() (localctx IFrame_clauseContext) {
 		{
 			p.SetState(1722)
 			p.Match(SQLiteParserAND_)
+			if p.HasError() {
+				// Recognition error - abort rule
+				goto errorExit
+			}
 		}
 		{
 			p.SetState(1723)
 			p.Frame_right()
 		}
 
+	case antlr.ATNInvalidAltNumber:
+		goto errorExit
 	}
 
+errorExit:
+	if p.HasError() {
+		v := p.GetError()
+		localctx.SetException(v)
+		p.GetErrorHandler().ReportError(p, v)
+		p.GetErrorHandler().Recover(p, v)
+		p.SetError(nil)
+	}
+	p.ExitRule()
 	return localctx
+	goto errorExit // Trick to prevent compiler error if the label is not used
 }
 
 // ISimple_function_invocationContext is an interface to support dynamic dispatch.
@@ -20663,15 +23049,20 @@ type ISimple_function_invocationContext interface {
 }
 
 type Simple_function_invocationContext struct {
-	*antlr.BaseParserRuleContext
+	antlr.BaseParserRuleContext
 	parser antlr.Parser
 }
 
 func NewEmptySimple_function_invocationContext() *Simple_function_invocationContext {
 	var p = new(Simple_function_invocationContext)
-	p.BaseParserRuleContext = antlr.NewBaseParserRuleContext(nil, -1)
+	antlr.InitBaseParserRuleContext(&p.BaseParserRuleContext, nil, -1)
 	p.RuleIndex = SQLiteParserRULE_simple_function_invocation
 	return p
+}
+
+func InitEmptySimple_function_invocationContext(p *Simple_function_invocationContext) {
+	antlr.InitBaseParserRuleContext(&p.BaseParserRuleContext, nil, -1)
+	p.RuleIndex = SQLiteParserRULE_simple_function_invocation
 }
 
 func (*Simple_function_invocationContext) IsSimple_function_invocationContext() {}
@@ -20679,7 +23070,7 @@ func (*Simple_function_invocationContext) IsSimple_function_invocationContext() 
 func NewSimple_function_invocationContext(parser antlr.Parser, parent antlr.ParserRuleContext, invokingState int) *Simple_function_invocationContext {
 	var p = new(Simple_function_invocationContext)
 
-	p.BaseParserRuleContext = antlr.NewBaseParserRuleContext(parent, invokingState)
+	antlr.InitBaseParserRuleContext(&p.BaseParserRuleContext, parent, invokingState)
 
 	p.parser = parser
 	p.RuleIndex = SQLiteParserRULE_simple_function_invocation
@@ -20787,28 +23178,9 @@ func (s *Simple_function_invocationContext) ExitRule(listener antlr.ParseTreeLis
 }
 
 func (p *SQLiteParser) Simple_function_invocation() (localctx ISimple_function_invocationContext) {
-	this := p
-	_ = this
-
 	localctx = NewSimple_function_invocationContext(p, p.GetParserRuleContext(), p.GetState())
 	p.EnterRule(localctx, 128, SQLiteParserRULE_simple_function_invocation)
 	var _la int
-
-	defer func() {
-		p.ExitRule()
-	}()
-
-	defer func() {
-		if err := recover(); err != nil {
-			if v, ok := err.(antlr.RecognitionException); ok {
-				localctx.SetException(v)
-				p.GetErrorHandler().ReportError(p, v)
-				p.GetErrorHandler().Recover(p, v)
-			} else {
-				panic(err)
-			}
-		}
-	}()
 
 	p.EnterOuterAlt(localctx, 1)
 	{
@@ -20818,9 +23190,16 @@ func (p *SQLiteParser) Simple_function_invocation() (localctx ISimple_function_i
 	{
 		p.SetState(1728)
 		p.Match(SQLiteParserOPEN_PAR)
+		if p.HasError() {
+			// Recognition error - abort rule
+			goto errorExit
+		}
 	}
 	p.SetState(1738)
 	p.GetErrorHandler().Sync(p)
+	if p.HasError() {
+		goto errorExit
+	}
 
 	switch p.GetTokenStream().LA(1) {
 	case SQLiteParserOPEN_PAR, SQLiteParserPLUS, SQLiteParserMINUS, SQLiteParserTILDE, SQLiteParserABORT_, SQLiteParserACTION_, SQLiteParserADD_, SQLiteParserAFTER_, SQLiteParserALL_, SQLiteParserALTER_, SQLiteParserANALYZE_, SQLiteParserAND_, SQLiteParserAS_, SQLiteParserASC_, SQLiteParserATTACH_, SQLiteParserAUTOINCREMENT_, SQLiteParserBEFORE_, SQLiteParserBEGIN_, SQLiteParserBETWEEN_, SQLiteParserBY_, SQLiteParserCASCADE_, SQLiteParserCASE_, SQLiteParserCAST_, SQLiteParserCHECK_, SQLiteParserCOLLATE_, SQLiteParserCOLUMN_, SQLiteParserCOMMIT_, SQLiteParserCONFLICT_, SQLiteParserCONSTRAINT_, SQLiteParserCREATE_, SQLiteParserCROSS_, SQLiteParserCURRENT_DATE_, SQLiteParserCURRENT_TIME_, SQLiteParserCURRENT_TIMESTAMP_, SQLiteParserDATABASE_, SQLiteParserDEFAULT_, SQLiteParserDEFERRABLE_, SQLiteParserDEFERRED_, SQLiteParserDELETE_, SQLiteParserDESC_, SQLiteParserDETACH_, SQLiteParserDISTINCT_, SQLiteParserDROP_, SQLiteParserEACH_, SQLiteParserELSE_, SQLiteParserEND_, SQLiteParserESCAPE_, SQLiteParserEXCEPT_, SQLiteParserEXCLUSIVE_, SQLiteParserEXISTS_, SQLiteParserEXPLAIN_, SQLiteParserFAIL_, SQLiteParserFOR_, SQLiteParserFOREIGN_, SQLiteParserFROM_, SQLiteParserFULL_, SQLiteParserGLOB_, SQLiteParserGROUP_, SQLiteParserHAVING_, SQLiteParserIF_, SQLiteParserIGNORE_, SQLiteParserIMMEDIATE_, SQLiteParserIN_, SQLiteParserINDEX_, SQLiteParserINDEXED_, SQLiteParserINITIALLY_, SQLiteParserINNER_, SQLiteParserINSERT_, SQLiteParserINSTEAD_, SQLiteParserINTERSECT_, SQLiteParserINTO_, SQLiteParserIS_, SQLiteParserISNULL_, SQLiteParserJOIN_, SQLiteParserKEY_, SQLiteParserLEFT_, SQLiteParserLIKE_, SQLiteParserLIMIT_, SQLiteParserMATCH_, SQLiteParserNATURAL_, SQLiteParserNO_, SQLiteParserNOT_, SQLiteParserNOTNULL_, SQLiteParserNULL_, SQLiteParserOF_, SQLiteParserOFFSET_, SQLiteParserON_, SQLiteParserOR_, SQLiteParserORDER_, SQLiteParserOUTER_, SQLiteParserPLAN_, SQLiteParserPRAGMA_, SQLiteParserPRIMARY_, SQLiteParserQUERY_, SQLiteParserRAISE_, SQLiteParserRECURSIVE_, SQLiteParserREFERENCES_, SQLiteParserREGEXP_, SQLiteParserREINDEX_, SQLiteParserRELEASE_, SQLiteParserRENAME_, SQLiteParserREPLACE_, SQLiteParserRESTRICT_, SQLiteParserRIGHT_, SQLiteParserROLLBACK_, SQLiteParserROW_, SQLiteParserROWS_, SQLiteParserSAVEPOINT_, SQLiteParserSELECT_, SQLiteParserSET_, SQLiteParserTABLE_, SQLiteParserTEMP_, SQLiteParserTEMPORARY_, SQLiteParserTHEN_, SQLiteParserTO_, SQLiteParserTRANSACTION_, SQLiteParserTRIGGER_, SQLiteParserUNION_, SQLiteParserUNIQUE_, SQLiteParserUPDATE_, SQLiteParserUSING_, SQLiteParserVACUUM_, SQLiteParserVALUES_, SQLiteParserVIEW_, SQLiteParserVIRTUAL_, SQLiteParserWHEN_, SQLiteParserWHERE_, SQLiteParserWITH_, SQLiteParserWITHOUT_, SQLiteParserFIRST_VALUE_, SQLiteParserOVER_, SQLiteParserPARTITION_, SQLiteParserRANGE_, SQLiteParserPRECEDING_, SQLiteParserUNBOUNDED_, SQLiteParserCURRENT_, SQLiteParserFOLLOWING_, SQLiteParserCUME_DIST_, SQLiteParserDENSE_RANK_, SQLiteParserLAG_, SQLiteParserLAST_VALUE_, SQLiteParserLEAD_, SQLiteParserNTH_VALUE_, SQLiteParserNTILE_, SQLiteParserPERCENT_RANK_, SQLiteParserRANK_, SQLiteParserROW_NUMBER_, SQLiteParserGENERATED_, SQLiteParserALWAYS_, SQLiteParserSTORED_, SQLiteParserTRUE_, SQLiteParserFALSE_, SQLiteParserWINDOW_, SQLiteParserNULLS_, SQLiteParserFIRST_, SQLiteParserLAST_, SQLiteParserFILTER_, SQLiteParserGROUPS_, SQLiteParserEXCLUDE_, SQLiteParserIDENTIFIER, SQLiteParserNUMERIC_LITERAL, SQLiteParserBIND_PARAMETER, SQLiteParserSTRING_LITERAL, SQLiteParserBLOB_LITERAL:
@@ -20830,12 +23209,19 @@ func (p *SQLiteParser) Simple_function_invocation() (localctx ISimple_function_i
 		}
 		p.SetState(1734)
 		p.GetErrorHandler().Sync(p)
+		if p.HasError() {
+			goto errorExit
+		}
 		_la = p.GetTokenStream().LA(1)
 
 		for _la == SQLiteParserCOMMA {
 			{
 				p.SetState(1730)
 				p.Match(SQLiteParserCOMMA)
+				if p.HasError() {
+					// Recognition error - abort rule
+					goto errorExit
+				}
 			}
 			{
 				p.SetState(1731)
@@ -20844,6 +23230,9 @@ func (p *SQLiteParser) Simple_function_invocation() (localctx ISimple_function_i
 
 			p.SetState(1736)
 			p.GetErrorHandler().Sync(p)
+			if p.HasError() {
+				goto errorExit
+			}
 			_la = p.GetTokenStream().LA(1)
 		}
 
@@ -20851,17 +23240,36 @@ func (p *SQLiteParser) Simple_function_invocation() (localctx ISimple_function_i
 		{
 			p.SetState(1737)
 			p.Match(SQLiteParserSTAR)
+			if p.HasError() {
+				// Recognition error - abort rule
+				goto errorExit
+			}
 		}
 
 	default:
-		panic(antlr.NewNoViableAltException(p, nil, nil, nil, nil, nil))
+		p.SetError(antlr.NewNoViableAltException(p, nil, nil, nil, nil, nil))
+		goto errorExit
 	}
 	{
 		p.SetState(1740)
 		p.Match(SQLiteParserCLOSE_PAR)
+		if p.HasError() {
+			// Recognition error - abort rule
+			goto errorExit
+		}
 	}
 
+errorExit:
+	if p.HasError() {
+		v := p.GetError()
+		localctx.SetException(v)
+		p.GetErrorHandler().ReportError(p, v)
+		p.GetErrorHandler().Recover(p, v)
+		p.SetError(nil)
+	}
+	p.ExitRule()
 	return localctx
+	goto errorExit // Trick to prevent compiler error if the label is not used
 }
 
 // IAggregate_function_invocationContext is an interface to support dynamic dispatch.
@@ -20888,15 +23296,20 @@ type IAggregate_function_invocationContext interface {
 }
 
 type Aggregate_function_invocationContext struct {
-	*antlr.BaseParserRuleContext
+	antlr.BaseParserRuleContext
 	parser antlr.Parser
 }
 
 func NewEmptyAggregate_function_invocationContext() *Aggregate_function_invocationContext {
 	var p = new(Aggregate_function_invocationContext)
-	p.BaseParserRuleContext = antlr.NewBaseParserRuleContext(nil, -1)
+	antlr.InitBaseParserRuleContext(&p.BaseParserRuleContext, nil, -1)
 	p.RuleIndex = SQLiteParserRULE_aggregate_function_invocation
 	return p
+}
+
+func InitEmptyAggregate_function_invocationContext(p *Aggregate_function_invocationContext) {
+	antlr.InitBaseParserRuleContext(&p.BaseParserRuleContext, nil, -1)
+	p.RuleIndex = SQLiteParserRULE_aggregate_function_invocation
 }
 
 func (*Aggregate_function_invocationContext) IsAggregate_function_invocationContext() {}
@@ -20904,7 +23317,7 @@ func (*Aggregate_function_invocationContext) IsAggregate_function_invocationCont
 func NewAggregate_function_invocationContext(parser antlr.Parser, parent antlr.ParserRuleContext, invokingState int) *Aggregate_function_invocationContext {
 	var p = new(Aggregate_function_invocationContext)
 
-	p.BaseParserRuleContext = antlr.NewBaseParserRuleContext(parent, invokingState)
+	antlr.InitBaseParserRuleContext(&p.BaseParserRuleContext, parent, invokingState)
 
 	p.parser = parser
 	p.RuleIndex = SQLiteParserRULE_aggregate_function_invocation
@@ -21032,28 +23445,9 @@ func (s *Aggregate_function_invocationContext) ExitRule(listener antlr.ParseTree
 }
 
 func (p *SQLiteParser) Aggregate_function_invocation() (localctx IAggregate_function_invocationContext) {
-	this := p
-	_ = this
-
 	localctx = NewAggregate_function_invocationContext(p, p.GetParserRuleContext(), p.GetState())
 	p.EnterRule(localctx, 130, SQLiteParserRULE_aggregate_function_invocation)
 	var _la int
-
-	defer func() {
-		p.ExitRule()
-	}()
-
-	defer func() {
-		if err := recover(); err != nil {
-			if v, ok := err.(antlr.RecognitionException); ok {
-				localctx.SetException(v)
-				p.GetErrorHandler().ReportError(p, v)
-				p.GetErrorHandler().Recover(p, v)
-			} else {
-				panic(err)
-			}
-		}
-	}()
 
 	p.EnterOuterAlt(localctx, 1)
 	{
@@ -21063,21 +23457,33 @@ func (p *SQLiteParser) Aggregate_function_invocation() (localctx IAggregate_func
 	{
 		p.SetState(1743)
 		p.Match(SQLiteParserOPEN_PAR)
+		if p.HasError() {
+			// Recognition error - abort rule
+			goto errorExit
+		}
 	}
 	p.SetState(1756)
 	p.GetErrorHandler().Sync(p)
-
+	if p.HasError() {
+		goto errorExit
+	}
 	switch p.GetTokenStream().LA(1) {
 	case SQLiteParserOPEN_PAR, SQLiteParserPLUS, SQLiteParserMINUS, SQLiteParserTILDE, SQLiteParserABORT_, SQLiteParserACTION_, SQLiteParserADD_, SQLiteParserAFTER_, SQLiteParserALL_, SQLiteParserALTER_, SQLiteParserANALYZE_, SQLiteParserAND_, SQLiteParserAS_, SQLiteParserASC_, SQLiteParserATTACH_, SQLiteParserAUTOINCREMENT_, SQLiteParserBEFORE_, SQLiteParserBEGIN_, SQLiteParserBETWEEN_, SQLiteParserBY_, SQLiteParserCASCADE_, SQLiteParserCASE_, SQLiteParserCAST_, SQLiteParserCHECK_, SQLiteParserCOLLATE_, SQLiteParserCOLUMN_, SQLiteParserCOMMIT_, SQLiteParserCONFLICT_, SQLiteParserCONSTRAINT_, SQLiteParserCREATE_, SQLiteParserCROSS_, SQLiteParserCURRENT_DATE_, SQLiteParserCURRENT_TIME_, SQLiteParserCURRENT_TIMESTAMP_, SQLiteParserDATABASE_, SQLiteParserDEFAULT_, SQLiteParserDEFERRABLE_, SQLiteParserDEFERRED_, SQLiteParserDELETE_, SQLiteParserDESC_, SQLiteParserDETACH_, SQLiteParserDISTINCT_, SQLiteParserDROP_, SQLiteParserEACH_, SQLiteParserELSE_, SQLiteParserEND_, SQLiteParserESCAPE_, SQLiteParserEXCEPT_, SQLiteParserEXCLUSIVE_, SQLiteParserEXISTS_, SQLiteParserEXPLAIN_, SQLiteParserFAIL_, SQLiteParserFOR_, SQLiteParserFOREIGN_, SQLiteParserFROM_, SQLiteParserFULL_, SQLiteParserGLOB_, SQLiteParserGROUP_, SQLiteParserHAVING_, SQLiteParserIF_, SQLiteParserIGNORE_, SQLiteParserIMMEDIATE_, SQLiteParserIN_, SQLiteParserINDEX_, SQLiteParserINDEXED_, SQLiteParserINITIALLY_, SQLiteParserINNER_, SQLiteParserINSERT_, SQLiteParserINSTEAD_, SQLiteParserINTERSECT_, SQLiteParserINTO_, SQLiteParserIS_, SQLiteParserISNULL_, SQLiteParserJOIN_, SQLiteParserKEY_, SQLiteParserLEFT_, SQLiteParserLIKE_, SQLiteParserLIMIT_, SQLiteParserMATCH_, SQLiteParserNATURAL_, SQLiteParserNO_, SQLiteParserNOT_, SQLiteParserNOTNULL_, SQLiteParserNULL_, SQLiteParserOF_, SQLiteParserOFFSET_, SQLiteParserON_, SQLiteParserOR_, SQLiteParserORDER_, SQLiteParserOUTER_, SQLiteParserPLAN_, SQLiteParserPRAGMA_, SQLiteParserPRIMARY_, SQLiteParserQUERY_, SQLiteParserRAISE_, SQLiteParserRECURSIVE_, SQLiteParserREFERENCES_, SQLiteParserREGEXP_, SQLiteParserREINDEX_, SQLiteParserRELEASE_, SQLiteParserRENAME_, SQLiteParserREPLACE_, SQLiteParserRESTRICT_, SQLiteParserRIGHT_, SQLiteParserROLLBACK_, SQLiteParserROW_, SQLiteParserROWS_, SQLiteParserSAVEPOINT_, SQLiteParserSELECT_, SQLiteParserSET_, SQLiteParserTABLE_, SQLiteParserTEMP_, SQLiteParserTEMPORARY_, SQLiteParserTHEN_, SQLiteParserTO_, SQLiteParserTRANSACTION_, SQLiteParserTRIGGER_, SQLiteParserUNION_, SQLiteParserUNIQUE_, SQLiteParserUPDATE_, SQLiteParserUSING_, SQLiteParserVACUUM_, SQLiteParserVALUES_, SQLiteParserVIEW_, SQLiteParserVIRTUAL_, SQLiteParserWHEN_, SQLiteParserWHERE_, SQLiteParserWITH_, SQLiteParserWITHOUT_, SQLiteParserFIRST_VALUE_, SQLiteParserOVER_, SQLiteParserPARTITION_, SQLiteParserRANGE_, SQLiteParserPRECEDING_, SQLiteParserUNBOUNDED_, SQLiteParserCURRENT_, SQLiteParserFOLLOWING_, SQLiteParserCUME_DIST_, SQLiteParserDENSE_RANK_, SQLiteParserLAG_, SQLiteParserLAST_VALUE_, SQLiteParserLEAD_, SQLiteParserNTH_VALUE_, SQLiteParserNTILE_, SQLiteParserPERCENT_RANK_, SQLiteParserRANK_, SQLiteParserROW_NUMBER_, SQLiteParserGENERATED_, SQLiteParserALWAYS_, SQLiteParserSTORED_, SQLiteParserTRUE_, SQLiteParserFALSE_, SQLiteParserWINDOW_, SQLiteParserNULLS_, SQLiteParserFIRST_, SQLiteParserLAST_, SQLiteParserFILTER_, SQLiteParserGROUPS_, SQLiteParserEXCLUDE_, SQLiteParserIDENTIFIER, SQLiteParserNUMERIC_LITERAL, SQLiteParserBIND_PARAMETER, SQLiteParserSTRING_LITERAL, SQLiteParserBLOB_LITERAL:
 		p.SetState(1745)
 		p.GetErrorHandler().Sync(p)
 
-		if p.GetInterpreter().AdaptivePredict(p.GetTokenStream(), 259, p.GetParserRuleContext()) == 1 {
+		if p.GetInterpreter().AdaptivePredict(p.BaseParser, p.GetTokenStream(), 259, p.GetParserRuleContext()) == 1 {
 			{
 				p.SetState(1744)
 				p.Match(SQLiteParserDISTINCT_)
+				if p.HasError() {
+					// Recognition error - abort rule
+					goto errorExit
+				}
 			}
 
+		} else if p.HasError() { // JIM
+			goto errorExit
 		}
 		{
 			p.SetState(1747)
@@ -21085,12 +23491,19 @@ func (p *SQLiteParser) Aggregate_function_invocation() (localctx IAggregate_func
 		}
 		p.SetState(1752)
 		p.GetErrorHandler().Sync(p)
+		if p.HasError() {
+			goto errorExit
+		}
 		_la = p.GetTokenStream().LA(1)
 
 		for _la == SQLiteParserCOMMA {
 			{
 				p.SetState(1748)
 				p.Match(SQLiteParserCOMMA)
+				if p.HasError() {
+					// Recognition error - abort rule
+					goto errorExit
+				}
 			}
 			{
 				p.SetState(1749)
@@ -21099,6 +23512,9 @@ func (p *SQLiteParser) Aggregate_function_invocation() (localctx IAggregate_func
 
 			p.SetState(1754)
 			p.GetErrorHandler().Sync(p)
+			if p.HasError() {
+				goto errorExit
+			}
 			_la = p.GetTokenStream().LA(1)
 		}
 
@@ -21106,6 +23522,10 @@ func (p *SQLiteParser) Aggregate_function_invocation() (localctx IAggregate_func
 		{
 			p.SetState(1755)
 			p.Match(SQLiteParserSTAR)
+			if p.HasError() {
+				// Recognition error - abort rule
+				goto errorExit
+			}
 		}
 
 	case SQLiteParserCLOSE_PAR:
@@ -21115,9 +23535,16 @@ func (p *SQLiteParser) Aggregate_function_invocation() (localctx IAggregate_func
 	{
 		p.SetState(1758)
 		p.Match(SQLiteParserCLOSE_PAR)
+		if p.HasError() {
+			// Recognition error - abort rule
+			goto errorExit
+		}
 	}
 	p.SetState(1760)
 	p.GetErrorHandler().Sync(p)
+	if p.HasError() {
+		goto errorExit
+	}
 	_la = p.GetTokenStream().LA(1)
 
 	if _la == SQLiteParserFILTER_ {
@@ -21128,7 +23555,17 @@ func (p *SQLiteParser) Aggregate_function_invocation() (localctx IAggregate_func
 
 	}
 
+errorExit:
+	if p.HasError() {
+		v := p.GetError()
+		localctx.SetException(v)
+		p.GetErrorHandler().ReportError(p, v)
+		p.GetErrorHandler().Recover(p, v)
+		p.SetError(nil)
+	}
+	p.ExitRule()
 	return localctx
+	goto errorExit // Trick to prevent compiler error if the label is not used
 }
 
 // IWindow_function_invocationContext is an interface to support dynamic dispatch.
@@ -21157,15 +23594,20 @@ type IWindow_function_invocationContext interface {
 }
 
 type Window_function_invocationContext struct {
-	*antlr.BaseParserRuleContext
+	antlr.BaseParserRuleContext
 	parser antlr.Parser
 }
 
 func NewEmptyWindow_function_invocationContext() *Window_function_invocationContext {
 	var p = new(Window_function_invocationContext)
-	p.BaseParserRuleContext = antlr.NewBaseParserRuleContext(nil, -1)
+	antlr.InitBaseParserRuleContext(&p.BaseParserRuleContext, nil, -1)
 	p.RuleIndex = SQLiteParserRULE_window_function_invocation
 	return p
+}
+
+func InitEmptyWindow_function_invocationContext(p *Window_function_invocationContext) {
+	antlr.InitBaseParserRuleContext(&p.BaseParserRuleContext, nil, -1)
+	p.RuleIndex = SQLiteParserRULE_window_function_invocation
 }
 
 func (*Window_function_invocationContext) IsWindow_function_invocationContext() {}
@@ -21173,7 +23615,7 @@ func (*Window_function_invocationContext) IsWindow_function_invocationContext() 
 func NewWindow_function_invocationContext(parser antlr.Parser, parent antlr.ParserRuleContext, invokingState int) *Window_function_invocationContext {
 	var p = new(Window_function_invocationContext)
 
-	p.BaseParserRuleContext = antlr.NewBaseParserRuleContext(parent, invokingState)
+	antlr.InitBaseParserRuleContext(&p.BaseParserRuleContext, parent, invokingState)
 
 	p.parser = parser
 	p.RuleIndex = SQLiteParserRULE_window_function_invocation
@@ -21333,28 +23775,9 @@ func (s *Window_function_invocationContext) ExitRule(listener antlr.ParseTreeLis
 }
 
 func (p *SQLiteParser) Window_function_invocation() (localctx IWindow_function_invocationContext) {
-	this := p
-	_ = this
-
 	localctx = NewWindow_function_invocationContext(p, p.GetParserRuleContext(), p.GetState())
 	p.EnterRule(localctx, 132, SQLiteParserRULE_window_function_invocation)
 	var _la int
-
-	defer func() {
-		p.ExitRule()
-	}()
-
-	defer func() {
-		if err := recover(); err != nil {
-			if v, ok := err.(antlr.RecognitionException); ok {
-				localctx.SetException(v)
-				p.GetErrorHandler().ReportError(p, v)
-				p.GetErrorHandler().Recover(p, v)
-			} else {
-				panic(err)
-			}
-		}
-	}()
 
 	p.EnterOuterAlt(localctx, 1)
 	{
@@ -21364,10 +23787,16 @@ func (p *SQLiteParser) Window_function_invocation() (localctx IWindow_function_i
 	{
 		p.SetState(1763)
 		p.Match(SQLiteParserOPEN_PAR)
+		if p.HasError() {
+			// Recognition error - abort rule
+			goto errorExit
+		}
 	}
 	p.SetState(1773)
 	p.GetErrorHandler().Sync(p)
-
+	if p.HasError() {
+		goto errorExit
+	}
 	switch p.GetTokenStream().LA(1) {
 	case SQLiteParserOPEN_PAR, SQLiteParserPLUS, SQLiteParserMINUS, SQLiteParserTILDE, SQLiteParserABORT_, SQLiteParserACTION_, SQLiteParserADD_, SQLiteParserAFTER_, SQLiteParserALL_, SQLiteParserALTER_, SQLiteParserANALYZE_, SQLiteParserAND_, SQLiteParserAS_, SQLiteParserASC_, SQLiteParserATTACH_, SQLiteParserAUTOINCREMENT_, SQLiteParserBEFORE_, SQLiteParserBEGIN_, SQLiteParserBETWEEN_, SQLiteParserBY_, SQLiteParserCASCADE_, SQLiteParserCASE_, SQLiteParserCAST_, SQLiteParserCHECK_, SQLiteParserCOLLATE_, SQLiteParserCOLUMN_, SQLiteParserCOMMIT_, SQLiteParserCONFLICT_, SQLiteParserCONSTRAINT_, SQLiteParserCREATE_, SQLiteParserCROSS_, SQLiteParserCURRENT_DATE_, SQLiteParserCURRENT_TIME_, SQLiteParserCURRENT_TIMESTAMP_, SQLiteParserDATABASE_, SQLiteParserDEFAULT_, SQLiteParserDEFERRABLE_, SQLiteParserDEFERRED_, SQLiteParserDELETE_, SQLiteParserDESC_, SQLiteParserDETACH_, SQLiteParserDISTINCT_, SQLiteParserDROP_, SQLiteParserEACH_, SQLiteParserELSE_, SQLiteParserEND_, SQLiteParserESCAPE_, SQLiteParserEXCEPT_, SQLiteParserEXCLUSIVE_, SQLiteParserEXISTS_, SQLiteParserEXPLAIN_, SQLiteParserFAIL_, SQLiteParserFOR_, SQLiteParserFOREIGN_, SQLiteParserFROM_, SQLiteParserFULL_, SQLiteParserGLOB_, SQLiteParserGROUP_, SQLiteParserHAVING_, SQLiteParserIF_, SQLiteParserIGNORE_, SQLiteParserIMMEDIATE_, SQLiteParserIN_, SQLiteParserINDEX_, SQLiteParserINDEXED_, SQLiteParserINITIALLY_, SQLiteParserINNER_, SQLiteParserINSERT_, SQLiteParserINSTEAD_, SQLiteParserINTERSECT_, SQLiteParserINTO_, SQLiteParserIS_, SQLiteParserISNULL_, SQLiteParserJOIN_, SQLiteParserKEY_, SQLiteParserLEFT_, SQLiteParserLIKE_, SQLiteParserLIMIT_, SQLiteParserMATCH_, SQLiteParserNATURAL_, SQLiteParserNO_, SQLiteParserNOT_, SQLiteParserNOTNULL_, SQLiteParserNULL_, SQLiteParserOF_, SQLiteParserOFFSET_, SQLiteParserON_, SQLiteParserOR_, SQLiteParserORDER_, SQLiteParserOUTER_, SQLiteParserPLAN_, SQLiteParserPRAGMA_, SQLiteParserPRIMARY_, SQLiteParserQUERY_, SQLiteParserRAISE_, SQLiteParserRECURSIVE_, SQLiteParserREFERENCES_, SQLiteParserREGEXP_, SQLiteParserREINDEX_, SQLiteParserRELEASE_, SQLiteParserRENAME_, SQLiteParserREPLACE_, SQLiteParserRESTRICT_, SQLiteParserRIGHT_, SQLiteParserROLLBACK_, SQLiteParserROW_, SQLiteParserROWS_, SQLiteParserSAVEPOINT_, SQLiteParserSELECT_, SQLiteParserSET_, SQLiteParserTABLE_, SQLiteParserTEMP_, SQLiteParserTEMPORARY_, SQLiteParserTHEN_, SQLiteParserTO_, SQLiteParserTRANSACTION_, SQLiteParserTRIGGER_, SQLiteParserUNION_, SQLiteParserUNIQUE_, SQLiteParserUPDATE_, SQLiteParserUSING_, SQLiteParserVACUUM_, SQLiteParserVALUES_, SQLiteParserVIEW_, SQLiteParserVIRTUAL_, SQLiteParserWHEN_, SQLiteParserWHERE_, SQLiteParserWITH_, SQLiteParserWITHOUT_, SQLiteParserFIRST_VALUE_, SQLiteParserOVER_, SQLiteParserPARTITION_, SQLiteParserRANGE_, SQLiteParserPRECEDING_, SQLiteParserUNBOUNDED_, SQLiteParserCURRENT_, SQLiteParserFOLLOWING_, SQLiteParserCUME_DIST_, SQLiteParserDENSE_RANK_, SQLiteParserLAG_, SQLiteParserLAST_VALUE_, SQLiteParserLEAD_, SQLiteParserNTH_VALUE_, SQLiteParserNTILE_, SQLiteParserPERCENT_RANK_, SQLiteParserRANK_, SQLiteParserROW_NUMBER_, SQLiteParserGENERATED_, SQLiteParserALWAYS_, SQLiteParserSTORED_, SQLiteParserTRUE_, SQLiteParserFALSE_, SQLiteParserWINDOW_, SQLiteParserNULLS_, SQLiteParserFIRST_, SQLiteParserLAST_, SQLiteParserFILTER_, SQLiteParserGROUPS_, SQLiteParserEXCLUDE_, SQLiteParserIDENTIFIER, SQLiteParserNUMERIC_LITERAL, SQLiteParserBIND_PARAMETER, SQLiteParserSTRING_LITERAL, SQLiteParserBLOB_LITERAL:
 		{
@@ -21376,12 +23805,19 @@ func (p *SQLiteParser) Window_function_invocation() (localctx IWindow_function_i
 		}
 		p.SetState(1769)
 		p.GetErrorHandler().Sync(p)
+		if p.HasError() {
+			goto errorExit
+		}
 		_la = p.GetTokenStream().LA(1)
 
 		for _la == SQLiteParserCOMMA {
 			{
 				p.SetState(1765)
 				p.Match(SQLiteParserCOMMA)
+				if p.HasError() {
+					// Recognition error - abort rule
+					goto errorExit
+				}
 			}
 			{
 				p.SetState(1766)
@@ -21390,6 +23826,9 @@ func (p *SQLiteParser) Window_function_invocation() (localctx IWindow_function_i
 
 			p.SetState(1771)
 			p.GetErrorHandler().Sync(p)
+			if p.HasError() {
+				goto errorExit
+			}
 			_la = p.GetTokenStream().LA(1)
 		}
 
@@ -21397,6 +23836,10 @@ func (p *SQLiteParser) Window_function_invocation() (localctx IWindow_function_i
 		{
 			p.SetState(1772)
 			p.Match(SQLiteParserSTAR)
+			if p.HasError() {
+				// Recognition error - abort rule
+				goto errorExit
+			}
 		}
 
 	case SQLiteParserCLOSE_PAR:
@@ -21406,9 +23849,16 @@ func (p *SQLiteParser) Window_function_invocation() (localctx IWindow_function_i
 	{
 		p.SetState(1775)
 		p.Match(SQLiteParserCLOSE_PAR)
+		if p.HasError() {
+			// Recognition error - abort rule
+			goto errorExit
+		}
 	}
 	p.SetState(1777)
 	p.GetErrorHandler().Sync(p)
+	if p.HasError() {
+		goto errorExit
+	}
 	_la = p.GetTokenStream().LA(1)
 
 	if _la == SQLiteParserFILTER_ {
@@ -21421,10 +23871,18 @@ func (p *SQLiteParser) Window_function_invocation() (localctx IWindow_function_i
 	{
 		p.SetState(1779)
 		p.Match(SQLiteParserOVER_)
+		if p.HasError() {
+			// Recognition error - abort rule
+			goto errorExit
+		}
 	}
 	p.SetState(1782)
 	p.GetErrorHandler().Sync(p)
-	switch p.GetInterpreter().AdaptivePredict(p.GetTokenStream(), 266, p.GetParserRuleContext()) {
+	if p.HasError() {
+		goto errorExit
+	}
+
+	switch p.GetInterpreter().AdaptivePredict(p.BaseParser, p.GetTokenStream(), 266, p.GetParserRuleContext()) {
 	case 1:
 		{
 			p.SetState(1780)
@@ -21437,9 +23895,21 @@ func (p *SQLiteParser) Window_function_invocation() (localctx IWindow_function_i
 			p.Window_name()
 		}
 
+	case antlr.ATNInvalidAltNumber:
+		goto errorExit
 	}
 
+errorExit:
+	if p.HasError() {
+		v := p.GetError()
+		localctx.SetException(v)
+		p.GetErrorHandler().ReportError(p, v)
+		p.GetErrorHandler().Recover(p, v)
+		p.SetError(nil)
+	}
+	p.ExitRule()
 	return localctx
+	goto errorExit // Trick to prevent compiler error if the label is not used
 }
 
 // ICommon_table_stmtContext is an interface to support dynamic dispatch.
@@ -21462,15 +23932,20 @@ type ICommon_table_stmtContext interface {
 }
 
 type Common_table_stmtContext struct {
-	*antlr.BaseParserRuleContext
+	antlr.BaseParserRuleContext
 	parser antlr.Parser
 }
 
 func NewEmptyCommon_table_stmtContext() *Common_table_stmtContext {
 	var p = new(Common_table_stmtContext)
-	p.BaseParserRuleContext = antlr.NewBaseParserRuleContext(nil, -1)
+	antlr.InitBaseParserRuleContext(&p.BaseParserRuleContext, nil, -1)
 	p.RuleIndex = SQLiteParserRULE_common_table_stmt
 	return p
+}
+
+func InitEmptyCommon_table_stmtContext(p *Common_table_stmtContext) {
+	antlr.InitBaseParserRuleContext(&p.BaseParserRuleContext, nil, -1)
+	p.RuleIndex = SQLiteParserRULE_common_table_stmt
 }
 
 func (*Common_table_stmtContext) IsCommon_table_stmtContext() {}
@@ -21478,7 +23953,7 @@ func (*Common_table_stmtContext) IsCommon_table_stmtContext() {}
 func NewCommon_table_stmtContext(parser antlr.Parser, parent antlr.ParserRuleContext, invokingState int) *Common_table_stmtContext {
 	var p = new(Common_table_stmtContext)
 
-	p.BaseParserRuleContext = antlr.NewBaseParserRuleContext(parent, invokingState)
+	antlr.InitBaseParserRuleContext(&p.BaseParserRuleContext, parent, invokingState)
 
 	p.parser = parser
 	p.RuleIndex = SQLiteParserRULE_common_table_stmt
@@ -21566,43 +24041,34 @@ func (s *Common_table_stmtContext) ExitRule(listener antlr.ParseTreeListener) {
 }
 
 func (p *SQLiteParser) Common_table_stmt() (localctx ICommon_table_stmtContext) {
-	this := p
-	_ = this
-
 	localctx = NewCommon_table_stmtContext(p, p.GetParserRuleContext(), p.GetState())
 	p.EnterRule(localctx, 134, SQLiteParserRULE_common_table_stmt)
 	var _la int
-
-	defer func() {
-		p.ExitRule()
-	}()
-
-	defer func() {
-		if err := recover(); err != nil {
-			if v, ok := err.(antlr.RecognitionException); ok {
-				localctx.SetException(v)
-				p.GetErrorHandler().ReportError(p, v)
-				p.GetErrorHandler().Recover(p, v)
-			} else {
-				panic(err)
-			}
-		}
-	}()
 
 	p.EnterOuterAlt(localctx, 1)
 	{
 		p.SetState(1784)
 		p.Match(SQLiteParserWITH_)
+		if p.HasError() {
+			// Recognition error - abort rule
+			goto errorExit
+		}
 	}
 	p.SetState(1786)
 	p.GetErrorHandler().Sync(p)
 
-	if p.GetInterpreter().AdaptivePredict(p.GetTokenStream(), 267, p.GetParserRuleContext()) == 1 {
+	if p.GetInterpreter().AdaptivePredict(p.BaseParser, p.GetTokenStream(), 267, p.GetParserRuleContext()) == 1 {
 		{
 			p.SetState(1785)
 			p.Match(SQLiteParserRECURSIVE_)
+			if p.HasError() {
+				// Recognition error - abort rule
+				goto errorExit
+			}
 		}
 
+	} else if p.HasError() { // JIM
+		goto errorExit
 	}
 	{
 		p.SetState(1788)
@@ -21610,12 +24076,19 @@ func (p *SQLiteParser) Common_table_stmt() (localctx ICommon_table_stmtContext) 
 	}
 	p.SetState(1793)
 	p.GetErrorHandler().Sync(p)
+	if p.HasError() {
+		goto errorExit
+	}
 	_la = p.GetTokenStream().LA(1)
 
 	for _la == SQLiteParserCOMMA {
 		{
 			p.SetState(1789)
 			p.Match(SQLiteParserCOMMA)
+			if p.HasError() {
+				// Recognition error - abort rule
+				goto errorExit
+			}
 		}
 		{
 			p.SetState(1790)
@@ -21624,10 +24097,23 @@ func (p *SQLiteParser) Common_table_stmt() (localctx ICommon_table_stmtContext) 
 
 		p.SetState(1795)
 		p.GetErrorHandler().Sync(p)
+		if p.HasError() {
+			goto errorExit
+		}
 		_la = p.GetTokenStream().LA(1)
 	}
 
+errorExit:
+	if p.HasError() {
+		v := p.GetError()
+		localctx.SetException(v)
+		p.GetErrorHandler().ReportError(p, v)
+		p.GetErrorHandler().Recover(p, v)
+		p.SetError(nil)
+	}
+	p.ExitRule()
 	return localctx
+	goto errorExit // Trick to prevent compiler error if the label is not used
 }
 
 // IOrder_by_stmtContext is an interface to support dynamic dispatch.
@@ -21650,15 +24136,20 @@ type IOrder_by_stmtContext interface {
 }
 
 type Order_by_stmtContext struct {
-	*antlr.BaseParserRuleContext
+	antlr.BaseParserRuleContext
 	parser antlr.Parser
 }
 
 func NewEmptyOrder_by_stmtContext() *Order_by_stmtContext {
 	var p = new(Order_by_stmtContext)
-	p.BaseParserRuleContext = antlr.NewBaseParserRuleContext(nil, -1)
+	antlr.InitBaseParserRuleContext(&p.BaseParserRuleContext, nil, -1)
 	p.RuleIndex = SQLiteParserRULE_order_by_stmt
 	return p
+}
+
+func InitEmptyOrder_by_stmtContext(p *Order_by_stmtContext) {
+	antlr.InitBaseParserRuleContext(&p.BaseParserRuleContext, nil, -1)
+	p.RuleIndex = SQLiteParserRULE_order_by_stmt
 }
 
 func (*Order_by_stmtContext) IsOrder_by_stmtContext() {}
@@ -21666,7 +24157,7 @@ func (*Order_by_stmtContext) IsOrder_by_stmtContext() {}
 func NewOrder_by_stmtContext(parser antlr.Parser, parent antlr.ParserRuleContext, invokingState int) *Order_by_stmtContext {
 	var p = new(Order_by_stmtContext)
 
-	p.BaseParserRuleContext = antlr.NewBaseParserRuleContext(parent, invokingState)
+	antlr.InitBaseParserRuleContext(&p.BaseParserRuleContext, parent, invokingState)
 
 	p.parser = parser
 	p.RuleIndex = SQLiteParserRULE_order_by_stmt
@@ -21754,37 +24245,26 @@ func (s *Order_by_stmtContext) ExitRule(listener antlr.ParseTreeListener) {
 }
 
 func (p *SQLiteParser) Order_by_stmt() (localctx IOrder_by_stmtContext) {
-	this := p
-	_ = this
-
 	localctx = NewOrder_by_stmtContext(p, p.GetParserRuleContext(), p.GetState())
 	p.EnterRule(localctx, 136, SQLiteParserRULE_order_by_stmt)
 	var _la int
-
-	defer func() {
-		p.ExitRule()
-	}()
-
-	defer func() {
-		if err := recover(); err != nil {
-			if v, ok := err.(antlr.RecognitionException); ok {
-				localctx.SetException(v)
-				p.GetErrorHandler().ReportError(p, v)
-				p.GetErrorHandler().Recover(p, v)
-			} else {
-				panic(err)
-			}
-		}
-	}()
 
 	p.EnterOuterAlt(localctx, 1)
 	{
 		p.SetState(1796)
 		p.Match(SQLiteParserORDER_)
+		if p.HasError() {
+			// Recognition error - abort rule
+			goto errorExit
+		}
 	}
 	{
 		p.SetState(1797)
 		p.Match(SQLiteParserBY_)
+		if p.HasError() {
+			// Recognition error - abort rule
+			goto errorExit
+		}
 	}
 	{
 		p.SetState(1798)
@@ -21792,12 +24272,19 @@ func (p *SQLiteParser) Order_by_stmt() (localctx IOrder_by_stmtContext) {
 	}
 	p.SetState(1803)
 	p.GetErrorHandler().Sync(p)
+	if p.HasError() {
+		goto errorExit
+	}
 	_la = p.GetTokenStream().LA(1)
 
 	for _la == SQLiteParserCOMMA {
 		{
 			p.SetState(1799)
 			p.Match(SQLiteParserCOMMA)
+			if p.HasError() {
+				// Recognition error - abort rule
+				goto errorExit
+			}
 		}
 		{
 			p.SetState(1800)
@@ -21806,10 +24293,23 @@ func (p *SQLiteParser) Order_by_stmt() (localctx IOrder_by_stmtContext) {
 
 		p.SetState(1805)
 		p.GetErrorHandler().Sync(p)
+		if p.HasError() {
+			goto errorExit
+		}
 		_la = p.GetTokenStream().LA(1)
 	}
 
+errorExit:
+	if p.HasError() {
+		v := p.GetError()
+		localctx.SetException(v)
+		p.GetErrorHandler().ReportError(p, v)
+		p.GetErrorHandler().Recover(p, v)
+		p.SetError(nil)
+	}
+	p.ExitRule()
 	return localctx
+	goto errorExit // Trick to prevent compiler error if the label is not used
 }
 
 // ILimit_stmtContext is an interface to support dynamic dispatch.
@@ -21831,15 +24331,20 @@ type ILimit_stmtContext interface {
 }
 
 type Limit_stmtContext struct {
-	*antlr.BaseParserRuleContext
+	antlr.BaseParserRuleContext
 	parser antlr.Parser
 }
 
 func NewEmptyLimit_stmtContext() *Limit_stmtContext {
 	var p = new(Limit_stmtContext)
-	p.BaseParserRuleContext = antlr.NewBaseParserRuleContext(nil, -1)
+	antlr.InitBaseParserRuleContext(&p.BaseParserRuleContext, nil, -1)
 	p.RuleIndex = SQLiteParserRULE_limit_stmt
 	return p
+}
+
+func InitEmptyLimit_stmtContext(p *Limit_stmtContext) {
+	antlr.InitBaseParserRuleContext(&p.BaseParserRuleContext, nil, -1)
+	p.RuleIndex = SQLiteParserRULE_limit_stmt
 }
 
 func (*Limit_stmtContext) IsLimit_stmtContext() {}
@@ -21847,7 +24352,7 @@ func (*Limit_stmtContext) IsLimit_stmtContext() {}
 func NewLimit_stmtContext(parser antlr.Parser, parent antlr.ParserRuleContext, invokingState int) *Limit_stmtContext {
 	var p = new(Limit_stmtContext)
 
-	p.BaseParserRuleContext = antlr.NewBaseParserRuleContext(parent, invokingState)
+	antlr.InitBaseParserRuleContext(&p.BaseParserRuleContext, parent, invokingState)
 
 	p.parser = parser
 	p.RuleIndex = SQLiteParserRULE_limit_stmt
@@ -21931,33 +24436,18 @@ func (s *Limit_stmtContext) ExitRule(listener antlr.ParseTreeListener) {
 }
 
 func (p *SQLiteParser) Limit_stmt() (localctx ILimit_stmtContext) {
-	this := p
-	_ = this
-
 	localctx = NewLimit_stmtContext(p, p.GetParserRuleContext(), p.GetState())
 	p.EnterRule(localctx, 138, SQLiteParserRULE_limit_stmt)
 	var _la int
-
-	defer func() {
-		p.ExitRule()
-	}()
-
-	defer func() {
-		if err := recover(); err != nil {
-			if v, ok := err.(antlr.RecognitionException); ok {
-				localctx.SetException(v)
-				p.GetErrorHandler().ReportError(p, v)
-				p.GetErrorHandler().Recover(p, v)
-			} else {
-				panic(err)
-			}
-		}
-	}()
 
 	p.EnterOuterAlt(localctx, 1)
 	{
 		p.SetState(1806)
 		p.Match(SQLiteParserLIMIT_)
+		if p.HasError() {
+			// Recognition error - abort rule
+			goto errorExit
+		}
 	}
 	{
 		p.SetState(1807)
@@ -21965,6 +24455,9 @@ func (p *SQLiteParser) Limit_stmt() (localctx ILimit_stmtContext) {
 	}
 	p.SetState(1810)
 	p.GetErrorHandler().Sync(p)
+	if p.HasError() {
+		goto errorExit
+	}
 	_la = p.GetTokenStream().LA(1)
 
 	if _la == SQLiteParserCOMMA || _la == SQLiteParserOFFSET_ {
@@ -21986,7 +24479,17 @@ func (p *SQLiteParser) Limit_stmt() (localctx ILimit_stmtContext) {
 
 	}
 
+errorExit:
+	if p.HasError() {
+		v := p.GetError()
+		localctx.SetException(v)
+		p.GetErrorHandler().ReportError(p, v)
+		p.GetErrorHandler().Recover(p, v)
+		p.SetError(nil)
+	}
+	p.ExitRule()
 	return localctx
+	goto errorExit // Trick to prevent compiler error if the label is not used
 }
 
 // IOrdering_termContext is an interface to support dynamic dispatch.
@@ -22010,15 +24513,20 @@ type IOrdering_termContext interface {
 }
 
 type Ordering_termContext struct {
-	*antlr.BaseParserRuleContext
+	antlr.BaseParserRuleContext
 	parser antlr.Parser
 }
 
 func NewEmptyOrdering_termContext() *Ordering_termContext {
 	var p = new(Ordering_termContext)
-	p.BaseParserRuleContext = antlr.NewBaseParserRuleContext(nil, -1)
+	antlr.InitBaseParserRuleContext(&p.BaseParserRuleContext, nil, -1)
 	p.RuleIndex = SQLiteParserRULE_ordering_term
 	return p
+}
+
+func InitEmptyOrdering_termContext(p *Ordering_termContext) {
+	antlr.InitBaseParserRuleContext(&p.BaseParserRuleContext, nil, -1)
+	p.RuleIndex = SQLiteParserRULE_ordering_term
 }
 
 func (*Ordering_termContext) IsOrdering_termContext() {}
@@ -22026,7 +24534,7 @@ func (*Ordering_termContext) IsOrdering_termContext() {}
 func NewOrdering_termContext(parser antlr.Parser, parent antlr.ParserRuleContext, invokingState int) *Ordering_termContext {
 	var p = new(Ordering_termContext)
 
-	p.BaseParserRuleContext = antlr.NewBaseParserRuleContext(parent, invokingState)
+	antlr.InitBaseParserRuleContext(&p.BaseParserRuleContext, parent, invokingState)
 
 	p.parser = parser
 	p.RuleIndex = SQLiteParserRULE_ordering_term
@@ -22121,28 +24629,9 @@ func (s *Ordering_termContext) ExitRule(listener antlr.ParseTreeListener) {
 }
 
 func (p *SQLiteParser) Ordering_term() (localctx IOrdering_termContext) {
-	this := p
-	_ = this
-
 	localctx = NewOrdering_termContext(p, p.GetParserRuleContext(), p.GetState())
 	p.EnterRule(localctx, 140, SQLiteParserRULE_ordering_term)
 	var _la int
-
-	defer func() {
-		p.ExitRule()
-	}()
-
-	defer func() {
-		if err := recover(); err != nil {
-			if v, ok := err.(antlr.RecognitionException); ok {
-				localctx.SetException(v)
-				p.GetErrorHandler().ReportError(p, v)
-				p.GetErrorHandler().Recover(p, v)
-			} else {
-				panic(err)
-			}
-		}
-	}()
 
 	p.EnterOuterAlt(localctx, 1)
 	{
@@ -22151,12 +24640,19 @@ func (p *SQLiteParser) Ordering_term() (localctx IOrdering_termContext) {
 	}
 	p.SetState(1815)
 	p.GetErrorHandler().Sync(p)
+	if p.HasError() {
+		goto errorExit
+	}
 	_la = p.GetTokenStream().LA(1)
 
 	if _la == SQLiteParserCOLLATE_ {
 		{
 			p.SetState(1813)
 			p.Match(SQLiteParserCOLLATE_)
+			if p.HasError() {
+				// Recognition error - abort rule
+				goto errorExit
+			}
 		}
 		{
 			p.SetState(1814)
@@ -22166,6 +24662,9 @@ func (p *SQLiteParser) Ordering_term() (localctx IOrdering_termContext) {
 	}
 	p.SetState(1818)
 	p.GetErrorHandler().Sync(p)
+	if p.HasError() {
+		goto errorExit
+	}
 	_la = p.GetTokenStream().LA(1)
 
 	if _la == SQLiteParserASC_ || _la == SQLiteParserDESC_ {
@@ -22177,12 +24676,19 @@ func (p *SQLiteParser) Ordering_term() (localctx IOrdering_termContext) {
 	}
 	p.SetState(1822)
 	p.GetErrorHandler().Sync(p)
+	if p.HasError() {
+		goto errorExit
+	}
 	_la = p.GetTokenStream().LA(1)
 
 	if _la == SQLiteParserNULLS_ {
 		{
 			p.SetState(1820)
 			p.Match(SQLiteParserNULLS_)
+			if p.HasError() {
+				// Recognition error - abort rule
+				goto errorExit
+			}
 		}
 		{
 			p.SetState(1821)
@@ -22198,7 +24704,17 @@ func (p *SQLiteParser) Ordering_term() (localctx IOrdering_termContext) {
 
 	}
 
+errorExit:
+	if p.HasError() {
+		v := p.GetError()
+		localctx.SetException(v)
+		p.GetErrorHandler().ReportError(p, v)
+		p.GetErrorHandler().Recover(p, v)
+		p.SetError(nil)
+	}
+	p.ExitRule()
 	return localctx
+	goto errorExit // Trick to prevent compiler error if the label is not used
 }
 
 // IAsc_descContext is an interface to support dynamic dispatch.
@@ -22217,15 +24733,20 @@ type IAsc_descContext interface {
 }
 
 type Asc_descContext struct {
-	*antlr.BaseParserRuleContext
+	antlr.BaseParserRuleContext
 	parser antlr.Parser
 }
 
 func NewEmptyAsc_descContext() *Asc_descContext {
 	var p = new(Asc_descContext)
-	p.BaseParserRuleContext = antlr.NewBaseParserRuleContext(nil, -1)
+	antlr.InitBaseParserRuleContext(&p.BaseParserRuleContext, nil, -1)
 	p.RuleIndex = SQLiteParserRULE_asc_desc
 	return p
+}
+
+func InitEmptyAsc_descContext(p *Asc_descContext) {
+	antlr.InitBaseParserRuleContext(&p.BaseParserRuleContext, nil, -1)
+	p.RuleIndex = SQLiteParserRULE_asc_desc
 }
 
 func (*Asc_descContext) IsAsc_descContext() {}
@@ -22233,7 +24754,7 @@ func (*Asc_descContext) IsAsc_descContext() {}
 func NewAsc_descContext(parser antlr.Parser, parent antlr.ParserRuleContext, invokingState int) *Asc_descContext {
 	var p = new(Asc_descContext)
 
-	p.BaseParserRuleContext = antlr.NewBaseParserRuleContext(parent, invokingState)
+	antlr.InitBaseParserRuleContext(&p.BaseParserRuleContext, parent, invokingState)
 
 	p.parser = parser
 	p.RuleIndex = SQLiteParserRULE_asc_desc
@@ -22272,28 +24793,9 @@ func (s *Asc_descContext) ExitRule(listener antlr.ParseTreeListener) {
 }
 
 func (p *SQLiteParser) Asc_desc() (localctx IAsc_descContext) {
-	this := p
-	_ = this
-
 	localctx = NewAsc_descContext(p, p.GetParserRuleContext(), p.GetState())
 	p.EnterRule(localctx, 142, SQLiteParserRULE_asc_desc)
 	var _la int
-
-	defer func() {
-		p.ExitRule()
-	}()
-
-	defer func() {
-		if err := recover(); err != nil {
-			if v, ok := err.(antlr.RecognitionException); ok {
-				localctx.SetException(v)
-				p.GetErrorHandler().ReportError(p, v)
-				p.GetErrorHandler().Recover(p, v)
-			} else {
-				panic(err)
-			}
-		}
-	}()
 
 	p.EnterOuterAlt(localctx, 1)
 	{
@@ -22308,7 +24810,17 @@ func (p *SQLiteParser) Asc_desc() (localctx IAsc_descContext) {
 		}
 	}
 
+errorExit:
+	if p.HasError() {
+		v := p.GetError()
+		localctx.SetException(v)
+		p.GetErrorHandler().ReportError(p, v)
+		p.GetErrorHandler().Recover(p, v)
+		p.SetError(nil)
+	}
+	p.ExitRule()
 	return localctx
+	goto errorExit // Trick to prevent compiler error if the label is not used
 }
 
 // IFrame_leftContext is an interface to support dynamic dispatch.
@@ -22331,15 +24843,20 @@ type IFrame_leftContext interface {
 }
 
 type Frame_leftContext struct {
-	*antlr.BaseParserRuleContext
+	antlr.BaseParserRuleContext
 	parser antlr.Parser
 }
 
 func NewEmptyFrame_leftContext() *Frame_leftContext {
 	var p = new(Frame_leftContext)
-	p.BaseParserRuleContext = antlr.NewBaseParserRuleContext(nil, -1)
+	antlr.InitBaseParserRuleContext(&p.BaseParserRuleContext, nil, -1)
 	p.RuleIndex = SQLiteParserRULE_frame_left
 	return p
+}
+
+func InitEmptyFrame_leftContext(p *Frame_leftContext) {
+	antlr.InitBaseParserRuleContext(&p.BaseParserRuleContext, nil, -1)
+	p.RuleIndex = SQLiteParserRULE_frame_left
 }
 
 func (*Frame_leftContext) IsFrame_leftContext() {}
@@ -22347,7 +24864,7 @@ func (*Frame_leftContext) IsFrame_leftContext() {}
 func NewFrame_leftContext(parser antlr.Parser, parent antlr.ParserRuleContext, invokingState int) *Frame_leftContext {
 	var p = new(Frame_leftContext)
 
-	p.BaseParserRuleContext = antlr.NewBaseParserRuleContext(parent, invokingState)
+	antlr.InitBaseParserRuleContext(&p.BaseParserRuleContext, parent, invokingState)
 
 	p.parser = parser
 	p.RuleIndex = SQLiteParserRULE_frame_left
@@ -22414,31 +24931,15 @@ func (s *Frame_leftContext) ExitRule(listener antlr.ParseTreeListener) {
 }
 
 func (p *SQLiteParser) Frame_left() (localctx IFrame_leftContext) {
-	this := p
-	_ = this
-
 	localctx = NewFrame_leftContext(p, p.GetParserRuleContext(), p.GetState())
 	p.EnterRule(localctx, 144, SQLiteParserRULE_frame_left)
-
-	defer func() {
-		p.ExitRule()
-	}()
-
-	defer func() {
-		if err := recover(); err != nil {
-			if v, ok := err.(antlr.RecognitionException); ok {
-				localctx.SetException(v)
-				p.GetErrorHandler().ReportError(p, v)
-				p.GetErrorHandler().Recover(p, v)
-			} else {
-				panic(err)
-			}
-		}
-	}()
-
 	p.SetState(1836)
 	p.GetErrorHandler().Sync(p)
-	switch p.GetInterpreter().AdaptivePredict(p.GetTokenStream(), 274, p.GetParserRuleContext()) {
+	if p.HasError() {
+		goto errorExit
+	}
+
+	switch p.GetInterpreter().AdaptivePredict(p.BaseParser, p.GetTokenStream(), 274, p.GetParserRuleContext()) {
 	case 1:
 		p.EnterOuterAlt(localctx, 1)
 		{
@@ -22448,6 +24949,10 @@ func (p *SQLiteParser) Frame_left() (localctx IFrame_leftContext) {
 		{
 			p.SetState(1827)
 			p.Match(SQLiteParserPRECEDING_)
+			if p.HasError() {
+				// Recognition error - abort rule
+				goto errorExit
+			}
 		}
 
 	case 2:
@@ -22459,6 +24964,10 @@ func (p *SQLiteParser) Frame_left() (localctx IFrame_leftContext) {
 		{
 			p.SetState(1830)
 			p.Match(SQLiteParserFOLLOWING_)
+			if p.HasError() {
+				// Recognition error - abort rule
+				goto errorExit
+			}
 		}
 
 	case 3:
@@ -22466,10 +24975,18 @@ func (p *SQLiteParser) Frame_left() (localctx IFrame_leftContext) {
 		{
 			p.SetState(1832)
 			p.Match(SQLiteParserCURRENT_)
+			if p.HasError() {
+				// Recognition error - abort rule
+				goto errorExit
+			}
 		}
 		{
 			p.SetState(1833)
 			p.Match(SQLiteParserROW_)
+			if p.HasError() {
+				// Recognition error - abort rule
+				goto errorExit
+			}
 		}
 
 	case 4:
@@ -22477,15 +24994,35 @@ func (p *SQLiteParser) Frame_left() (localctx IFrame_leftContext) {
 		{
 			p.SetState(1834)
 			p.Match(SQLiteParserUNBOUNDED_)
+			if p.HasError() {
+				// Recognition error - abort rule
+				goto errorExit
+			}
 		}
 		{
 			p.SetState(1835)
 			p.Match(SQLiteParserPRECEDING_)
+			if p.HasError() {
+				// Recognition error - abort rule
+				goto errorExit
+			}
 		}
 
+	case antlr.ATNInvalidAltNumber:
+		goto errorExit
 	}
 
+errorExit:
+	if p.HasError() {
+		v := p.GetError()
+		localctx.SetException(v)
+		p.GetErrorHandler().ReportError(p, v)
+		p.GetErrorHandler().Recover(p, v)
+		p.SetError(nil)
+	}
+	p.ExitRule()
 	return localctx
+	goto errorExit // Trick to prevent compiler error if the label is not used
 }
 
 // IFrame_rightContext is an interface to support dynamic dispatch.
@@ -22508,15 +25045,20 @@ type IFrame_rightContext interface {
 }
 
 type Frame_rightContext struct {
-	*antlr.BaseParserRuleContext
+	antlr.BaseParserRuleContext
 	parser antlr.Parser
 }
 
 func NewEmptyFrame_rightContext() *Frame_rightContext {
 	var p = new(Frame_rightContext)
-	p.BaseParserRuleContext = antlr.NewBaseParserRuleContext(nil, -1)
+	antlr.InitBaseParserRuleContext(&p.BaseParserRuleContext, nil, -1)
 	p.RuleIndex = SQLiteParserRULE_frame_right
 	return p
+}
+
+func InitEmptyFrame_rightContext(p *Frame_rightContext) {
+	antlr.InitBaseParserRuleContext(&p.BaseParserRuleContext, nil, -1)
+	p.RuleIndex = SQLiteParserRULE_frame_right
 }
 
 func (*Frame_rightContext) IsFrame_rightContext() {}
@@ -22524,7 +25066,7 @@ func (*Frame_rightContext) IsFrame_rightContext() {}
 func NewFrame_rightContext(parser antlr.Parser, parent antlr.ParserRuleContext, invokingState int) *Frame_rightContext {
 	var p = new(Frame_rightContext)
 
-	p.BaseParserRuleContext = antlr.NewBaseParserRuleContext(parent, invokingState)
+	antlr.InitBaseParserRuleContext(&p.BaseParserRuleContext, parent, invokingState)
 
 	p.parser = parser
 	p.RuleIndex = SQLiteParserRULE_frame_right
@@ -22591,31 +25133,15 @@ func (s *Frame_rightContext) ExitRule(listener antlr.ParseTreeListener) {
 }
 
 func (p *SQLiteParser) Frame_right() (localctx IFrame_rightContext) {
-	this := p
-	_ = this
-
 	localctx = NewFrame_rightContext(p, p.GetParserRuleContext(), p.GetState())
 	p.EnterRule(localctx, 146, SQLiteParserRULE_frame_right)
-
-	defer func() {
-		p.ExitRule()
-	}()
-
-	defer func() {
-		if err := recover(); err != nil {
-			if v, ok := err.(antlr.RecognitionException); ok {
-				localctx.SetException(v)
-				p.GetErrorHandler().ReportError(p, v)
-				p.GetErrorHandler().Recover(p, v)
-			} else {
-				panic(err)
-			}
-		}
-	}()
-
 	p.SetState(1848)
 	p.GetErrorHandler().Sync(p)
-	switch p.GetInterpreter().AdaptivePredict(p.GetTokenStream(), 275, p.GetParserRuleContext()) {
+	if p.HasError() {
+		goto errorExit
+	}
+
+	switch p.GetInterpreter().AdaptivePredict(p.BaseParser, p.GetTokenStream(), 275, p.GetParserRuleContext()) {
 	case 1:
 		p.EnterOuterAlt(localctx, 1)
 		{
@@ -22625,6 +25151,10 @@ func (p *SQLiteParser) Frame_right() (localctx IFrame_rightContext) {
 		{
 			p.SetState(1839)
 			p.Match(SQLiteParserPRECEDING_)
+			if p.HasError() {
+				// Recognition error - abort rule
+				goto errorExit
+			}
 		}
 
 	case 2:
@@ -22636,6 +25166,10 @@ func (p *SQLiteParser) Frame_right() (localctx IFrame_rightContext) {
 		{
 			p.SetState(1842)
 			p.Match(SQLiteParserFOLLOWING_)
+			if p.HasError() {
+				// Recognition error - abort rule
+				goto errorExit
+			}
 		}
 
 	case 3:
@@ -22643,10 +25177,18 @@ func (p *SQLiteParser) Frame_right() (localctx IFrame_rightContext) {
 		{
 			p.SetState(1844)
 			p.Match(SQLiteParserCURRENT_)
+			if p.HasError() {
+				// Recognition error - abort rule
+				goto errorExit
+			}
 		}
 		{
 			p.SetState(1845)
 			p.Match(SQLiteParserROW_)
+			if p.HasError() {
+				// Recognition error - abort rule
+				goto errorExit
+			}
 		}
 
 	case 4:
@@ -22654,15 +25196,35 @@ func (p *SQLiteParser) Frame_right() (localctx IFrame_rightContext) {
 		{
 			p.SetState(1846)
 			p.Match(SQLiteParserUNBOUNDED_)
+			if p.HasError() {
+				// Recognition error - abort rule
+				goto errorExit
+			}
 		}
 		{
 			p.SetState(1847)
 			p.Match(SQLiteParserFOLLOWING_)
+			if p.HasError() {
+				// Recognition error - abort rule
+				goto errorExit
+			}
 		}
 
+	case antlr.ATNInvalidAltNumber:
+		goto errorExit
 	}
 
+errorExit:
+	if p.HasError() {
+		v := p.GetError()
+		localctx.SetException(v)
+		p.GetErrorHandler().ReportError(p, v)
+		p.GetErrorHandler().Recover(p, v)
+		p.SetError(nil)
+	}
+	p.ExitRule()
 	return localctx
+	goto errorExit // Trick to prevent compiler error if the label is not used
 }
 
 // IFrame_singleContext is an interface to support dynamic dispatch.
@@ -22684,15 +25246,20 @@ type IFrame_singleContext interface {
 }
 
 type Frame_singleContext struct {
-	*antlr.BaseParserRuleContext
+	antlr.BaseParserRuleContext
 	parser antlr.Parser
 }
 
 func NewEmptyFrame_singleContext() *Frame_singleContext {
 	var p = new(Frame_singleContext)
-	p.BaseParserRuleContext = antlr.NewBaseParserRuleContext(nil, -1)
+	antlr.InitBaseParserRuleContext(&p.BaseParserRuleContext, nil, -1)
 	p.RuleIndex = SQLiteParserRULE_frame_single
 	return p
+}
+
+func InitEmptyFrame_singleContext(p *Frame_singleContext) {
+	antlr.InitBaseParserRuleContext(&p.BaseParserRuleContext, nil, -1)
+	p.RuleIndex = SQLiteParserRULE_frame_single
 }
 
 func (*Frame_singleContext) IsFrame_singleContext() {}
@@ -22700,7 +25267,7 @@ func (*Frame_singleContext) IsFrame_singleContext() {}
 func NewFrame_singleContext(parser antlr.Parser, parent antlr.ParserRuleContext, invokingState int) *Frame_singleContext {
 	var p = new(Frame_singleContext)
 
-	p.BaseParserRuleContext = antlr.NewBaseParserRuleContext(parent, invokingState)
+	antlr.InitBaseParserRuleContext(&p.BaseParserRuleContext, parent, invokingState)
 
 	p.parser = parser
 	p.RuleIndex = SQLiteParserRULE_frame_single
@@ -22763,31 +25330,15 @@ func (s *Frame_singleContext) ExitRule(listener antlr.ParseTreeListener) {
 }
 
 func (p *SQLiteParser) Frame_single() (localctx IFrame_singleContext) {
-	this := p
-	_ = this
-
 	localctx = NewFrame_singleContext(p, p.GetParserRuleContext(), p.GetState())
 	p.EnterRule(localctx, 148, SQLiteParserRULE_frame_single)
-
-	defer func() {
-		p.ExitRule()
-	}()
-
-	defer func() {
-		if err := recover(); err != nil {
-			if v, ok := err.(antlr.RecognitionException); ok {
-				localctx.SetException(v)
-				p.GetErrorHandler().ReportError(p, v)
-				p.GetErrorHandler().Recover(p, v)
-			} else {
-				panic(err)
-			}
-		}
-	}()
-
 	p.SetState(1857)
 	p.GetErrorHandler().Sync(p)
-	switch p.GetInterpreter().AdaptivePredict(p.GetTokenStream(), 276, p.GetParserRuleContext()) {
+	if p.HasError() {
+		goto errorExit
+	}
+
+	switch p.GetInterpreter().AdaptivePredict(p.BaseParser, p.GetTokenStream(), 276, p.GetParserRuleContext()) {
 	case 1:
 		p.EnterOuterAlt(localctx, 1)
 		{
@@ -22797,6 +25348,10 @@ func (p *SQLiteParser) Frame_single() (localctx IFrame_singleContext) {
 		{
 			p.SetState(1851)
 			p.Match(SQLiteParserPRECEDING_)
+			if p.HasError() {
+				// Recognition error - abort rule
+				goto errorExit
+			}
 		}
 
 	case 2:
@@ -22804,10 +25359,18 @@ func (p *SQLiteParser) Frame_single() (localctx IFrame_singleContext) {
 		{
 			p.SetState(1853)
 			p.Match(SQLiteParserUNBOUNDED_)
+			if p.HasError() {
+				// Recognition error - abort rule
+				goto errorExit
+			}
 		}
 		{
 			p.SetState(1854)
 			p.Match(SQLiteParserPRECEDING_)
+			if p.HasError() {
+				// Recognition error - abort rule
+				goto errorExit
+			}
 		}
 
 	case 3:
@@ -22815,15 +25378,35 @@ func (p *SQLiteParser) Frame_single() (localctx IFrame_singleContext) {
 		{
 			p.SetState(1855)
 			p.Match(SQLiteParserCURRENT_)
+			if p.HasError() {
+				// Recognition error - abort rule
+				goto errorExit
+			}
 		}
 		{
 			p.SetState(1856)
 			p.Match(SQLiteParserROW_)
+			if p.HasError() {
+				// Recognition error - abort rule
+				goto errorExit
+			}
 		}
 
+	case antlr.ATNInvalidAltNumber:
+		goto errorExit
 	}
 
+errorExit:
+	if p.HasError() {
+		v := p.GetError()
+		localctx.SetException(v)
+		p.GetErrorHandler().ReportError(p, v)
+		p.GetErrorHandler().Recover(p, v)
+		p.SetError(nil)
+	}
+	p.ExitRule()
 	return localctx
+	goto errorExit // Trick to prevent compiler error if the label is not used
 }
 
 // IWindow_functionContext is an interface to support dynamic dispatch.
@@ -22865,15 +25448,20 @@ type IWindow_functionContext interface {
 }
 
 type Window_functionContext struct {
-	*antlr.BaseParserRuleContext
+	antlr.BaseParserRuleContext
 	parser antlr.Parser
 }
 
 func NewEmptyWindow_functionContext() *Window_functionContext {
 	var p = new(Window_functionContext)
-	p.BaseParserRuleContext = antlr.NewBaseParserRuleContext(nil, -1)
+	antlr.InitBaseParserRuleContext(&p.BaseParserRuleContext, nil, -1)
 	p.RuleIndex = SQLiteParserRULE_window_function
 	return p
+}
+
+func InitEmptyWindow_functionContext(p *Window_functionContext) {
+	antlr.InitBaseParserRuleContext(&p.BaseParserRuleContext, nil, -1)
+	p.RuleIndex = SQLiteParserRULE_window_function
 }
 
 func (*Window_functionContext) IsWindow_functionContext() {}
@@ -22881,7 +25469,7 @@ func (*Window_functionContext) IsWindow_functionContext() {}
 func NewWindow_functionContext(parser antlr.Parser, parent antlr.ParserRuleContext, invokingState int) *Window_functionContext {
 	var p = new(Window_functionContext)
 
-	p.BaseParserRuleContext = antlr.NewBaseParserRuleContext(parent, invokingState)
+	antlr.InitBaseParserRuleContext(&p.BaseParserRuleContext, parent, invokingState)
 
 	p.parser = parser
 	p.RuleIndex = SQLiteParserRULE_window_function
@@ -23108,31 +25696,15 @@ func (s *Window_functionContext) ExitRule(listener antlr.ParseTreeListener) {
 }
 
 func (p *SQLiteParser) Window_function() (localctx IWindow_functionContext) {
-	this := p
-	_ = this
-
 	localctx = NewWindow_functionContext(p, p.GetParserRuleContext(), p.GetState())
 	p.EnterRule(localctx, 150, SQLiteParserRULE_window_function)
 	var _la int
 
-	defer func() {
-		p.ExitRule()
-	}()
-
-	defer func() {
-		if err := recover(); err != nil {
-			if v, ok := err.(antlr.RecognitionException); ok {
-				localctx.SetException(v)
-				p.GetErrorHandler().ReportError(p, v)
-				p.GetErrorHandler().Recover(p, v)
-			} else {
-				panic(err)
-			}
-		}
-	}()
-
 	p.SetState(1944)
 	p.GetErrorHandler().Sync(p)
+	if p.HasError() {
+		goto errorExit
+	}
 
 	switch p.GetTokenStream().LA(1) {
 	case SQLiteParserFIRST_VALUE_, SQLiteParserLAST_VALUE_:
@@ -23151,6 +25723,10 @@ func (p *SQLiteParser) Window_function() (localctx IWindow_functionContext) {
 		{
 			p.SetState(1860)
 			p.Match(SQLiteParserOPEN_PAR)
+			if p.HasError() {
+				// Recognition error - abort rule
+				goto errorExit
+			}
 		}
 		{
 			p.SetState(1861)
@@ -23159,17 +25735,32 @@ func (p *SQLiteParser) Window_function() (localctx IWindow_functionContext) {
 		{
 			p.SetState(1862)
 			p.Match(SQLiteParserCLOSE_PAR)
+			if p.HasError() {
+				// Recognition error - abort rule
+				goto errorExit
+			}
 		}
 		{
 			p.SetState(1863)
 			p.Match(SQLiteParserOVER_)
+			if p.HasError() {
+				// Recognition error - abort rule
+				goto errorExit
+			}
 		}
 		{
 			p.SetState(1864)
 			p.Match(SQLiteParserOPEN_PAR)
+			if p.HasError() {
+				// Recognition error - abort rule
+				goto errorExit
+			}
 		}
 		p.SetState(1866)
 		p.GetErrorHandler().Sync(p)
+		if p.HasError() {
+			goto errorExit
+		}
 		_la = p.GetTokenStream().LA(1)
 
 		if _la == SQLiteParserPARTITION_ {
@@ -23185,6 +25776,9 @@ func (p *SQLiteParser) Window_function() (localctx IWindow_functionContext) {
 		}
 		p.SetState(1870)
 		p.GetErrorHandler().Sync(p)
+		if p.HasError() {
+			goto errorExit
+		}
 		_la = p.GetTokenStream().LA(1)
 
 		if (int64((_la-128)) & ^0x3f) == 0 && ((int64(1)<<(_la-128))&2251799880794113) != 0 {
@@ -23197,6 +25791,10 @@ func (p *SQLiteParser) Window_function() (localctx IWindow_functionContext) {
 		{
 			p.SetState(1872)
 			p.Match(SQLiteParserCLOSE_PAR)
+			if p.HasError() {
+				// Recognition error - abort rule
+				goto errorExit
+			}
 		}
 
 	case SQLiteParserCUME_DIST_, SQLiteParserPERCENT_RANK_:
@@ -23215,21 +25813,40 @@ func (p *SQLiteParser) Window_function() (localctx IWindow_functionContext) {
 		{
 			p.SetState(1875)
 			p.Match(SQLiteParserOPEN_PAR)
+			if p.HasError() {
+				// Recognition error - abort rule
+				goto errorExit
+			}
 		}
 		{
 			p.SetState(1876)
 			p.Match(SQLiteParserCLOSE_PAR)
+			if p.HasError() {
+				// Recognition error - abort rule
+				goto errorExit
+			}
 		}
 		{
 			p.SetState(1877)
 			p.Match(SQLiteParserOVER_)
+			if p.HasError() {
+				// Recognition error - abort rule
+				goto errorExit
+			}
 		}
 		{
 			p.SetState(1878)
 			p.Match(SQLiteParserOPEN_PAR)
+			if p.HasError() {
+				// Recognition error - abort rule
+				goto errorExit
+			}
 		}
 		p.SetState(1880)
 		p.GetErrorHandler().Sync(p)
+		if p.HasError() {
+			goto errorExit
+		}
 		_la = p.GetTokenStream().LA(1)
 
 		if _la == SQLiteParserPARTITION_ {
@@ -23241,6 +25858,9 @@ func (p *SQLiteParser) Window_function() (localctx IWindow_functionContext) {
 		}
 		p.SetState(1883)
 		p.GetErrorHandler().Sync(p)
+		if p.HasError() {
+			goto errorExit
+		}
 		_la = p.GetTokenStream().LA(1)
 
 		if _la == SQLiteParserORDER_ {
@@ -23253,6 +25873,10 @@ func (p *SQLiteParser) Window_function() (localctx IWindow_functionContext) {
 		{
 			p.SetState(1885)
 			p.Match(SQLiteParserCLOSE_PAR)
+			if p.HasError() {
+				// Recognition error - abort rule
+				goto errorExit
+			}
 		}
 
 	case SQLiteParserDENSE_RANK_, SQLiteParserRANK_, SQLiteParserROW_NUMBER_:
@@ -23271,21 +25895,40 @@ func (p *SQLiteParser) Window_function() (localctx IWindow_functionContext) {
 		{
 			p.SetState(1887)
 			p.Match(SQLiteParserOPEN_PAR)
+			if p.HasError() {
+				// Recognition error - abort rule
+				goto errorExit
+			}
 		}
 		{
 			p.SetState(1888)
 			p.Match(SQLiteParserCLOSE_PAR)
+			if p.HasError() {
+				// Recognition error - abort rule
+				goto errorExit
+			}
 		}
 		{
 			p.SetState(1889)
 			p.Match(SQLiteParserOVER_)
+			if p.HasError() {
+				// Recognition error - abort rule
+				goto errorExit
+			}
 		}
 		{
 			p.SetState(1890)
 			p.Match(SQLiteParserOPEN_PAR)
+			if p.HasError() {
+				// Recognition error - abort rule
+				goto errorExit
+			}
 		}
 		p.SetState(1892)
 		p.GetErrorHandler().Sync(p)
+		if p.HasError() {
+			goto errorExit
+		}
 		_la = p.GetTokenStream().LA(1)
 
 		if _la == SQLiteParserPARTITION_ {
@@ -23302,6 +25945,10 @@ func (p *SQLiteParser) Window_function() (localctx IWindow_functionContext) {
 		{
 			p.SetState(1895)
 			p.Match(SQLiteParserCLOSE_PAR)
+			if p.HasError() {
+				// Recognition error - abort rule
+				goto errorExit
+			}
 		}
 
 	case SQLiteParserLAG_, SQLiteParserLEAD_:
@@ -23320,6 +25967,10 @@ func (p *SQLiteParser) Window_function() (localctx IWindow_functionContext) {
 		{
 			p.SetState(1898)
 			p.Match(SQLiteParserOPEN_PAR)
+			if p.HasError() {
+				// Recognition error - abort rule
+				goto errorExit
+			}
 		}
 		{
 			p.SetState(1899)
@@ -23328,15 +25979,20 @@ func (p *SQLiteParser) Window_function() (localctx IWindow_functionContext) {
 		p.SetState(1901)
 		p.GetErrorHandler().Sync(p)
 
-		if p.GetInterpreter().AdaptivePredict(p.GetTokenStream(), 282, p.GetParserRuleContext()) == 1 {
+		if p.GetInterpreter().AdaptivePredict(p.BaseParser, p.GetTokenStream(), 282, p.GetParserRuleContext()) == 1 {
 			{
 				p.SetState(1900)
 				p.Offset()
 			}
 
+		} else if p.HasError() { // JIM
+			goto errorExit
 		}
 		p.SetState(1904)
 		p.GetErrorHandler().Sync(p)
+		if p.HasError() {
+			goto errorExit
+		}
 		_la = p.GetTokenStream().LA(1)
 
 		if _la == SQLiteParserCOMMA {
@@ -23349,17 +26005,32 @@ func (p *SQLiteParser) Window_function() (localctx IWindow_functionContext) {
 		{
 			p.SetState(1906)
 			p.Match(SQLiteParserCLOSE_PAR)
+			if p.HasError() {
+				// Recognition error - abort rule
+				goto errorExit
+			}
 		}
 		{
 			p.SetState(1907)
 			p.Match(SQLiteParserOVER_)
+			if p.HasError() {
+				// Recognition error - abort rule
+				goto errorExit
+			}
 		}
 		{
 			p.SetState(1908)
 			p.Match(SQLiteParserOPEN_PAR)
+			if p.HasError() {
+				// Recognition error - abort rule
+				goto errorExit
+			}
 		}
 		p.SetState(1910)
 		p.GetErrorHandler().Sync(p)
+		if p.HasError() {
+			goto errorExit
+		}
 		_la = p.GetTokenStream().LA(1)
 
 		if _la == SQLiteParserPARTITION_ {
@@ -23376,6 +26047,10 @@ func (p *SQLiteParser) Window_function() (localctx IWindow_functionContext) {
 		{
 			p.SetState(1913)
 			p.Match(SQLiteParserCLOSE_PAR)
+			if p.HasError() {
+				// Recognition error - abort rule
+				goto errorExit
+			}
 		}
 
 	case SQLiteParserNTH_VALUE_:
@@ -23383,10 +26058,18 @@ func (p *SQLiteParser) Window_function() (localctx IWindow_functionContext) {
 		{
 			p.SetState(1915)
 			p.Match(SQLiteParserNTH_VALUE_)
+			if p.HasError() {
+				// Recognition error - abort rule
+				goto errorExit
+			}
 		}
 		{
 			p.SetState(1916)
 			p.Match(SQLiteParserOPEN_PAR)
+			if p.HasError() {
+				// Recognition error - abort rule
+				goto errorExit
+			}
 		}
 		{
 			p.SetState(1917)
@@ -23395,6 +26078,10 @@ func (p *SQLiteParser) Window_function() (localctx IWindow_functionContext) {
 		{
 			p.SetState(1918)
 			p.Match(SQLiteParserCOMMA)
+			if p.HasError() {
+				// Recognition error - abort rule
+				goto errorExit
+			}
 		}
 		{
 			p.SetState(1919)
@@ -23403,17 +26090,32 @@ func (p *SQLiteParser) Window_function() (localctx IWindow_functionContext) {
 		{
 			p.SetState(1920)
 			p.Match(SQLiteParserCLOSE_PAR)
+			if p.HasError() {
+				// Recognition error - abort rule
+				goto errorExit
+			}
 		}
 		{
 			p.SetState(1921)
 			p.Match(SQLiteParserOVER_)
+			if p.HasError() {
+				// Recognition error - abort rule
+				goto errorExit
+			}
 		}
 		{
 			p.SetState(1922)
 			p.Match(SQLiteParserOPEN_PAR)
+			if p.HasError() {
+				// Recognition error - abort rule
+				goto errorExit
+			}
 		}
 		p.SetState(1924)
 		p.GetErrorHandler().Sync(p)
+		if p.HasError() {
+			goto errorExit
+		}
 		_la = p.GetTokenStream().LA(1)
 
 		if _la == SQLiteParserPARTITION_ {
@@ -23429,6 +26131,9 @@ func (p *SQLiteParser) Window_function() (localctx IWindow_functionContext) {
 		}
 		p.SetState(1928)
 		p.GetErrorHandler().Sync(p)
+		if p.HasError() {
+			goto errorExit
+		}
 		_la = p.GetTokenStream().LA(1)
 
 		if (int64((_la-128)) & ^0x3f) == 0 && ((int64(1)<<(_la-128))&2251799880794113) != 0 {
@@ -23441,6 +26146,10 @@ func (p *SQLiteParser) Window_function() (localctx IWindow_functionContext) {
 		{
 			p.SetState(1930)
 			p.Match(SQLiteParserCLOSE_PAR)
+			if p.HasError() {
+				// Recognition error - abort rule
+				goto errorExit
+			}
 		}
 
 	case SQLiteParserNTILE_:
@@ -23448,10 +26157,18 @@ func (p *SQLiteParser) Window_function() (localctx IWindow_functionContext) {
 		{
 			p.SetState(1932)
 			p.Match(SQLiteParserNTILE_)
+			if p.HasError() {
+				// Recognition error - abort rule
+				goto errorExit
+			}
 		}
 		{
 			p.SetState(1933)
 			p.Match(SQLiteParserOPEN_PAR)
+			if p.HasError() {
+				// Recognition error - abort rule
+				goto errorExit
+			}
 		}
 		{
 			p.SetState(1934)
@@ -23460,17 +26177,32 @@ func (p *SQLiteParser) Window_function() (localctx IWindow_functionContext) {
 		{
 			p.SetState(1935)
 			p.Match(SQLiteParserCLOSE_PAR)
+			if p.HasError() {
+				// Recognition error - abort rule
+				goto errorExit
+			}
 		}
 		{
 			p.SetState(1936)
 			p.Match(SQLiteParserOVER_)
+			if p.HasError() {
+				// Recognition error - abort rule
+				goto errorExit
+			}
 		}
 		{
 			p.SetState(1937)
 			p.Match(SQLiteParserOPEN_PAR)
+			if p.HasError() {
+				// Recognition error - abort rule
+				goto errorExit
+			}
 		}
 		p.SetState(1939)
 		p.GetErrorHandler().Sync(p)
+		if p.HasError() {
+			goto errorExit
+		}
 		_la = p.GetTokenStream().LA(1)
 
 		if _la == SQLiteParserPARTITION_ {
@@ -23487,13 +26219,28 @@ func (p *SQLiteParser) Window_function() (localctx IWindow_functionContext) {
 		{
 			p.SetState(1942)
 			p.Match(SQLiteParserCLOSE_PAR)
+			if p.HasError() {
+				// Recognition error - abort rule
+				goto errorExit
+			}
 		}
 
 	default:
-		panic(antlr.NewNoViableAltException(p, nil, nil, nil, nil, nil))
+		p.SetError(antlr.NewNoViableAltException(p, nil, nil, nil, nil, nil))
+		goto errorExit
 	}
 
+errorExit:
+	if p.HasError() {
+		v := p.GetError()
+		localctx.SetException(v)
+		p.GetErrorHandler().ReportError(p, v)
+		p.GetErrorHandler().Recover(p, v)
+		p.SetError(nil)
+	}
+	p.ExitRule()
 	return localctx
+	goto errorExit // Trick to prevent compiler error if the label is not used
 }
 
 // IOffsetContext is an interface to support dynamic dispatch.
@@ -23512,15 +26259,20 @@ type IOffsetContext interface {
 }
 
 type OffsetContext struct {
-	*antlr.BaseParserRuleContext
+	antlr.BaseParserRuleContext
 	parser antlr.Parser
 }
 
 func NewEmptyOffsetContext() *OffsetContext {
 	var p = new(OffsetContext)
-	p.BaseParserRuleContext = antlr.NewBaseParserRuleContext(nil, -1)
+	antlr.InitBaseParserRuleContext(&p.BaseParserRuleContext, nil, -1)
 	p.RuleIndex = SQLiteParserRULE_offset
 	return p
+}
+
+func InitEmptyOffsetContext(p *OffsetContext) {
+	antlr.InitBaseParserRuleContext(&p.BaseParserRuleContext, nil, -1)
+	p.RuleIndex = SQLiteParserRULE_offset
 }
 
 func (*OffsetContext) IsOffsetContext() {}
@@ -23528,7 +26280,7 @@ func (*OffsetContext) IsOffsetContext() {}
 func NewOffsetContext(parser antlr.Parser, parent antlr.ParserRuleContext, invokingState int) *OffsetContext {
 	var p = new(OffsetContext)
 
-	p.BaseParserRuleContext = antlr.NewBaseParserRuleContext(parent, invokingState)
+	antlr.InitBaseParserRuleContext(&p.BaseParserRuleContext, parent, invokingState)
 
 	p.parser = parser
 	p.RuleIndex = SQLiteParserRULE_offset
@@ -23579,39 +26331,33 @@ func (s *OffsetContext) ExitRule(listener antlr.ParseTreeListener) {
 }
 
 func (p *SQLiteParser) Offset() (localctx IOffsetContext) {
-	this := p
-	_ = this
-
 	localctx = NewOffsetContext(p, p.GetParserRuleContext(), p.GetState())
 	p.EnterRule(localctx, 152, SQLiteParserRULE_offset)
-
-	defer func() {
-		p.ExitRule()
-	}()
-
-	defer func() {
-		if err := recover(); err != nil {
-			if v, ok := err.(antlr.RecognitionException); ok {
-				localctx.SetException(v)
-				p.GetErrorHandler().ReportError(p, v)
-				p.GetErrorHandler().Recover(p, v)
-			} else {
-				panic(err)
-			}
-		}
-	}()
-
 	p.EnterOuterAlt(localctx, 1)
 	{
 		p.SetState(1946)
 		p.Match(SQLiteParserCOMMA)
+		if p.HasError() {
+			// Recognition error - abort rule
+			goto errorExit
+		}
 	}
 	{
 		p.SetState(1947)
 		p.Signed_number()
 	}
 
+errorExit:
+	if p.HasError() {
+		v := p.GetError()
+		localctx.SetException(v)
+		p.GetErrorHandler().ReportError(p, v)
+		p.GetErrorHandler().Recover(p, v)
+		p.SetError(nil)
+	}
+	p.ExitRule()
 	return localctx
+	goto errorExit // Trick to prevent compiler error if the label is not used
 }
 
 // IDefault_valueContext is an interface to support dynamic dispatch.
@@ -23630,15 +26376,20 @@ type IDefault_valueContext interface {
 }
 
 type Default_valueContext struct {
-	*antlr.BaseParserRuleContext
+	antlr.BaseParserRuleContext
 	parser antlr.Parser
 }
 
 func NewEmptyDefault_valueContext() *Default_valueContext {
 	var p = new(Default_valueContext)
-	p.BaseParserRuleContext = antlr.NewBaseParserRuleContext(nil, -1)
+	antlr.InitBaseParserRuleContext(&p.BaseParserRuleContext, nil, -1)
 	p.RuleIndex = SQLiteParserRULE_default_value
 	return p
+}
+
+func InitEmptyDefault_valueContext(p *Default_valueContext) {
+	antlr.InitBaseParserRuleContext(&p.BaseParserRuleContext, nil, -1)
+	p.RuleIndex = SQLiteParserRULE_default_value
 }
 
 func (*Default_valueContext) IsDefault_valueContext() {}
@@ -23646,7 +26397,7 @@ func (*Default_valueContext) IsDefault_valueContext() {}
 func NewDefault_valueContext(parser antlr.Parser, parent antlr.ParserRuleContext, invokingState int) *Default_valueContext {
 	var p = new(Default_valueContext)
 
-	p.BaseParserRuleContext = antlr.NewBaseParserRuleContext(parent, invokingState)
+	antlr.InitBaseParserRuleContext(&p.BaseParserRuleContext, parent, invokingState)
 
 	p.parser = parser
 	p.RuleIndex = SQLiteParserRULE_default_value
@@ -23697,39 +26448,33 @@ func (s *Default_valueContext) ExitRule(listener antlr.ParseTreeListener) {
 }
 
 func (p *SQLiteParser) Default_value() (localctx IDefault_valueContext) {
-	this := p
-	_ = this
-
 	localctx = NewDefault_valueContext(p, p.GetParserRuleContext(), p.GetState())
 	p.EnterRule(localctx, 154, SQLiteParserRULE_default_value)
-
-	defer func() {
-		p.ExitRule()
-	}()
-
-	defer func() {
-		if err := recover(); err != nil {
-			if v, ok := err.(antlr.RecognitionException); ok {
-				localctx.SetException(v)
-				p.GetErrorHandler().ReportError(p, v)
-				p.GetErrorHandler().Recover(p, v)
-			} else {
-				panic(err)
-			}
-		}
-	}()
-
 	p.EnterOuterAlt(localctx, 1)
 	{
 		p.SetState(1949)
 		p.Match(SQLiteParserCOMMA)
+		if p.HasError() {
+			// Recognition error - abort rule
+			goto errorExit
+		}
 	}
 	{
 		p.SetState(1950)
 		p.Signed_number()
 	}
 
+errorExit:
+	if p.HasError() {
+		v := p.GetError()
+		localctx.SetException(v)
+		p.GetErrorHandler().ReportError(p, v)
+		p.GetErrorHandler().Recover(p, v)
+		p.SetError(nil)
+	}
+	p.ExitRule()
 	return localctx
+	goto errorExit // Trick to prevent compiler error if the label is not used
 }
 
 // IPartition_byContext is an interface to support dynamic dispatch.
@@ -23750,15 +26495,20 @@ type IPartition_byContext interface {
 }
 
 type Partition_byContext struct {
-	*antlr.BaseParserRuleContext
+	antlr.BaseParserRuleContext
 	parser antlr.Parser
 }
 
 func NewEmptyPartition_byContext() *Partition_byContext {
 	var p = new(Partition_byContext)
-	p.BaseParserRuleContext = antlr.NewBaseParserRuleContext(nil, -1)
+	antlr.InitBaseParserRuleContext(&p.BaseParserRuleContext, nil, -1)
 	p.RuleIndex = SQLiteParserRULE_partition_by
 	return p
+}
+
+func InitEmptyPartition_byContext(p *Partition_byContext) {
+	antlr.InitBaseParserRuleContext(&p.BaseParserRuleContext, nil, -1)
+	p.RuleIndex = SQLiteParserRULE_partition_by
 }
 
 func (*Partition_byContext) IsPartition_byContext() {}
@@ -23766,7 +26516,7 @@ func (*Partition_byContext) IsPartition_byContext() {}
 func NewPartition_byContext(parser antlr.Parser, parent antlr.ParserRuleContext, invokingState int) *Partition_byContext {
 	var p = new(Partition_byContext)
 
-	p.BaseParserRuleContext = antlr.NewBaseParserRuleContext(parent, invokingState)
+	antlr.InitBaseParserRuleContext(&p.BaseParserRuleContext, parent, invokingState)
 
 	p.parser = parser
 	p.RuleIndex = SQLiteParserRULE_partition_by
@@ -23846,41 +26596,32 @@ func (s *Partition_byContext) ExitRule(listener antlr.ParseTreeListener) {
 }
 
 func (p *SQLiteParser) Partition_by() (localctx IPartition_byContext) {
-	this := p
-	_ = this
-
 	localctx = NewPartition_byContext(p, p.GetParserRuleContext(), p.GetState())
 	p.EnterRule(localctx, 156, SQLiteParserRULE_partition_by)
-
-	defer func() {
-		p.ExitRule()
-	}()
-
-	defer func() {
-		if err := recover(); err != nil {
-			if v, ok := err.(antlr.RecognitionException); ok {
-				localctx.SetException(v)
-				p.GetErrorHandler().ReportError(p, v)
-				p.GetErrorHandler().Recover(p, v)
-			} else {
-				panic(err)
-			}
-		}
-	}()
-
 	var _alt int
 
 	p.EnterOuterAlt(localctx, 1)
 	{
 		p.SetState(1952)
 		p.Match(SQLiteParserPARTITION_)
+		if p.HasError() {
+			// Recognition error - abort rule
+			goto errorExit
+		}
 	}
 	{
 		p.SetState(1953)
 		p.Match(SQLiteParserBY_)
+		if p.HasError() {
+			// Recognition error - abort rule
+			goto errorExit
+		}
 	}
 	p.SetState(1955)
 	p.GetErrorHandler().Sync(p)
+	if p.HasError() {
+		goto errorExit
+	}
 	_alt = 1
 	for ok := true; ok; ok = _alt != 2 && _alt != antlr.ATNInvalidAltNumber {
 		switch _alt {
@@ -23891,15 +26632,29 @@ func (p *SQLiteParser) Partition_by() (localctx IPartition_byContext) {
 			}
 
 		default:
-			panic(antlr.NewNoViableAltException(p, nil, nil, nil, nil, nil))
+			p.SetError(antlr.NewNoViableAltException(p, nil, nil, nil, nil, nil))
+			goto errorExit
 		}
 
 		p.SetState(1957)
 		p.GetErrorHandler().Sync(p)
-		_alt = p.GetInterpreter().AdaptivePredict(p.GetTokenStream(), 289, p.GetParserRuleContext())
+		_alt = p.GetInterpreter().AdaptivePredict(p.BaseParser, p.GetTokenStream(), 289, p.GetParserRuleContext())
+		if p.HasError() {
+			goto errorExit
+		}
 	}
 
+errorExit:
+	if p.HasError() {
+		v := p.GetError()
+		localctx.SetException(v)
+		p.GetErrorHandler().ReportError(p, v)
+		p.GetErrorHandler().Recover(p, v)
+		p.SetError(nil)
+	}
+	p.ExitRule()
 	return localctx
+	goto errorExit // Trick to prevent compiler error if the label is not used
 }
 
 // IOrder_by_exprContext is an interface to support dynamic dispatch.
@@ -23920,15 +26675,20 @@ type IOrder_by_exprContext interface {
 }
 
 type Order_by_exprContext struct {
-	*antlr.BaseParserRuleContext
+	antlr.BaseParserRuleContext
 	parser antlr.Parser
 }
 
 func NewEmptyOrder_by_exprContext() *Order_by_exprContext {
 	var p = new(Order_by_exprContext)
-	p.BaseParserRuleContext = antlr.NewBaseParserRuleContext(nil, -1)
+	antlr.InitBaseParserRuleContext(&p.BaseParserRuleContext, nil, -1)
 	p.RuleIndex = SQLiteParserRULE_order_by_expr
 	return p
+}
+
+func InitEmptyOrder_by_exprContext(p *Order_by_exprContext) {
+	antlr.InitBaseParserRuleContext(&p.BaseParserRuleContext, nil, -1)
+	p.RuleIndex = SQLiteParserRULE_order_by_expr
 }
 
 func (*Order_by_exprContext) IsOrder_by_exprContext() {}
@@ -23936,7 +26696,7 @@ func (*Order_by_exprContext) IsOrder_by_exprContext() {}
 func NewOrder_by_exprContext(parser antlr.Parser, parent antlr.ParserRuleContext, invokingState int) *Order_by_exprContext {
 	var p = new(Order_by_exprContext)
 
-	p.BaseParserRuleContext = antlr.NewBaseParserRuleContext(parent, invokingState)
+	antlr.InitBaseParserRuleContext(&p.BaseParserRuleContext, parent, invokingState)
 
 	p.parser = parser
 	p.RuleIndex = SQLiteParserRULE_order_by_expr
@@ -24016,40 +26776,32 @@ func (s *Order_by_exprContext) ExitRule(listener antlr.ParseTreeListener) {
 }
 
 func (p *SQLiteParser) Order_by_expr() (localctx IOrder_by_exprContext) {
-	this := p
-	_ = this
-
 	localctx = NewOrder_by_exprContext(p, p.GetParserRuleContext(), p.GetState())
 	p.EnterRule(localctx, 158, SQLiteParserRULE_order_by_expr)
 	var _la int
-
-	defer func() {
-		p.ExitRule()
-	}()
-
-	defer func() {
-		if err := recover(); err != nil {
-			if v, ok := err.(antlr.RecognitionException); ok {
-				localctx.SetException(v)
-				p.GetErrorHandler().ReportError(p, v)
-				p.GetErrorHandler().Recover(p, v)
-			} else {
-				panic(err)
-			}
-		}
-	}()
 
 	p.EnterOuterAlt(localctx, 1)
 	{
 		p.SetState(1959)
 		p.Match(SQLiteParserORDER_)
+		if p.HasError() {
+			// Recognition error - abort rule
+			goto errorExit
+		}
 	}
 	{
 		p.SetState(1960)
 		p.Match(SQLiteParserBY_)
+		if p.HasError() {
+			// Recognition error - abort rule
+			goto errorExit
+		}
 	}
 	p.SetState(1962)
 	p.GetErrorHandler().Sync(p)
+	if p.HasError() {
+		goto errorExit
+	}
 	_la = p.GetTokenStream().LA(1)
 
 	for ok := true; ok; ok = ((int64(_la) & ^0x3f) == 0 && ((int64(1)<<_la)&-33552632) != 0) || ((int64((_la-64)) & ^0x3f) == 0 && ((int64(1)<<(_la-64))&-1152921504606846977) != 0) || ((int64((_la-128)) & ^0x3f) == 0 && ((int64(1)<<(_la-128))&4476578029606273023) != 0) {
@@ -24060,10 +26812,23 @@ func (p *SQLiteParser) Order_by_expr() (localctx IOrder_by_exprContext) {
 
 		p.SetState(1964)
 		p.GetErrorHandler().Sync(p)
+		if p.HasError() {
+			goto errorExit
+		}
 		_la = p.GetTokenStream().LA(1)
 	}
 
+errorExit:
+	if p.HasError() {
+		v := p.GetError()
+		localctx.SetException(v)
+		p.GetErrorHandler().ReportError(p, v)
+		p.GetErrorHandler().Recover(p, v)
+		p.SetError(nil)
+	}
+	p.ExitRule()
 	return localctx
+	goto errorExit // Trick to prevent compiler error if the label is not used
 }
 
 // IOrder_by_expr_asc_descContext is an interface to support dynamic dispatch.
@@ -24083,15 +26848,20 @@ type IOrder_by_expr_asc_descContext interface {
 }
 
 type Order_by_expr_asc_descContext struct {
-	*antlr.BaseParserRuleContext
+	antlr.BaseParserRuleContext
 	parser antlr.Parser
 }
 
 func NewEmptyOrder_by_expr_asc_descContext() *Order_by_expr_asc_descContext {
 	var p = new(Order_by_expr_asc_descContext)
-	p.BaseParserRuleContext = antlr.NewBaseParserRuleContext(nil, -1)
+	antlr.InitBaseParserRuleContext(&p.BaseParserRuleContext, nil, -1)
 	p.RuleIndex = SQLiteParserRULE_order_by_expr_asc_desc
 	return p
+}
+
+func InitEmptyOrder_by_expr_asc_descContext(p *Order_by_expr_asc_descContext) {
+	antlr.InitBaseParserRuleContext(&p.BaseParserRuleContext, nil, -1)
+	p.RuleIndex = SQLiteParserRULE_order_by_expr_asc_desc
 }
 
 func (*Order_by_expr_asc_descContext) IsOrder_by_expr_asc_descContext() {}
@@ -24099,7 +26869,7 @@ func (*Order_by_expr_asc_descContext) IsOrder_by_expr_asc_descContext() {}
 func NewOrder_by_expr_asc_descContext(parser antlr.Parser, parent antlr.ParserRuleContext, invokingState int) *Order_by_expr_asc_descContext {
 	var p = new(Order_by_expr_asc_descContext)
 
-	p.BaseParserRuleContext = antlr.NewBaseParserRuleContext(parent, invokingState)
+	antlr.InitBaseParserRuleContext(&p.BaseParserRuleContext, parent, invokingState)
 
 	p.parser = parser
 	p.RuleIndex = SQLiteParserRULE_order_by_expr_asc_desc
@@ -24154,43 +26924,41 @@ func (s *Order_by_expr_asc_descContext) ExitRule(listener antlr.ParseTreeListene
 }
 
 func (p *SQLiteParser) Order_by_expr_asc_desc() (localctx IOrder_by_expr_asc_descContext) {
-	this := p
-	_ = this
-
 	localctx = NewOrder_by_expr_asc_descContext(p, p.GetParserRuleContext(), p.GetState())
 	p.EnterRule(localctx, 160, SQLiteParserRULE_order_by_expr_asc_desc)
-
-	defer func() {
-		p.ExitRule()
-	}()
-
-	defer func() {
-		if err := recover(); err != nil {
-			if v, ok := err.(antlr.RecognitionException); ok {
-				localctx.SetException(v)
-				p.GetErrorHandler().ReportError(p, v)
-				p.GetErrorHandler().Recover(p, v)
-			} else {
-				panic(err)
-			}
-		}
-	}()
-
 	p.EnterOuterAlt(localctx, 1)
 	{
 		p.SetState(1966)
 		p.Match(SQLiteParserORDER_)
+		if p.HasError() {
+			// Recognition error - abort rule
+			goto errorExit
+		}
 	}
 	{
 		p.SetState(1967)
 		p.Match(SQLiteParserBY_)
+		if p.HasError() {
+			// Recognition error - abort rule
+			goto errorExit
+		}
 	}
 	{
 		p.SetState(1968)
 		p.Expr_asc_desc()
 	}
 
+errorExit:
+	if p.HasError() {
+		v := p.GetError()
+		localctx.SetException(v)
+		p.GetErrorHandler().ReportError(p, v)
+		p.GetErrorHandler().Recover(p, v)
+		p.SetError(nil)
+	}
+	p.ExitRule()
 	return localctx
+	goto errorExit // Trick to prevent compiler error if the label is not used
 }
 
 // IExpr_asc_descContext is an interface to support dynamic dispatch.
@@ -24213,15 +26981,20 @@ type IExpr_asc_descContext interface {
 }
 
 type Expr_asc_descContext struct {
-	*antlr.BaseParserRuleContext
+	antlr.BaseParserRuleContext
 	parser antlr.Parser
 }
 
 func NewEmptyExpr_asc_descContext() *Expr_asc_descContext {
 	var p = new(Expr_asc_descContext)
-	p.BaseParserRuleContext = antlr.NewBaseParserRuleContext(nil, -1)
+	antlr.InitBaseParserRuleContext(&p.BaseParserRuleContext, nil, -1)
 	p.RuleIndex = SQLiteParserRULE_expr_asc_desc
 	return p
+}
+
+func InitEmptyExpr_asc_descContext(p *Expr_asc_descContext) {
+	antlr.InitBaseParserRuleContext(&p.BaseParserRuleContext, nil, -1)
+	p.RuleIndex = SQLiteParserRULE_expr_asc_desc
 }
 
 func (*Expr_asc_descContext) IsExpr_asc_descContext() {}
@@ -24229,7 +27002,7 @@ func (*Expr_asc_descContext) IsExpr_asc_descContext() {}
 func NewExpr_asc_descContext(parser antlr.Parser, parent antlr.ParserRuleContext, invokingState int) *Expr_asc_descContext {
 	var p = new(Expr_asc_descContext)
 
-	p.BaseParserRuleContext = antlr.NewBaseParserRuleContext(parent, invokingState)
+	antlr.InitBaseParserRuleContext(&p.BaseParserRuleContext, parent, invokingState)
 
 	p.parser = parser
 	p.RuleIndex = SQLiteParserRULE_expr_asc_desc
@@ -24350,28 +27123,9 @@ func (s *Expr_asc_descContext) ExitRule(listener antlr.ParseTreeListener) {
 }
 
 func (p *SQLiteParser) Expr_asc_desc() (localctx IExpr_asc_descContext) {
-	this := p
-	_ = this
-
 	localctx = NewExpr_asc_descContext(p, p.GetParserRuleContext(), p.GetState())
 	p.EnterRule(localctx, 162, SQLiteParserRULE_expr_asc_desc)
 	var _la int
-
-	defer func() {
-		p.ExitRule()
-	}()
-
-	defer func() {
-		if err := recover(); err != nil {
-			if v, ok := err.(antlr.RecognitionException); ok {
-				localctx.SetException(v)
-				p.GetErrorHandler().ReportError(p, v)
-				p.GetErrorHandler().Recover(p, v)
-			} else {
-				panic(err)
-			}
-		}
-	}()
 
 	p.EnterOuterAlt(localctx, 1)
 	{
@@ -24380,6 +27134,9 @@ func (p *SQLiteParser) Expr_asc_desc() (localctx IExpr_asc_descContext) {
 	}
 	p.SetState(1972)
 	p.GetErrorHandler().Sync(p)
+	if p.HasError() {
+		goto errorExit
+	}
 	_la = p.GetTokenStream().LA(1)
 
 	if _la == SQLiteParserASC_ || _la == SQLiteParserDESC_ {
@@ -24391,12 +27148,19 @@ func (p *SQLiteParser) Expr_asc_desc() (localctx IExpr_asc_descContext) {
 	}
 	p.SetState(1981)
 	p.GetErrorHandler().Sync(p)
+	if p.HasError() {
+		goto errorExit
+	}
 	_la = p.GetTokenStream().LA(1)
 
 	for _la == SQLiteParserCOMMA {
 		{
 			p.SetState(1974)
 			p.Match(SQLiteParserCOMMA)
+			if p.HasError() {
+				// Recognition error - abort rule
+				goto errorExit
+			}
 		}
 		{
 			p.SetState(1975)
@@ -24404,6 +27168,9 @@ func (p *SQLiteParser) Expr_asc_desc() (localctx IExpr_asc_descContext) {
 		}
 		p.SetState(1977)
 		p.GetErrorHandler().Sync(p)
+		if p.HasError() {
+			goto errorExit
+		}
 		_la = p.GetTokenStream().LA(1)
 
 		if _la == SQLiteParserASC_ || _la == SQLiteParserDESC_ {
@@ -24416,10 +27183,23 @@ func (p *SQLiteParser) Expr_asc_desc() (localctx IExpr_asc_descContext) {
 
 		p.SetState(1983)
 		p.GetErrorHandler().Sync(p)
+		if p.HasError() {
+			goto errorExit
+		}
 		_la = p.GetTokenStream().LA(1)
 	}
 
+errorExit:
+	if p.HasError() {
+		v := p.GetError()
+		localctx.SetException(v)
+		p.GetErrorHandler().ReportError(p, v)
+		p.GetErrorHandler().Recover(p, v)
+		p.SetError(nil)
+	}
+	p.ExitRule()
 	return localctx
+	goto errorExit // Trick to prevent compiler error if the label is not used
 }
 
 // IInitial_selectContext is an interface to support dynamic dispatch.
@@ -24437,15 +27217,20 @@ type IInitial_selectContext interface {
 }
 
 type Initial_selectContext struct {
-	*antlr.BaseParserRuleContext
+	antlr.BaseParserRuleContext
 	parser antlr.Parser
 }
 
 func NewEmptyInitial_selectContext() *Initial_selectContext {
 	var p = new(Initial_selectContext)
-	p.BaseParserRuleContext = antlr.NewBaseParserRuleContext(nil, -1)
+	antlr.InitBaseParserRuleContext(&p.BaseParserRuleContext, nil, -1)
 	p.RuleIndex = SQLiteParserRULE_initial_select
 	return p
+}
+
+func InitEmptyInitial_selectContext(p *Initial_selectContext) {
+	antlr.InitBaseParserRuleContext(&p.BaseParserRuleContext, nil, -1)
+	p.RuleIndex = SQLiteParserRULE_initial_select
 }
 
 func (*Initial_selectContext) IsInitial_selectContext() {}
@@ -24453,7 +27238,7 @@ func (*Initial_selectContext) IsInitial_selectContext() {}
 func NewInitial_selectContext(parser antlr.Parser, parent antlr.ParserRuleContext, invokingState int) *Initial_selectContext {
 	var p = new(Initial_selectContext)
 
-	p.BaseParserRuleContext = antlr.NewBaseParserRuleContext(parent, invokingState)
+	antlr.InitBaseParserRuleContext(&p.BaseParserRuleContext, parent, invokingState)
 
 	p.parser = parser
 	p.RuleIndex = SQLiteParserRULE_initial_select
@@ -24500,35 +27285,25 @@ func (s *Initial_selectContext) ExitRule(listener antlr.ParseTreeListener) {
 }
 
 func (p *SQLiteParser) Initial_select() (localctx IInitial_selectContext) {
-	this := p
-	_ = this
-
 	localctx = NewInitial_selectContext(p, p.GetParserRuleContext(), p.GetState())
 	p.EnterRule(localctx, 164, SQLiteParserRULE_initial_select)
-
-	defer func() {
-		p.ExitRule()
-	}()
-
-	defer func() {
-		if err := recover(); err != nil {
-			if v, ok := err.(antlr.RecognitionException); ok {
-				localctx.SetException(v)
-				p.GetErrorHandler().ReportError(p, v)
-				p.GetErrorHandler().Recover(p, v)
-			} else {
-				panic(err)
-			}
-		}
-	}()
-
 	p.EnterOuterAlt(localctx, 1)
 	{
 		p.SetState(1984)
 		p.Select_stmt()
 	}
 
+errorExit:
+	if p.HasError() {
+		v := p.GetError()
+		localctx.SetException(v)
+		p.GetErrorHandler().ReportError(p, v)
+		p.GetErrorHandler().Recover(p, v)
+		p.SetError(nil)
+	}
+	p.ExitRule()
 	return localctx
+	goto errorExit // Trick to prevent compiler error if the label is not used
 }
 
 // IRecursive_selectContext is an interface to support dynamic dispatch.
@@ -24546,15 +27321,20 @@ type IRecursive_selectContext interface {
 }
 
 type Recursive_selectContext struct {
-	*antlr.BaseParserRuleContext
+	antlr.BaseParserRuleContext
 	parser antlr.Parser
 }
 
 func NewEmptyRecursive_selectContext() *Recursive_selectContext {
 	var p = new(Recursive_selectContext)
-	p.BaseParserRuleContext = antlr.NewBaseParserRuleContext(nil, -1)
+	antlr.InitBaseParserRuleContext(&p.BaseParserRuleContext, nil, -1)
 	p.RuleIndex = SQLiteParserRULE_recursive_select
 	return p
+}
+
+func InitEmptyRecursive_selectContext(p *Recursive_selectContext) {
+	antlr.InitBaseParserRuleContext(&p.BaseParserRuleContext, nil, -1)
+	p.RuleIndex = SQLiteParserRULE_recursive_select
 }
 
 func (*Recursive_selectContext) IsRecursive_selectContext() {}
@@ -24562,7 +27342,7 @@ func (*Recursive_selectContext) IsRecursive_selectContext() {}
 func NewRecursive_selectContext(parser antlr.Parser, parent antlr.ParserRuleContext, invokingState int) *Recursive_selectContext {
 	var p = new(Recursive_selectContext)
 
-	p.BaseParserRuleContext = antlr.NewBaseParserRuleContext(parent, invokingState)
+	antlr.InitBaseParserRuleContext(&p.BaseParserRuleContext, parent, invokingState)
 
 	p.parser = parser
 	p.RuleIndex = SQLiteParserRULE_recursive_select
@@ -24609,35 +27389,25 @@ func (s *Recursive_selectContext) ExitRule(listener antlr.ParseTreeListener) {
 }
 
 func (p *SQLiteParser) Recursive_select() (localctx IRecursive_selectContext) {
-	this := p
-	_ = this
-
 	localctx = NewRecursive_selectContext(p, p.GetParserRuleContext(), p.GetState())
 	p.EnterRule(localctx, 166, SQLiteParserRULE_recursive_select)
-
-	defer func() {
-		p.ExitRule()
-	}()
-
-	defer func() {
-		if err := recover(); err != nil {
-			if v, ok := err.(antlr.RecognitionException); ok {
-				localctx.SetException(v)
-				p.GetErrorHandler().ReportError(p, v)
-				p.GetErrorHandler().Recover(p, v)
-			} else {
-				panic(err)
-			}
-		}
-	}()
-
 	p.EnterOuterAlt(localctx, 1)
 	{
 		p.SetState(1986)
 		p.Select_stmt()
 	}
 
+errorExit:
+	if p.HasError() {
+		v := p.GetError()
+		localctx.SetException(v)
+		p.GetErrorHandler().ReportError(p, v)
+		p.GetErrorHandler().Recover(p, v)
+		p.SetError(nil)
+	}
+	p.ExitRule()
 	return localctx
+	goto errorExit // Trick to prevent compiler error if the label is not used
 }
 
 // IUnary_operatorContext is an interface to support dynamic dispatch.
@@ -24658,15 +27428,20 @@ type IUnary_operatorContext interface {
 }
 
 type Unary_operatorContext struct {
-	*antlr.BaseParserRuleContext
+	antlr.BaseParserRuleContext
 	parser antlr.Parser
 }
 
 func NewEmptyUnary_operatorContext() *Unary_operatorContext {
 	var p = new(Unary_operatorContext)
-	p.BaseParserRuleContext = antlr.NewBaseParserRuleContext(nil, -1)
+	antlr.InitBaseParserRuleContext(&p.BaseParserRuleContext, nil, -1)
 	p.RuleIndex = SQLiteParserRULE_unary_operator
 	return p
+}
+
+func InitEmptyUnary_operatorContext(p *Unary_operatorContext) {
+	antlr.InitBaseParserRuleContext(&p.BaseParserRuleContext, nil, -1)
+	p.RuleIndex = SQLiteParserRULE_unary_operator
 }
 
 func (*Unary_operatorContext) IsUnary_operatorContext() {}
@@ -24674,7 +27449,7 @@ func (*Unary_operatorContext) IsUnary_operatorContext() {}
 func NewUnary_operatorContext(parser antlr.Parser, parent antlr.ParserRuleContext, invokingState int) *Unary_operatorContext {
 	var p = new(Unary_operatorContext)
 
-	p.BaseParserRuleContext = antlr.NewBaseParserRuleContext(parent, invokingState)
+	antlr.InitBaseParserRuleContext(&p.BaseParserRuleContext, parent, invokingState)
 
 	p.parser = parser
 	p.RuleIndex = SQLiteParserRULE_unary_operator
@@ -24721,28 +27496,9 @@ func (s *Unary_operatorContext) ExitRule(listener antlr.ParseTreeListener) {
 }
 
 func (p *SQLiteParser) Unary_operator() (localctx IUnary_operatorContext) {
-	this := p
-	_ = this
-
 	localctx = NewUnary_operatorContext(p, p.GetParserRuleContext(), p.GetState())
 	p.EnterRule(localctx, 168, SQLiteParserRULE_unary_operator)
 	var _la int
-
-	defer func() {
-		p.ExitRule()
-	}()
-
-	defer func() {
-		if err := recover(); err != nil {
-			if v, ok := err.(antlr.RecognitionException); ok {
-				localctx.SetException(v)
-				p.GetErrorHandler().ReportError(p, v)
-				p.GetErrorHandler().Recover(p, v)
-			} else {
-				panic(err)
-			}
-		}
-	}()
 
 	p.EnterOuterAlt(localctx, 1)
 	{
@@ -24757,7 +27513,17 @@ func (p *SQLiteParser) Unary_operator() (localctx IUnary_operatorContext) {
 		}
 	}
 
+errorExit:
+	if p.HasError() {
+		v := p.GetError()
+		localctx.SetException(v)
+		p.GetErrorHandler().ReportError(p, v)
+		p.GetErrorHandler().Recover(p, v)
+		p.SetError(nil)
+	}
+	p.ExitRule()
 	return localctx
+	goto errorExit // Trick to prevent compiler error if the label is not used
 }
 
 // IError_messageContext is an interface to support dynamic dispatch.
@@ -24775,15 +27541,20 @@ type IError_messageContext interface {
 }
 
 type Error_messageContext struct {
-	*antlr.BaseParserRuleContext
+	antlr.BaseParserRuleContext
 	parser antlr.Parser
 }
 
 func NewEmptyError_messageContext() *Error_messageContext {
 	var p = new(Error_messageContext)
-	p.BaseParserRuleContext = antlr.NewBaseParserRuleContext(nil, -1)
+	antlr.InitBaseParserRuleContext(&p.BaseParserRuleContext, nil, -1)
 	p.RuleIndex = SQLiteParserRULE_error_message
 	return p
+}
+
+func InitEmptyError_messageContext(p *Error_messageContext) {
+	antlr.InitBaseParserRuleContext(&p.BaseParserRuleContext, nil, -1)
+	p.RuleIndex = SQLiteParserRULE_error_message
 }
 
 func (*Error_messageContext) IsError_messageContext() {}
@@ -24791,7 +27562,7 @@ func (*Error_messageContext) IsError_messageContext() {}
 func NewError_messageContext(parser antlr.Parser, parent antlr.ParserRuleContext, invokingState int) *Error_messageContext {
 	var p = new(Error_messageContext)
 
-	p.BaseParserRuleContext = antlr.NewBaseParserRuleContext(parent, invokingState)
+	antlr.InitBaseParserRuleContext(&p.BaseParserRuleContext, parent, invokingState)
 
 	p.parser = parser
 	p.RuleIndex = SQLiteParserRULE_error_message
@@ -24826,35 +27597,29 @@ func (s *Error_messageContext) ExitRule(listener antlr.ParseTreeListener) {
 }
 
 func (p *SQLiteParser) Error_message() (localctx IError_messageContext) {
-	this := p
-	_ = this
-
 	localctx = NewError_messageContext(p, p.GetParserRuleContext(), p.GetState())
 	p.EnterRule(localctx, 170, SQLiteParserRULE_error_message)
-
-	defer func() {
-		p.ExitRule()
-	}()
-
-	defer func() {
-		if err := recover(); err != nil {
-			if v, ok := err.(antlr.RecognitionException); ok {
-				localctx.SetException(v)
-				p.GetErrorHandler().ReportError(p, v)
-				p.GetErrorHandler().Recover(p, v)
-			} else {
-				panic(err)
-			}
-		}
-	}()
-
 	p.EnterOuterAlt(localctx, 1)
 	{
 		p.SetState(1990)
 		p.Match(SQLiteParserSTRING_LITERAL)
+		if p.HasError() {
+			// Recognition error - abort rule
+			goto errorExit
+		}
 	}
 
+errorExit:
+	if p.HasError() {
+		v := p.GetError()
+		localctx.SetException(v)
+		p.GetErrorHandler().ReportError(p, v)
+		p.GetErrorHandler().Recover(p, v)
+		p.SetError(nil)
+	}
+	p.ExitRule()
 	return localctx
+	goto errorExit // Trick to prevent compiler error if the label is not used
 }
 
 // IModule_argumentContext is an interface to support dynamic dispatch.
@@ -24873,15 +27638,20 @@ type IModule_argumentContext interface {
 }
 
 type Module_argumentContext struct {
-	*antlr.BaseParserRuleContext
+	antlr.BaseParserRuleContext
 	parser antlr.Parser
 }
 
 func NewEmptyModule_argumentContext() *Module_argumentContext {
 	var p = new(Module_argumentContext)
-	p.BaseParserRuleContext = antlr.NewBaseParserRuleContext(nil, -1)
+	antlr.InitBaseParserRuleContext(&p.BaseParserRuleContext, nil, -1)
 	p.RuleIndex = SQLiteParserRULE_module_argument
 	return p
+}
+
+func InitEmptyModule_argumentContext(p *Module_argumentContext) {
+	antlr.InitBaseParserRuleContext(&p.BaseParserRuleContext, nil, -1)
+	p.RuleIndex = SQLiteParserRULE_module_argument
 }
 
 func (*Module_argumentContext) IsModule_argumentContext() {}
@@ -24889,7 +27659,7 @@ func (*Module_argumentContext) IsModule_argumentContext() {}
 func NewModule_argumentContext(parser antlr.Parser, parent antlr.ParserRuleContext, invokingState int) *Module_argumentContext {
 	var p = new(Module_argumentContext)
 
-	p.BaseParserRuleContext = antlr.NewBaseParserRuleContext(parent, invokingState)
+	antlr.InitBaseParserRuleContext(&p.BaseParserRuleContext, parent, invokingState)
 
 	p.parser = parser
 	p.RuleIndex = SQLiteParserRULE_module_argument
@@ -24952,31 +27722,15 @@ func (s *Module_argumentContext) ExitRule(listener antlr.ParseTreeListener) {
 }
 
 func (p *SQLiteParser) Module_argument() (localctx IModule_argumentContext) {
-	this := p
-	_ = this
-
 	localctx = NewModule_argumentContext(p, p.GetParserRuleContext(), p.GetState())
 	p.EnterRule(localctx, 172, SQLiteParserRULE_module_argument)
-
-	defer func() {
-		p.ExitRule()
-	}()
-
-	defer func() {
-		if err := recover(); err != nil {
-			if v, ok := err.(antlr.RecognitionException); ok {
-				localctx.SetException(v)
-				p.GetErrorHandler().ReportError(p, v)
-				p.GetErrorHandler().Recover(p, v)
-			} else {
-				panic(err)
-			}
-		}
-	}()
-
 	p.SetState(1994)
 	p.GetErrorHandler().Sync(p)
-	switch p.GetInterpreter().AdaptivePredict(p.GetTokenStream(), 294, p.GetParserRuleContext()) {
+	if p.HasError() {
+		goto errorExit
+	}
+
+	switch p.GetInterpreter().AdaptivePredict(p.BaseParser, p.GetTokenStream(), 294, p.GetParserRuleContext()) {
 	case 1:
 		p.EnterOuterAlt(localctx, 1)
 		{
@@ -24991,9 +27745,21 @@ func (p *SQLiteParser) Module_argument() (localctx IModule_argumentContext) {
 			p.Column_def()
 		}
 
+	case antlr.ATNInvalidAltNumber:
+		goto errorExit
 	}
 
+errorExit:
+	if p.HasError() {
+		v := p.GetError()
+		localctx.SetException(v)
+		p.GetErrorHandler().ReportError(p, v)
+		p.GetErrorHandler().Recover(p, v)
+		p.SetError(nil)
+	}
+	p.ExitRule()
 	return localctx
+	goto errorExit // Trick to prevent compiler error if the label is not used
 }
 
 // IColumn_aliasContext is an interface to support dynamic dispatch.
@@ -25012,15 +27778,20 @@ type IColumn_aliasContext interface {
 }
 
 type Column_aliasContext struct {
-	*antlr.BaseParserRuleContext
+	antlr.BaseParserRuleContext
 	parser antlr.Parser
 }
 
 func NewEmptyColumn_aliasContext() *Column_aliasContext {
 	var p = new(Column_aliasContext)
-	p.BaseParserRuleContext = antlr.NewBaseParserRuleContext(nil, -1)
+	antlr.InitBaseParserRuleContext(&p.BaseParserRuleContext, nil, -1)
 	p.RuleIndex = SQLiteParserRULE_column_alias
 	return p
+}
+
+func InitEmptyColumn_aliasContext(p *Column_aliasContext) {
+	antlr.InitBaseParserRuleContext(&p.BaseParserRuleContext, nil, -1)
+	p.RuleIndex = SQLiteParserRULE_column_alias
 }
 
 func (*Column_aliasContext) IsColumn_aliasContext() {}
@@ -25028,7 +27799,7 @@ func (*Column_aliasContext) IsColumn_aliasContext() {}
 func NewColumn_aliasContext(parser antlr.Parser, parent antlr.ParserRuleContext, invokingState int) *Column_aliasContext {
 	var p = new(Column_aliasContext)
 
-	p.BaseParserRuleContext = antlr.NewBaseParserRuleContext(parent, invokingState)
+	antlr.InitBaseParserRuleContext(&p.BaseParserRuleContext, parent, invokingState)
 
 	p.parser = parser
 	p.RuleIndex = SQLiteParserRULE_column_alias
@@ -25067,28 +27838,9 @@ func (s *Column_aliasContext) ExitRule(listener antlr.ParseTreeListener) {
 }
 
 func (p *SQLiteParser) Column_alias() (localctx IColumn_aliasContext) {
-	this := p
-	_ = this
-
 	localctx = NewColumn_aliasContext(p, p.GetParserRuleContext(), p.GetState())
 	p.EnterRule(localctx, 174, SQLiteParserRULE_column_alias)
 	var _la int
-
-	defer func() {
-		p.ExitRule()
-	}()
-
-	defer func() {
-		if err := recover(); err != nil {
-			if v, ok := err.(antlr.RecognitionException); ok {
-				localctx.SetException(v)
-				p.GetErrorHandler().ReportError(p, v)
-				p.GetErrorHandler().Recover(p, v)
-			} else {
-				panic(err)
-			}
-		}
-	}()
 
 	p.EnterOuterAlt(localctx, 1)
 	{
@@ -25103,7 +27855,17 @@ func (p *SQLiteParser) Column_alias() (localctx IColumn_aliasContext) {
 		}
 	}
 
+errorExit:
+	if p.HasError() {
+		v := p.GetError()
+		localctx.SetException(v)
+		p.GetErrorHandler().ReportError(p, v)
+		p.GetErrorHandler().Recover(p, v)
+		p.SetError(nil)
+	}
+	p.ExitRule()
 	return localctx
+	goto errorExit // Trick to prevent compiler error if the label is not used
 }
 
 // IKeywordContext is an interface to support dynamic dispatch.
@@ -25275,15 +28037,20 @@ type IKeywordContext interface {
 }
 
 type KeywordContext struct {
-	*antlr.BaseParserRuleContext
+	antlr.BaseParserRuleContext
 	parser antlr.Parser
 }
 
 func NewEmptyKeywordContext() *KeywordContext {
 	var p = new(KeywordContext)
-	p.BaseParserRuleContext = antlr.NewBaseParserRuleContext(nil, -1)
+	antlr.InitBaseParserRuleContext(&p.BaseParserRuleContext, nil, -1)
 	p.RuleIndex = SQLiteParserRULE_keyword
 	return p
+}
+
+func InitEmptyKeywordContext(p *KeywordContext) {
+	antlr.InitBaseParserRuleContext(&p.BaseParserRuleContext, nil, -1)
+	p.RuleIndex = SQLiteParserRULE_keyword
 }
 
 func (*KeywordContext) IsKeywordContext() {}
@@ -25291,7 +28058,7 @@ func (*KeywordContext) IsKeywordContext() {}
 func NewKeywordContext(parser antlr.Parser, parent antlr.ParserRuleContext, invokingState int) *KeywordContext {
 	var p = new(KeywordContext)
 
-	p.BaseParserRuleContext = antlr.NewBaseParserRuleContext(parent, invokingState)
+	antlr.InitBaseParserRuleContext(&p.BaseParserRuleContext, parent, invokingState)
 
 	p.parser = parser
 	p.RuleIndex = SQLiteParserRULE_keyword
@@ -25942,28 +28709,9 @@ func (s *KeywordContext) ExitRule(listener antlr.ParseTreeListener) {
 }
 
 func (p *SQLiteParser) Keyword() (localctx IKeywordContext) {
-	this := p
-	_ = this
-
 	localctx = NewKeywordContext(p, p.GetParserRuleContext(), p.GetState())
 	p.EnterRule(localctx, 176, SQLiteParserRULE_keyword)
 	var _la int
-
-	defer func() {
-		p.ExitRule()
-	}()
-
-	defer func() {
-		if err := recover(); err != nil {
-			if v, ok := err.(antlr.RecognitionException); ok {
-				localctx.SetException(v)
-				p.GetErrorHandler().ReportError(p, v)
-				p.GetErrorHandler().Recover(p, v)
-			} else {
-				panic(err)
-			}
-		}
-	}()
 
 	p.EnterOuterAlt(localctx, 1)
 	{
@@ -25978,7 +28726,17 @@ func (p *SQLiteParser) Keyword() (localctx IKeywordContext) {
 		}
 	}
 
+errorExit:
+	if p.HasError() {
+		v := p.GetError()
+		localctx.SetException(v)
+		p.GetErrorHandler().ReportError(p, v)
+		p.GetErrorHandler().Recover(p, v)
+		p.SetError(nil)
+	}
+	p.ExitRule()
 	return localctx
+	goto errorExit // Trick to prevent compiler error if the label is not used
 }
 
 // INameContext is an interface to support dynamic dispatch.
@@ -25996,15 +28754,20 @@ type INameContext interface {
 }
 
 type NameContext struct {
-	*antlr.BaseParserRuleContext
+	antlr.BaseParserRuleContext
 	parser antlr.Parser
 }
 
 func NewEmptyNameContext() *NameContext {
 	var p = new(NameContext)
-	p.BaseParserRuleContext = antlr.NewBaseParserRuleContext(nil, -1)
+	antlr.InitBaseParserRuleContext(&p.BaseParserRuleContext, nil, -1)
 	p.RuleIndex = SQLiteParserRULE_name
 	return p
+}
+
+func InitEmptyNameContext(p *NameContext) {
+	antlr.InitBaseParserRuleContext(&p.BaseParserRuleContext, nil, -1)
+	p.RuleIndex = SQLiteParserRULE_name
 }
 
 func (*NameContext) IsNameContext() {}
@@ -26012,7 +28775,7 @@ func (*NameContext) IsNameContext() {}
 func NewNameContext(parser antlr.Parser, parent antlr.ParserRuleContext, invokingState int) *NameContext {
 	var p = new(NameContext)
 
-	p.BaseParserRuleContext = antlr.NewBaseParserRuleContext(parent, invokingState)
+	antlr.InitBaseParserRuleContext(&p.BaseParserRuleContext, parent, invokingState)
 
 	p.parser = parser
 	p.RuleIndex = SQLiteParserRULE_name
@@ -26059,35 +28822,25 @@ func (s *NameContext) ExitRule(listener antlr.ParseTreeListener) {
 }
 
 func (p *SQLiteParser) Name() (localctx INameContext) {
-	this := p
-	_ = this
-
 	localctx = NewNameContext(p, p.GetParserRuleContext(), p.GetState())
 	p.EnterRule(localctx, 178, SQLiteParserRULE_name)
-
-	defer func() {
-		p.ExitRule()
-	}()
-
-	defer func() {
-		if err := recover(); err != nil {
-			if v, ok := err.(antlr.RecognitionException); ok {
-				localctx.SetException(v)
-				p.GetErrorHandler().ReportError(p, v)
-				p.GetErrorHandler().Recover(p, v)
-			} else {
-				panic(err)
-			}
-		}
-	}()
-
 	p.EnterOuterAlt(localctx, 1)
 	{
 		p.SetState(2000)
 		p.Any_name()
 	}
 
+errorExit:
+	if p.HasError() {
+		v := p.GetError()
+		localctx.SetException(v)
+		p.GetErrorHandler().ReportError(p, v)
+		p.GetErrorHandler().Recover(p, v)
+		p.SetError(nil)
+	}
+	p.ExitRule()
 	return localctx
+	goto errorExit // Trick to prevent compiler error if the label is not used
 }
 
 // IFunction_nameContext is an interface to support dynamic dispatch.
@@ -26105,15 +28858,20 @@ type IFunction_nameContext interface {
 }
 
 type Function_nameContext struct {
-	*antlr.BaseParserRuleContext
+	antlr.BaseParserRuleContext
 	parser antlr.Parser
 }
 
 func NewEmptyFunction_nameContext() *Function_nameContext {
 	var p = new(Function_nameContext)
-	p.BaseParserRuleContext = antlr.NewBaseParserRuleContext(nil, -1)
+	antlr.InitBaseParserRuleContext(&p.BaseParserRuleContext, nil, -1)
 	p.RuleIndex = SQLiteParserRULE_function_name
 	return p
+}
+
+func InitEmptyFunction_nameContext(p *Function_nameContext) {
+	antlr.InitBaseParserRuleContext(&p.BaseParserRuleContext, nil, -1)
+	p.RuleIndex = SQLiteParserRULE_function_name
 }
 
 func (*Function_nameContext) IsFunction_nameContext() {}
@@ -26121,7 +28879,7 @@ func (*Function_nameContext) IsFunction_nameContext() {}
 func NewFunction_nameContext(parser antlr.Parser, parent antlr.ParserRuleContext, invokingState int) *Function_nameContext {
 	var p = new(Function_nameContext)
 
-	p.BaseParserRuleContext = antlr.NewBaseParserRuleContext(parent, invokingState)
+	antlr.InitBaseParserRuleContext(&p.BaseParserRuleContext, parent, invokingState)
 
 	p.parser = parser
 	p.RuleIndex = SQLiteParserRULE_function_name
@@ -26168,35 +28926,25 @@ func (s *Function_nameContext) ExitRule(listener antlr.ParseTreeListener) {
 }
 
 func (p *SQLiteParser) Function_name() (localctx IFunction_nameContext) {
-	this := p
-	_ = this
-
 	localctx = NewFunction_nameContext(p, p.GetParserRuleContext(), p.GetState())
 	p.EnterRule(localctx, 180, SQLiteParserRULE_function_name)
-
-	defer func() {
-		p.ExitRule()
-	}()
-
-	defer func() {
-		if err := recover(); err != nil {
-			if v, ok := err.(antlr.RecognitionException); ok {
-				localctx.SetException(v)
-				p.GetErrorHandler().ReportError(p, v)
-				p.GetErrorHandler().Recover(p, v)
-			} else {
-				panic(err)
-			}
-		}
-	}()
-
 	p.EnterOuterAlt(localctx, 1)
 	{
 		p.SetState(2002)
 		p.Any_name()
 	}
 
+errorExit:
+	if p.HasError() {
+		v := p.GetError()
+		localctx.SetException(v)
+		p.GetErrorHandler().ReportError(p, v)
+		p.GetErrorHandler().Recover(p, v)
+		p.SetError(nil)
+	}
+	p.ExitRule()
 	return localctx
+	goto errorExit // Trick to prevent compiler error if the label is not used
 }
 
 // ISchema_nameContext is an interface to support dynamic dispatch.
@@ -26214,15 +28962,20 @@ type ISchema_nameContext interface {
 }
 
 type Schema_nameContext struct {
-	*antlr.BaseParserRuleContext
+	antlr.BaseParserRuleContext
 	parser antlr.Parser
 }
 
 func NewEmptySchema_nameContext() *Schema_nameContext {
 	var p = new(Schema_nameContext)
-	p.BaseParserRuleContext = antlr.NewBaseParserRuleContext(nil, -1)
+	antlr.InitBaseParserRuleContext(&p.BaseParserRuleContext, nil, -1)
 	p.RuleIndex = SQLiteParserRULE_schema_name
 	return p
+}
+
+func InitEmptySchema_nameContext(p *Schema_nameContext) {
+	antlr.InitBaseParserRuleContext(&p.BaseParserRuleContext, nil, -1)
+	p.RuleIndex = SQLiteParserRULE_schema_name
 }
 
 func (*Schema_nameContext) IsSchema_nameContext() {}
@@ -26230,7 +28983,7 @@ func (*Schema_nameContext) IsSchema_nameContext() {}
 func NewSchema_nameContext(parser antlr.Parser, parent antlr.ParserRuleContext, invokingState int) *Schema_nameContext {
 	var p = new(Schema_nameContext)
 
-	p.BaseParserRuleContext = antlr.NewBaseParserRuleContext(parent, invokingState)
+	antlr.InitBaseParserRuleContext(&p.BaseParserRuleContext, parent, invokingState)
 
 	p.parser = parser
 	p.RuleIndex = SQLiteParserRULE_schema_name
@@ -26277,35 +29030,25 @@ func (s *Schema_nameContext) ExitRule(listener antlr.ParseTreeListener) {
 }
 
 func (p *SQLiteParser) Schema_name() (localctx ISchema_nameContext) {
-	this := p
-	_ = this
-
 	localctx = NewSchema_nameContext(p, p.GetParserRuleContext(), p.GetState())
 	p.EnterRule(localctx, 182, SQLiteParserRULE_schema_name)
-
-	defer func() {
-		p.ExitRule()
-	}()
-
-	defer func() {
-		if err := recover(); err != nil {
-			if v, ok := err.(antlr.RecognitionException); ok {
-				localctx.SetException(v)
-				p.GetErrorHandler().ReportError(p, v)
-				p.GetErrorHandler().Recover(p, v)
-			} else {
-				panic(err)
-			}
-		}
-	}()
-
 	p.EnterOuterAlt(localctx, 1)
 	{
 		p.SetState(2004)
 		p.Any_name()
 	}
 
+errorExit:
+	if p.HasError() {
+		v := p.GetError()
+		localctx.SetException(v)
+		p.GetErrorHandler().ReportError(p, v)
+		p.GetErrorHandler().Recover(p, v)
+		p.SetError(nil)
+	}
+	p.ExitRule()
 	return localctx
+	goto errorExit // Trick to prevent compiler error if the label is not used
 }
 
 // ITable_nameContext is an interface to support dynamic dispatch.
@@ -26323,15 +29066,20 @@ type ITable_nameContext interface {
 }
 
 type Table_nameContext struct {
-	*antlr.BaseParserRuleContext
+	antlr.BaseParserRuleContext
 	parser antlr.Parser
 }
 
 func NewEmptyTable_nameContext() *Table_nameContext {
 	var p = new(Table_nameContext)
-	p.BaseParserRuleContext = antlr.NewBaseParserRuleContext(nil, -1)
+	antlr.InitBaseParserRuleContext(&p.BaseParserRuleContext, nil, -1)
 	p.RuleIndex = SQLiteParserRULE_table_name
 	return p
+}
+
+func InitEmptyTable_nameContext(p *Table_nameContext) {
+	antlr.InitBaseParserRuleContext(&p.BaseParserRuleContext, nil, -1)
+	p.RuleIndex = SQLiteParserRULE_table_name
 }
 
 func (*Table_nameContext) IsTable_nameContext() {}
@@ -26339,7 +29087,7 @@ func (*Table_nameContext) IsTable_nameContext() {}
 func NewTable_nameContext(parser antlr.Parser, parent antlr.ParserRuleContext, invokingState int) *Table_nameContext {
 	var p = new(Table_nameContext)
 
-	p.BaseParserRuleContext = antlr.NewBaseParserRuleContext(parent, invokingState)
+	antlr.InitBaseParserRuleContext(&p.BaseParserRuleContext, parent, invokingState)
 
 	p.parser = parser
 	p.RuleIndex = SQLiteParserRULE_table_name
@@ -26386,35 +29134,25 @@ func (s *Table_nameContext) ExitRule(listener antlr.ParseTreeListener) {
 }
 
 func (p *SQLiteParser) Table_name() (localctx ITable_nameContext) {
-	this := p
-	_ = this
-
 	localctx = NewTable_nameContext(p, p.GetParserRuleContext(), p.GetState())
 	p.EnterRule(localctx, 184, SQLiteParserRULE_table_name)
-
-	defer func() {
-		p.ExitRule()
-	}()
-
-	defer func() {
-		if err := recover(); err != nil {
-			if v, ok := err.(antlr.RecognitionException); ok {
-				localctx.SetException(v)
-				p.GetErrorHandler().ReportError(p, v)
-				p.GetErrorHandler().Recover(p, v)
-			} else {
-				panic(err)
-			}
-		}
-	}()
-
 	p.EnterOuterAlt(localctx, 1)
 	{
 		p.SetState(2006)
 		p.Any_name()
 	}
 
+errorExit:
+	if p.HasError() {
+		v := p.GetError()
+		localctx.SetException(v)
+		p.GetErrorHandler().ReportError(p, v)
+		p.GetErrorHandler().Recover(p, v)
+		p.SetError(nil)
+	}
+	p.ExitRule()
 	return localctx
+	goto errorExit // Trick to prevent compiler error if the label is not used
 }
 
 // ITable_or_index_nameContext is an interface to support dynamic dispatch.
@@ -26432,15 +29170,20 @@ type ITable_or_index_nameContext interface {
 }
 
 type Table_or_index_nameContext struct {
-	*antlr.BaseParserRuleContext
+	antlr.BaseParserRuleContext
 	parser antlr.Parser
 }
 
 func NewEmptyTable_or_index_nameContext() *Table_or_index_nameContext {
 	var p = new(Table_or_index_nameContext)
-	p.BaseParserRuleContext = antlr.NewBaseParserRuleContext(nil, -1)
+	antlr.InitBaseParserRuleContext(&p.BaseParserRuleContext, nil, -1)
 	p.RuleIndex = SQLiteParserRULE_table_or_index_name
 	return p
+}
+
+func InitEmptyTable_or_index_nameContext(p *Table_or_index_nameContext) {
+	antlr.InitBaseParserRuleContext(&p.BaseParserRuleContext, nil, -1)
+	p.RuleIndex = SQLiteParserRULE_table_or_index_name
 }
 
 func (*Table_or_index_nameContext) IsTable_or_index_nameContext() {}
@@ -26448,7 +29191,7 @@ func (*Table_or_index_nameContext) IsTable_or_index_nameContext() {}
 func NewTable_or_index_nameContext(parser antlr.Parser, parent antlr.ParserRuleContext, invokingState int) *Table_or_index_nameContext {
 	var p = new(Table_or_index_nameContext)
 
-	p.BaseParserRuleContext = antlr.NewBaseParserRuleContext(parent, invokingState)
+	antlr.InitBaseParserRuleContext(&p.BaseParserRuleContext, parent, invokingState)
 
 	p.parser = parser
 	p.RuleIndex = SQLiteParserRULE_table_or_index_name
@@ -26495,35 +29238,25 @@ func (s *Table_or_index_nameContext) ExitRule(listener antlr.ParseTreeListener) 
 }
 
 func (p *SQLiteParser) Table_or_index_name() (localctx ITable_or_index_nameContext) {
-	this := p
-	_ = this
-
 	localctx = NewTable_or_index_nameContext(p, p.GetParserRuleContext(), p.GetState())
 	p.EnterRule(localctx, 186, SQLiteParserRULE_table_or_index_name)
-
-	defer func() {
-		p.ExitRule()
-	}()
-
-	defer func() {
-		if err := recover(); err != nil {
-			if v, ok := err.(antlr.RecognitionException); ok {
-				localctx.SetException(v)
-				p.GetErrorHandler().ReportError(p, v)
-				p.GetErrorHandler().Recover(p, v)
-			} else {
-				panic(err)
-			}
-		}
-	}()
-
 	p.EnterOuterAlt(localctx, 1)
 	{
 		p.SetState(2008)
 		p.Any_name()
 	}
 
+errorExit:
+	if p.HasError() {
+		v := p.GetError()
+		localctx.SetException(v)
+		p.GetErrorHandler().ReportError(p, v)
+		p.GetErrorHandler().Recover(p, v)
+		p.SetError(nil)
+	}
+	p.ExitRule()
 	return localctx
+	goto errorExit // Trick to prevent compiler error if the label is not used
 }
 
 // IColumn_nameContext is an interface to support dynamic dispatch.
@@ -26541,15 +29274,20 @@ type IColumn_nameContext interface {
 }
 
 type Column_nameContext struct {
-	*antlr.BaseParserRuleContext
+	antlr.BaseParserRuleContext
 	parser antlr.Parser
 }
 
 func NewEmptyColumn_nameContext() *Column_nameContext {
 	var p = new(Column_nameContext)
-	p.BaseParserRuleContext = antlr.NewBaseParserRuleContext(nil, -1)
+	antlr.InitBaseParserRuleContext(&p.BaseParserRuleContext, nil, -1)
 	p.RuleIndex = SQLiteParserRULE_column_name
 	return p
+}
+
+func InitEmptyColumn_nameContext(p *Column_nameContext) {
+	antlr.InitBaseParserRuleContext(&p.BaseParserRuleContext, nil, -1)
+	p.RuleIndex = SQLiteParserRULE_column_name
 }
 
 func (*Column_nameContext) IsColumn_nameContext() {}
@@ -26557,7 +29295,7 @@ func (*Column_nameContext) IsColumn_nameContext() {}
 func NewColumn_nameContext(parser antlr.Parser, parent antlr.ParserRuleContext, invokingState int) *Column_nameContext {
 	var p = new(Column_nameContext)
 
-	p.BaseParserRuleContext = antlr.NewBaseParserRuleContext(parent, invokingState)
+	antlr.InitBaseParserRuleContext(&p.BaseParserRuleContext, parent, invokingState)
 
 	p.parser = parser
 	p.RuleIndex = SQLiteParserRULE_column_name
@@ -26604,35 +29342,25 @@ func (s *Column_nameContext) ExitRule(listener antlr.ParseTreeListener) {
 }
 
 func (p *SQLiteParser) Column_name() (localctx IColumn_nameContext) {
-	this := p
-	_ = this
-
 	localctx = NewColumn_nameContext(p, p.GetParserRuleContext(), p.GetState())
 	p.EnterRule(localctx, 188, SQLiteParserRULE_column_name)
-
-	defer func() {
-		p.ExitRule()
-	}()
-
-	defer func() {
-		if err := recover(); err != nil {
-			if v, ok := err.(antlr.RecognitionException); ok {
-				localctx.SetException(v)
-				p.GetErrorHandler().ReportError(p, v)
-				p.GetErrorHandler().Recover(p, v)
-			} else {
-				panic(err)
-			}
-		}
-	}()
-
 	p.EnterOuterAlt(localctx, 1)
 	{
 		p.SetState(2010)
 		p.Any_name()
 	}
 
+errorExit:
+	if p.HasError() {
+		v := p.GetError()
+		localctx.SetException(v)
+		p.GetErrorHandler().ReportError(p, v)
+		p.GetErrorHandler().Recover(p, v)
+		p.SetError(nil)
+	}
+	p.ExitRule()
 	return localctx
+	goto errorExit // Trick to prevent compiler error if the label is not used
 }
 
 // ICollation_nameContext is an interface to support dynamic dispatch.
@@ -26650,15 +29378,20 @@ type ICollation_nameContext interface {
 }
 
 type Collation_nameContext struct {
-	*antlr.BaseParserRuleContext
+	antlr.BaseParserRuleContext
 	parser antlr.Parser
 }
 
 func NewEmptyCollation_nameContext() *Collation_nameContext {
 	var p = new(Collation_nameContext)
-	p.BaseParserRuleContext = antlr.NewBaseParserRuleContext(nil, -1)
+	antlr.InitBaseParserRuleContext(&p.BaseParserRuleContext, nil, -1)
 	p.RuleIndex = SQLiteParserRULE_collation_name
 	return p
+}
+
+func InitEmptyCollation_nameContext(p *Collation_nameContext) {
+	antlr.InitBaseParserRuleContext(&p.BaseParserRuleContext, nil, -1)
+	p.RuleIndex = SQLiteParserRULE_collation_name
 }
 
 func (*Collation_nameContext) IsCollation_nameContext() {}
@@ -26666,7 +29399,7 @@ func (*Collation_nameContext) IsCollation_nameContext() {}
 func NewCollation_nameContext(parser antlr.Parser, parent antlr.ParserRuleContext, invokingState int) *Collation_nameContext {
 	var p = new(Collation_nameContext)
 
-	p.BaseParserRuleContext = antlr.NewBaseParserRuleContext(parent, invokingState)
+	antlr.InitBaseParserRuleContext(&p.BaseParserRuleContext, parent, invokingState)
 
 	p.parser = parser
 	p.RuleIndex = SQLiteParserRULE_collation_name
@@ -26713,35 +29446,25 @@ func (s *Collation_nameContext) ExitRule(listener antlr.ParseTreeListener) {
 }
 
 func (p *SQLiteParser) Collation_name() (localctx ICollation_nameContext) {
-	this := p
-	_ = this
-
 	localctx = NewCollation_nameContext(p, p.GetParserRuleContext(), p.GetState())
 	p.EnterRule(localctx, 190, SQLiteParserRULE_collation_name)
-
-	defer func() {
-		p.ExitRule()
-	}()
-
-	defer func() {
-		if err := recover(); err != nil {
-			if v, ok := err.(antlr.RecognitionException); ok {
-				localctx.SetException(v)
-				p.GetErrorHandler().ReportError(p, v)
-				p.GetErrorHandler().Recover(p, v)
-			} else {
-				panic(err)
-			}
-		}
-	}()
-
 	p.EnterOuterAlt(localctx, 1)
 	{
 		p.SetState(2012)
 		p.Any_name()
 	}
 
+errorExit:
+	if p.HasError() {
+		v := p.GetError()
+		localctx.SetException(v)
+		p.GetErrorHandler().ReportError(p, v)
+		p.GetErrorHandler().Recover(p, v)
+		p.SetError(nil)
+	}
+	p.ExitRule()
 	return localctx
+	goto errorExit // Trick to prevent compiler error if the label is not used
 }
 
 // IForeign_tableContext is an interface to support dynamic dispatch.
@@ -26759,15 +29482,20 @@ type IForeign_tableContext interface {
 }
 
 type Foreign_tableContext struct {
-	*antlr.BaseParserRuleContext
+	antlr.BaseParserRuleContext
 	parser antlr.Parser
 }
 
 func NewEmptyForeign_tableContext() *Foreign_tableContext {
 	var p = new(Foreign_tableContext)
-	p.BaseParserRuleContext = antlr.NewBaseParserRuleContext(nil, -1)
+	antlr.InitBaseParserRuleContext(&p.BaseParserRuleContext, nil, -1)
 	p.RuleIndex = SQLiteParserRULE_foreign_table
 	return p
+}
+
+func InitEmptyForeign_tableContext(p *Foreign_tableContext) {
+	antlr.InitBaseParserRuleContext(&p.BaseParserRuleContext, nil, -1)
+	p.RuleIndex = SQLiteParserRULE_foreign_table
 }
 
 func (*Foreign_tableContext) IsForeign_tableContext() {}
@@ -26775,7 +29503,7 @@ func (*Foreign_tableContext) IsForeign_tableContext() {}
 func NewForeign_tableContext(parser antlr.Parser, parent antlr.ParserRuleContext, invokingState int) *Foreign_tableContext {
 	var p = new(Foreign_tableContext)
 
-	p.BaseParserRuleContext = antlr.NewBaseParserRuleContext(parent, invokingState)
+	antlr.InitBaseParserRuleContext(&p.BaseParserRuleContext, parent, invokingState)
 
 	p.parser = parser
 	p.RuleIndex = SQLiteParserRULE_foreign_table
@@ -26822,35 +29550,25 @@ func (s *Foreign_tableContext) ExitRule(listener antlr.ParseTreeListener) {
 }
 
 func (p *SQLiteParser) Foreign_table() (localctx IForeign_tableContext) {
-	this := p
-	_ = this
-
 	localctx = NewForeign_tableContext(p, p.GetParserRuleContext(), p.GetState())
 	p.EnterRule(localctx, 192, SQLiteParserRULE_foreign_table)
-
-	defer func() {
-		p.ExitRule()
-	}()
-
-	defer func() {
-		if err := recover(); err != nil {
-			if v, ok := err.(antlr.RecognitionException); ok {
-				localctx.SetException(v)
-				p.GetErrorHandler().ReportError(p, v)
-				p.GetErrorHandler().Recover(p, v)
-			} else {
-				panic(err)
-			}
-		}
-	}()
-
 	p.EnterOuterAlt(localctx, 1)
 	{
 		p.SetState(2014)
 		p.Any_name()
 	}
 
+errorExit:
+	if p.HasError() {
+		v := p.GetError()
+		localctx.SetException(v)
+		p.GetErrorHandler().ReportError(p, v)
+		p.GetErrorHandler().Recover(p, v)
+		p.SetError(nil)
+	}
+	p.ExitRule()
 	return localctx
+	goto errorExit // Trick to prevent compiler error if the label is not used
 }
 
 // IIndex_nameContext is an interface to support dynamic dispatch.
@@ -26868,15 +29586,20 @@ type IIndex_nameContext interface {
 }
 
 type Index_nameContext struct {
-	*antlr.BaseParserRuleContext
+	antlr.BaseParserRuleContext
 	parser antlr.Parser
 }
 
 func NewEmptyIndex_nameContext() *Index_nameContext {
 	var p = new(Index_nameContext)
-	p.BaseParserRuleContext = antlr.NewBaseParserRuleContext(nil, -1)
+	antlr.InitBaseParserRuleContext(&p.BaseParserRuleContext, nil, -1)
 	p.RuleIndex = SQLiteParserRULE_index_name
 	return p
+}
+
+func InitEmptyIndex_nameContext(p *Index_nameContext) {
+	antlr.InitBaseParserRuleContext(&p.BaseParserRuleContext, nil, -1)
+	p.RuleIndex = SQLiteParserRULE_index_name
 }
 
 func (*Index_nameContext) IsIndex_nameContext() {}
@@ -26884,7 +29607,7 @@ func (*Index_nameContext) IsIndex_nameContext() {}
 func NewIndex_nameContext(parser antlr.Parser, parent antlr.ParserRuleContext, invokingState int) *Index_nameContext {
 	var p = new(Index_nameContext)
 
-	p.BaseParserRuleContext = antlr.NewBaseParserRuleContext(parent, invokingState)
+	antlr.InitBaseParserRuleContext(&p.BaseParserRuleContext, parent, invokingState)
 
 	p.parser = parser
 	p.RuleIndex = SQLiteParserRULE_index_name
@@ -26931,35 +29654,25 @@ func (s *Index_nameContext) ExitRule(listener antlr.ParseTreeListener) {
 }
 
 func (p *SQLiteParser) Index_name() (localctx IIndex_nameContext) {
-	this := p
-	_ = this
-
 	localctx = NewIndex_nameContext(p, p.GetParserRuleContext(), p.GetState())
 	p.EnterRule(localctx, 194, SQLiteParserRULE_index_name)
-
-	defer func() {
-		p.ExitRule()
-	}()
-
-	defer func() {
-		if err := recover(); err != nil {
-			if v, ok := err.(antlr.RecognitionException); ok {
-				localctx.SetException(v)
-				p.GetErrorHandler().ReportError(p, v)
-				p.GetErrorHandler().Recover(p, v)
-			} else {
-				panic(err)
-			}
-		}
-	}()
-
 	p.EnterOuterAlt(localctx, 1)
 	{
 		p.SetState(2016)
 		p.Any_name()
 	}
 
+errorExit:
+	if p.HasError() {
+		v := p.GetError()
+		localctx.SetException(v)
+		p.GetErrorHandler().ReportError(p, v)
+		p.GetErrorHandler().Recover(p, v)
+		p.SetError(nil)
+	}
+	p.ExitRule()
 	return localctx
+	goto errorExit // Trick to prevent compiler error if the label is not used
 }
 
 // ITrigger_nameContext is an interface to support dynamic dispatch.
@@ -26977,15 +29690,20 @@ type ITrigger_nameContext interface {
 }
 
 type Trigger_nameContext struct {
-	*antlr.BaseParserRuleContext
+	antlr.BaseParserRuleContext
 	parser antlr.Parser
 }
 
 func NewEmptyTrigger_nameContext() *Trigger_nameContext {
 	var p = new(Trigger_nameContext)
-	p.BaseParserRuleContext = antlr.NewBaseParserRuleContext(nil, -1)
+	antlr.InitBaseParserRuleContext(&p.BaseParserRuleContext, nil, -1)
 	p.RuleIndex = SQLiteParserRULE_trigger_name
 	return p
+}
+
+func InitEmptyTrigger_nameContext(p *Trigger_nameContext) {
+	antlr.InitBaseParserRuleContext(&p.BaseParserRuleContext, nil, -1)
+	p.RuleIndex = SQLiteParserRULE_trigger_name
 }
 
 func (*Trigger_nameContext) IsTrigger_nameContext() {}
@@ -26993,7 +29711,7 @@ func (*Trigger_nameContext) IsTrigger_nameContext() {}
 func NewTrigger_nameContext(parser antlr.Parser, parent antlr.ParserRuleContext, invokingState int) *Trigger_nameContext {
 	var p = new(Trigger_nameContext)
 
-	p.BaseParserRuleContext = antlr.NewBaseParserRuleContext(parent, invokingState)
+	antlr.InitBaseParserRuleContext(&p.BaseParserRuleContext, parent, invokingState)
 
 	p.parser = parser
 	p.RuleIndex = SQLiteParserRULE_trigger_name
@@ -27040,35 +29758,25 @@ func (s *Trigger_nameContext) ExitRule(listener antlr.ParseTreeListener) {
 }
 
 func (p *SQLiteParser) Trigger_name() (localctx ITrigger_nameContext) {
-	this := p
-	_ = this
-
 	localctx = NewTrigger_nameContext(p, p.GetParserRuleContext(), p.GetState())
 	p.EnterRule(localctx, 196, SQLiteParserRULE_trigger_name)
-
-	defer func() {
-		p.ExitRule()
-	}()
-
-	defer func() {
-		if err := recover(); err != nil {
-			if v, ok := err.(antlr.RecognitionException); ok {
-				localctx.SetException(v)
-				p.GetErrorHandler().ReportError(p, v)
-				p.GetErrorHandler().Recover(p, v)
-			} else {
-				panic(err)
-			}
-		}
-	}()
-
 	p.EnterOuterAlt(localctx, 1)
 	{
 		p.SetState(2018)
 		p.Any_name()
 	}
 
+errorExit:
+	if p.HasError() {
+		v := p.GetError()
+		localctx.SetException(v)
+		p.GetErrorHandler().ReportError(p, v)
+		p.GetErrorHandler().Recover(p, v)
+		p.SetError(nil)
+	}
+	p.ExitRule()
 	return localctx
+	goto errorExit // Trick to prevent compiler error if the label is not used
 }
 
 // IView_nameContext is an interface to support dynamic dispatch.
@@ -27086,15 +29794,20 @@ type IView_nameContext interface {
 }
 
 type View_nameContext struct {
-	*antlr.BaseParserRuleContext
+	antlr.BaseParserRuleContext
 	parser antlr.Parser
 }
 
 func NewEmptyView_nameContext() *View_nameContext {
 	var p = new(View_nameContext)
-	p.BaseParserRuleContext = antlr.NewBaseParserRuleContext(nil, -1)
+	antlr.InitBaseParserRuleContext(&p.BaseParserRuleContext, nil, -1)
 	p.RuleIndex = SQLiteParserRULE_view_name
 	return p
+}
+
+func InitEmptyView_nameContext(p *View_nameContext) {
+	antlr.InitBaseParserRuleContext(&p.BaseParserRuleContext, nil, -1)
+	p.RuleIndex = SQLiteParserRULE_view_name
 }
 
 func (*View_nameContext) IsView_nameContext() {}
@@ -27102,7 +29815,7 @@ func (*View_nameContext) IsView_nameContext() {}
 func NewView_nameContext(parser antlr.Parser, parent antlr.ParserRuleContext, invokingState int) *View_nameContext {
 	var p = new(View_nameContext)
 
-	p.BaseParserRuleContext = antlr.NewBaseParserRuleContext(parent, invokingState)
+	antlr.InitBaseParserRuleContext(&p.BaseParserRuleContext, parent, invokingState)
 
 	p.parser = parser
 	p.RuleIndex = SQLiteParserRULE_view_name
@@ -27149,35 +29862,25 @@ func (s *View_nameContext) ExitRule(listener antlr.ParseTreeListener) {
 }
 
 func (p *SQLiteParser) View_name() (localctx IView_nameContext) {
-	this := p
-	_ = this
-
 	localctx = NewView_nameContext(p, p.GetParserRuleContext(), p.GetState())
 	p.EnterRule(localctx, 198, SQLiteParserRULE_view_name)
-
-	defer func() {
-		p.ExitRule()
-	}()
-
-	defer func() {
-		if err := recover(); err != nil {
-			if v, ok := err.(antlr.RecognitionException); ok {
-				localctx.SetException(v)
-				p.GetErrorHandler().ReportError(p, v)
-				p.GetErrorHandler().Recover(p, v)
-			} else {
-				panic(err)
-			}
-		}
-	}()
-
 	p.EnterOuterAlt(localctx, 1)
 	{
 		p.SetState(2020)
 		p.Any_name()
 	}
 
+errorExit:
+	if p.HasError() {
+		v := p.GetError()
+		localctx.SetException(v)
+		p.GetErrorHandler().ReportError(p, v)
+		p.GetErrorHandler().Recover(p, v)
+		p.SetError(nil)
+	}
+	p.ExitRule()
 	return localctx
+	goto errorExit // Trick to prevent compiler error if the label is not used
 }
 
 // IModule_nameContext is an interface to support dynamic dispatch.
@@ -27195,15 +29898,20 @@ type IModule_nameContext interface {
 }
 
 type Module_nameContext struct {
-	*antlr.BaseParserRuleContext
+	antlr.BaseParserRuleContext
 	parser antlr.Parser
 }
 
 func NewEmptyModule_nameContext() *Module_nameContext {
 	var p = new(Module_nameContext)
-	p.BaseParserRuleContext = antlr.NewBaseParserRuleContext(nil, -1)
+	antlr.InitBaseParserRuleContext(&p.BaseParserRuleContext, nil, -1)
 	p.RuleIndex = SQLiteParserRULE_module_name
 	return p
+}
+
+func InitEmptyModule_nameContext(p *Module_nameContext) {
+	antlr.InitBaseParserRuleContext(&p.BaseParserRuleContext, nil, -1)
+	p.RuleIndex = SQLiteParserRULE_module_name
 }
 
 func (*Module_nameContext) IsModule_nameContext() {}
@@ -27211,7 +29919,7 @@ func (*Module_nameContext) IsModule_nameContext() {}
 func NewModule_nameContext(parser antlr.Parser, parent antlr.ParserRuleContext, invokingState int) *Module_nameContext {
 	var p = new(Module_nameContext)
 
-	p.BaseParserRuleContext = antlr.NewBaseParserRuleContext(parent, invokingState)
+	antlr.InitBaseParserRuleContext(&p.BaseParserRuleContext, parent, invokingState)
 
 	p.parser = parser
 	p.RuleIndex = SQLiteParserRULE_module_name
@@ -27258,35 +29966,25 @@ func (s *Module_nameContext) ExitRule(listener antlr.ParseTreeListener) {
 }
 
 func (p *SQLiteParser) Module_name() (localctx IModule_nameContext) {
-	this := p
-	_ = this
-
 	localctx = NewModule_nameContext(p, p.GetParserRuleContext(), p.GetState())
 	p.EnterRule(localctx, 200, SQLiteParserRULE_module_name)
-
-	defer func() {
-		p.ExitRule()
-	}()
-
-	defer func() {
-		if err := recover(); err != nil {
-			if v, ok := err.(antlr.RecognitionException); ok {
-				localctx.SetException(v)
-				p.GetErrorHandler().ReportError(p, v)
-				p.GetErrorHandler().Recover(p, v)
-			} else {
-				panic(err)
-			}
-		}
-	}()
-
 	p.EnterOuterAlt(localctx, 1)
 	{
 		p.SetState(2022)
 		p.Any_name()
 	}
 
+errorExit:
+	if p.HasError() {
+		v := p.GetError()
+		localctx.SetException(v)
+		p.GetErrorHandler().ReportError(p, v)
+		p.GetErrorHandler().Recover(p, v)
+		p.SetError(nil)
+	}
+	p.ExitRule()
 	return localctx
+	goto errorExit // Trick to prevent compiler error if the label is not used
 }
 
 // IPragma_nameContext is an interface to support dynamic dispatch.
@@ -27304,15 +30002,20 @@ type IPragma_nameContext interface {
 }
 
 type Pragma_nameContext struct {
-	*antlr.BaseParserRuleContext
+	antlr.BaseParserRuleContext
 	parser antlr.Parser
 }
 
 func NewEmptyPragma_nameContext() *Pragma_nameContext {
 	var p = new(Pragma_nameContext)
-	p.BaseParserRuleContext = antlr.NewBaseParserRuleContext(nil, -1)
+	antlr.InitBaseParserRuleContext(&p.BaseParserRuleContext, nil, -1)
 	p.RuleIndex = SQLiteParserRULE_pragma_name
 	return p
+}
+
+func InitEmptyPragma_nameContext(p *Pragma_nameContext) {
+	antlr.InitBaseParserRuleContext(&p.BaseParserRuleContext, nil, -1)
+	p.RuleIndex = SQLiteParserRULE_pragma_name
 }
 
 func (*Pragma_nameContext) IsPragma_nameContext() {}
@@ -27320,7 +30023,7 @@ func (*Pragma_nameContext) IsPragma_nameContext() {}
 func NewPragma_nameContext(parser antlr.Parser, parent antlr.ParserRuleContext, invokingState int) *Pragma_nameContext {
 	var p = new(Pragma_nameContext)
 
-	p.BaseParserRuleContext = antlr.NewBaseParserRuleContext(parent, invokingState)
+	antlr.InitBaseParserRuleContext(&p.BaseParserRuleContext, parent, invokingState)
 
 	p.parser = parser
 	p.RuleIndex = SQLiteParserRULE_pragma_name
@@ -27367,35 +30070,25 @@ func (s *Pragma_nameContext) ExitRule(listener antlr.ParseTreeListener) {
 }
 
 func (p *SQLiteParser) Pragma_name() (localctx IPragma_nameContext) {
-	this := p
-	_ = this
-
 	localctx = NewPragma_nameContext(p, p.GetParserRuleContext(), p.GetState())
 	p.EnterRule(localctx, 202, SQLiteParserRULE_pragma_name)
-
-	defer func() {
-		p.ExitRule()
-	}()
-
-	defer func() {
-		if err := recover(); err != nil {
-			if v, ok := err.(antlr.RecognitionException); ok {
-				localctx.SetException(v)
-				p.GetErrorHandler().ReportError(p, v)
-				p.GetErrorHandler().Recover(p, v)
-			} else {
-				panic(err)
-			}
-		}
-	}()
-
 	p.EnterOuterAlt(localctx, 1)
 	{
 		p.SetState(2024)
 		p.Any_name()
 	}
 
+errorExit:
+	if p.HasError() {
+		v := p.GetError()
+		localctx.SetException(v)
+		p.GetErrorHandler().ReportError(p, v)
+		p.GetErrorHandler().Recover(p, v)
+		p.SetError(nil)
+	}
+	p.ExitRule()
 	return localctx
+	goto errorExit // Trick to prevent compiler error if the label is not used
 }
 
 // ISavepoint_nameContext is an interface to support dynamic dispatch.
@@ -27413,15 +30106,20 @@ type ISavepoint_nameContext interface {
 }
 
 type Savepoint_nameContext struct {
-	*antlr.BaseParserRuleContext
+	antlr.BaseParserRuleContext
 	parser antlr.Parser
 }
 
 func NewEmptySavepoint_nameContext() *Savepoint_nameContext {
 	var p = new(Savepoint_nameContext)
-	p.BaseParserRuleContext = antlr.NewBaseParserRuleContext(nil, -1)
+	antlr.InitBaseParserRuleContext(&p.BaseParserRuleContext, nil, -1)
 	p.RuleIndex = SQLiteParserRULE_savepoint_name
 	return p
+}
+
+func InitEmptySavepoint_nameContext(p *Savepoint_nameContext) {
+	antlr.InitBaseParserRuleContext(&p.BaseParserRuleContext, nil, -1)
+	p.RuleIndex = SQLiteParserRULE_savepoint_name
 }
 
 func (*Savepoint_nameContext) IsSavepoint_nameContext() {}
@@ -27429,7 +30127,7 @@ func (*Savepoint_nameContext) IsSavepoint_nameContext() {}
 func NewSavepoint_nameContext(parser antlr.Parser, parent antlr.ParserRuleContext, invokingState int) *Savepoint_nameContext {
 	var p = new(Savepoint_nameContext)
 
-	p.BaseParserRuleContext = antlr.NewBaseParserRuleContext(parent, invokingState)
+	antlr.InitBaseParserRuleContext(&p.BaseParserRuleContext, parent, invokingState)
 
 	p.parser = parser
 	p.RuleIndex = SQLiteParserRULE_savepoint_name
@@ -27476,35 +30174,25 @@ func (s *Savepoint_nameContext) ExitRule(listener antlr.ParseTreeListener) {
 }
 
 func (p *SQLiteParser) Savepoint_name() (localctx ISavepoint_nameContext) {
-	this := p
-	_ = this
-
 	localctx = NewSavepoint_nameContext(p, p.GetParserRuleContext(), p.GetState())
 	p.EnterRule(localctx, 204, SQLiteParserRULE_savepoint_name)
-
-	defer func() {
-		p.ExitRule()
-	}()
-
-	defer func() {
-		if err := recover(); err != nil {
-			if v, ok := err.(antlr.RecognitionException); ok {
-				localctx.SetException(v)
-				p.GetErrorHandler().ReportError(p, v)
-				p.GetErrorHandler().Recover(p, v)
-			} else {
-				panic(err)
-			}
-		}
-	}()
-
 	p.EnterOuterAlt(localctx, 1)
 	{
 		p.SetState(2026)
 		p.Any_name()
 	}
 
+errorExit:
+	if p.HasError() {
+		v := p.GetError()
+		localctx.SetException(v)
+		p.GetErrorHandler().ReportError(p, v)
+		p.GetErrorHandler().Recover(p, v)
+		p.SetError(nil)
+	}
+	p.ExitRule()
 	return localctx
+	goto errorExit // Trick to prevent compiler error if the label is not used
 }
 
 // ITable_aliasContext is an interface to support dynamic dispatch.
@@ -27522,15 +30210,20 @@ type ITable_aliasContext interface {
 }
 
 type Table_aliasContext struct {
-	*antlr.BaseParserRuleContext
+	antlr.BaseParserRuleContext
 	parser antlr.Parser
 }
 
 func NewEmptyTable_aliasContext() *Table_aliasContext {
 	var p = new(Table_aliasContext)
-	p.BaseParserRuleContext = antlr.NewBaseParserRuleContext(nil, -1)
+	antlr.InitBaseParserRuleContext(&p.BaseParserRuleContext, nil, -1)
 	p.RuleIndex = SQLiteParserRULE_table_alias
 	return p
+}
+
+func InitEmptyTable_aliasContext(p *Table_aliasContext) {
+	antlr.InitBaseParserRuleContext(&p.BaseParserRuleContext, nil, -1)
+	p.RuleIndex = SQLiteParserRULE_table_alias
 }
 
 func (*Table_aliasContext) IsTable_aliasContext() {}
@@ -27538,7 +30231,7 @@ func (*Table_aliasContext) IsTable_aliasContext() {}
 func NewTable_aliasContext(parser antlr.Parser, parent antlr.ParserRuleContext, invokingState int) *Table_aliasContext {
 	var p = new(Table_aliasContext)
 
-	p.BaseParserRuleContext = antlr.NewBaseParserRuleContext(parent, invokingState)
+	antlr.InitBaseParserRuleContext(&p.BaseParserRuleContext, parent, invokingState)
 
 	p.parser = parser
 	p.RuleIndex = SQLiteParserRULE_table_alias
@@ -27585,35 +30278,25 @@ func (s *Table_aliasContext) ExitRule(listener antlr.ParseTreeListener) {
 }
 
 func (p *SQLiteParser) Table_alias() (localctx ITable_aliasContext) {
-	this := p
-	_ = this
-
 	localctx = NewTable_aliasContext(p, p.GetParserRuleContext(), p.GetState())
 	p.EnterRule(localctx, 206, SQLiteParserRULE_table_alias)
-
-	defer func() {
-		p.ExitRule()
-	}()
-
-	defer func() {
-		if err := recover(); err != nil {
-			if v, ok := err.(antlr.RecognitionException); ok {
-				localctx.SetException(v)
-				p.GetErrorHandler().ReportError(p, v)
-				p.GetErrorHandler().Recover(p, v)
-			} else {
-				panic(err)
-			}
-		}
-	}()
-
 	p.EnterOuterAlt(localctx, 1)
 	{
 		p.SetState(2028)
 		p.Any_name()
 	}
 
+errorExit:
+	if p.HasError() {
+		v := p.GetError()
+		localctx.SetException(v)
+		p.GetErrorHandler().ReportError(p, v)
+		p.GetErrorHandler().Recover(p, v)
+		p.SetError(nil)
+	}
+	p.ExitRule()
 	return localctx
+	goto errorExit // Trick to prevent compiler error if the label is not used
 }
 
 // ITransaction_nameContext is an interface to support dynamic dispatch.
@@ -27631,15 +30314,20 @@ type ITransaction_nameContext interface {
 }
 
 type Transaction_nameContext struct {
-	*antlr.BaseParserRuleContext
+	antlr.BaseParserRuleContext
 	parser antlr.Parser
 }
 
 func NewEmptyTransaction_nameContext() *Transaction_nameContext {
 	var p = new(Transaction_nameContext)
-	p.BaseParserRuleContext = antlr.NewBaseParserRuleContext(nil, -1)
+	antlr.InitBaseParserRuleContext(&p.BaseParserRuleContext, nil, -1)
 	p.RuleIndex = SQLiteParserRULE_transaction_name
 	return p
+}
+
+func InitEmptyTransaction_nameContext(p *Transaction_nameContext) {
+	antlr.InitBaseParserRuleContext(&p.BaseParserRuleContext, nil, -1)
+	p.RuleIndex = SQLiteParserRULE_transaction_name
 }
 
 func (*Transaction_nameContext) IsTransaction_nameContext() {}
@@ -27647,7 +30335,7 @@ func (*Transaction_nameContext) IsTransaction_nameContext() {}
 func NewTransaction_nameContext(parser antlr.Parser, parent antlr.ParserRuleContext, invokingState int) *Transaction_nameContext {
 	var p = new(Transaction_nameContext)
 
-	p.BaseParserRuleContext = antlr.NewBaseParserRuleContext(parent, invokingState)
+	antlr.InitBaseParserRuleContext(&p.BaseParserRuleContext, parent, invokingState)
 
 	p.parser = parser
 	p.RuleIndex = SQLiteParserRULE_transaction_name
@@ -27694,35 +30382,25 @@ func (s *Transaction_nameContext) ExitRule(listener antlr.ParseTreeListener) {
 }
 
 func (p *SQLiteParser) Transaction_name() (localctx ITransaction_nameContext) {
-	this := p
-	_ = this
-
 	localctx = NewTransaction_nameContext(p, p.GetParserRuleContext(), p.GetState())
 	p.EnterRule(localctx, 208, SQLiteParserRULE_transaction_name)
-
-	defer func() {
-		p.ExitRule()
-	}()
-
-	defer func() {
-		if err := recover(); err != nil {
-			if v, ok := err.(antlr.RecognitionException); ok {
-				localctx.SetException(v)
-				p.GetErrorHandler().ReportError(p, v)
-				p.GetErrorHandler().Recover(p, v)
-			} else {
-				panic(err)
-			}
-		}
-	}()
-
 	p.EnterOuterAlt(localctx, 1)
 	{
 		p.SetState(2030)
 		p.Any_name()
 	}
 
+errorExit:
+	if p.HasError() {
+		v := p.GetError()
+		localctx.SetException(v)
+		p.GetErrorHandler().ReportError(p, v)
+		p.GetErrorHandler().Recover(p, v)
+		p.SetError(nil)
+	}
+	p.ExitRule()
 	return localctx
+	goto errorExit // Trick to prevent compiler error if the label is not used
 }
 
 // IWindow_nameContext is an interface to support dynamic dispatch.
@@ -27740,15 +30418,20 @@ type IWindow_nameContext interface {
 }
 
 type Window_nameContext struct {
-	*antlr.BaseParserRuleContext
+	antlr.BaseParserRuleContext
 	parser antlr.Parser
 }
 
 func NewEmptyWindow_nameContext() *Window_nameContext {
 	var p = new(Window_nameContext)
-	p.BaseParserRuleContext = antlr.NewBaseParserRuleContext(nil, -1)
+	antlr.InitBaseParserRuleContext(&p.BaseParserRuleContext, nil, -1)
 	p.RuleIndex = SQLiteParserRULE_window_name
 	return p
+}
+
+func InitEmptyWindow_nameContext(p *Window_nameContext) {
+	antlr.InitBaseParserRuleContext(&p.BaseParserRuleContext, nil, -1)
+	p.RuleIndex = SQLiteParserRULE_window_name
 }
 
 func (*Window_nameContext) IsWindow_nameContext() {}
@@ -27756,7 +30439,7 @@ func (*Window_nameContext) IsWindow_nameContext() {}
 func NewWindow_nameContext(parser antlr.Parser, parent antlr.ParserRuleContext, invokingState int) *Window_nameContext {
 	var p = new(Window_nameContext)
 
-	p.BaseParserRuleContext = antlr.NewBaseParserRuleContext(parent, invokingState)
+	antlr.InitBaseParserRuleContext(&p.BaseParserRuleContext, parent, invokingState)
 
 	p.parser = parser
 	p.RuleIndex = SQLiteParserRULE_window_name
@@ -27803,35 +30486,25 @@ func (s *Window_nameContext) ExitRule(listener antlr.ParseTreeListener) {
 }
 
 func (p *SQLiteParser) Window_name() (localctx IWindow_nameContext) {
-	this := p
-	_ = this
-
 	localctx = NewWindow_nameContext(p, p.GetParserRuleContext(), p.GetState())
 	p.EnterRule(localctx, 210, SQLiteParserRULE_window_name)
-
-	defer func() {
-		p.ExitRule()
-	}()
-
-	defer func() {
-		if err := recover(); err != nil {
-			if v, ok := err.(antlr.RecognitionException); ok {
-				localctx.SetException(v)
-				p.GetErrorHandler().ReportError(p, v)
-				p.GetErrorHandler().Recover(p, v)
-			} else {
-				panic(err)
-			}
-		}
-	}()
-
 	p.EnterOuterAlt(localctx, 1)
 	{
 		p.SetState(2032)
 		p.Any_name()
 	}
 
+errorExit:
+	if p.HasError() {
+		v := p.GetError()
+		localctx.SetException(v)
+		p.GetErrorHandler().ReportError(p, v)
+		p.GetErrorHandler().Recover(p, v)
+		p.SetError(nil)
+	}
+	p.ExitRule()
 	return localctx
+	goto errorExit // Trick to prevent compiler error if the label is not used
 }
 
 // IAliasContext is an interface to support dynamic dispatch.
@@ -27849,15 +30522,20 @@ type IAliasContext interface {
 }
 
 type AliasContext struct {
-	*antlr.BaseParserRuleContext
+	antlr.BaseParserRuleContext
 	parser antlr.Parser
 }
 
 func NewEmptyAliasContext() *AliasContext {
 	var p = new(AliasContext)
-	p.BaseParserRuleContext = antlr.NewBaseParserRuleContext(nil, -1)
+	antlr.InitBaseParserRuleContext(&p.BaseParserRuleContext, nil, -1)
 	p.RuleIndex = SQLiteParserRULE_alias
 	return p
+}
+
+func InitEmptyAliasContext(p *AliasContext) {
+	antlr.InitBaseParserRuleContext(&p.BaseParserRuleContext, nil, -1)
+	p.RuleIndex = SQLiteParserRULE_alias
 }
 
 func (*AliasContext) IsAliasContext() {}
@@ -27865,7 +30543,7 @@ func (*AliasContext) IsAliasContext() {}
 func NewAliasContext(parser antlr.Parser, parent antlr.ParserRuleContext, invokingState int) *AliasContext {
 	var p = new(AliasContext)
 
-	p.BaseParserRuleContext = antlr.NewBaseParserRuleContext(parent, invokingState)
+	antlr.InitBaseParserRuleContext(&p.BaseParserRuleContext, parent, invokingState)
 
 	p.parser = parser
 	p.RuleIndex = SQLiteParserRULE_alias
@@ -27912,35 +30590,25 @@ func (s *AliasContext) ExitRule(listener antlr.ParseTreeListener) {
 }
 
 func (p *SQLiteParser) Alias() (localctx IAliasContext) {
-	this := p
-	_ = this
-
 	localctx = NewAliasContext(p, p.GetParserRuleContext(), p.GetState())
 	p.EnterRule(localctx, 212, SQLiteParserRULE_alias)
-
-	defer func() {
-		p.ExitRule()
-	}()
-
-	defer func() {
-		if err := recover(); err != nil {
-			if v, ok := err.(antlr.RecognitionException); ok {
-				localctx.SetException(v)
-				p.GetErrorHandler().ReportError(p, v)
-				p.GetErrorHandler().Recover(p, v)
-			} else {
-				panic(err)
-			}
-		}
-	}()
-
 	p.EnterOuterAlt(localctx, 1)
 	{
 		p.SetState(2034)
 		p.Any_name()
 	}
 
+errorExit:
+	if p.HasError() {
+		v := p.GetError()
+		localctx.SetException(v)
+		p.GetErrorHandler().ReportError(p, v)
+		p.GetErrorHandler().Recover(p, v)
+		p.SetError(nil)
+	}
+	p.ExitRule()
 	return localctx
+	goto errorExit // Trick to prevent compiler error if the label is not used
 }
 
 // IFilenameContext is an interface to support dynamic dispatch.
@@ -27958,15 +30626,20 @@ type IFilenameContext interface {
 }
 
 type FilenameContext struct {
-	*antlr.BaseParserRuleContext
+	antlr.BaseParserRuleContext
 	parser antlr.Parser
 }
 
 func NewEmptyFilenameContext() *FilenameContext {
 	var p = new(FilenameContext)
-	p.BaseParserRuleContext = antlr.NewBaseParserRuleContext(nil, -1)
+	antlr.InitBaseParserRuleContext(&p.BaseParserRuleContext, nil, -1)
 	p.RuleIndex = SQLiteParserRULE_filename
 	return p
+}
+
+func InitEmptyFilenameContext(p *FilenameContext) {
+	antlr.InitBaseParserRuleContext(&p.BaseParserRuleContext, nil, -1)
+	p.RuleIndex = SQLiteParserRULE_filename
 }
 
 func (*FilenameContext) IsFilenameContext() {}
@@ -27974,7 +30647,7 @@ func (*FilenameContext) IsFilenameContext() {}
 func NewFilenameContext(parser antlr.Parser, parent antlr.ParserRuleContext, invokingState int) *FilenameContext {
 	var p = new(FilenameContext)
 
-	p.BaseParserRuleContext = antlr.NewBaseParserRuleContext(parent, invokingState)
+	antlr.InitBaseParserRuleContext(&p.BaseParserRuleContext, parent, invokingState)
 
 	p.parser = parser
 	p.RuleIndex = SQLiteParserRULE_filename
@@ -28021,35 +30694,25 @@ func (s *FilenameContext) ExitRule(listener antlr.ParseTreeListener) {
 }
 
 func (p *SQLiteParser) Filename() (localctx IFilenameContext) {
-	this := p
-	_ = this
-
 	localctx = NewFilenameContext(p, p.GetParserRuleContext(), p.GetState())
 	p.EnterRule(localctx, 214, SQLiteParserRULE_filename)
-
-	defer func() {
-		p.ExitRule()
-	}()
-
-	defer func() {
-		if err := recover(); err != nil {
-			if v, ok := err.(antlr.RecognitionException); ok {
-				localctx.SetException(v)
-				p.GetErrorHandler().ReportError(p, v)
-				p.GetErrorHandler().Recover(p, v)
-			} else {
-				panic(err)
-			}
-		}
-	}()
-
 	p.EnterOuterAlt(localctx, 1)
 	{
 		p.SetState(2036)
 		p.Any_name()
 	}
 
+errorExit:
+	if p.HasError() {
+		v := p.GetError()
+		localctx.SetException(v)
+		p.GetErrorHandler().ReportError(p, v)
+		p.GetErrorHandler().Recover(p, v)
+		p.SetError(nil)
+	}
+	p.ExitRule()
 	return localctx
+	goto errorExit // Trick to prevent compiler error if the label is not used
 }
 
 // IBase_window_nameContext is an interface to support dynamic dispatch.
@@ -28067,15 +30730,20 @@ type IBase_window_nameContext interface {
 }
 
 type Base_window_nameContext struct {
-	*antlr.BaseParserRuleContext
+	antlr.BaseParserRuleContext
 	parser antlr.Parser
 }
 
 func NewEmptyBase_window_nameContext() *Base_window_nameContext {
 	var p = new(Base_window_nameContext)
-	p.BaseParserRuleContext = antlr.NewBaseParserRuleContext(nil, -1)
+	antlr.InitBaseParserRuleContext(&p.BaseParserRuleContext, nil, -1)
 	p.RuleIndex = SQLiteParserRULE_base_window_name
 	return p
+}
+
+func InitEmptyBase_window_nameContext(p *Base_window_nameContext) {
+	antlr.InitBaseParserRuleContext(&p.BaseParserRuleContext, nil, -1)
+	p.RuleIndex = SQLiteParserRULE_base_window_name
 }
 
 func (*Base_window_nameContext) IsBase_window_nameContext() {}
@@ -28083,7 +30751,7 @@ func (*Base_window_nameContext) IsBase_window_nameContext() {}
 func NewBase_window_nameContext(parser antlr.Parser, parent antlr.ParserRuleContext, invokingState int) *Base_window_nameContext {
 	var p = new(Base_window_nameContext)
 
-	p.BaseParserRuleContext = antlr.NewBaseParserRuleContext(parent, invokingState)
+	antlr.InitBaseParserRuleContext(&p.BaseParserRuleContext, parent, invokingState)
 
 	p.parser = parser
 	p.RuleIndex = SQLiteParserRULE_base_window_name
@@ -28130,35 +30798,25 @@ func (s *Base_window_nameContext) ExitRule(listener antlr.ParseTreeListener) {
 }
 
 func (p *SQLiteParser) Base_window_name() (localctx IBase_window_nameContext) {
-	this := p
-	_ = this
-
 	localctx = NewBase_window_nameContext(p, p.GetParserRuleContext(), p.GetState())
 	p.EnterRule(localctx, 216, SQLiteParserRULE_base_window_name)
-
-	defer func() {
-		p.ExitRule()
-	}()
-
-	defer func() {
-		if err := recover(); err != nil {
-			if v, ok := err.(antlr.RecognitionException); ok {
-				localctx.SetException(v)
-				p.GetErrorHandler().ReportError(p, v)
-				p.GetErrorHandler().Recover(p, v)
-			} else {
-				panic(err)
-			}
-		}
-	}()
-
 	p.EnterOuterAlt(localctx, 1)
 	{
 		p.SetState(2038)
 		p.Any_name()
 	}
 
+errorExit:
+	if p.HasError() {
+		v := p.GetError()
+		localctx.SetException(v)
+		p.GetErrorHandler().ReportError(p, v)
+		p.GetErrorHandler().Recover(p, v)
+		p.SetError(nil)
+	}
+	p.ExitRule()
 	return localctx
+	goto errorExit // Trick to prevent compiler error if the label is not used
 }
 
 // ISimple_funcContext is an interface to support dynamic dispatch.
@@ -28176,15 +30834,20 @@ type ISimple_funcContext interface {
 }
 
 type Simple_funcContext struct {
-	*antlr.BaseParserRuleContext
+	antlr.BaseParserRuleContext
 	parser antlr.Parser
 }
 
 func NewEmptySimple_funcContext() *Simple_funcContext {
 	var p = new(Simple_funcContext)
-	p.BaseParserRuleContext = antlr.NewBaseParserRuleContext(nil, -1)
+	antlr.InitBaseParserRuleContext(&p.BaseParserRuleContext, nil, -1)
 	p.RuleIndex = SQLiteParserRULE_simple_func
 	return p
+}
+
+func InitEmptySimple_funcContext(p *Simple_funcContext) {
+	antlr.InitBaseParserRuleContext(&p.BaseParserRuleContext, nil, -1)
+	p.RuleIndex = SQLiteParserRULE_simple_func
 }
 
 func (*Simple_funcContext) IsSimple_funcContext() {}
@@ -28192,7 +30855,7 @@ func (*Simple_funcContext) IsSimple_funcContext() {}
 func NewSimple_funcContext(parser antlr.Parser, parent antlr.ParserRuleContext, invokingState int) *Simple_funcContext {
 	var p = new(Simple_funcContext)
 
-	p.BaseParserRuleContext = antlr.NewBaseParserRuleContext(parent, invokingState)
+	antlr.InitBaseParserRuleContext(&p.BaseParserRuleContext, parent, invokingState)
 
 	p.parser = parser
 	p.RuleIndex = SQLiteParserRULE_simple_func
@@ -28239,35 +30902,25 @@ func (s *Simple_funcContext) ExitRule(listener antlr.ParseTreeListener) {
 }
 
 func (p *SQLiteParser) Simple_func() (localctx ISimple_funcContext) {
-	this := p
-	_ = this
-
 	localctx = NewSimple_funcContext(p, p.GetParserRuleContext(), p.GetState())
 	p.EnterRule(localctx, 218, SQLiteParserRULE_simple_func)
-
-	defer func() {
-		p.ExitRule()
-	}()
-
-	defer func() {
-		if err := recover(); err != nil {
-			if v, ok := err.(antlr.RecognitionException); ok {
-				localctx.SetException(v)
-				p.GetErrorHandler().ReportError(p, v)
-				p.GetErrorHandler().Recover(p, v)
-			} else {
-				panic(err)
-			}
-		}
-	}()
-
 	p.EnterOuterAlt(localctx, 1)
 	{
 		p.SetState(2040)
 		p.Any_name()
 	}
 
+errorExit:
+	if p.HasError() {
+		v := p.GetError()
+		localctx.SetException(v)
+		p.GetErrorHandler().ReportError(p, v)
+		p.GetErrorHandler().Recover(p, v)
+		p.SetError(nil)
+	}
+	p.ExitRule()
 	return localctx
+	goto errorExit // Trick to prevent compiler error if the label is not used
 }
 
 // IAggregate_funcContext is an interface to support dynamic dispatch.
@@ -28285,15 +30938,20 @@ type IAggregate_funcContext interface {
 }
 
 type Aggregate_funcContext struct {
-	*antlr.BaseParserRuleContext
+	antlr.BaseParserRuleContext
 	parser antlr.Parser
 }
 
 func NewEmptyAggregate_funcContext() *Aggregate_funcContext {
 	var p = new(Aggregate_funcContext)
-	p.BaseParserRuleContext = antlr.NewBaseParserRuleContext(nil, -1)
+	antlr.InitBaseParserRuleContext(&p.BaseParserRuleContext, nil, -1)
 	p.RuleIndex = SQLiteParserRULE_aggregate_func
 	return p
+}
+
+func InitEmptyAggregate_funcContext(p *Aggregate_funcContext) {
+	antlr.InitBaseParserRuleContext(&p.BaseParserRuleContext, nil, -1)
+	p.RuleIndex = SQLiteParserRULE_aggregate_func
 }
 
 func (*Aggregate_funcContext) IsAggregate_funcContext() {}
@@ -28301,7 +30959,7 @@ func (*Aggregate_funcContext) IsAggregate_funcContext() {}
 func NewAggregate_funcContext(parser antlr.Parser, parent antlr.ParserRuleContext, invokingState int) *Aggregate_funcContext {
 	var p = new(Aggregate_funcContext)
 
-	p.BaseParserRuleContext = antlr.NewBaseParserRuleContext(parent, invokingState)
+	antlr.InitBaseParserRuleContext(&p.BaseParserRuleContext, parent, invokingState)
 
 	p.parser = parser
 	p.RuleIndex = SQLiteParserRULE_aggregate_func
@@ -28348,35 +31006,25 @@ func (s *Aggregate_funcContext) ExitRule(listener antlr.ParseTreeListener) {
 }
 
 func (p *SQLiteParser) Aggregate_func() (localctx IAggregate_funcContext) {
-	this := p
-	_ = this
-
 	localctx = NewAggregate_funcContext(p, p.GetParserRuleContext(), p.GetState())
 	p.EnterRule(localctx, 220, SQLiteParserRULE_aggregate_func)
-
-	defer func() {
-		p.ExitRule()
-	}()
-
-	defer func() {
-		if err := recover(); err != nil {
-			if v, ok := err.(antlr.RecognitionException); ok {
-				localctx.SetException(v)
-				p.GetErrorHandler().ReportError(p, v)
-				p.GetErrorHandler().Recover(p, v)
-			} else {
-				panic(err)
-			}
-		}
-	}()
-
 	p.EnterOuterAlt(localctx, 1)
 	{
 		p.SetState(2042)
 		p.Any_name()
 	}
 
+errorExit:
+	if p.HasError() {
+		v := p.GetError()
+		localctx.SetException(v)
+		p.GetErrorHandler().ReportError(p, v)
+		p.GetErrorHandler().Recover(p, v)
+		p.SetError(nil)
+	}
+	p.ExitRule()
 	return localctx
+	goto errorExit // Trick to prevent compiler error if the label is not used
 }
 
 // ITable_function_nameContext is an interface to support dynamic dispatch.
@@ -28394,15 +31042,20 @@ type ITable_function_nameContext interface {
 }
 
 type Table_function_nameContext struct {
-	*antlr.BaseParserRuleContext
+	antlr.BaseParserRuleContext
 	parser antlr.Parser
 }
 
 func NewEmptyTable_function_nameContext() *Table_function_nameContext {
 	var p = new(Table_function_nameContext)
-	p.BaseParserRuleContext = antlr.NewBaseParserRuleContext(nil, -1)
+	antlr.InitBaseParserRuleContext(&p.BaseParserRuleContext, nil, -1)
 	p.RuleIndex = SQLiteParserRULE_table_function_name
 	return p
+}
+
+func InitEmptyTable_function_nameContext(p *Table_function_nameContext) {
+	antlr.InitBaseParserRuleContext(&p.BaseParserRuleContext, nil, -1)
+	p.RuleIndex = SQLiteParserRULE_table_function_name
 }
 
 func (*Table_function_nameContext) IsTable_function_nameContext() {}
@@ -28410,7 +31063,7 @@ func (*Table_function_nameContext) IsTable_function_nameContext() {}
 func NewTable_function_nameContext(parser antlr.Parser, parent antlr.ParserRuleContext, invokingState int) *Table_function_nameContext {
 	var p = new(Table_function_nameContext)
 
-	p.BaseParserRuleContext = antlr.NewBaseParserRuleContext(parent, invokingState)
+	antlr.InitBaseParserRuleContext(&p.BaseParserRuleContext, parent, invokingState)
 
 	p.parser = parser
 	p.RuleIndex = SQLiteParserRULE_table_function_name
@@ -28457,35 +31110,25 @@ func (s *Table_function_nameContext) ExitRule(listener antlr.ParseTreeListener) 
 }
 
 func (p *SQLiteParser) Table_function_name() (localctx ITable_function_nameContext) {
-	this := p
-	_ = this
-
 	localctx = NewTable_function_nameContext(p, p.GetParserRuleContext(), p.GetState())
 	p.EnterRule(localctx, 222, SQLiteParserRULE_table_function_name)
-
-	defer func() {
-		p.ExitRule()
-	}()
-
-	defer func() {
-		if err := recover(); err != nil {
-			if v, ok := err.(antlr.RecognitionException); ok {
-				localctx.SetException(v)
-				p.GetErrorHandler().ReportError(p, v)
-				p.GetErrorHandler().Recover(p, v)
-			} else {
-				panic(err)
-			}
-		}
-	}()
-
 	p.EnterOuterAlt(localctx, 1)
 	{
 		p.SetState(2044)
 		p.Any_name()
 	}
 
+errorExit:
+	if p.HasError() {
+		v := p.GetError()
+		localctx.SetException(v)
+		p.GetErrorHandler().ReportError(p, v)
+		p.GetErrorHandler().Recover(p, v)
+		p.SetError(nil)
+	}
+	p.ExitRule()
 	return localctx
+	goto errorExit // Trick to prevent compiler error if the label is not used
 }
 
 // IAny_nameContext is an interface to support dynamic dispatch.
@@ -28508,15 +31151,20 @@ type IAny_nameContext interface {
 }
 
 type Any_nameContext struct {
-	*antlr.BaseParserRuleContext
+	antlr.BaseParserRuleContext
 	parser antlr.Parser
 }
 
 func NewEmptyAny_nameContext() *Any_nameContext {
 	var p = new(Any_nameContext)
-	p.BaseParserRuleContext = antlr.NewBaseParserRuleContext(nil, -1)
+	antlr.InitBaseParserRuleContext(&p.BaseParserRuleContext, nil, -1)
 	p.RuleIndex = SQLiteParserRULE_any_name
 	return p
+}
+
+func InitEmptyAny_nameContext(p *Any_nameContext) {
+	antlr.InitBaseParserRuleContext(&p.BaseParserRuleContext, nil, -1)
+	p.RuleIndex = SQLiteParserRULE_any_name
 }
 
 func (*Any_nameContext) IsAny_nameContext() {}
@@ -28524,7 +31172,7 @@ func (*Any_nameContext) IsAny_nameContext() {}
 func NewAny_nameContext(parser antlr.Parser, parent antlr.ParserRuleContext, invokingState int) *Any_nameContext {
 	var p = new(Any_nameContext)
 
-	p.BaseParserRuleContext = antlr.NewBaseParserRuleContext(parent, invokingState)
+	antlr.InitBaseParserRuleContext(&p.BaseParserRuleContext, parent, invokingState)
 
 	p.parser = parser
 	p.RuleIndex = SQLiteParserRULE_any_name
@@ -28603,30 +31251,13 @@ func (s *Any_nameContext) ExitRule(listener antlr.ParseTreeListener) {
 }
 
 func (p *SQLiteParser) Any_name() (localctx IAny_nameContext) {
-	this := p
-	_ = this
-
 	localctx = NewAny_nameContext(p, p.GetParserRuleContext(), p.GetState())
 	p.EnterRule(localctx, 224, SQLiteParserRULE_any_name)
-
-	defer func() {
-		p.ExitRule()
-	}()
-
-	defer func() {
-		if err := recover(); err != nil {
-			if v, ok := err.(antlr.RecognitionException); ok {
-				localctx.SetException(v)
-				p.GetErrorHandler().ReportError(p, v)
-				p.GetErrorHandler().Recover(p, v)
-			} else {
-				panic(err)
-			}
-		}
-	}()
-
 	p.SetState(2053)
 	p.GetErrorHandler().Sync(p)
+	if p.HasError() {
+		goto errorExit
+	}
 
 	switch p.GetTokenStream().LA(1) {
 	case SQLiteParserIDENTIFIER:
@@ -28634,6 +31265,10 @@ func (p *SQLiteParser) Any_name() (localctx IAny_nameContext) {
 		{
 			p.SetState(2046)
 			p.Match(SQLiteParserIDENTIFIER)
+			if p.HasError() {
+				// Recognition error - abort rule
+				goto errorExit
+			}
 		}
 
 	case SQLiteParserABORT_, SQLiteParserACTION_, SQLiteParserADD_, SQLiteParserAFTER_, SQLiteParserALL_, SQLiteParserALTER_, SQLiteParserANALYZE_, SQLiteParserAND_, SQLiteParserAS_, SQLiteParserASC_, SQLiteParserATTACH_, SQLiteParserAUTOINCREMENT_, SQLiteParserBEFORE_, SQLiteParserBEGIN_, SQLiteParserBETWEEN_, SQLiteParserBY_, SQLiteParserCASCADE_, SQLiteParserCASE_, SQLiteParserCAST_, SQLiteParserCHECK_, SQLiteParserCOLLATE_, SQLiteParserCOLUMN_, SQLiteParserCOMMIT_, SQLiteParserCONFLICT_, SQLiteParserCONSTRAINT_, SQLiteParserCREATE_, SQLiteParserCROSS_, SQLiteParserCURRENT_DATE_, SQLiteParserCURRENT_TIME_, SQLiteParserCURRENT_TIMESTAMP_, SQLiteParserDATABASE_, SQLiteParserDEFAULT_, SQLiteParserDEFERRABLE_, SQLiteParserDEFERRED_, SQLiteParserDELETE_, SQLiteParserDESC_, SQLiteParserDETACH_, SQLiteParserDISTINCT_, SQLiteParserDROP_, SQLiteParserEACH_, SQLiteParserELSE_, SQLiteParserEND_, SQLiteParserESCAPE_, SQLiteParserEXCEPT_, SQLiteParserEXCLUSIVE_, SQLiteParserEXISTS_, SQLiteParserEXPLAIN_, SQLiteParserFAIL_, SQLiteParserFOR_, SQLiteParserFOREIGN_, SQLiteParserFROM_, SQLiteParserFULL_, SQLiteParserGLOB_, SQLiteParserGROUP_, SQLiteParserHAVING_, SQLiteParserIF_, SQLiteParserIGNORE_, SQLiteParserIMMEDIATE_, SQLiteParserIN_, SQLiteParserINDEX_, SQLiteParserINDEXED_, SQLiteParserINITIALLY_, SQLiteParserINNER_, SQLiteParserINSERT_, SQLiteParserINSTEAD_, SQLiteParserINTERSECT_, SQLiteParserINTO_, SQLiteParserIS_, SQLiteParserISNULL_, SQLiteParserJOIN_, SQLiteParserKEY_, SQLiteParserLEFT_, SQLiteParserLIKE_, SQLiteParserLIMIT_, SQLiteParserMATCH_, SQLiteParserNATURAL_, SQLiteParserNO_, SQLiteParserNOT_, SQLiteParserNOTNULL_, SQLiteParserNULL_, SQLiteParserOF_, SQLiteParserOFFSET_, SQLiteParserON_, SQLiteParserOR_, SQLiteParserORDER_, SQLiteParserOUTER_, SQLiteParserPLAN_, SQLiteParserPRAGMA_, SQLiteParserPRIMARY_, SQLiteParserQUERY_, SQLiteParserRAISE_, SQLiteParserRECURSIVE_, SQLiteParserREFERENCES_, SQLiteParserREGEXP_, SQLiteParserREINDEX_, SQLiteParserRELEASE_, SQLiteParserRENAME_, SQLiteParserREPLACE_, SQLiteParserRESTRICT_, SQLiteParserRIGHT_, SQLiteParserROLLBACK_, SQLiteParserROW_, SQLiteParserROWS_, SQLiteParserSAVEPOINT_, SQLiteParserSELECT_, SQLiteParserSET_, SQLiteParserTABLE_, SQLiteParserTEMP_, SQLiteParserTEMPORARY_, SQLiteParserTHEN_, SQLiteParserTO_, SQLiteParserTRANSACTION_, SQLiteParserTRIGGER_, SQLiteParserUNION_, SQLiteParserUNIQUE_, SQLiteParserUPDATE_, SQLiteParserUSING_, SQLiteParserVACUUM_, SQLiteParserVALUES_, SQLiteParserVIEW_, SQLiteParserVIRTUAL_, SQLiteParserWHEN_, SQLiteParserWHERE_, SQLiteParserWITH_, SQLiteParserWITHOUT_, SQLiteParserFIRST_VALUE_, SQLiteParserOVER_, SQLiteParserPARTITION_, SQLiteParserRANGE_, SQLiteParserPRECEDING_, SQLiteParserUNBOUNDED_, SQLiteParserCURRENT_, SQLiteParserFOLLOWING_, SQLiteParserCUME_DIST_, SQLiteParserDENSE_RANK_, SQLiteParserLAG_, SQLiteParserLAST_VALUE_, SQLiteParserLEAD_, SQLiteParserNTH_VALUE_, SQLiteParserNTILE_, SQLiteParserPERCENT_RANK_, SQLiteParserRANK_, SQLiteParserROW_NUMBER_, SQLiteParserGENERATED_, SQLiteParserALWAYS_, SQLiteParserSTORED_, SQLiteParserTRUE_, SQLiteParserFALSE_, SQLiteParserWINDOW_, SQLiteParserNULLS_, SQLiteParserFIRST_, SQLiteParserLAST_, SQLiteParserFILTER_, SQLiteParserGROUPS_, SQLiteParserEXCLUDE_:
@@ -28648,6 +31283,10 @@ func (p *SQLiteParser) Any_name() (localctx IAny_nameContext) {
 		{
 			p.SetState(2048)
 			p.Match(SQLiteParserSTRING_LITERAL)
+			if p.HasError() {
+				// Recognition error - abort rule
+				goto errorExit
+			}
 		}
 
 	case SQLiteParserOPEN_PAR:
@@ -28655,6 +31294,10 @@ func (p *SQLiteParser) Any_name() (localctx IAny_nameContext) {
 		{
 			p.SetState(2049)
 			p.Match(SQLiteParserOPEN_PAR)
+			if p.HasError() {
+				// Recognition error - abort rule
+				goto errorExit
+			}
 		}
 		{
 			p.SetState(2050)
@@ -28663,13 +31306,28 @@ func (p *SQLiteParser) Any_name() (localctx IAny_nameContext) {
 		{
 			p.SetState(2051)
 			p.Match(SQLiteParserCLOSE_PAR)
+			if p.HasError() {
+				// Recognition error - abort rule
+				goto errorExit
+			}
 		}
 
 	default:
-		panic(antlr.NewNoViableAltException(p, nil, nil, nil, nil, nil))
+		p.SetError(antlr.NewNoViableAltException(p, nil, nil, nil, nil, nil))
+		goto errorExit
 	}
 
+errorExit:
+	if p.HasError() {
+		v := p.GetError()
+		localctx.SetException(v)
+		p.GetErrorHandler().ReportError(p, v)
+		p.GetErrorHandler().Recover(p, v)
+		p.SetError(nil)
+	}
+	p.ExitRule()
 	return localctx
+	goto errorExit // Trick to prevent compiler error if the label is not used
 }
 
 func (p *SQLiteParser) Sempred(localctx antlr.RuleContext, ruleIndex, predIndex int) bool {
@@ -28687,9 +31345,6 @@ func (p *SQLiteParser) Sempred(localctx antlr.RuleContext, ruleIndex, predIndex 
 }
 
 func (p *SQLiteParser) Expr_Sempred(localctx antlr.RuleContext, predIndex int) bool {
-	this := p
-	_ = this
-
 	switch predIndex {
 	case 0:
 		return p.Precpred(p.GetParserRuleContext(), 20)

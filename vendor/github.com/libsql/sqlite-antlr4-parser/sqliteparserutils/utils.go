@@ -1,7 +1,8 @@
 package sqliteparserutils
 
 import (
-	"github.com/antlr/antlr4/runtime/Go/antlr/v4"
+	"github.com/antlr4-go/antlr/v4"
+
 	"github.com/libsql/sqlite-antlr4-parser/sqliteparser"
 )
 
@@ -16,7 +17,7 @@ type SplitStatementExtraInfo struct {
 func SplitStatement(statement string) (stmts []string, extraInfo SplitStatementExtraInfo) {
 	tokenStream := createTokenStream(statement)
 
-	stmtIntervals := make([]*antlr.Interval, 0)
+	stmtIntervals := make([]antlr.Interval, 0)
 	currentIntervalStart := -1
 	insideCreateTriggerStmt := false
 	insideMultilineComment := false

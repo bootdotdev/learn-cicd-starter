@@ -1,26 +1,97 @@
+# filippo.io/edwards25519 v1.1.0
+## explicit; go 1.20
+# github.com/BurntSushi/toml v1.2.1
+## explicit; go 1.16
+# github.com/ClickHouse/ch-go v0.61.5
+## explicit; go 1.21
+# github.com/ClickHouse/clickhouse-go/v2 v2.23.0
+## explicit; go 1.21
+# github.com/andybalholm/brotli v1.1.0
+## explicit; go 1.13
 # github.com/antlr/antlr4/runtime/Go/antlr/v4 v4.0.0-20230512164433-5d1fd1a340c9
 ## explicit; go 1.18
-github.com/antlr/antlr4/runtime/Go/antlr/v4
+# github.com/antlr4-go/antlr/v4 v4.13.0
+## explicit; go 1.20
+github.com/antlr4-go/antlr/v4
+# github.com/dustin/go-humanize v1.0.1
+## explicit; go 1.16
+# github.com/elastic/go-sysinfo v1.14.0
+## explicit; go 1.21
+# github.com/elastic/go-windows v1.0.1
+## explicit
 # github.com/go-chi/chi v1.5.4
 ## explicit; go 1.16
 github.com/go-chi/chi
 # github.com/go-chi/cors v1.2.1
 ## explicit; go 1.14
 github.com/go-chi/cors
-# github.com/google/uuid v1.3.0
+# github.com/go-faster/city v1.0.1
+## explicit; go 1.17
+# github.com/go-faster/errors v0.7.1
+## explicit; go 1.20
+# github.com/go-sql-driver/mysql v1.8.1
+## explicit; go 1.18
+# github.com/golang-jwt/jwt/v4 v4.5.0
+## explicit; go 1.16
+# github.com/golang-sql/civil v0.0.0-20220223132316-b832511892a9
+## explicit
+# github.com/golang-sql/sqlexp v0.1.0
+## explicit; go 1.16
+# github.com/golang/protobuf v1.5.4
+## explicit; go 1.17
+# github.com/google/uuid v1.6.0
 ## explicit
 github.com/google/uuid
+# github.com/hashicorp/golang-lru/v2 v2.0.7
+## explicit; go 1.18
+# github.com/jackc/pgpassfile v1.0.0
+## explicit; go 1.12
+# github.com/jackc/pgservicefile v0.0.0-20231201235250-de7065d80cb9
+## explicit; go 1.14
+# github.com/jackc/pgx/v5 v5.5.5
+## explicit; go 1.19
+# github.com/jackc/puddle/v2 v2.2.1
+## explicit; go 1.19
+# github.com/joeshaw/multierror v0.0.0-20140124173710-69b34d4ec901
+## explicit
 # github.com/joho/godotenv v1.5.1
 ## explicit; go 1.12
 github.com/joho/godotenv
-# github.com/klauspost/compress v1.15.15
-## explicit; go 1.17
-github.com/klauspost/compress/flate
-# github.com/libsql/sqlite-antlr4-parser v0.0.0-20230802215326-5cb5bb604475
+# github.com/jonboulle/clockwork v0.4.0
+## explicit; go 1.15
+# github.com/klauspost/compress v1.17.8
+## explicit; go 1.20
+# github.com/libsql/sqlite-antlr4-parser v0.0.0-20240327125255-dbf53b6cbf06
 ## explicit; go 1.19
 github.com/libsql/sqlite-antlr4-parser/sqliteparser
 github.com/libsql/sqlite-antlr4-parser/sqliteparserutils
-# github.com/tursodatabase/libsql-client-go v0.0.0-20240220085343-4ae0eb9d0898
+# github.com/mattn/go-isatty v0.0.20
+## explicit; go 1.15
+# github.com/mfridman/interpolate v0.0.2
+## explicit; go 1.19
+# github.com/microsoft/go-mssqldb v1.7.0
+## explicit; go 1.17
+# github.com/ncruces/go-strftime v0.1.9
+## explicit; go 1.17
+# github.com/paulmach/orb v0.11.1
+## explicit; go 1.15
+# github.com/pierrec/lz4/v4 v4.1.21
+## explicit; go 1.14
+# github.com/pkg/errors v0.9.1
+## explicit
+# github.com/pressly/goose/v3 v3.19.2
+## explicit; go 1.20
+# github.com/prometheus/procfs v0.13.0
+## explicit; go 1.19
+# github.com/remyoudompheng/bigfft v0.0.0-20230129092748-24d4a6f8daec
+## explicit; go 1.12
+# github.com/segmentio/asm v1.2.0
+## explicit; go 1.18
+# github.com/sethvargo/go-retry v0.2.4
+## explicit; go 1.16
+# github.com/shopspring/decimal v1.3.1
+## explicit; go 1.13
+# github.com/tursodatabase/libsql-client-go v0.0.0-20240411070317-a1138d155304
 ## explicit; go 1.20
 github.com/tursodatabase/libsql-client-go/libsql
 github.com/tursodatabase/libsql-client-go/libsql/internal/hrana
@@ -28,15 +99,72 @@ github.com/tursodatabase/libsql-client-go/libsql/internal/http
 github.com/tursodatabase/libsql-client-go/libsql/internal/http/hranaV2
 github.com/tursodatabase/libsql-client-go/libsql/internal/http/shared
 github.com/tursodatabase/libsql-client-go/libsql/internal/ws
-# golang.org/x/exp v0.0.0-20220722155223-a9213eeb770e
+# github.com/vertica/vertica-sql-go v1.3.3
+## explicit; go 1.13
+# github.com/ydb-platform/ydb-go-genproto v0.0.0-20240316140903-4a47abca1cca
+## explicit; go 1.16
+# github.com/ydb-platform/ydb-go-sdk/v3 v3.64.0
+## explicit; go 1.21
+# github.com/ziutek/mymysql v1.5.4
+## explicit
+# go.opentelemetry.io/otel v1.25.0
+## explicit; go 1.21
+# go.opentelemetry.io/otel/trace v1.25.0
+## explicit; go 1.21
+# go.uber.org/multierr v1.11.0
+## explicit; go 1.19
+# golang.org/x/crypto v0.22.0
 ## explicit; go 1.18
+# golang.org/x/exp v0.0.0-20240409090435-93d18d7e34b8
+## explicit; go 1.20
 golang.org/x/exp/constraints
 golang.org/x/exp/slices
-# nhooyr.io/websocket v1.8.7
-## explicit; go 1.13
+# golang.org/x/exp/typeparams v0.0.0-20221208152030-732eee02a75a
+## explicit; go 1.18
+# golang.org/x/mod v0.17.0
+## explicit; go 1.18
+# golang.org/x/net v0.24.0
+## explicit; go 1.18
+# golang.org/x/sync v0.7.0
+## explicit; go 1.18
+# golang.org/x/sys v0.19.0
+## explicit; go 1.18
+# golang.org/x/text v0.14.0
+## explicit; go 1.18
+# golang.org/x/tools v0.20.0
+## explicit; go 1.19
+# google.golang.org/genproto/googleapis/rpc v0.0.0-20240401170217-c3f982113cda
+## explicit; go 1.19
+# google.golang.org/grpc v1.63.2
+## explicit; go 1.19
+# google.golang.org/protobuf v1.33.0
+## explicit; go 1.17
+# gopkg.in/yaml.v3 v3.0.1
+## explicit
+# honnef.co/go/tools v0.4.7
+## explicit; go 1.19
+# howett.net/plist v1.0.1
+## explicit; go 1.12
+# modernc.org/gc/v3 v3.0.0-20240304020402-f0dba7c97c2b
+## explicit; go 1.20
+# modernc.org/libc v1.49.3
+## explicit; go 1.20
+# modernc.org/mathutil v1.6.0
+## explicit; go 1.18
+# modernc.org/memory v1.8.0
+## explicit; go 1.18
+# modernc.org/sqlite v1.29.6
+## explicit; go 1.20
+# modernc.org/strutil v1.2.0
+## explicit; go 1.18
+# modernc.org/token v1.1.0
+## explicit
+# nhooyr.io/websocket v1.8.11
+## explicit; go 1.19
 nhooyr.io/websocket
 nhooyr.io/websocket/internal/bpool
 nhooyr.io/websocket/internal/errd
+nhooyr.io/websocket/internal/util
 nhooyr.io/websocket/internal/wsjs
 nhooyr.io/websocket/internal/xsync
 nhooyr.io/websocket/wsjson
