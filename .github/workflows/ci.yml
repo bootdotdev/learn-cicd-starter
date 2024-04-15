@@ -20,4 +20,3 @@ jobs:
 
       - name: test runner
         run: go test ./...
-            exit 1
