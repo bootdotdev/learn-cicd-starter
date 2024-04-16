@@ -3,16 +3,13 @@ name: cd
 on: 
   push:
     branches: [main]
-  workflow_call:
-    secrets:
-        GOOGLE_APPLICATION_CREDENTIALS:
-        required: true
 
 jobs:
   deploy:
     name: Deploy
     runs-on: ubuntu-latest
     timeout-minutes: 30
+    secrets: inherit
 
     steps:
       - name: Check out code
