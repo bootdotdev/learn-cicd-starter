@@ -11,6 +11,17 @@ jobs:
     timeout-minutes: 30
 
     steps:
+      - id: 'auth'
+        uses: 'google-github-actions/auth@v2'
+        with: 
+          credentials_json: '${{ secrets.GCP_CREDENTIALS }}'
+        
+      - name: 'Sep Up Cloud SDK'
+        uses: google-github-actions/setup-gcloud@v2
+
+      - name: Use gcloud CLI
+        run: gcloud info 
+
       - name: Check out code
         uses: actions/checkout@v4
 
