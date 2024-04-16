@@ -3,9 +3,7 @@ name: cd
 on: 
   push:
     branches: [main]
-    secrets:
-      GOOGLE_APPLICATION_CREDENTIALS:
-        required: true
+
 
 jobs:
   deploy:
@@ -21,7 +19,7 @@ jobs:
         uses: actions/setup-go@v4
         with: 
           go-version: "1.20"
-          
+
       - name: Build app
         run: scripts/buildprod.sh
       
@@ -35,4 +33,6 @@ jobs:
 
       - name: 'Use gcloud CLI'
         run: 'gcloud info'
-        
+      
+      - name: build docker image
+        run: gcloud builds submit --tag us-central1-docker.pkg.dev/arctic-ocean-420506/notely-ar-repo/notely:latest .
