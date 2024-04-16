@@ -3,7 +3,10 @@ name: cd
 on: 
   push:
     branches: [main]
-
+  workflow_call:
+    secrets:
+        GOOGLE_APPLICATION_CREDENTIALS:
+        required: true
 
 jobs:
   deploy:
