@@ -22,11 +22,11 @@ jobs:
       - name: Build app
         run: scripts/buildprod.sh
       
-      - name: Print GCP Credentials
-        run: echo "${{ secrets.GCP_CREDENTIALS }}"
+      - name: Print All Secrets
+        run: printenv | grep -i secret
 
-      - name: Print FOO
-        run: echo "Hello world"
+      - name: Print All Environment Variables
+        run: printenv
 
       - id: 'auth'
         uses: 'google-github-actions/auth@v2'
