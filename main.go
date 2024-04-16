@@ -17,7 +17,6 @@ import (
 
 	"github.com/bootdotdev/learn-cicd-starter/internal/database"
 
-	"github.com/go-sql-driver/mysql"
 )
 
 type apiConfig struct {
