@@ -11,6 +11,14 @@ jobs:
     timeout-minutes: 30
 
     steps:
+      - name: Check out code
+        uses: actions/checkout@v4
+
+      - name: Set up Go
+        uses: actions/setup-go@v4
+        with: 
+          go-version: "1.20"
+      
       - id: 'auth'
         uses: 'google-github-actions/auth@v2'
         with: 
@@ -22,13 +30,5 @@ jobs:
       - name: Use gcloud CLI
         run: gcloud info 
 
-      - name: Check out code
-        uses: actions/checkout@v4
-
-      - name: Set up Go
-        uses: actions/setup-go@v4
-        with: 
-          go-version: "1.20"
-      
       - name: Build app
         run: scripts/buildprod.sh
