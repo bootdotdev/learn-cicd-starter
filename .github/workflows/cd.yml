@@ -25,6 +25,9 @@ jobs:
       - name: Print GCP Credentials
         run: echo "${{ secrets.GCP_CREDENTIALS }}"
 
+      - name: Print FOO
+        run: echo "Hello world"
+
       - id: 'auth'
         uses: 'google-github-actions/auth@v2'
         with:
