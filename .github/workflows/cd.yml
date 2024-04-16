@@ -9,7 +9,6 @@ jobs:
     name: Deploy
     runs-on: ubuntu-latest
     timeout-minutes: 30
-    secrets: inherit
 
     steps:
       - name: Check out code
