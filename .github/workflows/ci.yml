@@ -29,7 +29,12 @@ jobs:
         run: test -z $(go fmt ./...)
 
       - name: Install staticcheck
-        run: go install honnef.co/go/tools/cmd/staticcheck@latest
+      - uses: actions/checkout@v2
+        with:
+          fetch-depth: 1
+      - uses: dominikh/staticcheck-action@v1
+        with:
+          version: "latest"
 
       - name: Test Lint
         run: staticcheck ./...
