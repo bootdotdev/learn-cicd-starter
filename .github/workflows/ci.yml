@@ -19,5 +19,5 @@ jobs:
           go-version: '1.20'
 
       - name: Show Go version
-        run: echo "go --version"
+        run: go --version
 
