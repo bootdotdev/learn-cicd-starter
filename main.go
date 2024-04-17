@@ -41,7 +41,7 @@ func main() {
 	// libsql://[your-database].turso.io?authToken=[your-auth-token]
 	dbURL := os.Getenv("DATABASE_URL")
 	if dbURL == "" {
-		log.Println("DATABASE_URL environment variable is not set")
+		log.Println("DATABASE_URL environment variable not set")
 		log.Println("Running without CRUD endpoints")
 	} else {
 		db, err := sql.Open("libsql", dbURL)
