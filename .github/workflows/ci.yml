@@ -20,6 +20,8 @@ jobs:
 
       - name: Force Failure
         run: (go test ./... -cover)
+      - name: style
+        run: (test -z $(go fmt ./...))
 
       - name: style
         run: (test -z $(go fmt ./...))
