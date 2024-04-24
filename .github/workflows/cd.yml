@@ -24,4 +24,4 @@ jobs:
       - name: 'Use gcloud CLI'
         run: gcloud info
       - name: 'Build docker image and push gcloud artifact'
-        run: gcloud builds submit --tag '${{secrets.DOCKER_IMAGE_TAG}}'
+        run: gcloud builds submit --tag '${{ secrets.DOCKER_IMAGE_TAG }}'
