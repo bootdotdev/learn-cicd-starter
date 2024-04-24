@@ -12,7 +12,7 @@ func TestGetAPIKey(t *testing.T) {
 
 	got, err := GetAPIKey(input)
 	if err != nil {
-		t.Fatal("GetAPIKey return an error", err)
+		t.Fatal("GetAPIKey return an error: ", err)
 	}
 
 	want := "MyApiKey"
