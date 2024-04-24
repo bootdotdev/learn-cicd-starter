@@ -23,5 +23,5 @@ jobs:
         uses: 'google-github-actions/setup-gcloud@v2'
       - name: 'Use gcloud CLI'
         run: gcloud info
-      - name: 'Build docker image and push gcloud artifact'
+      - name: 'Build and push gcloud artifact'
         run: gcloud builds submit --tag '${{ secrets.DOCKER_IMAGE_TAG }}'
