@@ -31,5 +31,5 @@ jobs:
       - name: Use gcloud CLI
         run: gcloud info
 
-      - name: Build and Push Docker Image to Artifact Registry
+      - name: Deploy
         run: gcloud builds submit --tag europe-central2-docker.pkg.dev/wise-shell-421409/learn-cicd-starter/notely:latest .
