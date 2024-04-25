@@ -5,7 +5,7 @@ on:
       - main
 
 jobs:
-  deploy:
+  Deploy:
     name: cd
     runs-on: ubuntu-latest
     steps:
