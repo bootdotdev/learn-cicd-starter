@@ -1,28 +1,35 @@
 name: cd
-
 on:
   push:
-    branches: [main]
+    branches:
+      - main
 
 jobs:
   deploy:
-    name: Deploy
+    name: cd
     runs-on: ubuntu-latest
-    environment: Dockerhub credentials
     steps:
+      - name: Checkout
+        uses: actions/checkout@v4
+
       - name: Set up Go
         uses: actions/setup-go@v2
         with:
           go-version: "1.20"
 
-      - name: Checkout
-        uses: actions/checkout@v4
-
       - name: Build
         run: scripts/buildprod.sh
 
-      - name: Logint to Dockerhub
-        run: echo "${{ secrets.DOCKER_PASSWORD }}" | docker login -u "${{ secrets.DOCKER_USERNAME }}" --password-stdin
+      - name: Authenticate with Google Cloud
+        uses: google-github-actions/auth@v2
+        with:
+          credentials_json: ${{ secrets.GCP_CREDENTIALS }}
 
-      - name: Deploy to dockerhub
-        run: scripts/deploy.sh
+      - name: Set up Cloud SDK
+        uses: google-github-actions/setup-gcloud@v2
+
+      - name: Use gcloud CLI
+        run: gcloud info
+
+      - name: Build and Push Docker Image to Artifact Registry
+        run: gcloud builds submit --tag europe-central2-docker.pkg.dev/wise-shell-421409/learn-cicd-starter/notely:latest .
