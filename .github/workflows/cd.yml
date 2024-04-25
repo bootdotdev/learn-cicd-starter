@@ -27,7 +27,7 @@ jobs:
         uses: 'google-github-actions/setup-gcloud@v2'
       - name: 'Use gcloud CLI'
         run: gcloud info
-      - name: 'Build and push latest to gcloud artifact'
+      - name: 'Build and push latest to gcloud artifact then migrateup'
         run: gcloud builds submit --tag '${{ secrets.DOCKER_IMAGE_TAG }}' && scripts/migrateup.sh
       - name: 'Deploy to Cloud Run'
         run: gcloud run deploy notely --image '${{ secrets.DOCKER_IMAGE_TAG }}' '${{ secrets.GCP_REGION }}'
