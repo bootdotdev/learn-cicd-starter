@@ -32,3 +32,6 @@ jobs:
 
       - name: Deploy
         run: gcloud builds submit --tag europe-central2-docker.pkg.dev/wise-shell-421409/learn-cicd-starter/notely:latest .
+
+      - name: Deploy to Cloud Run
+        run: gcloud run deploy notely --image europe-west1-docker.pkg.dev/wise-shell-421409/learn-cicd-starter/notely:latest --region europe-west1 --allow-unauthenticated --project wise-shell-421409 --max-instances=4
