@@ -1,6 +1,9 @@
 # github.com/antlr/antlr4/runtime/Go/antlr/v4 v4.0.0-20230512164433-5d1fd1a340c9
 ## explicit; go 1.18
 github.com/antlr/antlr4/runtime/Go/antlr/v4
+# github.com/davecgh/go-spew v1.1.1
+## explicit
+github.com/davecgh/go-spew/spew
 # github.com/go-chi/chi v1.5.4
 ## explicit; go 1.16
 github.com/go-chi/chi
@@ -20,6 +23,12 @@ github.com/klauspost/compress/flate
 ## explicit; go 1.19
 github.com/libsql/sqlite-antlr4-parser/sqliteparser
 github.com/libsql/sqlite-antlr4-parser/sqliteparserutils
+# github.com/pmezard/go-difflib v1.0.0
+## explicit
+github.com/pmezard/go-difflib/difflib
+# github.com/stretchr/testify v1.9.0
+## explicit; go 1.17
+github.com/stretchr/testify/assert
 # github.com/tursodatabase/libsql-client-go v0.0.0-20240220085343-4ae0eb9d0898
 ## explicit; go 1.20
 github.com/tursodatabase/libsql-client-go/libsql
@@ -32,6 +41,9 @@ github.com/tursodatabase/libsql-client-go/libsql/internal/ws
 ## explicit; go 1.18
 golang.org/x/exp/constraints
 golang.org/x/exp/slices
+# gopkg.in/yaml.v3 v3.0.1
+## explicit
+gopkg.in/yaml.v3
 # nhooyr.io/websocket v1.8.7
 ## explicit; go 1.13
 nhooyr.io/websocket
