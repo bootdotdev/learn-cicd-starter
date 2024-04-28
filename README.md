@@ -1,5 +1,5 @@
 # display badge
-![code coverage badge]https://github.com/jpforbes5151/learn-cicd-starter/actions/workflows/ci.yml/badge.svg
+![code coverage badge](https://github.com/jpforbes5151/learn-cicd-starter/actions/workflows/ci.yml/badge.svg)
 
 
 # learn-cicd-starter (Notely)
