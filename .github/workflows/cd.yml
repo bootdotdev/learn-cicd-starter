@@ -5,15 +5,14 @@ on:
       - main
 
 jobs:
-  deploy:
-    name: cd
+  Deploy:
     runs-on: ubuntu-latest
     steps:
       - name: Checkout
         uses: actions/checkout@v4
 
       - name: Set up Go
-        uses: actions/setup-go@v2
+        uses: actions/setup-go@v4
         with:
           go-version: "1.20"
 
@@ -31,5 +30,5 @@ jobs:
       - name: Use gcloud CLI
         run: gcloud info
 
-      - name: Build and Push Docker Image to Artifact Registry
+      - name: Deploy
         run: gcloud builds submit --tag europe-central2-docker.pkg.dev/wise-shell-421409/learn-cicd-starter/notely:latest .
