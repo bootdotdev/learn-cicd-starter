@@ -35,7 +35,6 @@ func TestGetAuth(t *testing.T) {
 
 		result, err := GetAPIKey(headers)
 
-		assert.NoError(t, err)
 		assert.EqualError(t, err, "malformed authorization header")
 		assert.Equal(t, "", result)
 	})
