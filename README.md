@@ -1,5 +1,7 @@
 # learn-cicd-starter (Notely)
 
+![code coverage badge](https://github.com/multimattia/learn-cicd-starter-fork/actions/workflows/ci.yml/badge.svg)
+
 This repo contains the starter code for the "Notely" application for the "Learn CICD" course on [Boot.dev](https://boot.dev).
 
 ## Local Development
@@ -17,6 +19,8 @@ Run the server:
 ```bash
 go build -o notely && ./notely
 ```
+
+Why does everything have to start with "ly" nowadays?
 
 *This starts the server in non-database mode.* It will serve a simple webpage at `http://localhost:8080`.
 
