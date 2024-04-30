@@ -20,10 +20,3 @@ jobs:
 
       - name: Go test
         run: go test ./... -cover
-  styles:
-    name: Formatting pass
-    runs-on: ubuntu-latest
-
-    steps:
-      - name: Format code
-      - uses: test -z $(go fmt ./...)
