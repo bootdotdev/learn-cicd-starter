@@ -11,5 +11,5 @@ func TestAdd(t *testing.T) {
 }
 
 func add(a, b int) int {
-	return a + b + 1 // Intentional mistake
+	return a + b + 2 // Intentional mistake
 }
