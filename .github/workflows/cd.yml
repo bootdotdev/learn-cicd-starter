@@ -7,6 +7,9 @@ on:
 jobs:
   Deploy:
     runs-on: ubuntu-latest
+    env:
+      DATABASE_URL: ${{ secrets.DATABASE_URL }}
+
     steps:
       - name: Checkout
         uses: actions/checkout@v4
@@ -30,8 +33,14 @@ jobs:
       - name: Use gcloud CLI
         run: gcloud info
 
-      - name: Deploy
+      - name: Build and push Docker image
         run: gcloud builds submit --tag europe-central2-docker.pkg.dev/wise-shell-421409/learn-cicd-starter/notely:latest .
+
+      - name: Install goose
+        run: go install github.com/pressly/goose/v3/cmd/goose@latest
+
+      - name: Run migrations
+        run: ./scripts/migrateup.sh
 
       - name: Deploy to Cloud Run
         run: gcloud run deploy notely --image europe-central2-docker.pkg.dev/wise-shell-421409/learn-cicd-starter/notely --region europe-west1 --allow-unauthenticated --project wise-shell-421409 --max-instances=4
