@@ -14,7 +14,7 @@ PORT="8080"
 
 Run the server:
 
-```bash
+```zsh
 go build -o notely && ./notely
 ```
 
