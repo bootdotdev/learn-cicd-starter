@@ -20,4 +20,6 @@ jobs:
 
       - name: version 
         run: go version 
-
+    
+      - name: Unit tests
+        run: go test ./...
