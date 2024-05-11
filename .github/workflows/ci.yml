@@ -26,6 +26,7 @@ jobs:
 
   Style:
     name: Style
+    runs-on: ubuntu-latest
 
     steps:
       - name: Check formatting
