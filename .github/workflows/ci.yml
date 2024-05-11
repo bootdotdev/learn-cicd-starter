@@ -27,8 +27,6 @@ jobs:
   Style:
     name: Style
     runs-on: ubuntu-latest
-    env:
-      PATH: /home/runner/.local/go/bin:$PATH
 
     steps:
       - name: Check formatting
