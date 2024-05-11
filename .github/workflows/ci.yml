@@ -27,6 +27,8 @@ jobs:
   Style:
     name: Style
     runs-on: ubuntu-latest
+    env:
+      PATH: ${{ runner.toolsDirectory }}/go/1.20.0/x64/bin:$PATH
 
     steps:
       - name: Check formatting
