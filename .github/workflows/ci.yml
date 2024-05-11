@@ -23,3 +23,10 @@ jobs:
     
       - name: Unit tests
         run: go test ./... -cover
+
+  Style:
+    name: Style
+
+    steps:
+      - name: Check formatting
+        run: test -z $(go fmt ./...)
