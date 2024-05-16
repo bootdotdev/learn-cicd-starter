@@ -24,3 +24,16 @@ jobs:
 
       - name: Force Failure
         run: (exit 1)
+
+      - name: Report failure
+        run: |
+          curl --request POST \
+          --url https://api.github.com/repos/${{ github.repository }}/statuses/${{ github.sha }} \
+          --header 'authorization: Bearer ${{ secrets.GITHUB_TOKEN }}' \
+          --header 'content-type: application/json' \
+          --data '{
+            "context": "tests",
+            "state": "failure",
+            "description": "Testing failure",
+            "target_url": "https://github.com/${{ github.repository }}/actions/runs/${{ github.run_id }}"
+          }'
