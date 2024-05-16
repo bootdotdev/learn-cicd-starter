@@ -36,5 +36,4 @@ func TestGetAPIKey (t *testing.T) {
 		}
 	}
 
-	t.Errorf("emotional damage")
 }
