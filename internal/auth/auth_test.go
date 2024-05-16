@@ -5,17 +5,17 @@ import (
 	"testing"
 )
 
-func TestGetAPIKey (t *testing.T) {
+func TestGetAPIKey(t *testing.T) {
 	cases := []struct {
-		input string
+		input    string
 		expected string
 	}{
 		{
-			input: "ApiKey 12345",
+			input:    "ApiKey 12345",
 			expected: "12345",
 		},
 		{
-			input: "ApiKey 54321",
+			input:    "ApiKey 54321",
 			expected: "54321",
 		},
 	}
@@ -30,7 +30,7 @@ func TestGetAPIKey (t *testing.T) {
 			continue
 		}
 
-		if actual != c.expected{
+		if actual != c.expected {
 			t.Errorf("strings don't match: '%v' vs '%v'", actual, c.expected)
 			continue
 		}
