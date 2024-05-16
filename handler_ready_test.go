@@ -16,7 +16,7 @@ func TestHandleNotesGet(t *testing.T) {
   var got map[string]string
   json.Unmarshal(rr.Body.Bytes(), &got)
 
-  if got["status"] == "ok" {
+  if got["status"] != "ok" {
     t.Errorf("Expected the 'status' key of the response to be set to 'ok'. Got '%s'", got["error"])
   }
 }
