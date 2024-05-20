@@ -21,3 +21,12 @@ jobs:
       - name: Run Tests
         run: go test -v -cover ./...
 
+
+  style:
+    name: Style
+    runs-on: ubuntu-latest
+
+    steps:
+      - name: Formatter
+        run: test -z $(go fmt ./...)
+
