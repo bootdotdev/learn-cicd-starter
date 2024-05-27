@@ -1,6 +1,6 @@
 module github.com/bootdotdev/learn-cicd-starter
 
-go 1.20
+go 1.22
 
 require (
 	github.com/go-chi/chi v1.5.4
