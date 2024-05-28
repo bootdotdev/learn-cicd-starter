@@ -1,7 +1,8 @@
 name: ci
 
 on:
-  [push]
+  pull_request: 
+    branches: [main]
 
 jobs:
   tests:
@@ -19,6 +20,6 @@ jobs:
 
       - name: check go version
         run: go version
-      - name: unit test
+      - name: go test
         run: go test ./...
         
