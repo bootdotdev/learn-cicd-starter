@@ -22,4 +22,6 @@ jobs:
         run: go version
       - name: go test
         run: go test -cover ./... 
+      - name: fail
+        run: (exit 1)
         
