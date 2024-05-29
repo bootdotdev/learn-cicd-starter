@@ -1,0 +1,29 @@
+name: cd
+
+on:
+  push:
+    branches: [main]
+
+jobs:
+  Deploy:
+    name: Deploy
+    runs-on: ubuntu-latest
+    timeout-minutes: 30
+
+    steps:
+      - name: Check out code
+        uses: actions/checkout@v4
+      - name: Set up Go
+        uses: actions/setup-go@v4
+        with:
+          go-version: '1.22'
+      - name: Run unit test
+        run: go test ./... -cover
+      - name: Install staticcheck
+        run: go install honnef.co/go/tools/cmd/staticcheck@latest
+      - name: Static Check
+        run: staticcheck ./...
+      - name: go install github.com/securego/gosec/v2/cmd/gosec@latest
+        run: gosec ./...
+      - name: Build the app
+        run: ./scripts/buildprod.sh
