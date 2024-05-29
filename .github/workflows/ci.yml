@@ -20,5 +20,9 @@ jobs:
         run: go test ./... -cover
       - name: Install staticcheck
         run: go install honnef.co/go/tools/cmd/staticcheck@latest
+      - name: Static Check
         run: staticcheck ./...
+      - name: go install github.com/securego/gosec/v2/cmd/gosec@latest
+        run: gosec ./...
+
       
