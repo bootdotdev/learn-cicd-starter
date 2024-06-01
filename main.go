@@ -7,6 +7,7 @@ import (
 	"log"
 	"net/http"
 	"os"
+	"time"
 
 	"github.com/go-chi/chi"
 	"github.com/go-chi/cors"
@@ -80,6 +81,7 @@ func main() {
 
 	if apiCfg.DB != nil {
 		v1Router.Post("/users", apiCfg.handlerUsersCreate)
+
 		v1Router.Get("/users", apiCfg.middlewareAuth(apiCfg.handlerUsersGet))
 		v1Router.Get("/notes", apiCfg.middlewareAuth(apiCfg.handlerNotesGet))
 		v1Router.Post("/notes", apiCfg.middlewareAuth(apiCfg.handlerNotesCreate))
@@ -91,6 +93,9 @@ func main() {
 	srv := &http.Server{
 		Addr:    ":" + port,
 		Handler: router,
+		// Good practice: enforce timeouts for servers you create!
+		WriteTimeout: 15 * time.Second,
+		ReadTimeout:  15 * time.Second,
 	}
 
 	log.Printf("Serving on port: %s\n", port)
