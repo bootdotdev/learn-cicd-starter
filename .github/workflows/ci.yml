@@ -41,7 +41,8 @@ jobs:
         uses: dominikh/staticcheck-action@v1
         with:
           version: "latest"
-            
+        
+          
   security:
     name: Security
     runs-on: ubuntu-latest
