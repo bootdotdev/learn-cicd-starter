@@ -24,6 +24,8 @@ type apiConfig struct {
 //go:embed static/*
 var staticFiles embed.FS
 
+//This is a useless comment. It does nothing.
+
 func main() {
 	err := godotenv.Load(".env")
 	if err != nil {
