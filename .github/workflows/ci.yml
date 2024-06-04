@@ -36,3 +36,8 @@ jobs:
 
       - name: Check Format
         run: test -z $(go fmt ./...)
+      
+      - name: Check Linting
+        uses: dominikh/staticcheck-action@v1
+        with:
+          version: "latest"
