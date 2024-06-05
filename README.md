@@ -24,4 +24,4 @@ You do _not_ need to set up a database or any interactivity on the webpage yet. 
 
 # License
 
-MIT license
+MIT license and copyright (c) 2023 Boot.dev
