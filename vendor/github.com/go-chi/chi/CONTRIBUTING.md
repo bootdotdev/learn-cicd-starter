@@ -5,10 +5,10 @@
 1. [Install Go][go-install].
 2. Download the sources and switch the working directory:
 
-    ```bash
-    go get -u -d github.com/go-chi/chi
-    cd $GOPATH/src/github.com/go-chi/chi
-    ```
+   ```bash
+   go get -u -d github.com/go-chi/chi
+   cd $GOPATH/src/github.com/go-chi/chi
+   ```
 
 ## Submitting a Pull Request
 
