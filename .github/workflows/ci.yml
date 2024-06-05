@@ -20,4 +20,3 @@ jobs:
 
       - name: Check Go version
 	run: go version
-
