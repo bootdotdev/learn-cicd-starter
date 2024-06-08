@@ -6,15 +6,18 @@ import (
 	"time"
 
 	"github.com/DATA-DOG/go-sqlmock"
-	"github.com/stretchr/testify/require"
+	"github.com/jmoiron/sqlx"
+	"github.com/stretchr/testify/assert"
 )
 
 func TestCreateNote(t *testing.T) {
 	db, mock, err := sqlmock.New()
-	require.NoError(t, err)
+	if err != nil {
+		t.Fatalf("failed to create mock database: %v", err)
+	}
 	defer db.Close()
 
-	q := &Queries{db: db}
+	q := &Queries{db: sqlx.NewDb(db, "sqlmock")}
 
 	ctx := context.Background()
 	arg := CreateNoteParams{
@@ -25,20 +28,27 @@ func TestCreateNote(t *testing.T) {
 		UserID:    "user1",
 	}
 
+	// expect the INSERT query
 	mock.ExpectExec("INSERT INTO notes").
 		WithArgs(arg.ID, arg.CreatedAt, arg.UpdatedAt, arg.Note, arg.UserID).
 		WillReturnResult(sqlmock.NewResult(1, 1))
 
+	// call the function
 	err = q.CreateNote(ctx, arg)
-	require.NoError(t, err)
+	assert.NoError(t, err)
+
+	// ensure all expectations were met
+	assert.NoError(t, mock.ExpectationsWereMet())
 }
 
 func TestGetNote(t *testing.T) {
 	db, mock, err := sqlmock.New()
-	require.NoError(t, err)
+	if err != nil {
+		t.Fatalf("failed to create mock database %v", err)
+	}
 	defer db.Close()
 
-	q := &Queries{db: db}
+	q := &Queries{db: sqlx.NewDb(db, "sqlmock")}
 
 	ctx := context.Background()
 	expectedNote := Note{
@@ -57,16 +67,21 @@ func TestGetNote(t *testing.T) {
 		WillReturnRows(rows)
 
 	note, err := q.GetNote(ctx, expectedNote.ID)
-	require.NoError(t, err)
-	require.Equal(t, expectedNote, note)
+	assert.NoError(t, err)
+	assert.Equal(t, expectedNote, note)
+
+	// ensure all expectations were met
+	assert.NoError(t, mock.ExpectationsWereMet())
 }
 
 func TestGetNotesForUser(t *testing.T) {
 	db, mock, err := sqlmock.New()
-	require.NoError(t, err)
+	if err != nil {
+		t.Fatalf("failed to create mock database %v", err)
+	}
 	defer db.Close()
 
-	q := &Queries{db: db}
+	q := &Queries{db: sqlx.NewDb(db, "sqlmock")}
 
 	ctx := context.Background()
 	expectedNotes := []Note{
@@ -95,6 +110,8 @@ func TestGetNotesForUser(t *testing.T) {
 		WillReturnRows(rows)
 
 	notes, err := q.GetNotesForUser(ctx, "user1")
-	require.NoError(t, err)
-	require.Equal(t, expectedNotes, notes)
+	assert.NoError(t, err)
+	assert.Equal(t, expectedNotes, notes)
+
+	assert.NoError(t, mock.ExpectationsWereMet())
 }
