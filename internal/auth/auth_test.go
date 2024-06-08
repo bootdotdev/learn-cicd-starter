@@ -35,9 +35,7 @@ func TestGetAPIKey(t *testing.T) {
 		headers.Set("Authorization", "BREAK myActualAPIKey")
 
 		_, err := GetAPIKey(headers)
-		expectedErr := "dummy fail"
-
-		// expectedErr := "malformed authorization header"
+		expectedErr := "malformed authorization header"
 
 		if err == nil || err.Error() != expectedErr {
 			t.Errorf("expected error '%v' but got '%v'", expectedErr, err)
