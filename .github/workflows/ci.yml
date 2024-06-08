@@ -22,18 +22,18 @@ jobs:
         run: echo "GOFLAPS=-mod=vendor" >> $GITHUB_ENV
 
       - name: Install Dependencies
-        run: go mod tidy
-
-      - name: Run Tests
-        run: go test ./... -v
+        run: go mod tidy && go mod vendor
 
       - name: Run Formatting Check
         run: |
-          if [ -n "$(gofmt -l .)" ]; then
+          if [ -n "$(gofmt -l . | grep -v vendor)" ]; then
             echo "The following files need to be formatted:"
-            gofmt -l .
+            gofmt -l . | grep -v vendor
             exit 1
           fi
+     
+      - name: Run Tests
+        run: go test ./... -v
 
       - name: Run Linting
         run: go vet ./...
