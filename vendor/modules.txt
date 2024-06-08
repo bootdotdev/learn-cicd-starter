@@ -40,3 +40,6 @@ nhooyr.io/websocket/internal/errd
 nhooyr.io/websocket/internal/wsjs
 nhooyr.io/websocket/internal/xsync
 nhooyr.io/websocket/wsjson
+
+## explicit; github.com/DATA-DOG/go-sqlmock
+github.com/DATA-DOG/go-sqlmock v1.5.2 

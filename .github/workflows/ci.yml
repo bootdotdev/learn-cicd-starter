@@ -18,11 +18,23 @@ jobs:
         with:
           go-version: '1.22'
 
+      - name: Set GOFLAGS to use vendor directory
+        run: echo "GOFLAPS=-mod=vendor" >> $GITHUB_ENV
+
       - name: Install Dependencies
         run: go mod tidy
 
       - name: Run Tests
-        run: go test ./...
+        run: go test ./... -v
 
       - name: Run Formatting Check
-        run: go fmt ./...
+        run: |
+          if [ -n "$(gofmt -l .)" ]; then
+            echo "The following files need to be formatted:"
+            gofmt -l .
+            exit 1
+          fi
+
+      - name: Run Linting
+        run: go vet ./...
+
