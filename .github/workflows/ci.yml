@@ -1,0 +1,40 @@
+name: ci
+
+on:
+  pull_request:
+    branches: [main]
+
+jobs:
+  tests:
+    name: Tests
+    runs-on: ubuntu-latest
+
+    steps:
+      - name: Check out code
+        uses: actions/checkout@v4
+
+      - name: Set up Go
+        uses: actions/setup-go@v4
+        with:
+          go-version: '1.22'
+
+      - name: Set GOFLAGS to use vendor directory
+        run: echo "GOFLAPS=-mod=vendor" >> $GITHUB_ENV
+
+      - name: Install Dependencies
+        run: go mod tidy && go mod vendor
+
+      - name: Run Formatting Check
+        run: |
+          if [ -n "$(gofmt -l . | grep -v vendor)" ]; then
+            echo "The following files need to be formatted:"
+            gofmt -l . | grep -v vendor
+            exit 1
+          fi
+     
+      - name: Run Tests
+        run: go test -cover ./... -v
+
+      - name: Run Linting
+        run: go vet ./...
+
