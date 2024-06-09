@@ -1,3 +1,9 @@
+# Dynamic Badge (Code Coverage)
+
+![code coverage badge](https://github.com/GReapSoww7/grommbot-learn-cicd-starter/tree/addtests/.github/workflows/ci.yml/badge.svg)
+
+
+
 # learn-cicd-starter (Notely)
 <<<<<<< HEAD
 # adding for bootdev walkthrough!!!
