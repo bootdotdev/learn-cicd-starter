@@ -33,7 +33,7 @@ jobs:
           fi
      
       - name: Run Tests
-        run: go test ./... -v
+        run: go test -cover ./... -v
 
       - name: Run Linting
         run: go vet ./...
