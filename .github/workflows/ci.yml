@@ -21,6 +21,9 @@ jobs:
       - name: Set GOFLAGS to use vendor directory
         run: echo "GOFLAPS=-mod=vendor" >> $GITHUB_ENV
 
+      - name: Install staticcheck
+        run: go install honnef.co/go/tools/cmd/staticcheck@latest
+
       - name: Install Dependencies
         run: go mod tidy && go mod vendor
 
@@ -31,5 +34,5 @@ jobs:
         run: go test -cover ./... -v
 
       - name: Run Linting
-        run: go vet ./...
+        run: go staticcheck ./...
 
