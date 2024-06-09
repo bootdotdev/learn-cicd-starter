@@ -1,6 +1,6 @@
 # Dynamic Badge (Code Coverage)
 
-![code coverage badge](https://github.com/GReapSoww7/grommbot-learn-cicd-starter/tree/addtests/actions/workflows/ci.yml/badge.svg)
+![code coverage badge](https://github.com/GReapSoww7/grommbot-learn-cicd-starter/actions/workflows/ci.yml/badge.svg)
 
 
 
