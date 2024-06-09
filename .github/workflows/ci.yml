@@ -25,13 +25,8 @@ jobs:
         run: go mod tidy && go mod vendor
 
       - name: Run Formatting Check
-        run: |
-          if [ -n "$(gofmt -l . | grep -v vendor)" ]; then
-            echo "The following files need to be formatted:"
-            gofmt -l . | grep -v vendor
-            exit 1
-          fi
-     
+        run: test -z $(go fmt ./...)
+      
       - name: Run Tests
         run: go test -cover ./... -v
 
