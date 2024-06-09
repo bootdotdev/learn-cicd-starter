@@ -34,5 +34,5 @@ jobs:
         run: go test -cover ./... -v
 
       - name: Run Linting
-        run: go staticcheck ./...
+        run: staticcheck ./...
 
