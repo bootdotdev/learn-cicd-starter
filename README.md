@@ -25,3 +25,5 @@ You do _not_ need to set up a database or any interactivity on the webpage yet. 
 ![code coverage badge](https://github.com/murillolamego/learn-cicd-starter/actions/workflows/ci.yml/badge.svg)
 
 /badge.svg
+
+abc
