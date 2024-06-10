@@ -1,5 +1,7 @@
 # learn-cicd-starter (Notely)
 
+![code coverage badge](https://github.com/jocdiazm/cicd-starter/actions/workflows/ci.yml/badge.svg)
+
 This repo contains the starter code for the "Notely" application for the "Learn CICD" course on [Boot.dev](https://boot.dev).
 
 ## Local Development
@@ -24,4 +26,4 @@ You do _not_ need to set up a database or any interactivity on the webpage yet. 
 
 # License
 
-MIT license
+MIT license and copyright (c) 2023 Boot.dev
