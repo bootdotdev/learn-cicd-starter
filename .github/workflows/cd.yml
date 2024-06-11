@@ -21,21 +21,16 @@ jobs:
       - name: Building the App
         run: ./scripts/buildprod.sh
 
-  gcp:
-    name: Google Cloud Platform
-    runs-on: ubuntu-latest
+      - id: 'auth'
+        uses: 'google-github-actions/auth@v2'
+        with:
+          credentials_json: '${{ secrets.GCP_CREDENTIALS }}'
 
-    steps:
-    - id: 'auth'
-      uses: 'google-github-actions/auth@v2'
-      with:
-        credentials_json: '${{ secrets.GCP_CREDENTIALS }}'
+      - name: 'Setting up Cloud SDK'
+        uses: 'google-github-actions/setup-gcloud@v2'
 
-    - name: 'Setting up Cloud SDK'
-      uses: 'google-github-actions/setup-gcloud@v2'
+      - name: 'Using gcloud CLI'
+        run: 'gcloud info'
 
-    - name: 'Using gcloud CLI'
-      run: 'gcloud info'
-
-    - name: Building the Docker image and pushing it to Google Artifact Registry
-      run: gcloud builds submit --tag us-central1-docker.pkg.dev/notely-426103/notely-ar-repo/notely:v1 .
+      - name: Building the Docker image and pushing it to Google Artifact Registry
+        run: gcloud builds submit --tag us-central1-docker.pkg.dev/notely-426103/notely-ar-repo/notely:v1 .
