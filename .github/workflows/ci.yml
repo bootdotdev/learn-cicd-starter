@@ -10,36 +10,42 @@ jobs:
     runs-on: ubuntu-latest
 
     steps:
-      - name: Check out code
+      - name: Checking out code
         uses: actions/checkout@v4
 
-      - name: Set up Go
+      - name: Setting up Go
         uses: actions/setup-go@v5
         with:
           go-version: '1.22'
 
-      - name: Test GetAPIKey Function
+      - name: Testing GetAPIKey Function
         run: go test -cover ./...
+
+      - name: Installing gosec
+        run: go install github.com/securego/gosec/v2/cmd/gosec@latest
+
+      - name: Running Security Checks
+        run: gosec ./...
 
   style:
     name: Style
     runs-on: ubuntu-latest
 
     steps:
-      - name: Check out code
+      - name: Checking out code
         uses: actions/checkout@v4
 
-      - name: Set up Go
+      - name: Setting up Go
         uses: actions/setup-go@v5
         with:
           go-version: '1.22'
 
-      - name: Check for Formatting Issues
+      - name: Checking for Formatting Issues
         run: test -z $(go fmt ./...)
 
-      - name: Install staticcheck
+      - name: Installing staticcheck
         run: go install honnef.co/go/tools/cmd/staticcheck@latest
 
-      - name: Check for Functional Issues
+      - name: Checking for Functional Issues
         run: test -z $(staticcheck ./...)
 
