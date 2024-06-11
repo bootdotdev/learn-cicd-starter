@@ -22,6 +22,9 @@ jobs:
         run: ./scripts/buildprod.sh
 
   gcp:
+    name: Google Cloud Platform
+    runs-on: ubuntu-latest
+
     steps:
     - id: 'auth'
       uses: 'google-github-actions/auth@v2'
