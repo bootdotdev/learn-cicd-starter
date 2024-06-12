@@ -50,7 +50,7 @@ func main() {
 		}
 		dbQueries := database.New(db)
 		apiCfg.DB = dbQueries
-		log.Println("Connected to database!")
+		log.Println("Connected to database!!")
 	}
 
 	router := chi.NewRouter()
