@@ -1,0 +1,33 @@
+name: deployment
+on:
+  push:
+    branches: [main]
+jobs:
+  deploy:
+    name: Deploy
+    runs-on: ubuntu-latest
+    env:
+      DATABASE_URL: ${{ secrets.DATABASE_URL }}
+    steps:
+      - name: Check out code
+        uses: actions/checkout@v4
+      - name: Set up Go
+        uses: actions/setup-go@v4
+        with:
+          go-version: '1.20'
+      - name: Install goose
+        run: go install github.com/pressly/goose/v3/cmd/goose@latest
+      - name: Build the app
+        run: scripts/buildprod.sh
+      - id: 'auth'
+        uses: 'google-github-actions/auth@v2'
+        with:
+          credentials_json: '${{ secrets.GCP_CREDENTIALS }}'
+      - name: 'Set up Cloud SDK'
+        uses: 'google-github-actions/setup-gcloud@v2'
+      - name: 'Use gcloud CLI'
+        run: gcloud info
+      - name: 'Build and push latest to gcloud artifact'
+        run: gcloud builds submit --tag '${{ secrets.DOCKER_IMAGE_TAG }}' && scripts/migrateup.sh
+      - name: 'Deploy to Cloud Run'
+        run: gcloud run deploy notely --image '${{ secrets.DOCKER_IMAGE_TAG }}' --region us-central1 --allow-unauthenticated --project notely-421217 --max-instances=4
