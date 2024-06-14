@@ -41,7 +41,12 @@ jobs:
             - name: Run Migrations
               env:
                 DATABASE_URL: ${{ secrets.DATABASE_URL }}
-              run: goose -dir migrations sqlite3 $DATABASE_URL up
+              run: |
+                if [-f .env ]; then
+                      source .env
+                fi
+                cd sql/schema
+                goose turso $DATABASE_URL up
 
             - name: check for sensitive creds
               run: git diff HEAD~1 HEAD | grep -E 'password|secret|DATABASE_URL'
