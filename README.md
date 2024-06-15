@@ -1,5 +1,15 @@
-# learn-cicd-starter (Notely)
+# Dynamic Badge (Code Coverage)
 
+![code coverage badge](https://github.com/GReapSoww7/grommbot-learn-cicd-starter/actions/workflows/ci.yml/badge.svg)
+
+
+
+# learn-cicd-starter (Notely)
+<<<<<<< HEAD
+# adding for bootdev walkthrough!!!
+=======
+
+>>>>>>> main
 This repo contains the starter code for the "Notely" application for the "Learn CICD" course on [Boot.dev](https://boot.dev).
 
 ## Local Development
