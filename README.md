@@ -1,4 +1,6 @@
+![CI/CD Status](https://github.com/bigbabyjack/learn-cicd-starter/actions/workflows/ci.yml/badge.svg)
 # learn-cicd-starter (Notely)
+This is jack's version.
 
 This repo contains the starter code for the "Notely" application for the "Learn CICD" course on [Boot.dev](https://boot.dev).
 
