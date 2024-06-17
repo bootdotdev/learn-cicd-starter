@@ -1,4 +1,4 @@
-![CI/CD Status](https://github.com/bigbabyjack/ci-cd-starter/actions/workflows/ci.yml/badge.svg)
+![CI/CD Status](https://github.com/bigbabyjack/learn-cicd-starter/actions/workflows/ci.yml/badge.svg)
 # learn-cicd-starter (Notely)
 This is jack's version.
 
