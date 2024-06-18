@@ -20,3 +20,18 @@ jobs:
 
       - name: Force Failure
         run: go test -cover ./...
+  format:
+    name: Format
+    runs-on: ubuntu-latest
+
+    steps:
+      - name: Check out code
+        uses: actions/checkout@v4
+
+      - name: Set up Go
+        uses: actions/setup-go@v4
+        with:
+          go-version: '1.22'
+
+      - name: Format
+        run: test -z $(go fmt ./...)
