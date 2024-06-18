@@ -1,10 +1,10 @@
 package auth
 
 import (
+	"errors"
 	"net/http"
 	"testing"
-	"errors"
-	
+
 	"github.com/stretchr/testify/assert"
 )
 
@@ -24,8 +24,8 @@ func TestGetAPIKey(t *testing.T) {
 			expectedError: nil,
 		},
 		{
-			name: "Missing Authorization Header",
-			headers: http.Header{},
+			name:          "Missing Authorization Header",
+			headers:       http.Header{},
 			expectedKey:   "",
 			expectedError: ErrNoAuthHeaderIncluded,
 		},
