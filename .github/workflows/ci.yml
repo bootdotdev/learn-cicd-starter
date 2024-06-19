@@ -20,8 +20,8 @@ jobs:
 
       - name: Running Tests
         run: go test ./... -cover
-  style:
-    name: Format
+  style: 
+    name: Style
     runs-on: ubuntu-latest
 
     steps: 
