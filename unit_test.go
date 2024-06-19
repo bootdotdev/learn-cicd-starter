@@ -114,26 +114,26 @@ func TestDBPoststoPosts(t *testing.T) {
 			},
 		},
 		// changes the Note field to now get a false test, see if the tests are working
-		{
-			input: []database.Note{
-				{
-					ID:        "1",
-					CreatedAt: "2024-06-18T18:19:06-07:00",
-					UpdatedAt: "2024-06-18T18:19:06-07:00",
-					Note:      "Hello this is Sebi",
-					UserID:    "1",
-				},
-			},
-			want: []Note{
-				{
-					ID:        "1",
-					CreatedAt: example_time,
-					UpdatedAt: example_time,
-					Note:      "Hello this is Julian",
-					UserID:    "1",
-				},
-			},
-		},
+		//{
+		//	input: []database.Note{
+		//		{
+		//			ID:        "1",
+		//			CreatedAt: "2024-06-18T18:19:06-07:00",
+		//			UpdatedAt: "2024-06-18T18:19:06-07:00",
+		//			Note:      "Hello this is Sebi",
+		//			UserID:    "1",
+		//		},
+		//	},
+		//	want: []Note{
+		//		{
+		//			ID:        "1",
+		//			CreatedAt: example_time,
+		//			UpdatedAt: example_time,
+		//			Note:      "Hello this is Julian",
+		//			UserID:    "1",
+		//		},
+		//	},
+		//},
 	}
 
 	for i, c := range cases {
