@@ -1,7 +1,5 @@
 github.com/antlr/antlr4/runtime/Go/antlr/v4 v4.0.0-20230512164433-5d1fd1a340c9 h1:goHVqTbFX3AIo0tzGr14pgfAW2ZfPChKO21Z9MGf/gk=
 github.com/antlr/antlr4/runtime/Go/antlr/v4 v4.0.0-20230512164433-5d1fd1a340c9/go.mod h1:pSwJ0fSY5KhvocuWSx4fz3BA8OrA1bQn+K1Eli3BRwM=
-github.com/bootdotdev/learn-cicd-starter v0.0.0-20240522183059-59115e60e9e3 h1:XqfLhl/NORGITZwRMU+pIXDgzUOl4cPRllTZCeTat9U=
-github.com/bootdotdev/learn-cicd-starter v0.0.0-20240522183059-59115e60e9e3/go.mod h1:EezqhfJ7H5IfNp4O7Tm0D8kBzmJLv+1wcx7iHXobn3w=
 github.com/davecgh/go-spew v1.1.0/go.mod h1:J7Y8YcW2NihsgmVo/mv3lAwl/skON4iLHjSsI+c5H38=
 github.com/davecgh/go-spew v1.1.1/go.mod h1:J7Y8YcW2NihsgmVo/mv3lAwl/skON4iLHjSsI+c5H38=
 github.com/gin-contrib/sse v0.1.0 h1:Y/yl/+YNO8GZSjAhjMsSuLt29uWRFHdHYUb5lYOV9qE=
