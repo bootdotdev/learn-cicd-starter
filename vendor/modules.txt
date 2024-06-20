@@ -7,19 +7,27 @@ github.com/go-chi/chi
 # github.com/go-chi/cors v1.2.1
 ## explicit; go 1.14
 github.com/go-chi/cors
-# github.com/google/uuid v1.3.0
+# github.com/golang/protobuf v1.5.3
+## explicit; go 1.9
+# github.com/google/go-cmp v0.6.0
+## explicit; go 1.13
+# github.com/google/uuid v1.5.0
 ## explicit
 github.com/google/uuid
+# github.com/gorilla/websocket v1.4.2
+## explicit; go 1.12
 # github.com/joho/godotenv v1.5.1
 ## explicit; go 1.12
 github.com/joho/godotenv
-# github.com/klauspost/compress v1.15.15
-## explicit; go 1.17
+# github.com/klauspost/compress v1.17.2
+## explicit; go 1.18
 github.com/klauspost/compress/flate
 # github.com/libsql/sqlite-antlr4-parser v0.0.0-20230802215326-5cb5bb604475
 ## explicit; go 1.19
 github.com/libsql/sqlite-antlr4-parser/sqliteparser
 github.com/libsql/sqlite-antlr4-parser/sqliteparserutils
+# github.com/mattn/go-isatty v0.0.20
+## explicit; go 1.15
 # github.com/tursodatabase/libsql-client-go v0.0.0-20240220085343-4ae0eb9d0898
 ## explicit; go 1.20
 github.com/tursodatabase/libsql-client-go/libsql
@@ -28,10 +36,14 @@ github.com/tursodatabase/libsql-client-go/libsql/internal/http
 github.com/tursodatabase/libsql-client-go/libsql/internal/http/hranaV2
 github.com/tursodatabase/libsql-client-go/libsql/internal/http/shared
 github.com/tursodatabase/libsql-client-go/libsql/internal/ws
-# golang.org/x/exp v0.0.0-20220722155223-a9213eeb770e
-## explicit; go 1.18
+# golang.org/x/exp v0.0.0-20230510235704-dd950f8aeaea
+## explicit; go 1.20
 golang.org/x/exp/constraints
 golang.org/x/exp/slices
+# golang.org/x/sys v0.15.0
+## explicit; go 1.18
+# google.golang.org/protobuf v1.31.0
+## explicit; go 1.11
 # nhooyr.io/websocket v1.8.7
 ## explicit; go 1.13
 nhooyr.io/websocket
