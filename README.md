@@ -1,6 +1,6 @@
-# learn-cicd-starter (Notely)
+# db-tinkering
 
-This repo contains the starter code for the "Notely" application for the "Learn CICD" course on [Boot.dev](https://boot.dev).
+Repo for tinkering with some CI/CD code, "Notely", etc. This repo contains the starter code for the "Notely" application for the "Learn CICD" course on [Boot.dev](https://boot.dev).
 
 ## Local Development
 
