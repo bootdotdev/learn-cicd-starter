@@ -22,7 +22,7 @@ jobs:
         run: go test ./... -cover
 
   style:
-    name: Styling the code
+    name: Style and lint the code
     runs-on: ubuntu-latest
 
     steps:
@@ -36,3 +36,8 @@ jobs:
 
       - name: Run go fmt
         run: test -z $(go fmt ./...)
+
+      - name: Run lint
+        uses: dominikh/staticcheck-action@v1
+        with:
+          version: "latest"
