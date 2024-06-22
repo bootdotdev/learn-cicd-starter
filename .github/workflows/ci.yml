@@ -20,3 +20,24 @@ jobs:
 
       - name: Run unit tests
         run: go test ./... -cover
+
+  style:
+    name: Style and lint the code
+    runs-on: ubuntu-latest
+
+    steps:
+      - name: Check out code
+        uses: actions/checkout@v4
+
+      - name: Set up Go
+        uses: actions/setup-go@v4
+        with:
+          go-version: '1.22'
+
+      - name: Run go fmt
+        run: test -z $(go fmt ./...)
+
+      - name: Run lint
+        uses: dominikh/staticcheck-action@v1
+        with:
+          version: "latest"
