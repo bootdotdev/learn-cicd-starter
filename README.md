@@ -1,4 +1,4 @@
-![code coverage badge](git@github.com:JustCallMe-AK/learn-cicd-starter.git/.github/workflows/ci.yml/badge.svg)
+![code coverage badge](https://github.com/JustCallMe-AK/learn-cicd-starter/actions/workflows/.github/workflows/ci.yml/badge.svg)
 # learn-cicd-starter (Notely)
 
 This repo contains the starter code for the "Notely" application for the "Learn CICD" course on [Boot.dev](https://boot.dev).
