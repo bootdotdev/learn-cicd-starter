@@ -24,6 +24,9 @@ jobs:
       - name: Install gosec
         run: go install github.com/securego/gosec/v2/cmd/gosec@latest
 
+      - name: Run security check
+        run: gosec ./...
+
   style:
     name: Style and lint the code
     runs-on: ubuntu-latest
