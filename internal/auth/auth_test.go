@@ -15,7 +15,7 @@ func TestGetAPIKey(t *testing.T) {
 
 		got, _ := GetAPIKey(headers)
 
-		if got == want {
+		if got != want {
 			t.Errorf("wanted apiKey %s, got %s", want, got)
 		}
 	})
