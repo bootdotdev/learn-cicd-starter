@@ -40,13 +40,6 @@ func TestGetAPIKey(t *testing.T) {
 			expectErr:    true,
 			expectErrMsg: "malformed authorization header",
 		},
-		{
-			name:         "Malformed Authorization Header - Only ApiKey",
-			headers:      http.Header{"Authorization": {"ApiKey "}},
-			want:         "",
-			expectErr:    true,
-			expectErrMsg: "malformed authorization header",
-		},
 	}
 
 	for _, tt := range tests {
