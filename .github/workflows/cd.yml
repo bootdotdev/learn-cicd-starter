@@ -29,5 +29,5 @@ jobs:
       - name: Set up Cloud SDK
         uses: google-github-actions/setup-gcloud@v2
 
-      - name: Use gcloud
-        run: gcloud info
+      - name: Submit to Google Artifact Registry
+        run: gloud builds submit --tag us-central1-docker.pkg.dev/notely-427402/notely-ar-repo/notely:latest .
