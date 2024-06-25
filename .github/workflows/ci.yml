@@ -16,5 +16,5 @@ jobs:
         uses: actions/setup-go@v4
         with:
           go-version: "1.22"
-      - name: Print version
+      - name: Test and Coverage
         run: go test -cover ./...
