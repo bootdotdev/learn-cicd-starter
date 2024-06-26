@@ -35,7 +35,6 @@ func TestGetAPIKey(t *testing.T) {
 
 	for _, tt := range tests {
 		t.Run(tt.name, func(t *testing.T) {
-			t.Errorf("intentional error")
 			apiKey, err := GetAPIKey(tt.headers)
 			if err != nil && err.Error() != tt.err.Error() {
 				t.Errorf("expected error %v, got %v", tt.err, err)
