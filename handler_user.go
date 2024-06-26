@@ -80,6 +80,6 @@ func (cfg *apiConfig) handlerUsersGet(w http.ResponseWriter, r *http.Request, us
 		return
 	}
   
-  //Comment
+  //Comments
 	respondWithJSON(w, http.StatusOK, userResp)
 }
