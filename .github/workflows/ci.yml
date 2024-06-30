@@ -5,7 +5,7 @@ on:
 jobs:
   tests:
     name: Tests
-    run-on: ubuntu-latest
+    runs-on: ubuntu-latest
 
     steps:
       - name: Check out code
