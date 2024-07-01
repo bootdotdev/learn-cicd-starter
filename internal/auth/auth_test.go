@@ -15,7 +15,7 @@ func TestGetAPIKey(t *testing.T) {
 			input: map[string][]string{
 				"Authorization": {"ApiKey test"},
 			},
-			result: "testa",
+			result: "test",
 		},
 		{
 			name: "incorrect header",
