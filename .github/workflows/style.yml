@@ -1,12 +1,12 @@
 
-name: style
+name: Style
 
 on: push 
 
 jobs:
   tests:
 
-    name: Formatting
+    name: Style
     runs-on: ubuntu-latest
 
     steps:
