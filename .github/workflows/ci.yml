@@ -20,6 +20,7 @@ jobs:
 
       - name: Run All Go Tests
         run: go test ./... -cover
+
  style_check:
     name: StyleCheck
     runs-on: ubuntu-latest
