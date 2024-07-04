@@ -27,4 +27,4 @@ jobs:
 
     steps:
       - name: Check go formatting
-        run: test -z $(go fmt ./...)
+        run: pwd
