@@ -2,7 +2,7 @@
 
 This repo contains the starter code for the "Notely" application for the "Learn CICD" course on [Boot.dev](https://boot.dev).
 
-![code coverage badge](![code coverage badge](https://github.com/coltiq/notely/actions/workflows/ci.yml/badge.svg))
+![code coverage badge](https://github.com/coltiq/notely/actions/workflows/ci.yml/badge.svg)
 
 ## Local Development
 
