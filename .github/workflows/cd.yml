@@ -20,3 +20,14 @@ jobs:
         
       - name: Build binary for production
         run: scripts/buildprod.sh
+
+      - id: 'auth'
+        uses: 'google-github-actions/auth@v2'
+        with:
+          credentials_json: '${{ secrets.GCP_CREDENTIALS }}'
+
+      - name: 'Set up Cloud SDK'
+        uses: 'google-github-actions/setup-gcloud@v2'
+
+      - name: 'Build docker image and push to GCP Artifact Registry'
+        run: 'gcloud builds submit --tag northamerica-northeast1-docker.pkg.dev/notely-428418/notely-ar-repo/erikjenkins/notely:latest .'
