@@ -7,7 +7,7 @@ func TestGenerateRandomSHA(t *testing.T) {
 	if err != nil {
 		t.Errorf("Unexpected error generating SHA")
 	}
-	if len(sha) != 4 {
+	if len(sha) != 64 {
 		t.Errorf("Expected 64 bytes, got %d", len(sha))
 	}
 }
