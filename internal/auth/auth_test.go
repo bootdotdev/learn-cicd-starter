@@ -13,7 +13,7 @@ func TestGetAPIKey(t *testing.T) {
 		want   string
 	}{
 		{name: "abcd", header: http.Header{"Authorization": []string{"ApiKey abcd"}}, want: "abcd"},
-		{name: "fail", header: http.Header{"Authorization": []string{"ApiKey abcd"}}, want: "liaf"},
+		{name: "succeed", header: http.Header{"Authorization": []string{"ApiKey succeed"}}, want: "succeed"},
 	}
 
 	fmt.Println("foo")
