@@ -25,4 +25,3 @@ func TestGetAPIKeyHappyPath(t *testing.T) {
 		t.Errorf("expected no error, got %v", err)
 	}
 }
-
