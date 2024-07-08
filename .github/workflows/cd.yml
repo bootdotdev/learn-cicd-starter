@@ -19,5 +19,24 @@ jobs:
         with:
           go-version: '1.22'
     
-      - name: Deploy
+      - name: Build app
         run: scripts/buildprod.sh
+
+      - id: auth
+        uses: google-github-actions/auth@v2
+        with:
+          credentials_json: ${{ secrets.GCP_CREDENTIALS }}
+
+      - name: Set up Cloud SDK
+        uses: google-github-actions/setup-gcloud@v2
+
+      - name: Use gcloud CLI
+        run: gcloud info
+
+          
+      - name: Build and push Docker image
+        run: gcloud builds submit --tag us-central1-docker.pkg.dev/notely-428818/notely-ar-repo/notely:latest
+      
+      - name: Deploy to Cloud Run
+        run: gcloud run deploy notely --image us-central1-docker.pkg.dev/notely-428818/notely-ar-repo/notely:latest --region us-central1 --allow-unauthenticated --project notely-428818 --max-instances=4
+
