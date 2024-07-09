@@ -18,5 +18,10 @@ jobs:
         with:
           go-version: '1.22'
 
-      - name: Force Failure
-        run: (exit 1)
+      - name: Check Go version
+        uses: actions/go@version
+        id: go_version
+        env:
+          GO_VERSION: ${{ steps.setup-go.outputs.GOVARIANT }}
+        run: echo "Go version is $GO_VERSION"
+        shell: bash
