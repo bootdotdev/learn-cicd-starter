@@ -14,7 +14,7 @@ func TestGetAPIKey(t *testing.T) {
 	}
 	tests := []test{
 		{input: nil, want: ""},
-		{input: map[string][]string{"Authorization": {"ApiKey 123"}}, want: "123"},
+		{input: map[string][]string{"Authorization": {"ApiKey 123"}}, want: "1234"},
 	}
 
 	for _, tc := range tests {
