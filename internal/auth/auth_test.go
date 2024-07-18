@@ -14,8 +14,8 @@ func TestAuthAPI(t *testing.T) {
 	}{
 		"AuthorizationSucessful": {header: "Authorization", input: "ApiKey key-input", want: "key-input"},
 		"AuthorizationFailed":    {header: "WrongHeader", input: "ApiKey key-input", want: ""},
-		"ApiKeyNoSpaceFailed":    {header: "WrongHeader", input: "ApiKeykey-input", want: ""},
-		"ApiKeyWrongKeyFailed":   {header: "WrongHeader", input: "ApIKey key-input", want: ""},
+		"ApiKeyNoSpaceFailed":    {header: "WrongHeader", input: "ApiKeykey-input", want: "f"},
+		"ApiKeyWrongKeyFailed":   {header: "WrongHeader", input: "ApIKey key-input", want: "f"},
 	}
 	for name, tc := range tests {
 		testHeader := http.Header{}
