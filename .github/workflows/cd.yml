@@ -31,7 +31,7 @@ jobs:
       - name: Run migrations
         run: ./scripts/migrateup.sh
 
-      - id: auth
+      - id: authenticate
         uses: google-github-actions/auth@v2
         with:
           credentials_json: ${{ secrets.GCP_CREDENTIALS }}
