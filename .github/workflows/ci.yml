@@ -18,6 +18,6 @@ on:
           uses: actions/setup-go@v5 
           with: go-version: '1.22'
 
-        - name: Force Failure
-          run: (exit 1)
+        - name: Print Go Version
+          run: go version
   
