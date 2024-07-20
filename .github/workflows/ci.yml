@@ -23,10 +23,14 @@ jobs:
 
       - name: Test API
         run: go test ./... -cover
+
   formatting:
     name: Formatter
     runs-on: ubuntu-latest
 
     steps:
-      - name: Using Go Formatter
+      - name: Check out code
+        uses: actions/checkout@v4
+
+      - name: Run Go Formatter
         run: test -z $(go fmt ./...)
