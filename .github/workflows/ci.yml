@@ -19,7 +19,7 @@ jobs:
           go-version: '1.22'
 
       - name: Go test
-        run: go test ./...
+        run: go test ./... -cover
 
       - name: Success
         run: (exit 0)
