@@ -29,4 +29,4 @@ jobs:
 
     steps:
       - name: Using Go Formatter
-        uses: test -z $(go fmt ./...)
+        run: test -z $(go fmt ./...)
