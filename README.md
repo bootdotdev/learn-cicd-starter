@@ -23,5 +23,4 @@ You do *not* need to set up a database or any interactivity on the webpage yet. 
 
 ## Code Coverage 
 ![code coverage badge](https://github.com/wagslane/go-rabbitmq/actions/workflows/Tests.yml/badge.svg)
-
-it's bad I know :(
+Let's change somethin
