@@ -21,10 +21,9 @@ import (
 // 	return splitAuth[1], nil
 // }
 
-
 func Test_GetAPIKey_Failure(t *testing.T) {
 	header := http.Header{}
-	
+
 	_, err := GetAPIKey(header)
 
 	if err != ErrNoAuthHeaderIncluded {
@@ -35,7 +34,7 @@ func Test_GetAPIKey_Failure(t *testing.T) {
 func Test_GetAPIKey_Success(t *testing.T) {
 	header := http.Header{}
 	header.Set("Authorization", "ApiKey validkey")
-	key,err := GetAPIKey(header)
+	key, err := GetAPIKey(header)
 
 	if err != nil {
 		t.Fatalf("expected no error: got %v", err)
