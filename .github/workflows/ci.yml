@@ -27,6 +27,6 @@ jobs:
     name: Formatter
     runs-on: ubuntu-latest
 
-    step:
+    steps:
       - name: Using Go Formatter
         uses: test -z $(go fmt ./...)
