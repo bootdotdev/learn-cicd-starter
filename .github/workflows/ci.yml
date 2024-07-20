@@ -18,5 +18,8 @@ jobs:
         with:
           go-version: '1.22'
 
+      - name: Go test
+        run: go test ./...
+
       - name: Success
         run: (exit 0)
