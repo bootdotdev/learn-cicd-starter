@@ -23,7 +23,6 @@ jobs:
 
       - name: Test API
         run: go test ./... -cover
-jobs:
   formatting:
     name: Formatter
     runs-on: ubuntu-latest
