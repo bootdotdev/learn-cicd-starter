@@ -1,4 +1,5 @@
 # learn-cicd-starter (Notely)
+![TestCover](https://github.com/The-fthe/learn-cicd-starter/actions/workflows/ci.yml/badge.svg)
 
 This repo contains the starter code for the "Notely" application for the "Learn CICD" course on [Boot.dev](https://boot.dev).
 
@@ -26,5 +27,3 @@ You do *not* need to set up a database or any interactivity on the webpage yet. 
 
 this message is to test pr
 
-## Test Coverage
-![TestCover](https://github.com/The-fthe/learn-cicd-starter/actions/workflows/ci.yml/badge.svg)
