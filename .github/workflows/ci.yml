@@ -24,3 +24,18 @@ jobs:
 
       - name: Run tests
         run: go test ./... -cover
+  style:
+      - name: Check out code
+        uses: actions/checkout@v4
+
+      - name: Set up Go
+        uses: actions/setup-go@v4
+        with:
+          go-version: '1.20'
+
+      - name: Install dependencies
+        run: go mod tidy
+
+      - name: Run fmt
+        run: test -$(go fmt ./...)
+    
