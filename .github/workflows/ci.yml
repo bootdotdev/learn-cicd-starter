@@ -24,7 +24,7 @@ jobs:
 
       - name: Run tests
         run: go test ./... -cover
-  style:
+    style:
       - name: Check out code
         uses: actions/checkout@v4
 
