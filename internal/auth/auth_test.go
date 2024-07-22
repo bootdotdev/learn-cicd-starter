@@ -7,12 +7,11 @@ import (
 	"testing"
 )
 
-
-func TestGetAPIKey(t *testing.T){
+func TestGetAPIKey(t *testing.T) {
 	type test struct {
-		input	   http.Header
+		input      http.Header
 		wantResult string
-		wantErr	   error
+		wantErr    error
 	}
 
 	h1 := http.Header{}
@@ -29,9 +28,9 @@ func TestGetAPIKey(t *testing.T){
 		{input: h3, wantResult: "", wantErr: ErrNoAuthHeaderIncluded},
 	}
 
-	for _, tc := range tests{
+	for _, tc := range tests {
 		got, err := GetAPIKey(tc.input)
-		if !reflect.DeepEqual(tc.wantResult, got){
+		if !reflect.DeepEqual(tc.wantResult, got) {
 			t.Fatalf("expected: %v, got: %v", tc.wantResult, got)
 		}
 		if err != nil && !reflect.DeepEqual(tc.wantErr.Error(), err.Error()) {
