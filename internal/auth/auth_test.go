@@ -26,7 +26,7 @@ func TestGetAPIKey(t *testing.T) {
 		},
 		"wrong auth header format postfix": {
 			input: "ApiKey ",
-			want:  "1",
+			want:  "",
 		},
 	}
 
