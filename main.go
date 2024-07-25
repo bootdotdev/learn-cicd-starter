@@ -1,5 +1,9 @@
 package main
 
+// 1st block: 
+// 2nd clock: 
+// 3rd shock:
+// 4th _ock:
 import (
 	"database/sql"
 	"embed"
@@ -94,5 +98,5 @@ func main() {
 	}
 
 	log.Printf("Serving on port: %s\n", port)
-	log.Fatal(srv.ListenAndServe())
+	log.Fatal(srv.ListenAndServe()) //Oh i think i know what this does, this is the final line of code after all the setup where the server stays open and listens to requests.
 }
