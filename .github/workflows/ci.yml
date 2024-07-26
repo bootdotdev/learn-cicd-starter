@@ -20,6 +20,9 @@ jobs:
 
       - name: Print Go version
         run: (go version)
+        
+      - name: Run Go test 
+        run: (go ./...)
 
       - name: Exit
         run: (exit 0)
