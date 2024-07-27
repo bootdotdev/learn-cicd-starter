@@ -50,5 +50,4 @@ jobs:
         run: test -z $(go fmt ./...)
       
       - name: Go Security Check
-        run: gosec ./...
-      
+        run: gosec ./..
