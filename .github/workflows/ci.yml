@@ -1,0 +1,18 @@
+name: ci
+
+on:
+  pull_request:
+    branches: [main]
+
+jobs:
+  tests:
+    name: Tests
+    runs-on: ubuntu-latest
+
+    steps:
+      - name: Set up Go
+        uses: actions/setup-go@v-5
+        with:
+          go-version: '1.22'
+      - name: Force failure
+        run: (exit 1)
