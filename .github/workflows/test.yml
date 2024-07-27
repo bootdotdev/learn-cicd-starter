@@ -1,9 +1,8 @@
-name: ci
+name: CI
 
 on:
   pull_request:
     branches: [main]
-
 
 jobs:
   tests:
@@ -21,6 +20,7 @@ jobs:
       
       - name: Go Test
         run: go test ./... --cover
+<<<<<<< HEAD:.github/workflows/ci.yml
   style:
       name: Style Check
       runs-on: ubuntu-latest
@@ -37,3 +37,5 @@ jobs:
         - name: Go Style Check
           run: test -z $(go fmt ./...)
 
+=======
+>>>>>>> addtests:.github/workflows/test.yml
