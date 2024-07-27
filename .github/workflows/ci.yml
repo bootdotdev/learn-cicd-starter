@@ -1,9 +1,8 @@
-name: ci
+name: CI
 
 on:
   pull_request:
     branches: [main]
-
 
 jobs:
   tests:
@@ -21,7 +20,7 @@ jobs:
       
       - name: Go Test
         run: go test ./... --cover
-  
+
   style:
     name: Style
     runs-on: ubuntu-latest
@@ -37,4 +36,3 @@ jobs:
       
       - name: Go Style
         run: test -z $(go fmt ./...)
-
