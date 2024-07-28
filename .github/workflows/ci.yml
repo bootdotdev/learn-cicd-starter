@@ -22,3 +22,6 @@ jobs:
       
       - name: Run unit tests
         run: go test ./internal/auth/auth_test.go
+
+      - name: Check test cover
+        run: go test ./internal/auth/auth_test.go -cover
