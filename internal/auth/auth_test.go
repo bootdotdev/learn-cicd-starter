@@ -26,7 +26,7 @@ func TestGetApiKey(t *testing.T) {
 		"malformed auth": {input: http.Header{"Authorization": []string{"Bearer invalid-api-key"}}, want: struct {
 			value string
 			err   error
-		}{"", auth.ErrMalformedAuth}},
+		}{"", auth.ErrNoAuthHeaderIncluded}},
 	}
 
 	for name, test := range tests {
