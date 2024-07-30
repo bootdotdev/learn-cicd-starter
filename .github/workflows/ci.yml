@@ -27,6 +27,10 @@ jobs:
         uses: actions/setup-go@v5
         with:
           go-version: '1.22'
+      - name: Install staticcheck
+        run: go install honnef.co/go/tools/cmd/staticcheck@latest
       - name: Format
         run: test -z $(go fmt ./...)
+      - name: Linting
+        run: staticcheck ./...
 
