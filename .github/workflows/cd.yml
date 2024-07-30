@@ -31,3 +31,6 @@ jobs:
 
             - name: 'Use gcloud CLI'
               run: 'gcloud info'
+            
+            - name: 'Push to GCP'
+              run: 'gcloud builds submit --tag us-central1-docker.pkg.dev/learn-ci-cd-430719/notely-ar-repo/notely-ar:latest' .
