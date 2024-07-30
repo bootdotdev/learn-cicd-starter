@@ -34,3 +34,6 @@ jobs:
             
             - name: 'Push to GCP'
               run: 'gcloud builds submit --tag us-central1-docker.pkg.dev/learn-ci-cd-430719/notely-ar-repo/notely:latest .'
+
+            - name: 'Deploy to GCP'
+              run: 'gcloud run deploy notely --image us-central1-docker.pkg.dev/learn-ci-cd-430719/notely-ar-repo/notely:latest --region us-central1 --allow-unauthenticated --project learn-ci-cd-430719 --max-instances 4'
