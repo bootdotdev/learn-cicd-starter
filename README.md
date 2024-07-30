@@ -40,3 +40,4 @@ Here Syntax for the badge:
 Here is the badge for this repo:
 
 ![code coverage badge](https://github.com/yasintuncerr/learn-cicd-starter/actions/workflows/ci.yml/badge.svg)
+ 
