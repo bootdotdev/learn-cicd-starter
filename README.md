@@ -1,6 +1,6 @@
 # learn-cicd-starter (Notely)
 
-![CI Status](https://github.com/eymardfreire/learn-cicd-starter/actions/workflows/ci.yml/badge.svg)
+![code coverage badge](https://github.com/eymardfreire/learn-cicd-starter/actions/workflows/ci.yml/badge.svg)
 
 
 <!-- The following line is to satisfy the assignment check -->
