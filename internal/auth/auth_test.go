@@ -13,11 +13,11 @@ func TestGetAPIKey(t *testing.T) {
 		want string
 		err  error
 	}{
-		"Ideal case":                    {http.Header{"Authorization": []string{"ApiKey 1234"}}, "1234", nil},
-		"Auth header not APIKey":        {http.Header{"Authorization": []string{"somethingelse 1234"}}, "", errors.New("malformed authorization header")},
-		"Auth header missing APIKey":    {http.Header{"Authorization": []string{"1234"}}, "", errors.New("malformed authorization header")},
-		"Wrong auth header":             {http.Header{"NotAuthorization": []string{""}}, "", ErrNoAuthHeaderIncluded},
-		"Empty header":                  {http.Header{}, "", ErrNoAuthHeaderIncluded},
+		"Ideal case":                 {http.Header{"Authorization": []string{"ApiKey 1234"}}, "1234", nil},
+		"Auth header not APIKey":     {http.Header{"Authorization": []string{"somethingelse 1234"}}, "", errors.New("malformed authorization header")},
+		"Auth header missing APIKey": {http.Header{"Authorization": []string{"1234"}}, "", errors.New("malformed authorization header")},
+		"Wrong auth header":          {http.Header{"NotAuthorization": []string{""}}, "", ErrNoAuthHeaderIncluded},
+		"Empty header":               {http.Header{}, "", ErrNoAuthHeaderIncluded},
 	}
 
 	for name, tc := range tests {
