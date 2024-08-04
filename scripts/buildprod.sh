@@ -1,10 +1,8 @@
-#!/bin/bash
+#!/bin/sh
+set -e
 
-# Navigate to the project's root directory (if not already there)
+# Navigate to the root of the project directory
 cd "$(dirname "$0")/.."
 
-# Ensure the directory structure is as expected
-ls -R
-
-# Build the project
-go build -o cmd/notely ./cmd/notely
+# Build the Go project
+go build -o notely ./notely
