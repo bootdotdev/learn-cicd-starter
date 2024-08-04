@@ -8,6 +8,7 @@ jobs:
   tests:
     name: Tests
     runs-on: ubuntu-latest
+
     steps:
       - name: Check out code
         uses: actions/checkout@v4
@@ -21,8 +22,9 @@ jobs:
         run: go test ./... -cover
 
   style:
-    name: Style Check
+    name: Style
     runs-on: ubuntu-latest
+
     steps:
       - name: Check out code
         uses: actions/checkout@v4
