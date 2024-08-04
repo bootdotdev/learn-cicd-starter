@@ -1,5 +1,7 @@
 name: cd
 
+#change the name of the workflow
+
 on:
   push:
     branches: [main]
