@@ -5,4 +5,4 @@ set -e
 cd "$(dirname "$0")/.."
 
 # Build the Go project
-go build -o notely ./cmd/notely
+go build -o notely main.go
