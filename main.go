@@ -83,7 +83,10 @@ func main() {
 			http.Error(w, "Notely keyword not found", http.StatusInternalServerError)
 			return
 		}
-		w.Write(content)
+		_, err = w.Write(content)
+		if err != nil {
+			log.Printf("Failed to write response: %v", err)
+		}
 	})
 
 	v1Router := chi.NewRouter()
