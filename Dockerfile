@@ -1,7 +1,15 @@
-FROM --platform=linux/amd64 debian:stable-slim
+# syntax=docker/dockerfile:1
 
-RUN apt-get update && apt-get install -y ca-certificates
+# Build the Go app
+FROM golang:1.20-alpine AS builder
+WORKDIR /app
+COPY . .
+RUN go mod tidy
+RUN go build -o notely .
 
-ADD notely /usr/bin/notely
-
-CMD ["notely"]
+# Run the Go app
+FROM alpine:latest
+WORKDIR /root/
+COPY --from=builder /app/notely .
+EXPOSE 8080
+CMD ["./notely"]

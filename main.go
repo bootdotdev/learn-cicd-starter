@@ -7,6 +7,8 @@ import (
 	"log"
 	"net/http"
 	"os"
+	"strings"
+	"time"
 
 	"github.com/go-chi/chi"
 	"github.com/go-chi/cors"
@@ -65,14 +67,25 @@ func main() {
 	}))
 
 	router.Get("/", func(w http.ResponseWriter, r *http.Request) {
+		log.Println("Serving index.html")
 		f, err := staticFiles.Open("static/index.html")
 		if err != nil {
 			http.Error(w, err.Error(), http.StatusInternalServerError)
 			return
 		}
 		defer f.Close()
-		if _, err := io.Copy(w, f); err != nil {
+		content, err := io.ReadAll(f)
+		if err != nil {
 			http.Error(w, err.Error(), http.StatusInternalServerError)
+			return
+		}
+		if !strings.Contains(string(content), "Notely") {
+			http.Error(w, "Notely keyword not found", http.StatusInternalServerError)
+			return
+		}
+		_, err = w.Write(content)
+		if err != nil {
+			log.Printf("Failed to write response: %v", err)
 		}
 	})
 
@@ -89,8 +102,11 @@ func main() {
 
 	router.Mount("/v1", v1Router)
 	srv := &http.Server{
-		Addr:    ":" + port,
-		Handler: router,
+		Addr:         ":" + port,
+		Handler:      router,
+		ReadTimeout:  5 * time.Second,
+		WriteTimeout: 10 * time.Second,
+		IdleTimeout:  120 * time.Second,
 	}
 
 	log.Printf("Serving on port: %s\n", port)

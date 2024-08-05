@@ -1,3 +1,8 @@
-#!/bin/bash
+#!/bin/sh
+set -e
 
-CGO_ENABLED=0 GOOS=linux GOARCH=amd64 go build -o notely
+# Navigate to the root of the project directory
+cd "$(dirname "$0")/.."
+
+# Build the Go project
+go build -o notely
