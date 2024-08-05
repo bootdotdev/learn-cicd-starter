@@ -7,6 +7,7 @@ import (
 	"log"
 	"net/http"
 	"os"
+	"strings"
 	"time"
 
 	"github.com/go-chi/chi"
@@ -66,15 +67,23 @@ func main() {
 	}))
 
 	router.Get("/", func(w http.ResponseWriter, r *http.Request) {
+		log.Println("Serving index.html")
 		f, err := staticFiles.Open("static/index.html")
 		if err != nil {
 			http.Error(w, err.Error(), http.StatusInternalServerError)
 			return
 		}
 		defer f.Close()
-		if _, err := io.Copy(w, f); err != nil {
+		content, err := io.ReadAll(f)
+		if err != nil {
 			http.Error(w, err.Error(), http.StatusInternalServerError)
+			return
 		}
+		if !strings.Contains(string(content), "Notely") {
+			http.Error(w, "Notely keyword not found", http.StatusInternalServerError)
+			return
+		}
+		w.Write(content)
 	})
 
 	v1Router := chi.NewRouter()
