@@ -20,3 +20,19 @@ jobs:
 
       - name: Run tests
         run: go test ./... -cover
+
+  styletest:
+    name: Style Test
+    runs-on: ubuntu-latest
+
+    steps:
+      - name: Check out code
+        uses: actions/checkout@v4
+
+      - name: Set up Go
+        uses: actions/setup-go@v5
+        with:
+          go-version: '1.22'
+
+      - name: Style check
+        run: test -z "$(go fmt ./...)"
