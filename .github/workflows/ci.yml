@@ -19,7 +19,7 @@ jobs:
           go-version: '1.22'
      
       - name: Test
-        run: go test
+        run: go test -cover
       
       - name: Force Failure
         run: go version
