@@ -20,7 +20,7 @@ jobs:
 
       - name: Run unit tests
         run: go test ./... -cover
-
+#add style part
   style:
     name: Style
     runs-on: ubuntu-latest
