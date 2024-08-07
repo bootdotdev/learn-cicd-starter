@@ -27,3 +27,7 @@ jobs:
     steps:
       - name: Run go fmt
         run: test -z $(go fmt ./...)
+      
+      - name: Linting with staticcheck
+        run: staticcheck ./...
+      
