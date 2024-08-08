@@ -19,8 +19,10 @@
 package auth
 
 import (
+	"fmt"
 	"net/http"
 	"testing"
+	"errors"
 )
 
 func TestGetAPIKey(t *testing.T) {
@@ -30,20 +32,20 @@ func TestGetAPIKey(t *testing.T) {
 		expectedKey   string
 		expectedError error
 	}{
-		// {
-		// 	name:          "No Authorization Header",
-		// 	headers:       http.Header{},
-		// 	expectedKey:   "",
-		// 	expectedError: ErrNoAuthHeaderIncluded,
-		// }//,
-		// {
-		// 	name: "Malformed Authorization Header",
-		// 	headers: http.Header{
-		// 		"Authorization": []string{"Bearer token"},
-		// 	},
-		// 	expectedKey:   "",
-		// 	expectedError: errors.New("malformed authorization header"),
-		// },
+		{
+			name:          "No Authorization Header",
+			headers:       http.Header{},
+			expectedKey:   "",
+			expectedError: ErrNoAuthHeaderIncluded,
+		},
+		{
+			name: "Malformed Authorization Header",
+			headers: http.Header{
+				"Authorization": []string{"Bearer token"},
+			},
+			expectedKey:   "",
+			expectedError: errors.New("malformed authorization header"),
+		},
 		{
 			name: "Valid Authorization Header",
 			headers: http.Header{
@@ -52,17 +54,26 @@ func TestGetAPIKey(t *testing.T) {
 			expectedKey:   "myapikey",
 			expectedError: nil,
 		},
-		// {
-		// 	name: "Invalid Authorization Scheme",
-		// 	headers: http.Header{
-		// 		"Authorization": []string{"ApiKey"},
-		// 	},
-		// 	expectedKey:   "",
-		// 	expectedError: errors.New("malformed authorization header"),
-		// },
+		{
+			name: "Invalid Authorization Scheme",
+			headers: http.Header{
+				"Authorization": []string{"ApiKey"},
+			},
+			expectedKey:   "",
+			expectedError: errors.New("malformed authorization header"),
+		},
+		{
+			name: "Invalid Authorization Scheme failing",
+			headers: http.Header{
+				"Authorization": []string{"ApiKey"},
+			},
+			expectedKey:   "",
+			expectedError: nil,
+		},
 	}
 
 	for _, tt := range tests {
+		fmt.Println("Starting test...")
 		t.Run(tt.name, func(t *testing.T) {
 			key, err := GetAPIKey(tt.headers)
 			if key != tt.expectedKey {
@@ -77,3 +88,5 @@ func TestGetAPIKey(t *testing.T) {
 		})
 	}
 }
+
+
