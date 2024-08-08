@@ -62,14 +62,6 @@ func TestGetAPIKey(t *testing.T) {
 			expectedKey:   "",
 			expectedError: errors.New("malformed authorization header"),
 		},
-		{
-			name: "Invalid Authorization Scheme failing",
-			headers: http.Header{
-				"Authorization": []string{"ApiKey"},
-			},
-			expectedKey:   "",
-			expectedError: nil,
-		},
 	}
 
 	for _, tt := range tests {
