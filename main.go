@@ -17,10 +17,6 @@ import (
 	_ "github.com/tursodatabase/libsql-client-go/libsql"
 )
 
-func testing() {
-	// does nothing
-}
-
 type apiConfig struct {
 	DB *database.Queries
 }
