@@ -23,13 +23,13 @@ jobs:
 
   formatting:
     name: formatting
-    runs-on: ubunto-latest
+    runs-on: ubuntu-latest
 
     steps:
-      - name: check out code
+      - name: Check out code
         uses: actions/checkout@v4
       
-      - name: Set up go
+      - name: Set up Go
         uses: actions/setup-go@v5
         with:
             go-version: '1.22'
