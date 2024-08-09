@@ -1,3 +1,5 @@
+[![ci](https://github.com/Juan-Alves-1/learn-cicd-starter/actions/workflows/ci.yml/badge.svg)](https://github.com/Juan-Alves-1/learn-cicd-starter/actions/workflows/ci.yml)
+
 # Add a comment test
 # learn-cicd-starter (Notely)
 
