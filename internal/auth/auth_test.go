@@ -23,7 +23,6 @@ func TestGetAPIKey_Valid(t *testing.T) {
 
 func TestGetAPIKey_MissingHeader(t *testing.T) {
 	headers := http.Header{}
-	headers.Set("Authorization", "ApiKey valid-api-key")
 
 	_, err := GetAPIKey(headers)
 	if !errors.Is(err, ErrNoAuthHeaderIncluded) {
