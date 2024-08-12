@@ -1,21 +1,3 @@
-// package auth
-
-// import (
-// 	"testing"
-// 	"net/http"
-// )
-
-// func TestGetAPIKey(*testing.T) {
-// 	header := http.Header()
-// 	got1, got2 := GetAPIKey("Connection: keep-alive")
-// 	want := "result"
-
-//     if !reflect.DeepEqual(want, got1) {
-// 		t.Fatalf("expected: %v, got: %v", want, got)
-//    }
-// }
-
-
 package auth
 
 import (
