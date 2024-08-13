@@ -29,5 +29,8 @@ jobs:
         with:
           credentials_json: ${{ secrets.GCP_CREDENTIALS }}
 
+      - name: Set up Docker authentication
+        run: gcloud auth configure-docker us-central1-docker.pkg.dev
+
       - name: Submit build to Google Cloud
         run: gcloud builds submit --tag us-central1-docker.pkg.dev/notely-432413/notely-ar-repo/notely-app:v1 .
