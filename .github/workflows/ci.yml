@@ -20,3 +20,6 @@ jobs:
 
       - name: Don't Force Failure, Not Funny
         run: go version
+
+      - name: Actually Test Code
+        run: go test ./...
