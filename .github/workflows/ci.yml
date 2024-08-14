@@ -22,4 +22,4 @@ jobs:
         run: go version
 
       - name: Actually Test Code
-        run: go test ./...
+        run: go test -cover
