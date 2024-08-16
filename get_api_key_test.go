@@ -17,7 +17,7 @@ func TestGetAPIKey(t *testing.T) {
 	header["Content-Type"] = []string{"application/json"}
 
 	tests := []test{
-		{input: header, want: "RandomAccessKey"},
+		{input: header, want: "randomAccessKey"},
 	}
 
 	for _, test := range tests {
