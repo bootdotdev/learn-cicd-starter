@@ -8,23 +8,19 @@ import (
 )
 
 func TestGetAPIKey(t *testing.T) {
-	type test struct {
+	tests := map[string]struct {
 		input map[string][]string
 		want  string
-	}
-	var header = make(map[string][]string)
-	header["Authorization"] = []string{"ApiKey randomAccessKey"}
-	header["Content-Type"] = []string{"application/json"}
-
-	tests := []test{
-		{input: header, want: "randomAccessKey"},
+	}{
+		"auth_provided": {input: map[string][]string{"Authorization": {"ApiKey randomAccessKey"}}, want: "randomAccessKey"},
 	}
 
-	for _, test := range tests {
-		got, _ := auth.GetAPIKey(test.input)
-		if !reflect.DeepEqual(test.want, got) {
-			t.Fatalf("Expected %#v, got %#v", test.want, got)
-		}
-
+	for name, tc := range tests {
+		t.Run(name, func(t *testing.T) {
+			got, _ := auth.GetAPIKey(tc.input)
+			if !reflect.DeepEqual(tc.want, got) {
+				t.Fatalf("Expected %#v, got %#v", tc.want, got)
+			}
+		})
 	}
 }
