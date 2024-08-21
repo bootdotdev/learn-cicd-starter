@@ -1,3 +1,5 @@
+![code coverage badge]https://github.com/Darwin-David/learn-cicd-starter/actions/workflows/ci.yml/badge.svg
+
 name: ci
 
 on:
