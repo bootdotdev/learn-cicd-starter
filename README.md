@@ -1,7 +1,8 @@
+![code coverage badge](https://github.com/wagslane/go-rabbitmq/actions/workflows/Tests.yml/badge.svg)
 # learn-cicd-starter (Notely)
 
 This repo contains the starter code for the "Notely" application for the "Learn CICD" course on [Boot.dev](https://boot.dev).
-
+JUST A TEST
 ## Local Development
 
 Make sure you're on Go version 1.22+.
