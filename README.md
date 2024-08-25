@@ -1,5 +1,7 @@
 # learn-cicd-starter (Notely)
 
+![code coverage badge](https://github.com/jollyboss123/learn-cicd-starter/actions/workflows/Tests.yml/badge.svg)
+
 ## Local Development
 
 Make sure you're on Go version 1.22+.
