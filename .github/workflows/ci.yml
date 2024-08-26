@@ -9,7 +9,7 @@ jobs:
     name: Tests
     runs-on: ubuntu-latest
 
-    steps:  
+    steps:
       - name: Check out code
         uses: actions/checkout@v4
 
@@ -19,4 +19,4 @@ jobs:
           go-version: '1.22'
 
       - name: Force Failure
-        run : (exit 1)
+        run: (exit 1)
