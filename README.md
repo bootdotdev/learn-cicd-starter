@@ -1,4 +1,4 @@
-![code coverage badge](https://github.com/GabrielPereira187/learn-cicd-starter/.github/workflows/ci.yml/badge.svg)
+![code coverage badge](https://github.com/GabrielPereira187/learn-cicd-starter/actions/workflows/ci.yml/badge.svg)
 
 # learn-cicd-starter (Notely)
 
@@ -13,7 +13,7 @@ Create a `.env` file in the root of the project with the following contents:
 ```bash
 PORT="8080"
 ```
-
+C
 Run the server:
 
 ```bash
