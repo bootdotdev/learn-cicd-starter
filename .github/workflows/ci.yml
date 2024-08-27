@@ -20,6 +20,11 @@ jobs:
 
       - name: Go run
         run: go version
+
+      - name: Run unit tests
+        run: go test ./... -cover
+
+        
   style:
     name: Style
     runs-on: ubuntu-latest
