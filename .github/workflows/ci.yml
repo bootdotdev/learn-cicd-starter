@@ -11,7 +11,7 @@ jobs:
 
     steps:
       - name: Check out code
-        users: actions/checkout@v4
+        uses: actions/checkout@v4
 
       - name: Set up Go
         uses: actuibs/setup-go@v5
