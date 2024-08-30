@@ -40,5 +40,5 @@ jobs:
       - name: Run migrations
         run: ./scripts/migrateup.sh
 
-      - name: "Deploy to Cloud Run for Automatic Build"
+      - name: "Deploy to Cloud Run for Automatic Build v1.0"
         run: "gcloud run deploy notely --image us-central1-docker.pkg.dev/notely-433411/notely-ar-repo/notely:latest --region us-central1 --allow-unauthenticated --project notely-433411"
