@@ -76,7 +76,7 @@ func (cfg *apiConfig) handlerUsersGet(w http.ResponseWriter, r *http.Request, us
 	userResp, err := databaseUserToUser(user)
 	if err != nil {
 		log.Println(err)
-		respondWithError(w, http.StatusInternalServerError, "Couldn't convert user")
+		respondWithError(w, http.StatusInternalServerError, "Couldn't convert user from database")
 		return
 	}
 
