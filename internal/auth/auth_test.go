@@ -24,7 +24,7 @@ func TestGetAPIKey(t *testing.T) {
 			err:     ErrNoAuthHeaderIncluded,
 		},
 		"malformed header - missing ApiKey": {
-			headers: http.Header{"Authorization": {"ApiKey abc123"}}, // temp break test
+			headers: http.Header{"Authorization": {"Bearer abc123"}}, 
 			want:    "",
 			err:     ErrMalformedAuthHeader,
 		},
