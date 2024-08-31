@@ -1,7 +1,7 @@
 name: ci
   on:  
     pull_request:    
-      branches: [main]
+      branches: [addtest]
         jobs:  
           tests:    
             name: Tests    
