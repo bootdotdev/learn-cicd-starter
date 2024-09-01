@@ -34,9 +34,9 @@ func main() {
 
 	port := os.Getenv("PORT")
 	if port == "" {
-    	log.Fatal("PORT environment variable is not set")
+		log.Fatal("PORT environment variable is not set")
 	} else {
-    	log.Printf("Port: %s", port)
+		log.Printf("Port: %s", port)
 	}
 
 	apiCfg := apiConfig{}
@@ -44,17 +44,17 @@ func main() {
 	dbURL := os.Getenv("DATABASE_URL")
 	log.Printf("Database URL: %s", dbURL)
 	if dbURL == "" {
-    	log.Println("DATABASE_URL environment variable is not set")
-    	log.Println("Running without CRUD endpoints")
+		log.Println("DATABASE_URL environment variable is not set")
+		log.Println("Running without CRUD endpoints")
 	} else {
-    	db, err := sql.Open("libsql", dbURL)
-    	if err != nil {
-        	log.Fatal(err)
-    	}
-    dbQueries := database.New(db)
-    apiCfg.DB = dbQueries
-    log.Println("Connected to database!")
-}
+		db, err := sql.Open("libsql", dbURL)
+		if err != nil {
+			log.Fatal(err)
+		}
+		dbQueries := database.New(db)
+		apiCfg.DB = dbQueries
+		log.Println("Connected to database!")
+	}
 
 	router := chi.NewRouter()
 
