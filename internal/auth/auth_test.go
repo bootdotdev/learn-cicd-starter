@@ -20,7 +20,7 @@ func TestGetAPIKey(t *testing.T) {
 func TestGetAPIKeyEmpty(t *testing.T) {
 	req := httptest.NewRequest(http.MethodGet, "/", nil)
 	got, err := GetAPIKey(req.Header)
-	if err != nil || got != "" {
+	if err == nil || got != "" {
 		t.Fatalf("expected: a error and empty value, got: %v", got)
 	}
 }
