@@ -26,7 +26,7 @@ func main() {
 	err := godotenv.Load(".env")
 	if err != nil {
 		log.Printf("warning: assuming default configuration. .env unreadable: %v", err)
-        log.Println("Test!")
+		log.Println("Test!")
 	}
 
 	port := os.Getenv("PORT")
@@ -94,8 +94,4 @@ func main() {
 
 	log.Printf("Serving on port: %s\n", port)
 	log.Fatal(srv.ListenAndServe())
-}
-
-func unused() {
-    //An unusded Function
 }
