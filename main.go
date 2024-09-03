@@ -14,7 +14,7 @@ import (
 
 	"github.com/bootdotdev/learn-cicd-starter/internal/database"
 
-	"github.com/tursodatabase/libsql-client-go/libsql"
+    _	"github.com/tursodatabase/libsql-client-go/libsql"
 )
 
 type apiConfig struct {
