@@ -1,21 +1,21 @@
 package auth
 
 import (
-    "net/http"
-    "testing"
+	"log"
+	"net/http"
 	"os"
-    "log"
+	"testing"
 )
 
 func TestAPIKey(t *testing.T) {
-    h := http.Header{}
+	h := http.Header{}
 
-    apiKey := os.Getenv("APIKEY")
-    h.Add("Authorization", apiKey)
-    log.Println(apiKey)
+	apiKey := os.Getenv("APIKEY")
+	h.Add("Authorization", apiKey)
+	log.Println(apiKey)
 
-    key, _ := GetAPIKey(h)
+	key, _ := GetAPIKey(h)
 
-    log.Printf("Api key: %s", key)
+	log.Printf("Api key: %s", key)
 
 }
