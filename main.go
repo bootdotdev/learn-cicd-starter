@@ -7,13 +7,14 @@ import (
 	"log"
 	"net/http"
 	"os"
-	"time"
 
 	"github.com/go-chi/chi"
 	"github.com/go-chi/cors"
 	"github.com/joho/godotenv"
 
 	"github.com/bootdotdev/learn-cicd-starter/internal/database"
+
+	_ "github.com/tursodatabase/libsql-client-go/libsql"
 )
 
 type apiConfig struct {
@@ -88,9 +89,8 @@ func main() {
 
 	router.Mount("/v1", v1Router)
 	srv := &http.Server{
-		Addr:        ":" + port,
-		Handler:     router,
-		ReadTimeout: 1 * time.Minute,
+		Addr:    ":" + port,
+		Handler: router,
 	}
 
 	log.Printf("Serving on port: %s\n", port)
