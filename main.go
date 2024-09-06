@@ -72,8 +72,7 @@ func main() {
 		}
 		defer f.Close()
 		if _, err := io.Copy(w, f); err != nil {
-			http.Error(w, err.Error(), http.StatusInternalServerError)
-		}
+			http.Error(w, err.Error(), http.StatusInternalServerError)}
 	})
 
 	v1Router := chi.NewRouter()
