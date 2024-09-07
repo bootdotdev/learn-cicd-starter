@@ -24,7 +24,7 @@ func TestApiKey(t *testing.T) {
 		},
 		"Correct Auth Header": {
 			header:        http.Header{"Authorization": []string{"ApiKey my-api-key"}},
-			ExpectedToken: "ApiKey",
+			ExpectedToken: "my-api-key",
 			ExpectedError: nil,
 		},
 		"Auth Header without Key": {
