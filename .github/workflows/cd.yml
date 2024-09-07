@@ -19,5 +19,4 @@ jobs:
 
       - name: Run The App
         run: ./scripts/buildprod.sh
-             ./notely
 
