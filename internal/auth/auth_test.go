@@ -12,7 +12,7 @@ func TestGetApiKey(t *testing.T) {
 	header.Set("Authorization", "ApiKey <KEY>")
 
 	apiKey, err := GetAPIKey(header)
-	if apiKey != "<KE>" || err != nil {
+	if apiKey != "<KEY>" || err != nil {
 		t.Errorf("Expected <KEY> but got %s", apiKey)
 	}
 }
