@@ -21,5 +21,5 @@ jobs:
       - name: Tests
         run: go test ./... -cover
 
-      - name: style
+      - name: Style
         run: test -z "$(gofmt ./...)"
