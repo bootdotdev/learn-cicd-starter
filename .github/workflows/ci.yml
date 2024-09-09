@@ -36,3 +36,5 @@ jobs:
 
       - name: Style
         run: test -z "$(gofmt ./...)"
+      - name: staticcheck
+        uses: dominikh/staticcheck-action@v1
