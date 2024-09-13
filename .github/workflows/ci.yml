@@ -24,6 +24,12 @@ jobs:
       - name: Actually Test Code
         run: go test -cover
 
+      - name: Install gosec
+        run: go install github.com/securego/gosec/v2/cmd/gosec@latest
+
+      - name: Check gosec
+        run: test -z $(go gosec ./...)
+
   style:
     name: Style
     runs-on: ubuntu-latest
