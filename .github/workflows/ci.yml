@@ -19,6 +19,6 @@ jobs:
           go-version: '1.23.0'
 
       - name: Print go-version 
-        run: go --version
+        run: go -version
           
       
