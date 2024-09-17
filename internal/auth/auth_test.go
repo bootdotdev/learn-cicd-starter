@@ -1,9 +1,9 @@
 package auth
 
 import (
+	"errors"
 	"net/http"
 	"testing"
-	"errors"
 )
 
 func TestGetAPIKey(t *testing.T) {
@@ -19,7 +19,7 @@ func TestGetAPIKey(t *testing.T) {
 			expectedKey:   "",
 			expectedError: ErrNoAuthHeaderIncluded,
 		},
-				{
+		{
 			name: "Malformed Authorization Header",
 			headers: http.Header{
 				"Authorization": []string{"Bearer somekey"},
