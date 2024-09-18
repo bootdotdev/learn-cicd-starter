@@ -1,3 +1,5 @@
+![code coverage badge](https://github.com/TedMartell/learn-cicd-starter/actions/workflows/ci.yml/badge.svg)
+
 # learn-cicd-starter (Notely)
 //Teds branch
 
