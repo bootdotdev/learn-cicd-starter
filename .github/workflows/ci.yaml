@@ -3,10 +3,10 @@ name ci
 on:
   push:
     branches:
-      - laptop
+      - main
   pull_request:
     branches:
-      - laptop
+      - main
 
 jobs:
   tests:
