@@ -51,7 +51,7 @@ func TestGetAPIKey(t *testing.T) {
 			},
 			want: testout{
 				apiKey: "123456",
-				err:    nil,
+				err:    errors.New("malformed authorization header"),
 			},
 		},
 	}
