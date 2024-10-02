@@ -82,7 +82,6 @@ jobs:
           DOCKER_PASSWORD: ${{ secrets.DOCKER_PASSWORD }}
         run: echo $DOCKER_PASSWORD | docker login -u $DOCKER_USERNAME --password-stdin
 
-# //dummy
       - name: Build Docker image
         run: docker build -t notely:latest .
 
