@@ -23,7 +23,7 @@ jobs:
         continue-on-error: false
 
   style:
-    name: Styling
+    name: Style
     runs-on: ubuntu-latest
 
     steps:
@@ -38,3 +38,4 @@ jobs:
         - name: Run Formatting Tests
           run: test -z $(go fmt ./...)
           continue-on-error: false
+        
