@@ -86,7 +86,7 @@ jobs:
         run: ./scripts/buildprod.sh
 
       - name: Build Docker image
-        run: docker build -t notely:latest .
+        run: docker build -t ${{ secrets.DOCKER_USERNAME }}/notely:latest .
 
       - name: Push Docker image
         run: docker push ${{ secrets.DOCKER_USERNAME }}/notely:latest
