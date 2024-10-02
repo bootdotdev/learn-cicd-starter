@@ -1,4 +1,8 @@
+<<<<<<< HEAD
 name ci
+=======
+name: ci
+>>>>>>> origin/main
 
 on:
   push:
@@ -14,13 +18,28 @@ jobs:
     runs-on: ubuntu-latest
 
     steps:
+<<<<<<< HEAD
       - name: Check out code 
         uses: actions/checkout@v4
       
+=======
+      - name: Check out code
+        uses: actions/checkout@v4
+
+>>>>>>> origin/main
       - name: Check out go
         uses: actions/setup-go@v5
         with:
           go-version: 1.23.0
+<<<<<<< HEAD
         
       - name: Force failures
         run: exit 1
+=======
+
+      - name: Run tests
+        run: go test ./...
+
+      - name: Check go version
+        run: go version
+>>>>>>> origin/main
