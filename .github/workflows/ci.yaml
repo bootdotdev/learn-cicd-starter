@@ -36,6 +36,7 @@ jobs:
         run: test -z $(go fmt ./...)
 
       - name: Install staticcheck
+        description: Installing staticcheck for linting
         uses: dominikh/staticcheck-action@v1
         with:
           version: "latest"
@@ -61,3 +62,29 @@ jobs:
 
       - name: Run go sec
         run: gosec ./...
+
+  docker-build:
+    name: Docker build and push
+    runs-on: ubuntu-latest
+    needs: [tests, formatting, security]
+
+    steps:
+      - name: Check out code
+        uses: actions/checkout@v4
+
+      - name: Check out go
+        uses: actions/setup-go@v5
+        with:
+          go-version: 1.23.0
+
+      - name: Log in to Docker Hub
+        env:
+          DOCKER_USERNAME: ${{ secrets.DOCKER_USERNAME }}
+          DOCKER_PASSWORD: ${{ secrets.DOCKER_PASSWORD }}
+        run: docker login -u $DOCKER_USERNAME -p $DOCKER_PASSWORD
+
+      - name: Build Docker image
+        run: docker build -t notely:latest .
+
+      - name: Push Docker image
+        run: docker push $DOCKER_USERNAME/notely:latest
