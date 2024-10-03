@@ -9,16 +9,14 @@ on:
 jobs:
   deploy:
     name: Deploy
-    runs-on: ubuntu-latest
+    runs-on: self-hosted
 
     steps:
-      - name: Check out code
-        uses: actions/checkout@v4
+      - name: Pull docker image from Docker Hub
+        run: sudo docker pull ${{ secrets.DOCKER_USERNAME }}/notely:latest
 
-      - name: Check out go
-        uses: actions/setup-go@v5
-        with:
-          go-version: 1.23.0
-
-      - name: Build
-        run: ./scripts/buildprod.sh
+      - name: Delete old docker container
+        run: sudo docker rm -f notely || true
+      
+      - name: Run new docker container
+        run: sudo docker run -d -e PORT=8080 -p 8080:8080 --name notely ${{ secrets.DOCKER_USERNAME }}/notely:latest
