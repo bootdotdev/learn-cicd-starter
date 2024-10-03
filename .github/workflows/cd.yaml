@@ -1,9 +1,10 @@
-name: cd
+name: Continuous Deployment
 
 on:
-  push:
-    branches:
-      - main
+  workflow_run:
+    workflows: ["Docker build and push"]
+    types:
+      - completed
 
 jobs:
   deploy:
