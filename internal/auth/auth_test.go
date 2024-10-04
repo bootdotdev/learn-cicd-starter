@@ -26,7 +26,7 @@ func TestGetAPIKey(t *testing.T)  {
 
 	t.Run("Valid Header", func(t *testing.T) {
 		header := http.Header{}
-		header.Set("Authorization", "ApiKeytest-api-key")
+		header.Set("Authorization", "ApiKey test-api-key")
 		got, err := GetAPIKey(header)
 		if err != nil {
 			t.Fatalf("GetAPIKey() returned an error: %v", err)
