@@ -5,7 +5,7 @@ import (
 	"testing"
 )
 
-func TestGetAPIKey(t *testing.T)  {
+func TestGetAPIKey(t *testing.T) {
 	t.Run("missing header", func(t *testing.T) {
 		header := http.Header{}
 		_, err := GetAPIKey(header)
@@ -21,7 +21,7 @@ func TestGetAPIKey(t *testing.T)  {
 		if err == nil || err.Error() != "malformed authorization header" {
 			t.Fatalf("GetAPIKey() malformed: %v", err)
 		}
-		
+
 	})
 
 	t.Run("Valid Header", func(t *testing.T) {
