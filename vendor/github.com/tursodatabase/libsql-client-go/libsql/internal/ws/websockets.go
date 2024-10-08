@@ -9,8 +9,8 @@ import (
 	"sync"
 	"time"
 
-	"nhooyr.io/websocket"
-	"nhooyr.io/websocket/wsjson"
+	"github.com/coder/websocket"
+	"github.com/coder/websocket/wsjson"
 )
 
 // defaultWSTimeout specifies the timeout used for initial http connection
@@ -55,6 +55,13 @@ func convertValue(v any) (map[string]interface{}, error) {
 	} else if float, ok := v.(float64); ok {
 		res["type"] = "float"
 		res["value"] = float
+	} else if boolean, ok := v.(bool); ok {
+		res["type"] = "integer"
+		if boolean {
+			res["value"] = "1"
+		} else {
+			res["value"] = "0"
+		}
 	} else {
 		return nil, fmt.Errorf("unsupported value type: %s", v)
 	}
@@ -197,6 +204,8 @@ func connect(url string, jwt string) (*websocketConn, error) {
 	if err != nil {
 		return nil, err
 	}
+
+	c.SetReadLimit(1024 * 1024 * 16) // 16MB
 
 	err = wsjson.Write(ctx, c, map[string]interface{}{
 		"type": "hello",
