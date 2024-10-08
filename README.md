@@ -9,7 +9,7 @@ Make sure you're on Go version 1.22+.
 Create a `.env` file in the root of the project with the following contents:
 
 ```bash
-PORT="8080"
+PORT="8080" OR any non used port
 ```
 
 Run the server:
