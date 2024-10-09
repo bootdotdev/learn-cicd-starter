@@ -13,7 +13,7 @@ type User struct {
 	Name      string    `json:"name"`
 	ApiKey    string    `json:"api_key"`
 }
-
+// for my first commit
 func databaseUserToUser(user database.User) (User, error) {
 	createdAt, err := time.Parse(time.RFC3339, user.CreatedAt)
 	if err != nil {
