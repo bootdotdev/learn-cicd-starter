@@ -33,8 +33,8 @@ func TestGetAPIKeyValidAuth(t *testing.T) {
 	headers := http.Header{}
 	headers.Add("Authorization", "ApiKey 213234asdas4")
 	result, err := GetAPIKey(headers)
-	if result != "" {
-		t.Fatalf("Unexpected return: %s", result)
+	if result == "" {
+		t.Fatalf("Unexpected empty return: %s", result)
 	}
 	if err != nil {
 		t.Fatalf("Unexpected error for valid auth header format: %s", err)
