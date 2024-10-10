@@ -5,25 +5,6 @@ on:
     branches: [main]
 
 jobs:
-  build:
-    name: Build
-    runs-on: ubuntu-latest
-    
-    steps:
-      - id: 'auth'
-        uses: 'google-github-actions/auth@v2'
-        with:
-          credentials_json: '${{ secrets.GCP_CREDENTIALS }}'
-
-      - name: 'Set up Cloud SDK'
-        uses: 'google-github-actions/setup-gcloud@v2'
-
-      - name: 'Use gcloud CLI'
-        run: 'gcloud info'
-
-      - name: Build and push Docker image
-        run: gcloud builds submit --tag us-central1-docker.pkg.dev/notely-438213/notely-ar-repo/taninnats/notely:latest .
-
   deploy:
     name: Deploy
     runs-on: ubuntu-latest
@@ -37,5 +18,19 @@ jobs:
         with:
           go-version: '1.23.0'
       
-      - name: Build
+      - name: Build app
         run: ./scripts/buildprod.sh
+
+      - id: auth
+        uses: google-github-actions/auth@v2
+        with:
+          credentials_json: ${{ secrets.GCP_CREDENTIALS }}
+
+      - name: Set up Cloud SDK
+        uses: google-github-actions/setup-gcloud@v2
+
+      - name: Use gcloud CLI
+        run: gcloud info
+
+      - name: Build and push Docker image
+        run: gcloud builds submit --tag us-central1-docker.pkg.dev/notely-438213/notely-ar-repo/taninnats/notely:latest .
