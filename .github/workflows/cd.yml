@@ -5,9 +5,9 @@ on:
     branches: [main]
 
 jobs:
-  job_id:
-    name: Job ID
-    runs-on: ubuntu-;atest
+  build:
+    name: Build
+    runs-on: ubuntu-latest
     
     steps:
     - id: 'auth'
