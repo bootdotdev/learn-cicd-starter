@@ -28,7 +28,7 @@ func TestGetAPIKey(t *testing.T) {
 		"correct api keys": {
 			input: http.Header{
 				"Content-Type":  []string{"text/html"},
-				"Authorization": []string{"ApiKey making the test fail in purpose to check if the CI is running the tests correctly"},
+				"Authorization": []string{"ApiKey kfpqhj3weofjefioisiogjsdugjfqopugjwoiejgqwoegjqoj"},
 			},
 			want:          "kfpqhj3weofjefioisiogjsdugjfqopugjwoiejgqwoegjqoj",
 			errorContains: "",
