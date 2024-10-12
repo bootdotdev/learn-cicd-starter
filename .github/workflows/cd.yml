@@ -16,6 +16,9 @@ jobs:
         with:
           go-version: '1.23.0'
 
+      - name: Install goose
+        run: go install github.com/pressly/goose/v3/cmd/goose@latest
+
       - name: Build Prod
         run: ./scripts/buildprod.sh
 
@@ -30,6 +33,11 @@ jobs:
       - name: Deploy to Google Artifact Registry
         run: gcloud builds submit --tag us-central1-docker.pkg.dev/peaceful-harbor-438009-s9/notely-ar-repo/notely:latest .
 
+        env:
+          DATABASE_URL: ${{ secrets.DATABASE_URL }}
+
+      - name: Run DB Migrations
+        run: ./scripts/migrateup.sh
+
       - name: Deploy to Cloud Run
         run: gcloud run deploy notely --image us-central1-docker.pkg.dev/peaceful-harbor-438009-s9/notely-ar-repo/notely:latest --region us-central1 --allow-unauthenticated --project peaceful-harbor-438009-s9 --max-instances=4
-
