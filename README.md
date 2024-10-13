@@ -12,7 +12,7 @@ Create a `.env` file in the root of the project with the following contents:
 PORT="8080"
 ```
 
-Run the server:
+Run the server now :
 
 ```bash
 go build -o notely && ./notely
