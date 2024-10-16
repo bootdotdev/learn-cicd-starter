@@ -28,3 +28,12 @@ jobs:
      steps:
       - name: format code
         run: test -z $(go fmt ./...)
+
+  linting:
+    name: Install staticcheck
+    run: go install honnef.co/go/tools/cmd/staticcheck@latest
+
+    steps:
+      - name: static_check
+        run: staticcheck
+
