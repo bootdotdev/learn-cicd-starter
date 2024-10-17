@@ -21,7 +21,7 @@ jobs:
       - name: Unit Tests
         run: go test -cover ./...
   format:
-    name: Format
+    name: Style
     runs-on: ubuntu-latest
 
     steps:
@@ -33,5 +33,5 @@ jobs:
         with:
           go-version: "1.23.0"
 
-      - name: Format
+      - name: Style
         run: go fmt ./...
