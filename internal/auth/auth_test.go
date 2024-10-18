@@ -19,7 +19,7 @@ func TestGetAPIKey(t *testing.T) {
 		t.Error("GetAPIKey threw an error")
 	}
 
-	if key != testKey+"fail" {
+	if key != testKey {
 		t.Errorf(`Expected %s, got %s`, testKey, key)
 	}
 }
