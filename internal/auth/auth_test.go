@@ -18,7 +18,6 @@ func TestGetAPIKey(t *testing.T) {
 		"valid_short":          {header: "Authorization", headerValue: "ApiKey apikey", strWant: "apikey"},
 		"invalid":              {header: "Authorization", headerValue: "apple sauce", strWant: ""},
 		"invalid_wrong_header": {header: "ApiKey", headerValue: "ApiKey thisismyapikey", strWant: ""},
-		"force_fail":           {header: "Authorization", headerValue: "ApiKey thisismyapikey", strWant: ""},
 	}
 
 	for name, tc := range tests {
