@@ -20,7 +20,7 @@ func TestGetAPIKey(t *testing.T) {
 		input http.Header
 		want  string
 	}{
-		"correctly formed header": {input: correctHeader, want: "som-random-bullshi"},
+		"correctly formed header": {input: correctHeader, want: "som-random-bullshit"},
 		"empty header":            {input: emptyHeader, want: ""},
 		"malformed header":        {input: malformedHeader, want: ""},
 	}
