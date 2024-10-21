@@ -2,7 +2,7 @@
 
 ![code coverage badge](https://github.com/loganchaffee/learn-cicd-starter/actions/workflows/Tests.yaml/badge.svg)
 
-This repo contains the starter code for the "Notely" application for the "Learn CICD" course on [Boot.dev](https://boot.dev).
+This repo contains the starter code for the "Notely" application for the "Learn CICD" course on [Boot.dev](https://boot.dev)
 
 ## Local Development
 
