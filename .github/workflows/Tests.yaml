@@ -8,10 +8,17 @@ jobs:
   tests:
     name: Tests
     runs-on: ubuntu-latest
-
     steps:
       - name: Check out code
         uses: actions/checkout@v4
-
       - name: Run go tests
         run: go test ./... -cover
+
+  style:
+    name: Style
+    runs-on: ubuntu-latest
+    steps:
+      - name: Check out code
+        uses: actions/checkout@v4
+      - name: Check formatting
+        run: test -z $(go fmt ./...)
