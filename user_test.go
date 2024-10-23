@@ -14,7 +14,7 @@ func TestBurgers(t *testing.T) {
 	if err != nil {
 		t.Fatalf("Error thrown: %s", err)
 	}
-	expected := "BEANSBEANSBEANS1"
+	expected := "BEANSBEANSBEANS"
 	if output != expected {
 		t.Fatalf("Expected: %v, got: %v", expected, output)
 	}
