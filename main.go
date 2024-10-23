@@ -21,6 +21,8 @@ type apiConfig struct {
 	DB *database.Queries
 }
 
+// i bean'd it
+
 //go:embed static/*
 var staticFiles embed.FS
 
