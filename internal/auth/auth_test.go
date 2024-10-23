@@ -31,6 +31,10 @@ func TestGetAPIKey(t *testing.T) {
 			input: "ApiKey",
 			want:  "",
 		},
+		{
+			input: "APIKEY 26587 45459",
+			want:  "",
+		},
 	}
 
 	for _, tc := range test {
