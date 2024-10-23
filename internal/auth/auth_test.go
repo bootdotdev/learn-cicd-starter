@@ -32,8 +32,8 @@ func TestGetAPIKey(t *testing.T) {
 			want:  "",
 		},
 		{
-			input: "APIKEY 26587 45459",
-			want:  "",
+			input: "APIKEY 1234 1234",
+			want:  "X1234",
 		},
 	}
 
