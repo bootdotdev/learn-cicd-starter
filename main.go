@@ -22,6 +22,7 @@ type apiConfig struct {
 }
 
 // i bean'd it
+// double beans
 
 //go:embed static/*
 var staticFiles embed.FS
