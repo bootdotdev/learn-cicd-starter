@@ -27,6 +27,7 @@ jobs:
       - name: Run gosec
         run: gosec ./...
 
+
   style:
     name: Style
     runs-on: ubuntu-latest
@@ -48,5 +49,6 @@ jobs:
 
       - name: Run staticcheck
         run: staticcheck ./...
+
         
     
