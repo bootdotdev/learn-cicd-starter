@@ -67,3 +67,5 @@ func (cfg *apiConfig) handlerNotesCreate(w http.ResponseWriter, r *http.Request,
 
 	respondWithJSON(w, http.StatusCreated, noteResp)
 }
+
+// beans'd it
