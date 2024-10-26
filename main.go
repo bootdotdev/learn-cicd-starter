@@ -91,6 +91,11 @@ func main() {
 	srv := &http.Server{
 		Addr:    ":" + port,
 		Handler: router,
+
+		// Good practice to set timeouts to avoid Slowloris attacks.
+		WriteTimeout: 15 * 60 * 1000 * 1000 * 1000,
+		ReadTimeout:  15 * 60 * 1000 * 1000 * 1000,
+		IdleTimeout:  15 * 60 * 1000 * 1000 * 1000,
 	}
 
 	log.Printf("Serving on port: %s\n", port)
