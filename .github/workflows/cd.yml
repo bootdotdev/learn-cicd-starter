@@ -18,4 +18,4 @@ jobs:
                   go-version: '1.22.0'
 
             - name: Build
-              run: scripts/buildprod.s
+              run: go build -o notely
