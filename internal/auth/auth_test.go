@@ -48,7 +48,8 @@ func TestGetAPIKeyIncompleteAuthHeader(t *testing.T) {
 
 	_, err := GetAPIKey(headers)
 
-	if err == nil || err.Error() != "malformed authorization header" {
+	
 		t.Errorf("expected 'malformed authorization header' error, got %v", err)
-	}
+	
+
 }
