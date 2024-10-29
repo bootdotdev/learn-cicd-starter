@@ -4,6 +4,7 @@ package main
 import (
 	"database/sql"
 	"embed"
+	"fmt"
 	"io"
 	"log"
 	"net/http"
@@ -20,6 +21,10 @@ import (
 
 type apiConfig struct {
 	DB *database.Queries
+}
+
+func unusued_func() {
+	fmt.Println("This is a unused function for staticcheck steps")
 }
 
 //go:embed static/*
