@@ -31,6 +31,8 @@ func (cfg *apiConfig) handlerUsersCreate(w http.ResponseWriter, r *http.Request)
 		return
 	}
 
+	// meow
+
 	err = cfg.DB.CreateUser(r.Context(), database.CreateUserParams{
 		ID:        uuid.New().String(),
 		CreatedAt: time.Now().UTC().Format(time.RFC3339),
