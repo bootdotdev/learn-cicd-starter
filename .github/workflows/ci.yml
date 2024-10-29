@@ -20,3 +20,6 @@ jobs:
 
       - name: Print current version of Go
         run: go version
+
+      - name: Test Go
+        run: go test
