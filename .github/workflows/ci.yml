@@ -18,8 +18,5 @@ jobs:
         with:
           go-version: "1.23.0"
 
-      - name: Print current version of Go
-        run: go version
-
       - name: Test Auth Go
-        run: go test
+        run: go test ./...
