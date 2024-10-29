@@ -21,5 +21,5 @@ jobs:
       - name: Print current version of Go
         run: go version
 
-      - name: Test Go
-        run: go test
+      - name: Test Auth Go
+        run: go test internal/auth/auth.go
