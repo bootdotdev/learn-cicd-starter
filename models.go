@@ -72,3 +72,5 @@ func databasePostsToPosts(notes []database.Note) ([]Note, error) {
 	}
 	return result, nil
 }
+
+// bro im gonna scream
