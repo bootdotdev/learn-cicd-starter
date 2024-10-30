@@ -7,7 +7,7 @@ import (
 )
 
 func Test_handlerReadiness(t *testing.T) {
-	test := []struct {
+	tests := []struct {
 		name string
 	}{
 		{"Basic readiness test"},
