@@ -21,5 +21,4 @@ jobs:
       - name: Run Test
         run: |
           set -e
-          go test ./...
-          -cover
+          go test -cover ./...
