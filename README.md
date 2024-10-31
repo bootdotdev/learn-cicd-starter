@@ -4,7 +4,7 @@ This repo contains the starter code for the "Notely" application for the "Learn 
 
 ![code coverage badge](https://github.com/fatihesergg/learn-cicd-starter/actions/workflows/ci.yml/badge.svg)
 
-# Update
+
 
 ## Local Development
 
