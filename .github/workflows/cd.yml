@@ -31,3 +31,6 @@ jobs:
 
       - name: 'Deploy to Cloud Google Artifact Registry'
         run: gcloud builds submit --tag europe-west2-docker.pkg.dev/bootdotdev-notely/bootdotdev-notely-ar-repo/notely:latest .
+
+      - name: Deploy to Cloud Run
+        run: gcloud run deploy notely --image europe-west2-docker.pkg.dev/bootdotdev-notely/bootdotdev-notely-ar-repo/notely:latest --region europe-west2 --allow-unauthenticated --project bootdotdev-notely --max-instances=4
