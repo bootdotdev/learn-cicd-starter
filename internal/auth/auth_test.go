@@ -29,7 +29,7 @@ func TestGetAPIKey_Success(t *testing.T) {
 	if err != nil {
 		t.Errorf("Expected no error, got %v", err)
 	}
-	if key == "1234" {
+	if key != "1234" {
 		t.Errorf("Expected key to be 1234, got %v", key)
 	}
 }
