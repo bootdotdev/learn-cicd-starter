@@ -25,5 +25,5 @@ jobs:
     runs-on: ubuntu-latest
 
     steps:
-      - name: Go format
+      - name: go format
         run: test -z $(go fmt ./...)
