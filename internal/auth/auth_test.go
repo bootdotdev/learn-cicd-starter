@@ -21,7 +21,7 @@ func TestGetAPIKey(t *testing.T) {
 	}{
 		"simple test case":           {input: createHeaderWithAPIKey("ApiKey TestApiKey"), want: "TestApiKey", err: nil},
 		"malformed header no ApiKey": {input: createHeaderWithAPIKey("TestApiKey"), want: "", err: errors.New("malformed authorization header")},
-		"header with many sapces":    {input: createHeaderWithAPIKey("ApiKey TestApiKey TestApiKey TestApiKey"), want: "TestApiKe", err: nil},
+		"header with many sapces":    {input: createHeaderWithAPIKey("ApiKey TestApiKey TestApiKey TestApiKey"), want: "TestApiKey", err: nil},
 		"empty header":               {input: make(http.Header), want: "", err: ErrNoAuthHeaderIncluded},
 	}
 
