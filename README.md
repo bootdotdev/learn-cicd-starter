@@ -1,4 +1,4 @@
-![code coverage badge](https://github.com/windowsrefund/ci-cd/actions/workflows/ci.yaml/badge.svg) 
+![code coverage badge](https://github.com/windowsrefund/ci-cd/actions/workflows/ci.yml/badge.svg) 
 
 # learn-cicd-starter (Notely)
 
