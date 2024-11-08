@@ -79,13 +79,13 @@ func main() {
 	v1Router := chi.NewRouter()
 
 	if apiCfg.DB != nil {
-		v1Router.Post("/users", apiCfg.handlerUsersCreate)
+		v1Router.Post("/users", apiCfg.createUsersHandler)
 		v1Router.Get("/users", apiCfg.middlewareAuth(apiCfg.handlerUsersGet))
-		v1Router.Get("/notes", apiCfg.middlewareAuth(apiCfg.handlerNotesGet))
-		v1Router.Post("/notes", apiCfg.middlewareAuth(apiCfg.handlerNotesCreate))
+		v1Router.Get("/notes", apiCfg.middlewareAuth(apiCfg.getNotesHandler))
+		v1Router.Post("/notes", apiCfg.middlewareAuth(apiCfg.createNotesHandler))
 	}
 
-	v1Router.Get("/healthz", handlerReadiness)
+	v1Router.Get("/healthz", readinessHandler)
 
 	router.Mount("/v1", v1Router)
 	srv := &http.Server{
