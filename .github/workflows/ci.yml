@@ -21,19 +21,9 @@ jobs:
       - name: Run Tests
         run: go test ./...
 
-  style:
-    name: Style
-    runs-on: ubuntu-latest
+      - name: Install gosec
+        run: go install github.com/securego/gosec/v2/cmd/gosec@latest
 
-    steps:
-      - name: Check out code
-        uses: actions/checkout@v4
-
-      - name: Set up Go
-        uses: actions/setup-go@v5
-        with:
-          go-version: '1.23.0'
-
-      - name: Check for Formatting Issues
-        run: test -z "$(go fmt ./...)"
+      - name: Run gosec check
+        run: gosec ./...
 
