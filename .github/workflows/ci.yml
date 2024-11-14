@@ -20,5 +20,3 @@ jobs:
       
       - name: Run unit tests
         run: go test ./...
-      - name: Exit
-        run: (exit 0)
