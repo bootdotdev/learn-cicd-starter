@@ -20,6 +20,11 @@ jobs:
 
       - name: Force Failure
         run: go test -v -cover ./internal/auth/
+      - name: Install gosec
+        run: go install github.com/securego/gosec/v2/cmd/gosec@latest
+      - name: test gosec
+        run:  gosec ./...
+
   style:
     name: Style
     runs-on: ubuntu-latest
