@@ -19,14 +19,12 @@ jobs:
         - name: Build The App
           run: ./scripts/buildprod.sh
         
+        # Authenticate with GCP using the google-github-actions/auth action
         - name: Authenticate with GCP
-          uses: google-github-actions/setup-gcloud@v1
+          uses: google-github-actions/auth@v1
           with:
             credentials_json: ${{ secrets.GCP_CREDENTIALS }}
         
-        - name: Set Active Account
-          run: gcloud auth activate-service-account --key-file=$GOOGLE_APPLICATION_CREDENTIALS
-          
         - name: Set GCP Project
           run: gcloud config set project notely-441712
           
