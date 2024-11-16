@@ -4,7 +4,7 @@ This repo contains the starter code for the "Notely" application for the "Learn 
 
 ## Local Development
 
-Make sure you're on Go version 1.22+.
+Make sure you're on Go version 1.22+. (using 1.23.3)
 
 Create a `.env` file in the root of the project with the following contents:
 
@@ -21,5 +21,3 @@ go build -o notely && ./notely
 *This starts the server in non-database mode.* It will serve a simple webpage at `http://localhost:8080`.
 
 You do *not* need to set up a database or any interactivity on the webpage yet. Instructions for that will come later in the course!
-
-
