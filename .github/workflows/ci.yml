@@ -39,3 +39,10 @@ jobs:
 
       - name: Check exit
         run: echo $?
+
+      - name: Install staticcheck
+        run: go install honnef.co/go/tools/cmd/staticcheck@latest
+
+      - name: Run static check
+        run: staticcheck ./...
+
