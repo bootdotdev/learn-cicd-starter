@@ -18,5 +18,8 @@ jobs:
         with:
           go-version: '1.23.0'
 
+      - name: Check formatting
+        run: test -z $(go fmt ./...)
+
       - name: Run tests
         run: go test -cover ./...
