@@ -42,7 +42,7 @@ jobs:
         run: |
           cd ../..
           ls -l
-          gcloud builds submit --tag us-central1-docker.pkg.dev/notely-442220/notely-ar-repo/notely:latest
+          gcloud builds submit --tag us-central1-docker.pkg.dev/notely-442220/notely-ar-repo/notely:latest github/scoob/learn-cicd-starter/Dockerfile
           
 
 
