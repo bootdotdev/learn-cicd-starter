@@ -10,6 +10,11 @@ jobs:
         runs-on: ubuntu-latest
 
         steps:
+            - id: 'auth'
+              uses: 'google-github-actions/auth@v2'
+              with: 
+                credentials_json: '${{ secrets.GCP_CREDENTIALS }}'
+            
             - name: checkout code
               uses: actions/checkout@v4
             
@@ -21,3 +26,8 @@ jobs:
             - name: Run build script
               run: ./scripts/buildprod.sh
             
+            - name: setup gcloud sdk
+              uses: 'google-github-actions/setup-gcloud@v2'
+            
+            - name: 'Push artifact to google registry'
+              run: 'gcloud builds submit --tag us-central1-docker.pkg.dev/notely-442519/notely-ar-repo/notely:latest .'
