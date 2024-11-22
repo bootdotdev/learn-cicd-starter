@@ -7,12 +7,6 @@ import (
 )
 
 func TestGetAPIKey(t *testing.T) {
-	type test struct {
-		name  string
-		input string
-		want  string
-	}
-
 	tests := map[string]struct {
 		input string
 		want  string
