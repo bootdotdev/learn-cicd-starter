@@ -32,7 +32,7 @@ func TestGetAPIKey(t *testing.T) {
 			r.Header.Set("Authorization", tc.input)
 			got, _ := GetAPIKey(r.Header)
 			if !reflect.DeepEqual(tc.want, got) {
-				t.Fatalf("%s: expected: %#v, got: %#v", name, tc.want, got)
+				t.Fatalf("%s: expected: %v, got: %v", name, tc.want, got)
 			}
 		})
 	}
