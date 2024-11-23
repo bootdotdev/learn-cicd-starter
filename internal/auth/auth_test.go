@@ -17,15 +17,15 @@ func TestGetAPIKey(t *testing.T) {
 	}
 
 	tests := map[string]test{
-		"Test empty api key": {
+		"test empty api key": {
 			input: http.Header{"Authorization": []string{""}},
 			want:  want{str: "", err: "no authorization header included"},
 		},
-		"Test malformed api key": {
+		"test malformed api key": {
 			input: http.Header{"Authorization": []string{"Bearer fakeapikey"}},
 			want:  want{str: "", err: "malformed authorization header"},
 		},
-		"Test correct api key": {
+		"test correct api key": {
 			input: http.Header{"Authorization": []string{"ApiKey 1234123123"}},
 			want:  want{str: "1234123123", err: ""},
 		},
