@@ -1,4 +1,4 @@
-module github.com/bootdotdev/learn-cicd-starter
+module github.com/DanielJacob1998/learn-cicd-starter
 
 go 1.22
 
