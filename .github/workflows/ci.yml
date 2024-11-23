@@ -20,3 +20,6 @@ jobs:
 
       - name: Run cases
         run: go test ./... --cover
+
+      - name: Format
+        run: test -z $(go fmt ./...)
