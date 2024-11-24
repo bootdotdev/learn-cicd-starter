@@ -18,6 +18,6 @@ Run the server: You can also directly go run without creating executable.
 go build -o notely && ./notely
 ```
 
-_This starts the server in non-database mode._ It will serve a simple webpage at `http://localhost:8080`.
+_This starts the server in non-database mode._ It will serve a simple webpage at, the 8080 is the PORT added in .env `http://localhost:8080`.
 
 You do _not_ need to set up a database or any interactivity on the webpage yet. Instructions for that will come later in the course!
