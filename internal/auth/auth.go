@@ -6,6 +6,8 @@ import (
 	"strings"
 )
 
+making ci test fail
+
 var ErrNoAuthHeaderIncluded = errors.New("no authorization header included")
 
 // GetAPIKey -

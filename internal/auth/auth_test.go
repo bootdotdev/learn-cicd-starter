@@ -5,7 +5,7 @@ import (
 	"net/http"
 	"testing"
 )
-
+makeing test to fail
 func TestGetAPIKey(t *testing.T) {
 	// Prepare headers
 	header0 := make(http.Header)
