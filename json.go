@@ -28,6 +28,6 @@ func respondWithJSON(w http.ResponseWriter, code int, payload interface{}) {
 	}
 	w.WriteHeader(code)
 	if _, err := w.Write(dat); err != nil {
-	log.Printf("error while wrirign: %v", err)
+		log.Printf("error while wrirign: %v", err)
 	}
 }
