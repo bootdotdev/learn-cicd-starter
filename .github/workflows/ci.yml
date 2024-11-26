@@ -19,7 +19,7 @@ jobs:
                   go-version: "1.23.0"
             - name: run unit tests
               run: go test ./... -cover
-    style:
+    Style:
         name: formate code
         runs-on: ubuntu-latest
 
