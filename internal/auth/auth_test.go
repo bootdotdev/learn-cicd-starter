@@ -46,7 +46,7 @@ func TestGetAPIKey(t *testing.T) {
 				headers: headers2,
 			},
 			want:    "",
-			wantErr: false,
+			wantErr: true,
 		},
 		{
 			name: "Test 3 - Authorization header too short - malformed",
