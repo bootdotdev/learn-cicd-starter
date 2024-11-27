@@ -20,3 +20,5 @@ jobs:
 
       - name: Print Go version
         run: go version
+      - name: Run tests
+        run: go test ./...
