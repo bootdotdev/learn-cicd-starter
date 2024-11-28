@@ -35,15 +35,7 @@ jobs:
           go-version: '1.23.0'
 
       - name: Check formatting
-        run: go fmt ./...
-      
-      - name: Check formatting
         run: |
-        go fmt ./...
-        echo "Formatting completed"
-
-     - name: Debug formatting results
-        run: |
-        UNFORMATTED_FILES=$(go fmt ./...)
-        echo "Files requiring formatting: $UNFORMATTED_FILES"
-        test -z "$UNFORMATTED_FILES"
+          UNFORMATTED_FILES=$(go fmt ./...)
+          echo "Files requiring formatting: $UNFORMATTED_FILES"
+          test -z "$UNFORMATTED_FILES"
