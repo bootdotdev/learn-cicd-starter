@@ -16,12 +16,9 @@ jobs:
       - name: Set up Go
         uses: actions/setup-go@v5
         with:
-          go-version: "1.22.0"
+          go-version: '1.23.0'
 
-      - name: Print Go version
-        run: go version
-        
-      - name: Run tests
+      - name: Run unit tests
         run: go test ./... -cover
 
       - name: Install gosec
@@ -33,7 +30,7 @@ jobs:
   style:
     name: Style
     runs-on: ubuntu-latest
-    
+
     steps:
       - name: Check out code
         uses: actions/checkout@v4
@@ -41,13 +38,13 @@ jobs:
       - name: Set up Go
         uses: actions/setup-go@v5
         with:
-          go-version: "1.22.0"
+          go-version: '1.23.0'
 
-      - name: Run format check
-        run: gofmt -l . | if read; then echo "Found unformatted files:"; gofmt -l .; exit 1; fi
+      - name: Check formatting
+        run: test -z $(go fmt ./...)
 
       - name: Install staticcheck
         run: go install honnef.co/go/tools/cmd/staticcheck@latest
 
-      - name: run staticcheck
+      - name: Run staticcheck
         run: staticcheck ./...
