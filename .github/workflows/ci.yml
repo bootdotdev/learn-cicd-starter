@@ -20,8 +20,15 @@ jobs:
 
       - name: Print Go version
         run: go version
+        
       - name: Run tests
         run: go test ./... -cover
+
+      - name: Install gosec
+        run: go install github.com/securego/gosec/v2/cmd/gosec@latest
+
+      - name: Run gosec
+        run: gosec -exclude-dir=vendor ./...
 
   style:
     name: Style
@@ -34,7 +41,13 @@ jobs:
       - name: Set up Go
         uses: actions/setup-go@v5
         with:
-          go-version: "1.23.0"
+          go-version: "1.22.0"
 
       - name: Run format check
-        run: test -z $(go fmt ./...)
+        run: test -z $(gofmt -l .)
+
+      - name: Install staticcheck
+        run: go install honnef.co/go/tools/cmd/staticcheck@latest
+
+      - name: run staticcheck
+        run: staticcheck ./...
