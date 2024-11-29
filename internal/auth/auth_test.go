@@ -13,7 +13,7 @@ var headers http.Header = http.Header{
 
 func TestGetAPIKey(t *testing.T) {
 
-	headers.Set("Authorization", "Bearer blabla-secret-apikey")
+	// headers.Set("Authorization", "Bearer blabla-secret-apikey")
 
 	gotValue, gotError := GetAPIKey(headers)
 	wantValue := "blabla"
