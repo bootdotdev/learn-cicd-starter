@@ -27,8 +27,7 @@ jobs:
       - id: 'auth'
         uses: 'google-github-actions/auth@v2'
         with:
-          workload_identity_provider: 'projects/18233761238/locations/global/workloadIdentityPools'
-          service_account: 'cloud-run-deployer@notely-443215.iam.gserviceaccount.com'
+          credentials_json: '${{ secrets.GCP_CREDENTIALS }}'
 
       - name: 'Set up Google SDK'
         uses: 'google-github-actions/setup-gcloud@v2'
