@@ -12,6 +12,9 @@ jobs:
       contents: 'read'
       id-token: 'write'
 
+    env:
+      DATABASE_URL: ${{ secrets.DATABASE_URL }}
+
     steps:
       - name: Check out code
         uses: actions/checkout@v4
