@@ -11,8 +11,8 @@ func TestGetApiKey(t *testing.T) {
 		expectedKey    string
 		expectedErrStr string
 	}{
-		"Proper API Key": {args: "ApiKey 1234", expectedKey: "1234", expectedErrStr: ""},
-		"No Header":      {args: "", expectedKey: "", expectedErrStr: "no authorization header included"},
+		"Proper API Key":   {args: "ApiKey 1234", expectedKey: "1234", expectedErrStr: ""},
+		"No Header":        {args: "", expectedKey: "", expectedErrStr: "no authorization header included"},
 		"Incorrect Header": {args: "test 23", expectedKey: "", expectedErrStr: "malformed authorization header"},
 	}
 
