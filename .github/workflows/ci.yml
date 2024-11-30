@@ -44,3 +44,4 @@ jobs:
           fi
 
         run: test -z $(go fmt ./...)
+
