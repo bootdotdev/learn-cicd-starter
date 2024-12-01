@@ -1,0 +1,44 @@
+name: CD
+
+on:
+   push:
+     branches: [main]
+
+jobs:
+    Deploy:
+        name: Deploy
+        runs-on: ubuntu-latest
+        env:
+          DATABASE_URL: ${{ secrets.DATABASE_URL }}
+
+
+
+
+        steps:
+            - name: Checkout code
+              uses: actions/checkout@v4
+
+            - name: Set up Go
+              uses: actions/setup-go@v5
+              with:
+                go-version: '1.22'
+
+            - name: Build
+              run: ./scripts/buildprod.sh
+
+            - id: 'auth'
+              uses: 'google-github-actions/auth@v2'
+              with:
+                credentials_json: '${{ secrets.GCP_CREDENTIALS }}'
+                
+            - name: 'Set up Cloud SDK'
+              uses: 'google-github-actions/setup-gcloud@v2'
+
+            - name: 'Use gcloud CLI'
+              run: 'gcloud info'
+            
+            - name: 'Push to GCP'
+              run: 'gcloud builds submit --tag us-central1-docker.pkg.dev/learn-ci-cd-430719/notely-ar-repo/notely:latest .'
+
+            - name: 'Deploy to GCP'
+              run: 'gcloud run deploy notely --image us-central1-docker.pkg.dev/learn-ci-cd-430719/notely-ar-repo/notely:latest --region us-central1 --allow-unauthenticated --project learn-ci-cd-430719 --max-instances 4'
