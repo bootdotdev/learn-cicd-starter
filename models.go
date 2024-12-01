@@ -13,7 +13,7 @@ type User struct {
 	Name      string    `json:"name"`
 	ApiKey    string    `json:"api_key"`
 }
-
+// hello this mf is insane
 func databaseUserToUser(user database.User) (User, error) {
 	createdAt, err := time.Parse(time.RFC3339, user.CreatedAt)
 	if err != nil {
