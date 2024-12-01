@@ -20,3 +20,22 @@ jobs:
             
             - name: Build
               run: scripts/buildprod.sh
+
+            - id: 'auth'
+              uses: 'google-github-actions/auth@v2'
+              with:
+                workload_identity_provider: 'projects/123456789/locations/global/workloadIdentityPools/my-pool/providers/my-provider'
+                service_account: 'cloud-run-deployer@notely-443421.iam.gserviceaccount.com'
+        
+            - name: 'Set up Cloud SDK'
+              uses: 'google-github-actions/setup-gcloud@v2'
+              with:
+                version: '>= 363.0.0'
+        
+            - name: 'Use gcloud CLI'
+              run: 'gcloud info'          
+              
+            - name: build docker image
+              run: gcloud builds submit --tag us-central1-docker.pkg.dev/notely-443421/notely-ar-repo .
+
+              
