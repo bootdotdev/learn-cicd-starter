@@ -14,7 +14,7 @@ func TestSplit(t *testing.T) {
 		input []string
 		want  string
 	}{
-		{name: "simple", input: []string{"Authorization", "ApiKey 123456"}, want: "1234566"},
+		{name: "simple", input: []string{"Authorization", "ApiKey 123456"}, want: "123456"},
 	}
 
 	for _, tc := range tests {
