@@ -35,12 +35,4 @@ jobs:
           go-version: '1.23.0'
 
       - name: Check formatting
-        run: |
-          UNFORMATTED_FILES=$(go fmt ./...)
-          if [ -n "$UNFORMATTED_FILES" ]; then
-            echo "Files requiring formatting: $UNFORMATTED_FILES"
-            echo "::error::Formatting issues found!"
-            exit 1
-          else
-            echo "All files are properly formatted."
-          fi
+        run: test -z $(go fmt ./...)
