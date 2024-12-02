@@ -37,8 +37,10 @@ jobs:
       - name: Check formatting
         run: |
           UNFORMATTED_FILES=$(go fmt ./...)
-          echo "Files requiring formatting: $UNFORMATTED_FILES"
           if [ -n "$UNFORMATTED_FILES" ]; then
+            echo "Files requiring formatting: $UNFORMATTED_FILES"
             echo "::error::Formatting issues found!"
             exit 1
+          else
+            echo "All files are properly formatted."
           fi
