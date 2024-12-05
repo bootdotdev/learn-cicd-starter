@@ -27,7 +27,7 @@ func TestGetAPIKey(t *testing.T) {
 			h.Add(test.inputKey, test.inputValue)
 
 			gotStr, gotErr := GetAPIKey(h)
-			if gotErr == nil && gotErr.Error() != test.wantedErr.Error() {
+			if gotErr != nil && gotErr.Error() != test.wantedErr.Error() {
 				t.Errorf("eERROR\tTestGetAPIKey: %v\n", gotErr)
 				return
 			}
