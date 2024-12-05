@@ -1,0 +1,3 @@
+2024/12/05 11:38:37 DATABASE_URL environment variable is not set
+2024/12/05 11:38:37 Running without CRUD endpoints
+2024/12/05 11:38:37 Serving on port: 8080
