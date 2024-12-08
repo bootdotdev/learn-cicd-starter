@@ -93,6 +93,6 @@ func main() {
 		Handler: router,
 	}
 
-	log.Printf("Serving on port: %s\n", port)
+	log.Printf("This is serving on port: %s\n", port)
 	log.Fatal(srv.ListenAndServe())
 }
