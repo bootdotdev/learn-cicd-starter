@@ -24,3 +24,5 @@ You do *not* need to set up a database or any interactivity on the webpage yet. 
 
 first change
 second change
+
+![dynamic badge](https://github.com/troclaux/learn-cicd-starter/actions/workflows/ci.yml/badge.svg)
