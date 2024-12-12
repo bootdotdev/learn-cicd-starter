@@ -24,3 +24,5 @@ You do *not* need to set up a database or any interactivity on the webpage yet. 
 
 *These are my changes*
 Hader's version of Boot.dev's Notely app.
+
+*Showing Go version in GitHub action step*
