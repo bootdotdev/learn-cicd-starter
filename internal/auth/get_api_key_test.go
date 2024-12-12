@@ -15,27 +15,27 @@ func TestGetAPIKey(t *testing.T) {
 		expectErr string
 	}{
 		{
-			expectErr: "Xno authorization header",
+			expectErr: "no authorization header",
 		},
 		{
 			key:       "Authorization",
-			expectErr: "Xno authorization header",
+			expectErr: "no authorization header",
 		},
 		{
 			key:       "Authorization",
 			value:     "-",
-			expectErr: "Xmalformed authorization header",
+			expectErr: "malformed authorization header",
 		},
 		{
 			key:       "Authorization",
 			value:     "Bearer xxxxxx",
-			expectErr: "Xmalformed authorization header",
+			expectErr: "malformed authorization header",
 		},
 		{
 			key:       "Authorization",
 			value:     "ApiKey xxxxxx",
 			expect:    "xxxxxx",
-			expectErr: "Xnot expecting an error",
+			expectErr: "not expecting an error",
 		},
 	}
 
