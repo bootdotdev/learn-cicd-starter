@@ -34,5 +34,11 @@ jobs:
         with: # Inputs de la Acción
           go-version: "1.23.0"
 
+      - name: Install staticcheck
+        run: install honnef.co/go/tools/cmd/staticcheck@latest
+
       - name: Check code style
         run: test -z $(go fmt ./...)
+
+      - name: Check staticcheck
+        run: staticcheck ./...
