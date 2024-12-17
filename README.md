@@ -18,6 +18,7 @@ Run the server:
 go build -o notely && ./notely
 ```
 fadoua's version of Boot.dev's Notely app.
+![alt text goes here](https://github.com/Fadouach1111/learn-cicd-starter/actions/workflows/ci.yml/badge.svg)
 
 *This starts the server in non-database mode.* It will serve a simple webpage at `http://localhost:8080`.
 
