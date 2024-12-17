@@ -1,4 +1,5 @@
 # learn-cicd-starter (Notely)
+[![ci](https://github.com/Fadouach1111/learn-cicd-starter/actions/workflows/ci.yml/badge.svg)](https://github.com/Fadouach1111/learn-cicd-starter/actions/workflows/ci.yml/badge.svg)
 
 This repo contains the starter code for the "Notely" application for the "Learn CICD" course on [Boot.dev](https://boot.dev).
 
@@ -17,7 +18,7 @@ Run the server:
 ```bash
 go build -o notely && ./notely
 ```
-[![ci](https://github.com/Fadouach1111/learn-cicd-starter/actions/workflows/ci.yml/badge.svg)](https://github.com/Fadouach1111/learn-cicd-starter/actions/workflows/ci.yml)
+
 
 fadoua's version of Boot.dev's Notely app.
 
