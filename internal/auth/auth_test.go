@@ -12,7 +12,7 @@ func TestGetApiKey(t *testing.T) {
 		want  string
 	}{
 		"shouldSucceed":         {input: http.Header{}, want: "test1"},
-		"noToken":               {input: http.Header{}, want: "malformed authorization header1"},
+		"noToken":               {input: http.Header{}, want: "malformed authorization header"},
 		"noAuthorizationHeader": {input: http.Header{}, want: "no authorization header included"},
 	}
 
