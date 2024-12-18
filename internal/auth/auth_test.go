@@ -14,7 +14,7 @@ func TestSplit(t *testing.T) {
 		t.Fatalf("unexpected error: %v", err)
 	}
 
-	expectedAPIKey := "some_toke"
+	expectedAPIKey := "some_token"
 	if apiKey != expectedAPIKey {
 		t.Fatalf("expected: %s, got: %s", expectedAPIKey, apiKey)
 	}
