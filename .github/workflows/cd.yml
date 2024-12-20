@@ -21,16 +21,17 @@ jobs:
       - name: Build app
         run: ./scripts/buildprod.sh
 
-      - name: "Google Auth"
-        uses: "google-github-actions/auth@v2"
+      - id: auth
+        name: Google Auth
+        uses: google-github-actions/auth@v2
         with:
-          credentials_json: "${{ secrets.GCP_CREDENTIALS }}"
+          credentials_json: ${{ secrets.GCP_CREDENTIALS }}
 
-      - name: "Set up Cloud SDK"
-        uses: "google-github-actions/setup-gcloud@v2"
+      - name: Set up Cloud SDK
+        uses: google-github-actions/setup-gcloud@v2
 
-      - name: "Use gcloud CLI"
-        run: 'gcloud auth list --filter=status:ACTIVE --format="value(account)"'
+      - name: Use gcloud CLI
+        run: gcloud auth list --filter=status:ACTIVE --format="value(account)"
 
-      - name: "Build, tag, and push image to Google Container Registry"
+      - name: Build, tag, and push image to Google Container Registry
         run: gcloud builds submit --tag us-central1-docker.pkg.dev/notely-445316/notely-ar-repo/notely .
