@@ -2,21 +2,11 @@ package auth
 
 import (
 	"net/http"
-	"reflect"
 	"strings"
 	"testing"
 )
 
 func TestGetAPIKey(t *testing.T) {
-	authHeader := http.Header{}
-	authHeader.Set("Authorization", "ApiKey validKey")
-
-	got, err := GetAPIKey(authHeader)
-	want := "validKey"
-	if err != nil && !reflect.DeepEqual(got, want) {
-		t.Fatalf("expected: %v, got: %v, err: %v", want, got, err)
-	}
-
 	tests := map[string]struct {
 		headers     http.Header
 		wantKey     string
