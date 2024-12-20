@@ -20,3 +20,6 @@ jobs:
 
       - name: Run unit tests
         run: go test -cover ./...
+
+      - name: Check code style
+        run: go fmt ./...
