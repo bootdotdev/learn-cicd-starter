@@ -21,5 +21,10 @@ jobs:
       - name: Run unit tests
         run: go test -cover ./...
 
-      - name: Check code style
-        run: go fmt ./...
+  style:
+    name: Style
+    runs-on: ubuntu-latest
+
+    steps:
+      - name: Formatting check
+        run: test -z $(go fmt ./...)
