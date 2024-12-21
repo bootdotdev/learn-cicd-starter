@@ -34,4 +34,7 @@ jobs:
         run: gcloud auth list --filter=status:ACTIVE --format="value(account)"
 
       - name: Build, tag, and push image to Google Container Registry
-        run: gcloud builds submit --tag us-central1-docker.pkg.dev/notely-445316/notely-ar-repo/notely .
+        run: gcloud builds submit --tag us-central1-docker.pkg.dev/notely-445316/notely-ar-repo/notely:latest .
+
+      - name: Deploy to Cloud Run
+        run: gcloud run deploy notely --image us-central1-docker.pkg.dev/notely-445316/notely-ar-repo/notely:latest --region us-central1 --allow-unautheticated --project notely-445316 --max-instances=4
