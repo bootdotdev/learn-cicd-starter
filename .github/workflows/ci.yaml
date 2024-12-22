@@ -1,0 +1,22 @@
+name: ci
+
+on:
+  push:
+    branches: [add_tests]
+
+jobs:
+  tests:
+    name: Tests
+    runs-on: ubuntu-latest
+
+    steps:
+      - name: Check out code
+        uses: actions/checkout@v4
+
+      - name: Set up Go
+        uses: actions/setup-go@v5
+        with:
+          go-version: "1.23.0"
+
+      - name: print go version
+        run: go version
