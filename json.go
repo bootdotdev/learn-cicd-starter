@@ -28,6 +28,6 @@ func respondWithJSON(w http.ResponseWriter, code int, payload interface{}) {
 	}
 	w.WriteHeader(code)
 	if _, err := w.Write(dat); err != nil {
-		respondWithError(w, http.StatusInternalServerError, "")
+		log.Printf("Critical error writing response: %s", err)
 	}
 }
