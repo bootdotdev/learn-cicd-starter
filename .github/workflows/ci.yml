@@ -32,5 +32,9 @@ jobs:
       - name: Install staticcheck
         run: go install honnef.co/go/tools/cmd/staticcheck@latest
 
-      - name: Run staticcheck
-        run: staticcheck ./...
+      - uses: actions/checkout@v2
+        with:
+          fetch-depth: 1
+      - uses: dominikh/staticcheck-action@v1
+        with:
+          version: "latest"
