@@ -25,19 +25,19 @@ func TestAPIKey(t *testing.T) {
 		{
 			name:        "Valid token",
 			header:      header1,
-			expectedErr: true,
+			expectedErr: false,
 			expectedKey: "123456",
 		},
 		{
 			name:        "Invalid Header Key",
 			header:      header1,
-			expectedErr: false,
+			expectedErr: true,
 			expectedKey: "",
 		},
 		{
 			name:        "Invalid value",
 			header:      header1,
-			expectedErr: false,
+			expectedErr: true,
 			expectedKey: "",
 		},
 	}
