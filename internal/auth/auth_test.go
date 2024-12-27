@@ -10,7 +10,7 @@ func TestAPIKey(t *testing.T) {
 	header2 := http.Header{}
 	header3 := http.Header{}
 
-	header1.Set("Authorization", "token 123456")
+	header1.Set("Authorization", "ApiKey 123456")
 	header2.Set("Auth", "1234")
 	header3.Set("Authorization", "abc123")
 
@@ -30,13 +30,13 @@ func TestAPIKey(t *testing.T) {
 		},
 		{
 			name:        "Invalid Header Key",
-			header:      header1,
+			header:      header2,
 			expectedErr: true,
 			expectedKey: "",
 		},
 		{
 			name:        "Invalid value",
-			header:      header1,
+			header:      header3,
 			expectedErr: true,
 			expectedKey: "",
 		},
