@@ -6,7 +6,7 @@ import (
 )
 
 func TestThing(t *testing.T) {
-  if 1 == 1 {
+  if 1 == 2 {
     t.Fatalf("Oh no oh me oh my numbers")
   }
 }
