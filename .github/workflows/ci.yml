@@ -16,6 +16,9 @@ jobs:
       - name: Run tests
         run: go test ./... -cover
 
+      - name: Style check
+        run: test -z $(go fmt ./...)
+
       # - name: Set up Go
       #   uses: actions/setup-go@v5
       #   with:
