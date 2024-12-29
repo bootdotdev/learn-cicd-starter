@@ -13,10 +13,15 @@ jobs:
       - name: Check out code
         uses: actions/checkout@v4
 
-      - name: Set up Go
-        uses: actions/setup-go@v5
-        with:
-          go-version: "1.23.0"
+      - name: Run tests
+        run: go test ./...
 
-      - name: Force to succeed
-        run: (exit 0)
+      - name: Force to fail
+        run: (exit 1)
+      # - name: Set up Go
+      #   uses: actions/setup-go@v5
+      #   with:
+      #     go-version: "1.23.0"
+
+      # - name: Force to succeed
+      #   run: (exit 0)
