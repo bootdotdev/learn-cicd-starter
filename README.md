@@ -26,4 +26,3 @@ You do *not* need to set up a database or any interactivity on the webpage yet. 
 Eric's version of Boot.dev's Notely app.
 
 Now there is formatting in the ci workflow!
-And a merge from a different branch.
