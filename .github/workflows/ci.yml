@@ -35,7 +35,6 @@ jobs:
           go-version: '1.22'
 
       - name: Check formatting
-        uses: actions/checkout@v4
-        run: go fmt ./...
+        run: test -z $(go fmt ./...)
 
 
