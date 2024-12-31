@@ -9,7 +9,6 @@ import (
 func TestGetAPIKey(t *testing.T) {
 	// Test case 1: No Authorization header
 	headers := http.Header{}
-	headers.Add("Authorization", "Bearer somekey") // Add a header to break code
 	_, err := GetAPIKey(headers)
 	if err != ErrNoAuthHeaderIncluded {
 		t.Errorf("expected error %v, got %v", ErrNoAuthHeaderIncluded, err)
