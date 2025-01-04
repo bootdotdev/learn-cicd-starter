@@ -9,9 +9,6 @@ import (
 	"testing"
 )
 
-func TestForcedFail(t *testing.T) {
-	t.Fatalf("TestForcedFail:")
-}
 func TestGetAPIKey(t *testing.T) {
 
 	for i := 0; i < 5; i++ {
