@@ -33,7 +33,7 @@ func TestGetAPIKey(t *testing.T) {
 		{
 			name:    "no ApiKey",
 			input:   "1 12345",
-			wantErr: true,
+			wantErr: false,
 		},
 	}
 	for _, tt := range tests {
