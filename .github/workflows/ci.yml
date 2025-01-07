@@ -22,6 +22,9 @@ jobs:
         run: |
           go test ./... -cover
 
+      - name: Sec Check
+        run: gosec -fmt=json ./...
+
   style:
     name: Style
     runs-on: ubuntu-latest
@@ -46,6 +49,3 @@ jobs:
 
       - name: Lint
         run: staticcheck ./...
-
-      - name: Sec Check
-        run: gosec -fmt=json ./...
