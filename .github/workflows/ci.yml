@@ -48,23 +48,4 @@ jobs:
         run: staticcheck ./...
 
       - name: Sec Check
-        run: gosec ./...
-
-  gosec:
-    name: Go Sec Check
-    runs-on: ubuntu-latest
-
-    steps:
-      - name: Check out code
-        uses: actions/checkout@v4
-
-      - name: Set up Go
-        uses: actions/setup-go@v5
-        with:
-          go-version: "1.23.0"
-
-      - name: Install gosec
-        run: go install github.com/securego/gosec/v2/cmd/gosec@latest
-
-      - name: Sec Check
-        run: gosec ./...
+        run: gosec -fmt=json ./...
