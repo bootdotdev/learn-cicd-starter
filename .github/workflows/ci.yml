@@ -22,8 +22,8 @@ jobs:
         run: |
           go test ./... -cover
 
-  styles:
-    name: Styles
+  style:
+    name: Style
     runs-on: ubuntu-latest
 
     steps:
