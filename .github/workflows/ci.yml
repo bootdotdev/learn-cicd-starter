@@ -42,10 +42,10 @@ jobs:
         run: go install github.com/securego/gosec/v2/cmd/gosec@latest
 
       - name: Format
-        run: test -z $(go fmt ./...)
+        run: go fmt ./...
 
       - name: Lint
-        run: test -z $(staticcheck ./...)
+        run: staticcheck ./...
 
       - name: Sec Check
-        run: test -z $(gosec ./...)
+        run: gosec ./...
