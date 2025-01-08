@@ -27,5 +27,8 @@ func respondWithJSON(w http.ResponseWriter, code int, payload interface{}) {
 		return
 	}
 	w.WriteHeader(code)
-	w.Write(dat)
+	_, err = w.Write(dat)
+	if err != nil { // Prevent G104 (CWE-703): Errors unhandled
+		log.Printf("Failed to write response: %v", err)
+	}
 }
