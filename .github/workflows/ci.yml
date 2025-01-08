@@ -22,7 +22,7 @@ jobs:
         run: go install github.com/securego/gosec/v2/cmd/gosec@latest
 
       - name: Run tests logging the percentage of the Coverage evaluation
-        run: go test ./... -cover && gosec  #&& (exit 1)  #go version
+        run: go test ./... -cover && gosec ./...  #&& (exit 1)  #go version
 
   style:
     name: Style
