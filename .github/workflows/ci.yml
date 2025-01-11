@@ -35,9 +35,6 @@ jobs:
           go-version: "1.23.0"
 
       - name: Check Go formatting
-        run: test -z $(go fmt ./...)
-
-      - name: Check Go formatting
         run: go fmt ./...
 
       - name: Install staticcheck
