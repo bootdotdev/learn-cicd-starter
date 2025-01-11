@@ -92,16 +92,10 @@ func main() {
 	srv := &http.Server{
 		Addr:    ":" + port,
 		Handler: router,
-                ReadHeaderTimeout: 10 * time.Second, // Set this to a reasonable value
-                WriteTimeout:      15 * time.Second, // Timeout za slanje odgovora
+                ReadHeaderTimeout: 5 * time.Second, // Set this to a reasonable value
 	}
 
-	//log.Printf("Serving on port: %s\n", port)
-	//log.Fatal(srv.ListenAndServe())
-        	// Pokreni server
-	log.Printf("Server listening on port %s", port)
-	if err := srv.ListenAndServe(); err != nil {
-		log.Fatalf("Server failed: %v", err)
-	}
+	log.Printf("Serving on port: %s\n", port)
+        log.Fatal(srv.ListenAndServe())
 }
 
