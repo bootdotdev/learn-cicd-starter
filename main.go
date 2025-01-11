@@ -7,6 +7,7 @@ import (
 	"log"
 	"net/http"
 	"os"
+        "time"
 
 	"github.com/go-chi/chi"
 	"github.com/go-chi/cors"
@@ -92,6 +93,7 @@ func main() {
 		Addr:    ":" + port,
 		Handler: router,
                 ReadHeaderTimeout: 10 * time.Second, // Set this to a reasonable value
+                WriteTimeout:      15 * time.Second, // Timeout za slanje odgovora
 	}
 
 	//log.Printf("Serving on port: %s\n", port)
