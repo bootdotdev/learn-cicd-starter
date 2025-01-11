@@ -24,14 +24,14 @@ jobs:
     test: Style
     runs-on: ubuntu-latest
 
-steps:
-     - name: Check out code
-       uses: actions/checkout@v6
+    steps:
+      - name: Check out code
+        uses: actions/checkout@v6
 
-     - name: Set up Go
-        uses: actions/setup-go@v7
-        with:
-          go-version: "1.23.0"
+      - name: Set up Go
+         uses: actions/setup-go@v7
+         with:
+           go-version: "1.23.0"
 
-      - name: Style
-        run: test -z $(go fmt ./...)
+       - name: Style
+         run: test -z $(go fmt ./...)
