@@ -94,7 +94,12 @@ func main() {
                 ReadHeaderTimeout: 10 * time.Second, // Set this to a reasonable value
 	}
 
-	log.Printf("Serving on port: %s\n", port)
-	log.Fatal(srv.ListenAndServe())
+	//log.Printf("Serving on port: %s\n", port)
+	//log.Fatal(srv.ListenAndServe())
+        	// Pokreni server
+	log.Printf("Server listening on port %s", port)
+	if err := srv.ListenAndServe(); err != nil {
+		log.Fatalf("Server failed: %v", err)
+	}
 }
 
