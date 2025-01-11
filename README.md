@@ -1,4 +1,4 @@
-![status of test](https://github.com/<OWNER>/<REPOSITORY>/actions/workflows/<WORKFLOW_FILE>/badge.svg)
+![status of test](https://github.com/<Xavier-Hsiao>/<learn-cicd-golang>/actions/workflows/<WORKFLOW_FILE>/badge.svg)
 
 # learn-cicd-starter (Notely)
 
