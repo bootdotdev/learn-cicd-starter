@@ -19,9 +19,10 @@ jobs:
           go-version: "1.23.0"
 
       - name: Force Failure
-        run: go test ./... -cover 
-jobs: 
-    test: Style
+        run: go test ./... -cover
+
+  style:
+    name: Style
     runs-on: ubuntu-latest
 
     steps:
@@ -33,5 +34,6 @@ jobs:
         with:
           go-version: "1.23.0"
 
-       - name: Style
-         run: test -z $(go fmt ./...)
+      - name: Check Go formatting
+        run: go fmt ./...
+
