@@ -91,6 +91,12 @@ func main() {
 	srv := &http.Server{
 		Addr:    ":" + port,
 		Handler: router,
+                //Handler: http.DefaultServeMux,
+                ReadHeaderTimeout: 10 * time.Second, // Set this to a reasonable value
+		// Optional: Configure other timeouts for additional protection
+		ReadTimeout:       30 * time.Second,
+		WriteTimeout:      30 * time.Second,
+		IdleTimeout:       60 * time.Second,
 	}
 
 	log.Printf("Serving on port: %s\n", port)
