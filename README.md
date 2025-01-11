@@ -1,4 +1,4 @@
-![status of test](https://github.com/<Xavier-Hsiao>/<learn-cicd-golang>/actions/workflows/<ci.yml>/badge.svg)
+![status of test](https://github.com/Xavier-Hsiao/learn-cicd-golang/actions/workflows/ci.yml/badge.svg)
 
 # learn-cicd-starter (Notely)
 
