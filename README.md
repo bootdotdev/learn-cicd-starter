@@ -24,5 +24,6 @@ go build -o notely && ./notely
 
 You do *not* need to set up a database or any interactivity on the webpage yet. Instructions for that will come later in the course!
 
-https://github.com/<OWNER>/<REPOSITORY>/actions/workflows/<WORKFLOW_FILE>/badge.svg
+https://github.com/f0rLinux/learn-cicd-starter/actions/workflows/<WORKFLOW_FILE>/badge.svg
+
 ![alt text goes here](IMAGE_URL)
