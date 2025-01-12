@@ -21,8 +21,8 @@ jobs:
       - name: Build app
         run: ./scripts/buildprod.sh
 
-      - name: Checkout Repository
-        uses: actions/checkout@v2
+      #- name: Checkout Repository
+      #  uses: actions/checkout@v2
 
       - id: auth
         uses: google-github-actions/auth@v2
