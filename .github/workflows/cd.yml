@@ -31,6 +31,9 @@ jobs:
 
       - name: Set up Cloud SDK
         uses: google-github-actions/setup-gcloud@v2
+        
+      - name: List files in the directory
+        run: ls -la
 
       - name: Use gcloud CLI
         run: gcloud info
