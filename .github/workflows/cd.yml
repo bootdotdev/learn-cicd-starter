@@ -37,8 +37,8 @@ jobs:
       - name: Set up Google Cloud SDK
         uses: google-github-actions/setup-gcloud@v2
         with:
-          project_id: ${{ secrets.GCP_PROJECT_ID }}  # Your Google Cloud project ID
-          credentials_json: ${{ secrets.GCP_SA_KEY }}  # Path to service account key stored in GitHub secrets
+          project_id: ${{ secrets.notely-447611 }}  # Your Google Cloud project ID
+          credentials_json: ${{ secrets.GCP_CREDENTIALS }}  # Path to service account key stored in GitHub secrets
 
       # Step 3: Configure Docker to use Google Artifact Registry
       - name: Configure Docker to use Google Artifact Registry
