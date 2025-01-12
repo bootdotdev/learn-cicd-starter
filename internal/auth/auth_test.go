@@ -8,32 +8,32 @@ import (
 
 func TestGetAPIKey(t *testing.T) {
 	tests := []struct {
-		name       string
-		headers    http.Header
+		name        string
+		headers     http.Header
 		expectedKey string
 		expectedErr error
 	}{
 		{
-			name:       "Valid ApiKey header",
-			headers:    http.Header{"Authorization": []string{"ApiKey abc123"}},
+			name:        "Valid ApiKey header",
+			headers:     http.Header{"Authorization": []string{"ApiKey abc123"}},
 			expectedKey: "abc123",
 			expectedErr: nil,
 		},
 		{
-			name:       "Missing Authorization header",
-			headers:    http.Header{},
+			name:        "Missing Authorization header",
+			headers:     http.Header{},
 			expectedKey: "",
 			expectedErr: ErrNoAuthHeaderIncluded,
 		},
 		{
-			name:       "Malformed Authorization header",
-			headers:    http.Header{"Authorization": []string{"Bearer abc123"}},
+			name:        "Malformed Authorization header",
+			headers:     http.Header{"Authorization": []string{"Bearer abc123"}},
 			expectedKey: "",
 			expectedErr: errors.New("malformed authorization header"),
 		},
 		{
-			name:       "Authorization header with no ApiKey value",
-			headers:    http.Header{"Authorization": []string{"ApiKey"}},
+			name:        "Authorization header with no ApiKey value",
+			headers:     http.Header{"Authorization": []string{"ApiKey"}},
 			expectedKey: "",
 			expectedErr: errors.New("malformed authorization header"),
 		},
