@@ -1,3 +1,8 @@
+# Learn CICD Starter
+
+![Tests](https://github.com/Dorbenami/learn-cicd-starter/actions/workflows/ci.yml/badge.svg)
+
+
 # Version and author
 
 Dorbenami's version of boot.dev's Notely app
