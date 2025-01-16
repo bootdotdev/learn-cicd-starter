@@ -23,7 +23,7 @@ jobs:
 
       - name: Run Test Cases
         run: go test ./... -cover
-  Style:
+  style:
     name: Style
     runs-on: ubuntu-latest
 
