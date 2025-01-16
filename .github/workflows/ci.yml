@@ -23,7 +23,7 @@ jobs:
 
       - name: Run Test Cases
         run: go test ./... -cover
-  style:
+  Style:
     name: Style
     runs-on: ubuntu-latest
 
@@ -38,4 +38,3 @@ jobs:
       
       - name: Check formatting
         run: test -z $(go fmt ./...)
-
