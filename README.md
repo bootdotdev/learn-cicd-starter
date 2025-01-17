@@ -24,4 +24,4 @@ You do *not* need to set up a database or any interactivity on the webpage yet. 
 
 "Zhix's version of Boot.dev's Notely app."
 
-"Fix 2"
+"Fix 3"
