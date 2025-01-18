@@ -1,4 +1,7 @@
+<<<<<<< HEAD
 ![CI](https://github.com/brainspill3r/learn-cicd-starter/actions/workflows/ci.yml/badge.svg)
+=======
+>>>>>>> d62bd5479f89dbe6fc8639f3c8b471d88576fecf
 # learn-cicd-starter (Notely)
 
 This repo contains the starter code for the "Notely" application for the "Learn CICD" course on [Boot.dev](https://boot.dev).
