@@ -21,5 +21,8 @@ jobs:
       - name: Run tests
         run: go test ./...
 
+      - name: Run tests with coverage
+        run: go test -cover ./...
+
       # - name: Force Failure
       #   run: (exit 1)
