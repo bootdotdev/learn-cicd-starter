@@ -1,4 +1,3 @@
-ppp
 name: ci
 
 on:
@@ -37,3 +36,6 @@ jobs:
 
       - name: Check formatting
         run: test -z $(go fmt ./...)
+
+
+   style:
