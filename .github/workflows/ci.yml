@@ -1,6 +1,6 @@
 ![CI]https://github.com/brainspill3r/learn-cicd-starter/actions/workflows/ci.yml/badge.svg
 name: ci
-d
+
 on:
   pull_request:
     branches: [main]
