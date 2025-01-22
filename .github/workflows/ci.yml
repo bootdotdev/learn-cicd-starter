@@ -19,7 +19,7 @@ jobs:
           go-version: "1.23.0"
 
       - name: Run Unit Tests
-        run: go test ./...
-        
+        run: go test ./... -cover
+
       - name: Force Failure
         run: (exit 0)
