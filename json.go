@@ -1,36 +1,36 @@
 package main
 
 import (
-        "encoding/json"
-        "log"
-        "net/http"
+	"encoding/json"
+	"log"
+	"net/http"
 )
 
 func respondWithError(w http.ResponseWriter, code int, msg string) {
-        if code > 499 {
-                log.Printf("Responding with 5XX error: %s", msg)
-        }
-        type errorResponse struct {
-                Error string `json:"error"`
-        }
-        respondWithJSON(w, code, errorResponse{
-                Error: msg,
-        })
+	if code > 499 {
+		log.Printf("Responding with 5XX error: %s", msg)
+	}
+	type errorResponse struct {
+		Error string `json:"error"`
+	}
+	respondWithJSON(w, code, errorResponse{
+		Error: msg,
+	})
 }
 
 func respondWithJSON(w http.ResponseWriter, code int, payload interface{}) {
-    w.Header().Set("Content-Type", "application/json")
-    dat, err := json.Marshal(payload)
-    if err != nil {
-        log.Printf("Error marshalling JSON: %s", err)
-        w.WriteHeader(500) // Internal Server Error
-        return
-    }
+	w.Header().Set("Content-Type", "application/json")
+	dat, err := json.Marshal(payload)
+	if err != nil {
+		log.Printf("Error marshalling JSON: %s", err)
+		w.WriteHeader(500) // Internal Server Error
+		return
+	}
 
-    w.WriteHeader(code)
-    _, err = w.Write(dat) // Reassign `err` returned by w.Write
-    if err != nil {
-        log.Printf("failed to write response: %v", err) // Logs the error
-        // Optionally, you could take further action here if necessary
-    }
+	w.WriteHeader(code)
+	_, err = w.Write(dat) // Reassign `err` returned by w.Write
+	if err != nil {
+		log.Printf("failed to write response: %v", err) // Logs the error
+		// Optionally, you could take further action here if necessary
+	}
 }
