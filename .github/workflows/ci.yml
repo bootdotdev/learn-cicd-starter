@@ -1,3 +1,4 @@
+name: ci
 on:
   pull_request:
     branches:
@@ -15,5 +16,7 @@ jobs:
         uses: actions/setup-go@v5
         with:
           go-version: "1.23.0"
-      - name: Force Failure
+      - name: Force Pass
         run: (exit 0)
+      - name: Echo Go version
+        run: go version
