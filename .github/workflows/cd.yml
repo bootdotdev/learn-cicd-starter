@@ -23,4 +23,4 @@ jobs:
           export_default_credentials: true  
 
       - name: Build and push Docker image to Artifact Registry
-        run: gcloud builds submit --tag us-central1-docker.pkg.dev/notely-448816/notely-ar-repo/notely:latest .
+        run: gcloud builds submit --project notely-448816 --tag us-central1-docker.pkg.dev/notely-448816/notely-ar-repo/notely:latest .
