@@ -43,5 +43,11 @@ jobs:
       - name: run tests 
         run: go test ./... -cover
 
+      - name: Install gosec
+        uses: go install github.com/securego/gosec/v2/cmd/gosec@latest
+
+      - name: run gosec
+        run: gosec ./...
+
       - name: exit
         run: (exit 0)
