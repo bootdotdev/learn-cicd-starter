@@ -1,8 +1,8 @@
-name : deployment
+name: deployment
 
 on:
-    push:
-      branches: [main]
+  push:
+    branches: [main]
 
 jobs:
   deploy:
@@ -13,14 +13,20 @@ jobs:
       - name: Check out code
         uses: actions/checkout@v4
 
-      - name: setup go tool
-        run : scripts/buildprod.sh
+      - name: Setup build script
+        run: scripts/buildprod.sh
 
+      # Authenticate with GCP
       - name: Authenticate with GCP
         uses: google-github-actions/setup-gcloud@v1
         with:
           service_account_key: ${{ secrets.GCP_CREDENTIALS }}
           export_default_credentials: true  
 
+      # Set the active project
+      - name: Set GCP Project
+        run: gcloud config set project notely-448816
+
+      # Build and push the Docker image
       - name: Build and push Docker image to Artifact Registry
-        run: gcloud builds submit --project notely-448816 --tag us-central1-docker.pkg.dev/notely-448816/notely-ar-repo/notely:latest .
+        run: gcloud builds submit --tag us-central1-docker.pkg.dev/notely-448816/notely-ar-repo/notely:latest .
