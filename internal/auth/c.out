@@ -1,0 +1,6 @@
+mode: set
+github.com/bootdotdev/learn-cicd-starter/internal/auth/auth.go:12.53,14.22 2 1
+github.com/bootdotdev/learn-cicd-starter/internal/auth/auth.go:14.22,16.3 1 1
+github.com/bootdotdev/learn-cicd-starter/internal/auth/auth.go:17.2,18.52 2 1
+github.com/bootdotdev/learn-cicd-starter/internal/auth/auth.go:18.52,20.3 1 1
+github.com/bootdotdev/learn-cicd-starter/internal/auth/auth.go:22.2,22.26 1 1
