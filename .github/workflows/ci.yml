@@ -1,8 +1,8 @@
 name: ci
-
 on:
   pull_request:
-    branches: [main]
+    branches:
+      - main
 
 jobs:
   tests:
@@ -16,5 +16,9 @@ jobs:
         uses: actions/setup-go@v5
         with:
           go-version: "1.23.0"
-      - name: Force Failure
-        run: (exit 1)
+      - name: Force Pass
+        run: (exit 0)
+      - name: GO Tests
+        run: go test ./...
+      - name: -cover
+        run: go test -cover ./...
