@@ -19,4 +19,6 @@ jobs:
       - name: Force Pass
         run: (exit 0)
       - name: GO Tests
-        run: go test ./... -cover
+        run: go test ./...
+      - name: -cover
+        run: go test -cover ./...
