@@ -20,7 +20,6 @@ jobs:
 
       - name: Run tests
         run: go test -cover ./...
-
   style:
     name: Style
     runs-on: ubuntu-latest
@@ -36,6 +35,4 @@ jobs:
 
       - name: Run tests
         run: test -z $(go fmt ./...)
-
-
 
