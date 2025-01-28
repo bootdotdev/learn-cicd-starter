@@ -21,3 +21,8 @@ func GetAPIKey(headers http.Header) (string, error) {
 
 	return splitAuth[1], nil
 }
+
+// TestGetAPIKey -
+func TestGetAPIKey(headers http.Header) (string, error) {
+	return GetAPIKey(headers)
+}
