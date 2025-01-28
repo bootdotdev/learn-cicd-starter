@@ -10,7 +10,7 @@ func TestGetAPIKey(t *testing.T) {
 	// Arrange: Set up necessary input
 	input := http.Header{}
 	input.Add("Content-Type", "application/json")
-	expected := "a"
+	expected := ""
 
 	// Act: Call the function being tested
 	result , status:= GetAPIKey(input)
