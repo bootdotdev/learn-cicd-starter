@@ -24,6 +24,6 @@ jobs:
       - name: Set up gcloud Cloud SDK environment
         uses: google-github-actions/setup-gcloud@v2.1.2
 
-      - name: deploy
+      - name: Deploy
         run: australia-southeast2-docker.pkg.dev/notely-449312/notely-ar-repo/notely:latest
 
