@@ -6,7 +6,6 @@ import (
 	"testing"
 )
 
-
 func TestGetAPIKey(t *testing.T) {
 	tests := []struct {
 		name    string
