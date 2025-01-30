@@ -25,5 +25,4 @@ jobs:
         uses: google-github-actions/setup-gcloud@v2.1.2
 
       - name: Deploy
-        run: australia-southeast2-docker.pkg.dev/notely-449312/notely-ar-repo/notely:latest
-
+        run: gcloud builds submit --tag australia-southeast2-docker.pkg.dev/notely-449312/notely-ar-repo/notely:latest
