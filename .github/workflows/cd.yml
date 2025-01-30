@@ -26,3 +26,4 @@ jobs:
 
       - name: deploy
         run: australia-southeast2-docker.pkg.dev/notely-449312/notely-ar-repo/notely:latest
+
