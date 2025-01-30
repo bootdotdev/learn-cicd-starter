@@ -100,4 +100,5 @@ func main() {
 func unused() {
 	// this function does nothing!
 	//And is called nowhere!
+
 }
