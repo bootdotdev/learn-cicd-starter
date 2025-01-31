@@ -5,47 +5,49 @@ on:
     branches: [main]
 
 jobs:
-  Deploy:
+  deploy:
+    name: Deploy
     runs-on: ubuntu-latest
-    
+
+    # Step 1: Provide DATABASE_URL secret to the environment
+    env:
+      DATABASE_URL: ${{ secrets.DATABASE_URL }}  # This will make DATABASE_URL available to all steps
+
     steps:
-      # Step 1: Checkout the repository
+      # Step 2: Checkout the repository
       - name: Checkout repository
         uses: actions/checkout@v3
 
-      # Step 2: Set up Go
+      # Step 3: Set up Go
       - name: Set up Go
         uses: actions/setup-go@v4
         with:
           go-version: '1.22'
 
-      # Step 3: Build the app
+      # Step 4: Build the app
       - name: Build the app
         run: scripts/buildprod.sh
 
-      # Step 4: Authenticate with Google Cloud using service account
+      # Step 5: Authenticate with Google Cloud using service account
       - id: 'auth'
         uses: 'google-github-actions/auth@v2'
         with:
           credentials_json: ${{ secrets.GCP_CREDENTIALS }}  # Replace with the correct secret name
 
-      # Step 5: Set up gcloud CLI
+      # Step 6: Set up gcloud CLI
       - name: 'Set up Cloud SDK'
         uses: 'google-github-actions/setup-gcloud@v2'
-
-      # Step 6: Use gcloud CLI to verify setup (optional, you can remove if not needed)
-      - name: Use gcloud CLI
-        run: gcloud info
 
       # Step 7: Build and push Docker image
       - name: Build and push Docker image
         run: gcloud builds submit --tag us-central1-docker.pkg.dev/notely-449513/notely-ar-repo/notely .
 
       # Step 8: Install goose and run migrations
-      - name: Install goose
+      - name: Install goose and run migrations
         run: |
           go install github.com/pressly/goose/v3/cmd/goose@latest
           goose -version # Ensure at least v3.18.0
+          ./scripts/migrateup.sh
         env:
           DATABASE_URL: ${{ secrets.DATABASE_URL }}
 
