@@ -25,10 +25,10 @@ jobs:
     name: "Style"
     runs-on: ubuntu-latest
     steps:
-      - name: "Install staticcheck"
-        run: go install honnef.co/go/tools/cmd/staticcheck@latest
       - name: "Check styling"
         run: test -z $(go fmt ./...)
       - name: "Lint with staticcheck"
-        run: staticcheck ./...
+        uses: dominikh/staticcheck-action@v1.2.0
+        with:
+         version: "2022.1.1"
 
