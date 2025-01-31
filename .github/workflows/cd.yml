@@ -4,31 +4,39 @@ on:
   push:
     branches: [main]
 
-jobs: # <-- Fix indentation here
+jobs:
   Deploy:
     runs-on: ubuntu-latest
     steps:
+      # Step 1: Checkout the repository
       - name: Checkout repository
         uses: actions/checkout@v3
 
+      # Step 2: Set up Go
       - name: Set up Go
         uses: actions/setup-go@v4
         with:
           go-version: '1.22'
 
+      # Step 3: Build the app
       - name: Build the app
         run: scripts/buildprod.sh
 
+      # Step 4: Authenticate with Google Cloud using service account
       - id: 'auth'
-      uses: 'google-github-actions/auth@v2'
-      with:
-        credentials_json: ${{ secrets.GCP_CREDENTIALS }}
+        uses: 'google-github-actions/auth@v2'
+        with:
+          credentials_json: ${{ secrets.GCP_CREDENTIALS }}  # Replace with the correct secret name
 
+      # Step 5: Set up gcloud CLI
       - name: 'Set up Cloud SDK'
-      uses: 'google-github-actions/setup-gcloud@v2'
+        uses: 'google-github-actions/setup-gcloud@v2'
 
+      # Step 6: Use gcloud CLI to verify setup (optional, you can remove if not needed)
       - name: Use gcloud CLI
         run: gcloud info
 
+      # Step 7: Build and push Docker image
       - name: Build and push Docker image
-        run: gcloud builds submit --tag REGION-docker.pkg.dev/notely-449513/notely-ar-repo/notely
+        run: |
+          gcloud builds submit --tag REGION-docker.pkg.dev/notely-449513/notely-ar-repo/notely:latest .
