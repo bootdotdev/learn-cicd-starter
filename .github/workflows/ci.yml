@@ -18,5 +18,6 @@ jobs:
         with:
           go-version: "1.23.0"
 
-      - name: Display Go Version
-       	run: go version
+      - name: Echo Go version
+        run: go version
+
