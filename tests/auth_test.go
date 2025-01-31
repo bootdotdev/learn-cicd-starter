@@ -40,6 +40,7 @@ func TestGetAPIKey(t *testing.T) {
 	}
 
 	for _, tt := range tests {
+
 		t.Run(tt.name, func(t *testing.T) {
 			key, err := auth.GetAPIKey(tt.headers)
 			if key != tt.expectedKey {
