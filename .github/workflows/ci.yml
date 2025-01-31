@@ -27,5 +27,4 @@ jobs:
     steps:
       - name: "Check styling"
         run: test -z $(go fmt ./...)
-        
 
