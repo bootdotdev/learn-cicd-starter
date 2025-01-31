@@ -41,17 +41,25 @@ jobs:
       - name: Build and push Docker image
         run: gcloud builds submit --tag us-central1-docker.pkg.dev/notely-449513/notely-ar-repo/notely .
 
+      # Step 8: Install goose and run migrations
       - name: Install goose
         run: |
           go install github.com/pressly/goose/v3/cmd/goose@latest
           goose -version # Ensure at least v3.18.0
-
         env:
-        DATABASE_URL: ${{ secrets.DATABASE_URL }}
+          DATABASE_URL: ${{ secrets.DATABASE_URL }}
 
+      # Step 9: Deploy to Cloud Run
       - name: Deploy to Cloud Run
-        run: gcloud run deploy notely --image us-central1-docker.pkg.dev/notely-449513/notely-ar-repo/notely --region us-central1 --allow-unauthenticated --project notely-449513 --max-instances=4
+        run: |
+          gcloud run deploy notely \
+            --image us-central1-docker.pkg.dev/notely-449513/notely-ar-repo/notely \
+            --region us-central1 \
+            --allow-unauthenticated \
+            --project notely-449513 \
+            --max-instances=4
 
+      # Step 10: Check for sensitive credentials
       - name: Check for sensitive credentials
         run: |
           git diff --exit-code || echo "Check for sensitive credentials like database URLs."
