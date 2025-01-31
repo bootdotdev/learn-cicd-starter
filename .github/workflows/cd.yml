@@ -39,4 +39,4 @@ jobs:
       # Step 7: Build and push Docker image
       - name: Build and push Docker image
         run: |
-          gcloud builds submit --tag REGION-docker.pkg.dev/notely-449513/notely-ar-repo/notely:latest .
+          gcloud builds submit --tag REGION-docker.pkg.dev/notely-449513/notely-ar-repo/notely .
