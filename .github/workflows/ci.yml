@@ -18,6 +18,10 @@ jobs:
 
       - name: Test with the Go CLI
         run: go test ./... -cover
+      - name: Install gosec
+        run: go install github.com/securego/gosec/v2/cmd/gosec@latest
+      - name: Test sec vulnerabilities
+        run: gosec ./...
 
       - name: Force Failure
         run: (exit 0)
