@@ -21,3 +21,10 @@ jobs:
 
       - name: Force Failure
         run: (exit 0)
+  style:
+    name: "Style"
+    runs-on: ubuntu-latest
+    steps:
+      - name: "Check styling"
+        run: test -z $(go fmt ./...)
+
