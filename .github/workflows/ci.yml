@@ -36,6 +36,6 @@ jobs:
       - name: Run formatting
         run: test -z $(go fmt ./...)
       - name: Run staticcheck
-        - uses: dominikh/staticcheck-action@v1
+        uses: dominikh/staticcheck-action@v1
         with:
           version: "latest"
