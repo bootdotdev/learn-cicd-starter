@@ -40,3 +40,20 @@ jobs:
 
     - name : s
       run: staticcheck ./...
+
+  Tests:
+    name: Tests
+    runs-on: ubuntu-latest
+
+    steps:
+    - name: what is check check is priating your code
+      uses: actions/checkout@v4
+
+    - name: use go code
+      uses: actions/setup-go@v5
+
+    - name: Install 
+      run: go install github.com/securego/gosec/v2/cmd/gosec@latest
+
+    - name : s
+      run: gosec ./...
