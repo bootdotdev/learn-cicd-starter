@@ -21,7 +21,7 @@ import (
 type apiConfig struct {
 	DB *database.Queries
 }
-
+//tes
 //go:embed static/*
 var staticFiles embed.FS
 
