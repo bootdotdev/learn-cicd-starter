@@ -21,7 +21,9 @@ import (
 type apiConfig struct {
 	DB *database.Queries
 }
-//tes
+
+// tes
+//
 //go:embed static/*
 var staticFiles embed.FS
 
@@ -90,8 +92,8 @@ func main() {
 
 	router.Mount("/v1", v1Router)
 	srv := &http.Server{
-		Addr:    ":" + port,
-		Handler: router,
+		Addr:              ":" + port,
+		Handler:           router,
 		ReadHeaderTimeout: time.Second * 60,
 	}
 
