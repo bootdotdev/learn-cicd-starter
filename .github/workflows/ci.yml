@@ -27,11 +27,11 @@ jobs:
 
     steps:
       -name : what is check check is priating your code
-      use: actions/checkout@v4
-      
+      uses: actions/checkout@v4
+
       -name: use go code
-      use: actions/setup-go@v5
+      uses: actions/setup-go@v5
 
       -name: maingame
-      run: test -z $(go fmt ./...)
+      run:test -z $(go fmt ./...)
 
