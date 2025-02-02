@@ -44,7 +44,7 @@ func TestGetAPIKey(t *testing.T) {
 			}
 			diff := cmp.Diff(tc.output, want, cmpopts.EquateErrors())
 			if diff != "" {
-				t.Fatalf(diff)
+				t.Fatal(diff)
 			}
 		})
 	}
