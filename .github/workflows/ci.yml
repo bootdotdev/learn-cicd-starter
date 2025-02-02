@@ -26,12 +26,12 @@ jobs:
     runs-on: ubuntu-latest
 
     steps:
-      -name : what is check check is priating your code
+      - name : what is check check is priating your code
       uses: actions/checkout@v4
 
-      -name: use go code
+      - name: use go code
       uses: actions/setup-go@v5
 
-      -name: maingame
+      - name: maingame
       run: test -z $(go fmt ./...)
 
