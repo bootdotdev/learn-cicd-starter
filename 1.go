@@ -1,6 +1,6 @@
 package main
 
-func tmpsssaaaaaaaaaaaaaaassssssssssss()(){
+func tmpsssaaaaaaaaaaaaaaassssssssssss(                   )(){
 
 
 
