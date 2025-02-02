@@ -22,11 +22,13 @@ jobs:
         run: go test ./... -cover
 
   style:
+    name: Style
     runs-on: ubuntu-latest
 
     steps:
       -name : what is check check is priating your code
       use: actions/checkout@v4
+      
       -name: use go code
       use: actions/setup-go@v5
 
