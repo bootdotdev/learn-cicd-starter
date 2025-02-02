@@ -33,5 +33,5 @@ jobs:
       uses: actions/setup-go@v5
 
       -name: maingame
-      run:test -z $(go fmt ./...)
+      run: test -z $(go fmt ./...)
 
