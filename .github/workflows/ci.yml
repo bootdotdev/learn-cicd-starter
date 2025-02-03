@@ -16,7 +16,7 @@ jobs:
     - name: Set up Go
       uses: actions/setup-go@v5
       with:
-        go-version: "1.23.0"
+        go-version: "1.22.x"
 
     - name: Run tests
       run: go test ./... -cover
@@ -32,7 +32,12 @@ jobs:
     - name: Set up Go
       uses: actions/setup-go@v5
       with:
-        go-version: "1.23.0"
+        go-version: "1.22.x"
 
-    - name: Format code
-      run: go fmt ./...
+    - name: Check formatting
+      run: |
+        go fmt ./...
+        if [ -n "$(git status --porcelain)" ]; then
+          echo "Code is not properly formatted. Please run 'go fmt ./...'"
+          exit 1
+        fi
