@@ -21,6 +21,11 @@ type apiConfig struct {
 	DB *database.Queries
 }
 
+// Add this to any of your .go files
+func unusedFunction() {
+	// This function will trigger staticcheck
+}
+
 //go:embed static/*
 var staticFiles embed.FS
 
