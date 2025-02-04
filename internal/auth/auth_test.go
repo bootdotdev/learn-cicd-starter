@@ -54,7 +54,7 @@ func TestGetAPIKey(t *testing.T) {
 
 		"correct header": {
 			header: map[string][]string{
-				"Authorization": {"ApiKey 12345678"},
+				"Authorization": {"ApiKey 123456789"},
 			},
 			want: struct {
 				apikey string
