@@ -22,4 +22,4 @@ jobs:
         run: go version
 
       - name: Force Failure
-        run: go test ./... -cover
+        run: go test -cover
