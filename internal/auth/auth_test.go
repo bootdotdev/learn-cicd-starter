@@ -25,7 +25,7 @@ func TestGetAPIKey(t *testing.T) {
 		// Don't add any Authorization header
 
 		got, err := GetAPIKey(headers)
-		if err == ErrNoAuthHeaderIncluded {
+		if err != ErrNoAuthHeaderIncluded {
 			t.Errorf("Expected ErrNoAuthHeaderIncluded, got %v", err)
 		}
 
