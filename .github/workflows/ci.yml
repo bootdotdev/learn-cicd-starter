@@ -35,4 +35,3 @@ jobs:
 
         - name: run formatter
           run: test -z $(go fmt ./...)
-        
