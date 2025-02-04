@@ -24,6 +24,7 @@ jobs:
   style:
     name: Style
     needs: tests
+      
       steps:
         - name: run formatter
           run: test -z $(go fmt ./...)
