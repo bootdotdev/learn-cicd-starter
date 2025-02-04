@@ -1,4 +1,5 @@
-https://github.com/hardikason/learn-cicd-starter-sk/actions/workflows/ci.yml/badge.svg
+![example workflow status badge display](https://github.com/hardikason/learn-cicd-starter-sk/actions/workflows/ci.yml/badge.svg
+)
 
 
 # learn-cicd-starter (Notely)
