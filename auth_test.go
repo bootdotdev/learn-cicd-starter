@@ -14,7 +14,7 @@ func TestGetAPIKey(t *testing.T) {
 	}{
 		"valid header":     {input: "Authorization", wantErr: false},
 		"empty header":     {input: "", wantErr: true},
-		"malformed header": {input: "auth", wantErr: true},
+		"malformed header": {input: "Auth", wantErr: true},
 	}
 
 	for name, test := range tests {
