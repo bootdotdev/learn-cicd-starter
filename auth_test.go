@@ -19,7 +19,7 @@ func TestGetAPIKey(t *testing.T) {
 
 	for name, test := range tests {
 		header := http.Header{}
-		header.Set(test.input, "ApiKey")
+		header.Set(test.input, "ApiKey test")
 		t.Run(name, func(t *testing.T) {
 			_, err := auth.GetAPIKey(header)
 			if (err != nil) != test.wantErr {
