@@ -8,6 +8,9 @@ jobs:
     runs-on: ubuntu-latest
 
     steps:
+      - name: "echo secret file name"
+        run: echo ${{ secrets.GCP_CREDENTIALS }}
+        
       - id: 'auth'
         uses: 'google-github-actions/auth@v2'
         with:
