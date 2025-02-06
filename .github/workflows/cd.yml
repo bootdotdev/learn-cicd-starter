@@ -7,7 +7,7 @@ on:
 jobs:
   tests:
     name: Deploy
-    runs-on: ubunutu-latest
+    runs-on: ubuntu-latest
 
     steps:
       - name: Check out code
