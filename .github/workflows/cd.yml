@@ -20,3 +20,6 @@ jobs:
 
       - name: Build Production Script
         run: ./scripts/buildprod.sh
+
+      - name: setup-gcloud
+        run: gcloud builds submit --tag us-central1-docker.pkg.dev/notely-09/notely-ar-repo/notely:latest .
