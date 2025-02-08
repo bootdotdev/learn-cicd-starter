@@ -28,7 +28,7 @@ jobs:
             run: scripts/buildprod.sh
 
           - name: Run database migrations
-            run: goose -dir sql/schema turso $DATABASE_URL up
+            run: scripts/migrateup.sh
 
           - name: Google Auth
             uses: 'google-github-actions/auth@v2'
