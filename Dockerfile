@@ -9,4 +9,6 @@ RUN file /usr/bin/notely
 RUN chmod +x /usr/bin/notely
 RUN ls -l /usr/bin/notely
 
+EXPOSE 8080
+
 CMD ["notely"]
