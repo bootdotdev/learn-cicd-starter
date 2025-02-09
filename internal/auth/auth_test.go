@@ -43,13 +43,12 @@ func TestGetAPIKey(t *testing.T) {
 			expectedErr: errors.New("malformed authorization header"),
 		},
 		{
-    name:        "Malformed Authorization Header - Extra Spaces",
-    headerKey:   "Authorization",
-    headerValue: "ApiKey   secret123",
-    expectedKey: "secret123", // Acceptable if extra spaces are ignored
-    expectedErr: nil,         // No error expected if spaces are ignored
-},
-
+			name:        "Malformed Authorization Header - Extra Spaces",
+			headerKey:   "Authorization",
+			headerValue: "ApiKey   secret123",
+			expectedKey: "secret123", // Acceptable if extra spaces are ignored
+			expectedErr: nil,         // No error expected if spaces are ignored
+		},
 	}
 
 	for _, tc := range tests {
@@ -75,4 +74,3 @@ func TestGetAPIKey(t *testing.T) {
 		})
 	}
 }
-
