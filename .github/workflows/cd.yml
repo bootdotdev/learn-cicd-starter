@@ -18,6 +18,17 @@ jobs:
         with:
           go-version: "1.23.0"
 
-      - name: Build app
+      - name: Build production binary
         run: ./scripts/buildprod.sh
+
+      - name: Setup gcloud CLI
+        uses: google-github-actions/setup-gcloud@v1
+        with:
+          project_id: gen-lang-client-0858969440
+          service_account_key: ${{ secrets.GCP_CREDENTIALS }}
+          export_default_credentials: true
+
+      - name: Build and push Docker image
+        run: |
+          gcloud builds submit --tag us-central1-docker.pkg.dev/gen-lang-client-0858969440/notely-ar-repo:latest .
 
