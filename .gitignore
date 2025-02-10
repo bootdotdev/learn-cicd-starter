@@ -26,3 +26,6 @@ go.work.sum
 
 learn-cicd-starter
 notely
+
+ci-cd-github-action-notes.md
+sample-ci-cd.yaml
