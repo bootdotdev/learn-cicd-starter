@@ -21,7 +21,7 @@ func TestGetAPIKey(t *testing.T) {
 	tests := []test{
 		{header: http.Header{"Authorization": []string{"ApiKey 12345678-abcd-90ef-gh12-ijklmnopqrst"}}, expected_result: output{key: "12345678-abcd-90ef-gh12-ijklmnopqrst", err: nil}},
 		{header: http.Header{"Authorization": []string{"Key 12345678-abcd-90ef-gh12-ijklmnopqrst"}}, expected_result: output{key: "", err: errors.New("malformed authorization header")}},
-		{header: http.Header{}, expected_result: output{key: "key", err: ErrNoAuthHeaderIncluded}},
+		{header: http.Header{}, expected_result: output{key: "", err: ErrNoAuthHeaderIncluded}},
 	}
 
 	for i, tc := range tests {
