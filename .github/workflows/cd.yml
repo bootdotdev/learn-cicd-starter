@@ -1,41 +1,52 @@
-name: cd
+name: cd # CI/CD workflow for Continuous Deployment
 
 on:
   push:
-    branches: [ main ]
+    branches: [main] # Trigger deployment on pushes to the 'main' branch
 
 jobs:
   deploy:
-    name: Deploy
-    runs-on: ubuntu-latest
+    name: Deploy # Deployment job
+    runs-on: ubuntu-latest # Use the latest Ubuntu runner
+    permissions:
+      contents: read # Allow read access to repository contents (needed for checkout)
 
     steps:
-      - name: Check out code
-        uses: actions/checkout@v4
+      - name: Checkout code
+        uses: actions/checkout@v4 # Clone the repository
 
       - name: Set up Go
-        uses: actions/setup-go@v5
+        uses: actions/setup-go@v5 # Install Go environment
         with:
-          go-version: "1.23.0"
+          go-version: "1.23.0" # Specify Go version
 
       - name: Build App
-        run: ./scripts/buildprod.sh
+        run: ./scripts/buildprod.sh # Execute the production build script
 
-      # Authenticate with GCP using the service account key stored as a GitHub secret
       - name: Authenticate with GCP
-        uses: google-github-actions/auth@v2
+        uses: google-github-actions/auth@v2 # Authenticate with Google Cloud Platform
         with:
-          credentials_json: ${{ secrets.GCP_CREDENTIALS }}
+          credentials_json: ${{ secrets.GCP_CREDENTIALS }} # Use stored GCP service account credentials
 
-      # Set up the gcloud CLI
-      - name: Set up gcloud
-        uses: google-github-actions/setup-gcloud@v2
+      - name: Set up gcloud CLI
+        uses: google-github-actions/setup-gcloud@v2 # Install and configure gcloud CLI
 
-      # Configure Docker to use Artifact Registry
+      - name: Grant Cloud Build Service Account Permissions
+        run: |
+          PROJECT_ID=$(gcloud config get-value project) # Retrieve GCP project ID
+          SERVICE_ACCOUNT=$(gcloud auth list --filter=status:ACTIVE --format="value(account)") # Get active service account email
+          
+          # Grant Cloud Build service account necessary permissions for Cloud Storage
+          gsutil iam ch serviceAccount:${SERVICE_ACCOUNT}:objectCreator,objectViewer gs://notely-450615_cloudbuild
+          
+          # This allows Cloud Build to upload and access the source code stored in the GCS bucket.
+
       - name: Configure Docker for Artifact Registry
-        run: gcloud auth configure-docker us-central1-docker.pkg.dev
+        run: gcloud auth configure-docker us-central1-docker.pkg.dev # Authenticate Docker with Artifact Registry
 
-      # Build and push the Docker image to Google Artifact Registry
       - name: Build and Push Docker Image
         run: |
           gcloud builds submit --tag us-central1-docker.pkg.dev/notely-450615/notely-ar-repo/notely:latest .
+          
+          # Submit the source code to Cloud Build, which builds the Docker image and pushes it to Artifact Registry.
+          # The '--tag' flag specifies the target Artifact Registry repository and image name.
