@@ -46,7 +46,13 @@ jobs:
 
       - name: Build and Push Docker Image
         run: |
+<<<<<<< HEAD
           gcloud builds submit --tag us-central1-docker.pkg.dev/notely-450615/notely-ar-repo/notely:latest .
           
           # Submit the source code to Cloud Build, which builds the Docker image and pushes it to Artifact Registry.
           # The '--tag' flag specifies the target Artifact Registry repository and image name.
+||||||| d8e5a05
+          gcloud builds submit --tag us-central1-docker.pkg.dev/notely-450615/notely-ar-repo/notely:latest .
+=======
+          gcloud builds submit --tag us-central1-docker.pkg.dev/notely-450615/notely-ar-repo/notely:latest .
+>>>>>>> 5453b5943b58a09436c68cf3814df52d4617b821
