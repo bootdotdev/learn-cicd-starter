@@ -1,3 +1,4 @@
+<!-- Ch 2. Tests Lv 4. README Badge for Tests -->
 ![ALT_TEXT](https://github.com/Bayan2019/learn-cicd-starter/actions/workflows/ci.yml/badge.svg)
 
 # learn-cicd-starter (Notely)
