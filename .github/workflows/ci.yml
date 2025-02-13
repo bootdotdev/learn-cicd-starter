@@ -27,9 +27,9 @@ jobs:
       # - name: Test security check
       #   run: gosec ./...
 
-  # style:
-  #   name: Style
-  #   runs-on: ubuntu-latest
+  style:
+    name: Style
+    runs-on: ubuntu-latest
       
   #   steps:
   #     - name: Set up Go
@@ -40,8 +40,8 @@ jobs:
   #     - name: Check out code
   #       uses: actions/checkout@v3
       
-  #     - name: Check formatting
-  #       run: test -z $(go fmt ./...)
+      - name: Check formatting
+        run: test -z $(go fmt ./...)
 
   #     - name: install staticcheck
   #       run: go install honnef.co/go/tools/cmd/staticcheck@latest
