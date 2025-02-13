@@ -14,12 +14,14 @@ jobs:
         uses: actions/checkout@v3
 
       - name: Set up Go
-        uses: actions/setup-go@v4
+        uses: actions/setup-go@v5
         with:
           go-version: "1.23.5"
 
-      - name: Check Go Version
-        run: go version
+      # - name: Check Go Version
+      #   run: go version
+      - name: Go Tests
+        run: go test ./...
 
       # - name: Test coverage
       #   run: go test -cover ./...

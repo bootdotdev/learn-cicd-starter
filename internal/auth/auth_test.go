@@ -1,57 +1,66 @@
 package auth
 
 import (
-	"errors"
+	"fmt"
 	"net/http"
+	"strings"
 	"testing"
 )
 
+// Ch 2. Tests Lv 1. Running Tests
+// Add a couple unit tests for the GetAPIKey function
 func TestGetAPIKey(t *testing.T) {
 
 	cases := []struct {
-		input           http.Header
-		expected_string string
-		expected_error  error
+		key       string
+		value     string
+		expect    string
+		expectErr string
 	}{
 		{
-			input:           http.Header{"Authentication": {"Bearer Token"}},
-			expected_string: "",
-			expected_error:  ErrNoAuthHeaderIncluded,
+			expectErr: "no authorization header",
 		},
 		{
-			input:           http.Header{"Authorization": {"Bearer Token"}},
-			expected_string: "",
-			expected_error:  errors.New("malformed authorization header"),
+			key:       "Authorization",
+			expectErr: "no authorization header",
 		},
 		{
-			input:           http.Header{"Authorization": {"ApiKey"}},
-			expected_string: "",
-			expected_error:  errors.New("malformed authorization header"),
+			key:       "Authorization",
+			value:     "-",
+			expectErr: "malformed authorization header",
 		},
 		{
-			input:           http.Header{"Authorization": {"ApiKey Key"}},
-			expected_string: "Key",
-			expected_error:  nil,
+			key:       "Authorization",
+			value:     "Bearer xxxxxx",
+			expectErr: "malformed authorization header",
+		},
+		{
+			key:       "Authorization",
+			value:     "ApiKey xxxxxx",
+			expect:    "xxxxxx",
+			expectErr: "not expecting an error",
 		},
 	}
 
-	for _, cs := range cases {
-		actual_string, actual_error := GetAPIKey(cs.input)
-		if actual_string != cs.expected_string {
-			t.Errorf("The key don't coincide: %v vs %v", actual_string, cs.expected_string)
-			continue
-		}
-		if actual_error == nil {
-			if cs.expected_error != nil {
-				t.Errorf("The errors don't coincide")
-				continue
+	for i, test := range cases {
+		t.Run(fmt.Sprintf("TestGetAPIKey Case #%v:", i), func(t *testing.T) {
+			header := http.Header{}
+			header.Add(test.key, test.value)
+
+			output, err := GetAPIKey(header)
+			if err != nil {
+				if strings.Contains(err.Error(), test.expectErr) {
+					return
+				}
+				t.Errorf("Unexpected: TestGetAPIKey:%v\n", err)
+				return
 			}
-			continue
-		}
-		if actual_error.Error() != cs.expected_error.Error() {
-			t.Errorf("The errors don't coincide: %v vs %v", actual_error, cs.expected_error)
-			continue
-		}
+
+			if output != test.expect {
+				t.Errorf("Unexpected: TestGetAPIKey:%s", output)
+				return
+			}
+		})
 	}
 
 }
