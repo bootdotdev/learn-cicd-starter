@@ -21,7 +21,7 @@ jobs:
       # - name: Run unit tests
       #   run: go test ./...
 
-      - name: Test coverage
+      - name: Run unit tests
         run: go test -cover ./...
 
       # - name: Test security check
