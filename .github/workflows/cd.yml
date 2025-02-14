@@ -8,6 +8,7 @@ jobs:
   deploy:
     name: Deploy
     runs-on: ubuntu-latest
+    timeout-minutes: 30
 
     env:
       DATABASE_URL: ${{ secrets.DATABASE_URL }}
@@ -17,32 +18,32 @@ jobs:
         uses: actions/checkout@v4
 
       - name: Set up Go
-        uses: actions/setup-go@v4
+        uses: actions/setup-go@v5
         with:
-          go-version: "1.20"
+          go-version: "1.23.5"
 
       - name: Build app
         run: ./scripts/buildprod.sh
 
-      - id: auth
-        uses: google-github-actions/auth@v2
-        with:
-          credentials_json: ${{ secrets.GCP_CREDENTIALS }}
+      # - id: auth
+      #   uses: google-github-actions/auth@v2
+      #   with:
+      #     credentials_json: ${{ secrets.GCP_CREDENTIALS }}
         
-      - name: Set up Cloud SDK
-        uses: google-github-actions/setup-gcloud@v2
+      # - name: Set up Cloud SDK
+      #   uses: google-github-actions/setup-gcloud@v2
 
-      - name: Use gcloud CLI
-        run: gcloud info
+      # - name: Use gcloud CLI
+      #   run: gcloud info
 
-      - name: Build and push Docker image
-        run: gcloud builds submit --tag asia-east2-docker.pkg.dev/notely-408701/notely-ar-repo/notely:latest .
+      # - name: Build and push Docker image
+      #   run: gcloud builds submit --tag asia-east2-docker.pkg.dev/notely-408701/notely-ar-repo/notely:latest .
 
-      - name: goose
-        run: go install github.com/pressly/goose/v3/cmd/goose@latest
+      # - name: goose
+      #   run: go install github.com/pressly/goose/v3/cmd/goose@latest
 
-      - name: Migration
-        run: ./scripts/migrateup.sh
+      # - name: Migration
+      #   run: ./scripts/migrateup.sh
 
-      - name: Deploy to Cloud Run
-        run: gcloud run deploy notely --image asia-east2-docker.pkg.dev/notely-408701/notely-ar-repo/notely:latest --region us-central1 --allow-unauthenticated --project notely-408701 --max-instances=4
+      # - name: Deploy to Cloud Run
+      #   run: gcloud run deploy notely --image asia-east2-docker.pkg.dev/notely-408701/notely-ar-repo/notely:latest --region us-central1 --allow-unauthenticated --project notely-408701 --max-instances=4
