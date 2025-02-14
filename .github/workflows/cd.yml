@@ -31,11 +31,6 @@ jobs:
 
       - name: 'Use gcloud CLI'
         run: 'gcloud info'
-
-      - name: Select project
-        run: gcloud config set project notely-450909
       
       - name: 'Build to Google Cloud'
         run: gcloud builds submit --tag us-central1-docker.pkg.dev/notely-450909/notely-ar-repo/notely:latest .
-
-    
