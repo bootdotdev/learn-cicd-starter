@@ -20,7 +20,7 @@ func TestGetAPIKey(t *testing.T) {
 	tests := []test{
 		{input: http.Header{"Authorization": {""}}, expectedErr: ErrNoAuthHeaderIncluded, expected: ""},
 		{input: properHeader, expectedErr: nil, expected: "FakeToken"},
-		{input: incorrectHeader, expectedErr: MalformedAuthHeader, expected: ""},
+		{input: incorrectHeader, expectedErr: ErrMalformedAuthHeader, expected: ""},
 	}
 
 	for _, tc := range tests {
