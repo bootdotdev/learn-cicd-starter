@@ -13,11 +13,6 @@ func TestEmptyHeader(t *testing.T) {
 	}
 }
 
-func TestThatFails(t *testing.T) {
-	//throw random error to test CI workflow
-	t.Fatalf("This should fail")
-}
-
 func TestMalformedHeader(t *testing.T) {
 	header := http.Header{}
 	header.Set("Authorization", "something wrong")
