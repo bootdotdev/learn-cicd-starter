@@ -5,15 +5,20 @@ import (
 	"testing"
 )
 
-func testEmptyHeader(t *testing.T) {
+func TestEmptyHeader(t *testing.T) {
 	header := http.Header{}
 	header.Set("Authorization", "")
-	if _, err := GetAPIKey(header); err == ErrNoAuthHeaderIncluded {
+	if _, err := GetAPIKey(header); err != ErrNoAuthHeaderIncluded {
 		t.Error("Expected empty header error, found none")
 	}
 }
 
-func testMalformedHeader(t *testing.T) {
+func TestThatFails(t *testing.T) {
+	//throw random error to test CI workflow
+	t.Fatalf("This should fail")
+}
+
+func TestMalformedHeader(t *testing.T) {
 	header := http.Header{}
 	header.Set("Authorization", "something wrong")
 	if _, err := GetAPIKey(header); err == nil {
