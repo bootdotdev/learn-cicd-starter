@@ -9,7 +9,7 @@ import (
 	"net/http"
 	"time"
 
-	"github.com/bootdotdev/learn-cicd-starter/internal/database"
+	"github.com/Bayan2019/learn-cicd-starter/internal/database"
 	"github.com/google/uuid"
 )
 
@@ -33,8 +33,8 @@ func (cfg *apiConfig) handlerUsersCreate(w http.ResponseWriter, r *http.Request)
 
 	err = cfg.DB.CreateUser(r.Context(), database.CreateUserParams{
 		ID:        uuid.New().String(),
-		CreatedAt: time.Now().UTC(),
-		UpdatedAt: time.Now().UTC(),
+		CreatedAt: time.Now().UTC().Format(time.RFC3339),
+		UpdatedAt: time.Now().UTC().Format(time.RFC3339),
 		Name:      params.Name,
 		ApiKey:    apiKey,
 	})
@@ -51,7 +51,13 @@ func (cfg *apiConfig) handlerUsersCreate(w http.ResponseWriter, r *http.Request)
 		return
 	}
 
-	respondWithJSON(w, http.StatusCreated, databaseUserToUser(user))
+	userResp, err := databaseUserToUser(user)
+	if err != nil {
+		log.Println(err)
+		respondWithError(w, http.StatusInternalServerError, "Couldn't convert user")
+		return
+	}
+	respondWithJSON(w, http.StatusCreated, userResp)
 }
 
 func generateRandomSHA256Hash() (string, error) {
@@ -66,5 +72,13 @@ func generateRandomSHA256Hash() (string, error) {
 }
 
 func (cfg *apiConfig) handlerUsersGet(w http.ResponseWriter, r *http.Request, user database.User) {
-	respondWithJSON(w, http.StatusOK, databaseUserToUser(user))
+
+	userResp, err := databaseUserToUser(user)
+	if err != nil {
+		log.Println(err)
+		respondWithError(w, http.StatusInternalServerError, "Couldn't convert user")
+		return
+	}
+
+	respondWithJSON(w, http.StatusOK, userResp)
 }

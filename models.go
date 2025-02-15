@@ -3,7 +3,8 @@ package main
 import (
 	"time"
 
-	"github.com/bootdotdev/learn-cicd-starter/internal/database"
+	// "github.com/bootdotdev/learn-cicd-starter/internal/database"
+	"github.com/Bayan2019/learn-cicd-starter/internal/database"
 )
 
 type User struct {
@@ -14,14 +15,23 @@ type User struct {
 	ApiKey    string    `json:"api_key"`
 }
 
-func databaseUserToUser(user database.User) User {
+func databaseUserToUser(user database.User) (User, error) {
+	createdAt, err := time.Parse(time.RFC3339, user.CreatedAt)
+	if err != nil {
+		return User{}, err
+	}
+
+	updatedAt, err := time.Parse(time.RFC3339, user.UpdatedAt)
+	if err != nil {
+		return User{}, err
+	}
 	return User{
 		ID:        user.ID,
-		CreatedAt: user.CreatedAt,
-		UpdatedAt: user.UpdatedAt,
+		CreatedAt: createdAt,
+		UpdatedAt: updatedAt,
 		Name:      user.Name,
 		ApiKey:    user.ApiKey,
-	}
+	}, nil
 }
 
 type Note struct {
@@ -32,20 +42,34 @@ type Note struct {
 	UserID    string    `json:"user_id"`
 }
 
-func databaseNoteToNote(post database.Note) Note {
+func databaseNoteToNote(post database.Note) (Note, error) {
+	createdAt, err := time.Parse(time.RFC3339, post.CreatedAt)
+	if err != nil {
+		return Note{}, err
+	}
+
+	updatedAt, err := time.Parse(time.RFC3339, post.UpdatedAt)
+	if err != nil {
+		return Note{}, err
+	}
 	return Note{
 		ID:        post.ID,
-		CreatedAt: post.CreatedAt,
-		UpdatedAt: post.UpdatedAt,
+		CreatedAt: createdAt,
+		UpdatedAt: updatedAt,
 		Note:      post.Note,
 		UserID:    post.UserID,
-	}
+	}, nil
 }
 
-func databasePostsToPosts(notes []database.Note) []Note {
+func databasePostsToPosts(notes []database.Note) ([]Note, error) {
 	result := make([]Note, len(notes))
 	for i, note := range notes {
-		result[i] = databaseNoteToNote(note)
+		var err error
+		result[i], err = databaseNoteToNote(note)
+		if err != nil {
+			return nil, err
+		}
+
 	}
-	return result
+	return result, nil
 }

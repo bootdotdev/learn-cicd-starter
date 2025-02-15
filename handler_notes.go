@@ -2,10 +2,11 @@ package main
 
 import (
 	"encoding/json"
+	"log"
 	"net/http"
 	"time"
 
-	"github.com/bootdotdev/learn-cicd-starter/internal/database"
+	"github.com/Bayan2019/learn-cicd-starter/internal/database"
 	"github.com/google/uuid"
 )
 
@@ -16,7 +17,14 @@ func (cfg *apiConfig) handlerNotesGet(w http.ResponseWriter, r *http.Request, us
 		return
 	}
 
-	respondWithJSON(w, http.StatusOK, databasePostsToPosts(posts))
+	postsResp, err := databasePostsToPosts(posts)
+	if err != nil {
+		log.Println(err)
+		respondWithError(w, http.StatusInternalServerError, "Couldn't convert posts")
+		return
+	}
+
+	respondWithJSON(w, http.StatusOK, postsResp)
 }
 
 func (cfg *apiConfig) handlerNotesCreate(w http.ResponseWriter, r *http.Request, user database.User) {
@@ -34,8 +42,8 @@ func (cfg *apiConfig) handlerNotesCreate(w http.ResponseWriter, r *http.Request,
 	id := uuid.New().String()
 	err = cfg.DB.CreateNote(r.Context(), database.CreateNoteParams{
 		ID:        id,
-		CreatedAt: time.Now().UTC(),
-		UpdatedAt: time.Now().UTC(),
+		CreatedAt: time.Now().UTC().Format(time.RFC3339),
+		UpdatedAt: time.Now().UTC().Format(time.RFC3339),
 		Note:      params.Note,
 		UserID:    user.ID,
 	})
@@ -49,5 +57,13 @@ func (cfg *apiConfig) handlerNotesCreate(w http.ResponseWriter, r *http.Request,
 		respondWithError(w, http.StatusNotFound, "Couldn't get note")
 		return
 	}
-	respondWithJSON(w, http.StatusCreated, databaseNoteToNote(note))
+
+	noteResp, err := databaseNoteToNote(note)
+	if err != nil {
+		log.Println(err)
+		respondWithError(w, http.StatusInternalServerError, "Couldn't convert note")
+		return
+	}
+
+	respondWithJSON(w, http.StatusCreated, noteResp)
 }
