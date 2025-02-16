@@ -19,7 +19,7 @@ func TestGetAPIKey(t *testing.T) {
 		"Simple": {
 			input: func() http.Header {
 				h := http.Header{}
-				h.Add("Authorization", "ApiKey different-test-key")
+				h.Add("Authorization", "ApiKey test-key")
 				return h
 			}(),
 			want: apiKeyResult{"test-key", nil}},
