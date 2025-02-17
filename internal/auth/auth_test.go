@@ -21,7 +21,7 @@ func TestAuth(t *testing.T) {
 	for _, c := range cases {
 		t.Run(c.name, func(t *testing.T) {
 			_, err := GetAPIKey(c.headers)
-			if (err != nil) == c.wantError {
+			if (err != nil) != c.wantError {
 				t.Errorf("%v expecting error %v but received %v", c.name, c.wantError, err)
 			}
 		})
