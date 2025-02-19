@@ -36,3 +36,6 @@ jobs:
 
       - name: Check styling
         run: test -z $(go fmt ./...)
+
+      - name: Linting checks
+        run: go install honnef.co/go/tools/cmd/staticcheck@latest
