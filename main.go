@@ -4,6 +4,7 @@ import (
 	"database/sql"
 	"embed"
 	"io"
+	"io/fs"
 	"log"
 	"net/http"
 	"os"
@@ -23,11 +24,6 @@ type apiConfig struct {
 
 //go:embed static/*
 var staticFiles embed.FS
-
-func unused() {
-	// this function does nothing
-	// and is called nowhere
-}
 
 func main() {
 	err := godotenv.Load(".env")
@@ -75,7 +71,12 @@ func main() {
 			http.Error(w, err.Error(), http.StatusInternalServerError)
 			return
 		}
-		defer f.Close()
+		defer func(f fs.File) {
+			err := f.Close()
+			if err != nil {
+
+			}
+		}(f)
 		if _, err := io.Copy(w, f); err != nil {
 			http.Error(w, err.Error(), http.StatusInternalServerError)
 		}
