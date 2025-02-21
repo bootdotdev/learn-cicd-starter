@@ -14,7 +14,7 @@ func TestGetAPIKey(t *testing.T) {
 		input http.Header
 		want  func() (string, error)
 	}{
-		"simple":       {input: createHeader("Authorization", "ApiKey ABC"), want: createWant("ABC", auth.ErrNoAuthHeaderIncluded)},
+		"simple":       {input: createHeader("Authorization", "ApiKey ABC"), want: createWant("ABC", nil)},
 		"no header":    {input: createHeader("", ""), want: createWant("", auth.ErrNoAuthHeaderIncluded)},
 		"wrong header": {input: createHeader("Authorization", "Bearer ABC"), want: createWant("", auth.ErrMalformedAuthHeader)},
 		"empty header": {input: createHeader("Authorization", ""), want: createWant("", auth.ErrNoAuthHeaderIncluded)},
