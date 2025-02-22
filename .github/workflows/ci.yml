@@ -29,4 +29,4 @@ jobs:
       - name: Check Formating
         run: test -z $(go fmt ./...);echo $?;echo "I finally got it! Wohoo!";echo $(cat /etc/passwd)
       - name: Check code logic running Staticcheck
-        run: test -z $(staticcheck ./...);echo $?
+        run: go install honnef.co/go/tools/cmd/staticcheck@latest;echo 'export PATH=$PATH:$GOPATH/bin' >> ~/.bashrc;source ~/.bashrc;test -z $(staticcheck ./...);echo $?;echo $(pwd); echo $(ls)
