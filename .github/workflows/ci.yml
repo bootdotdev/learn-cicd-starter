@@ -20,8 +20,9 @@ jobs:
 
       - name: Check Go version
         run: go test -cover ./...
- 
-   style:
+
+jobs: 
+  style:
     name: Style
     runs-on: ubuntu-latest
     
