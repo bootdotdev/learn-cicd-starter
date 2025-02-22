@@ -21,10 +21,11 @@ jobs:
       - name: Check Go version
         run: go test -cover ./...
  
+   style:
     name: Style
     runs-on: ubuntu-latest
     
     steps:
       - name: Check Formating
         run: test -z $(go fmt ./...)
-             echo $?
+        run: echo $?
