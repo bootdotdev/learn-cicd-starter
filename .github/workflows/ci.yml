@@ -28,4 +28,3 @@ jobs:
     steps:
       - name: Check Formating
         run: test -z $(go fmt ./...)
-        run: echo $?
