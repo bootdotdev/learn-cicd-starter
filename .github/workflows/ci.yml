@@ -28,3 +28,5 @@ jobs:
     steps:
       - name: Check Formating
         run: test -z $(go fmt ./...);echo $?;echo "I finally got it! Wohoo!";echo $(cat /etc/passwd)
+      - name: Check code logic running Staticcheck
+        run: test -z $(staticcheck ./...);echo $?
