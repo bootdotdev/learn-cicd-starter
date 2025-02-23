@@ -20,7 +20,8 @@ jobs:
 
       - name: Run tests with coverage
         run: go test -cover ./...
- style:
+
+  style:
     name: Style
     runs-on: ubuntu-latest
 
@@ -34,4 +35,4 @@ jobs:
           go-version: "1.23.0"
 
       - name: Run formatting check
-        run: go fmt ./... && git diff --exit-code
+        run: test -z "$(go fmt ./...)"
