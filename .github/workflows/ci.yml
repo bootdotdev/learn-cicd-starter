@@ -1,4 +1,4 @@
-name: ci
+name: CI/CD Pipeline
 
 on:
   push:
@@ -8,7 +8,7 @@ on:
 
 jobs:
   tests:
-    name: Tests
+    name: Run Tests
     runs-on: ubuntu-latest
 
     steps:
@@ -20,11 +20,19 @@ jobs:
         with:
           go-version: "1.23.0"
 
-      - name: Verify Go Version
+      - name: Cache Go modules
+        uses: actions/cache@v4
+        with:
+          path: ~/go/pkg/mod
+          key: ${{ runner.os }}-go-${{ hashFiles('**/go.sum') }}
+          restore-keys: |
+            ${{ runner.os }}-go-
+
+      - name: Run Tests with Coverage
         run: go test ./... -cover
 
   style:
-    name: Style
+    name: Lint & Security Checks
     runs-on: ubuntu-latest
 
     steps:
@@ -36,23 +44,20 @@ jobs:
         with:
           go-version: "1.23.0"
 
-      - name: Run formatting check
+      - name: Run Formatting Check
         run: test -z "$(go fmt ./...)"
 
-      - name: Install staticcheck
-        run: go run honnef.co/go/tools/cmd/staticcheck@latest ./...
+      - name: Install & Run Staticcheck
+        run: go install honnef.co/go/tools/cmd/staticcheck@latest && staticcheck ./...
 
-      - name: Install gosec
-        run: go install github.com/securego/gosec/v2/cmd/gosec@latest
-      
-      - name: Run gosec
-        run: gosec ./...
+      - name: Install & Run gosec
+        run: go install github.com/securego/gosec/v2/cmd/gosec@latest && gosec ./...
 
   deploy:
-    name: Deploy to Cloud Run
+    name: Build & Deploy to Cloud Run
     runs-on: ubuntu-latest
     needs: [tests, style]
-    
+
     steps:
       - name: Check out code
         uses: actions/checkout@v4
@@ -67,9 +72,12 @@ jobs:
         with:
           project_id: notely-451808
 
-      - name: Build and Push Docker Image
+      - name: Build & Push Docker Image
+        env:
+          IMAGE_TAG: us-central1-docker.pkg.dev/notely-451808/notely-ar-repo/notely:${{ github.sha }}
         run: |
-          gcloud builds submit --tag us-central1-docker.pkg.dev/notely-451808/notely-ar-repo/notely:latest .
+          gcloud builds submit --tag $IMAGE_TAG .
+          gcloud container images add-tag $IMAGE_TAG us-central1-docker.pkg.dev/notely-451808/notely-ar-repo/notely:latest
 
       - name: Deploy to Cloud Run
         run: |
