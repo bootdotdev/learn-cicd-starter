@@ -16,10 +16,9 @@ func TestGetAPIKey(t *testing.T) {
 		expectErr string
 	}{
 		{
-			name: "Valid Header",
-			key:  "Authorization",
-			// value:     "ApiKey valid_token",
-			value:     "Bearer valid_token", // temp break code
+			name:      "Valid Header",
+			key:       "Authorization",
+			value:     "ApiKey valid_token",
 			want:      "valid_token",
 			expectErr: "not expecting an error",
 		},
