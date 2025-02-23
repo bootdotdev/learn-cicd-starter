@@ -20,19 +20,11 @@ jobs:
         with:
           go-version: "1.23.0"
 
-      - name: Cache Go modules
-        uses: actions/cache@v4
-        with:
-          path: ~/go/pkg/mod
-          key: ${{ runner.os }}-go-${{ hashFiles('**/go.sum') }}
-          restore-keys: |
-            ${{ runner.os }}-go-
-
       - name: Run Tests with Coverage
         run: go test ./... -cover
 
   style:
-    name: Lint & Security Checks
+    name: Code Style & Security Checks
     runs-on: ubuntu-latest
 
     steps:
@@ -47,14 +39,20 @@ jobs:
       - name: Run Formatting Check
         run: test -z "$(go fmt ./...)"
 
-      - name: Install & Run Staticcheck
-        run: go install honnef.co/go/tools/cmd/staticcheck@latest && staticcheck ./...
+      - name: Install Staticcheck
+        run: go install honnef.co/go/tools/cmd/staticcheck@latest
 
-      - name: Install & Run gosec
-        run: go install github.com/securego/gosec/v2/cmd/gosec@latest && gosec ./...
+      - name: Run Staticcheck
+        run: staticcheck ./...
+
+      - name: Install Gosec
+        run: go install github.com/securego/gosec/v2/cmd/gosec@latest
+
+      - name: Run Gosec Security Check
+        run: gosec ./...
 
   deploy:
-    name: Build & Deploy to Cloud Run
+    name: Deploy to Cloud Run
     runs-on: ubuntu-latest
     needs: [tests, style]
 
@@ -67,12 +65,20 @@ jobs:
         with:
           credentials_json: ${{ secrets.GCP_CREDENTIALS }}
 
-      - name: Set up gcloud CLI
+      - name: Set up Google Cloud SDK
         uses: google-github-actions/setup-gcloud@v2
         with:
           project_id: notely-451808
 
-      - name: Build & Push Docker Image
+      - name: Set up Go
+        uses: actions/setup-go@v5
+        with:
+          go-version: "1.23.0"
+
+      - name: Build Go Binary
+        run: go build -o notely .
+
+      - name: Build and Push Docker Image
         env:
           IMAGE_TAG: us-central1-docker.pkg.dev/notely-451808/notely-ar-repo/notely:${{ github.sha }}
         run: |
