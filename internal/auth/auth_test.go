@@ -41,7 +41,7 @@ func TestGetAPIKey(t *testing.T) {
 			headers: http.Header{
 				"Authorization": []string{"ApiKey my-secret-key"},
 			},
-			want:        "wrong-key", // Valor incorrecto
+			want:        "my-secret-key", // Valor correcto
 			expectedErr: nil,
 		},
 	}
