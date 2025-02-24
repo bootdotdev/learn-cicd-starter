@@ -10,13 +10,16 @@ jobs:
     runs-on: ubuntu-latest
 
     steps:
+      # Paso 1: Descargar el código del repositorio
       - name: Check out code
         uses: actions/checkout@v4
 
+      # Paso 2: Configurar Go con la versión especificada
       - name: Set up Go
         uses: actions/setup-go@v5
         with:
           go-version: "1.23.0"
 
-      - name: Force Failure
-        run: (exit 1)
+      # Paso 3 (Modificado): Verificar la versión de Go
+      - name: Verify Go Version
+        run: go version
