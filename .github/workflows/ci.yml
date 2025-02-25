@@ -2,7 +2,7 @@ name: ci
 
 on:
   push:
-    branches: [main]  # Cambiado a push
+    branches: [main]
 
 jobs:
   tests:
@@ -36,3 +36,10 @@ jobs:
 
       - name: Check formatting
         run: test -z $(go fmt ./...)
+
+      # Nuevos pasos para staticcheck
+      - name: Install staticcheck
+        run: go install honnef.co/go/tools/cmd/staticcheck@latest
+
+      - name: Run staticcheck
+        run: staticcheck ./...
