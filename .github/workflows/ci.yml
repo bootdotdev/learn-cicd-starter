@@ -21,6 +21,13 @@ jobs:
       - name: Run tests with coverage
         run: go test -cover ./...
 
+      # Nuevos pasos de seguridad
+      - name: Install gosec
+        run: go install github.com/securego/gosec/v2/cmd/gosec@latest
+
+      - name: Run gosec security scan
+        run: gosec ./...
+
   style:
     name: Style
     runs-on: ubuntu-latest
@@ -37,7 +44,6 @@ jobs:
       - name: Check formatting
         run: test -z $(go fmt ./...)
 
-      # Nuevos pasos para staticcheck
       - name: Install staticcheck
         run: go install honnef.co/go/tools/cmd/staticcheck@latest
 
