@@ -14,7 +14,7 @@ var (
 )
 
 // GetAPIKey extrae la API Key del encabezado de autorización.
-func GetAPIKey(headers http.Header) (string, error) {
+func GetAPIKey(headers http.Header) (string, error)   {
 	authHeader := headers.Get("Authorization")
 	if authHeader == "" {
 		return "", ErrNoAuthHeaderIncluded
