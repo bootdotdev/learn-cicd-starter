@@ -1,8 +1,8 @@
 name: ci
 
 on:
-  pull_request:
-    branches: [main]
+  push:
+    branches: [main]  # Cambiado de pull_request a push
 
 jobs:
   tests:
@@ -19,4 +19,4 @@ jobs:
           go-version: "1.23.0"
 
       - name: Run tests with coverage
-        run: go test -cover ./...  # Flag añadido aquí
+        run: go test -cover ./...
