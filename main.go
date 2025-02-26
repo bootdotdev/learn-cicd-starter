@@ -53,7 +53,7 @@ func main() {
 		log.Println("Connected to database!")
 	}
 
-	router := ad
+	router := chi.NewRouter()
 
 	router.Use(cors.Handler(cors.Options{
 		AllowedOrigins:   []string{"https://*", "http://*"},
