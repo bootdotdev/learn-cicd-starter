@@ -26,6 +26,11 @@ jobs:
         with:
           service_account_key: ${{ secrets.GCP_CREDENTIALS }}
           project_id: notely-452202
+          install_components: 'gcloud'
+
+      - name: Authenticate with Google Cloud
+        run: |
+            gcloud auth configure-docker us-central1-docker.pkg.dev
 
       - name: Build and push image to Google Cloud
         run: |
