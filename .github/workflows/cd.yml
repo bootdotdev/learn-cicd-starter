@@ -20,17 +20,17 @@ jobs:
 
       - name: Build
         run: ./scripts/buildprod.sh
+
+      - id: auth
+        uses: google-github-actions/auth@v2
+        with:
+          credentials_json: ${{ secrets.GCP_CREDENTIALS }}
         
       - name: Set up Cloud SDK
-        uses: google-github-actions/setup-gcloud@v1
-        with:
-          service_account_key: ${{ secrets.GCP_CREDENTIALS }}
-          project_id: notely-452202
-          install_components: 'gcloud'
+        uses: google-github-actions/setup-gcloud@v2
 
-      - name: Authenticate with Google Cloud
-        run: |
-            gcloud auth configure-docker us-central1-docker.pkg.dev
+      - name: Use gcloud CLI
+        run: gcloud info
 
       - name: Build and push image to Google Cloud
         run: |
