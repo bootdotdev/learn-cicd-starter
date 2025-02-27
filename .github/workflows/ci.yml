@@ -19,7 +19,7 @@ jobs:
         with:
           go-version: "1.23.0"
 
-      - name: run gofmt
+      - name: Format code
         run: test -z $(gofmt ./...)
 
   tests:
