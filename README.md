@@ -8,6 +8,9 @@ Make sure you're on Go version 1.22+.
 
 Create a `.env` file in the root of the project with the following contents:
 
+## New Info
+Eric's version of Boot.dev's Notely app.
+
 ```bash
 PORT="8080"
 ```
