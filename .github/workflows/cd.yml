@@ -27,10 +27,10 @@ jobs:
           credentials_json: ${{ secrets.GCP_CREDENTIALS }}
 
       - name: Set up Cloud SDK
-        uses: google-github-actions/setup-gcloud@v2
-
-      - name: Use gcloud CLI
-        run: gcloud info
+        uses: google-github-actions/setup-gcloud@v1
 
       - name: Build and push Docker image
         run: gcloud builds submit --tag us-central1-docker.pkg.dev/omega-monolith-452302-f0/notely-ar-repo/notely-app:TAG .
+
+      - name: Deploy to Cloud Run
+        run: gcloud run deploy notely --image REGION-docker.pkg.dev/PROJECT_ID/REPOSITORY/IMAGE:TAG --region REGION --allow-unauthenticated --project PROJECT_ID --max-instances=4
