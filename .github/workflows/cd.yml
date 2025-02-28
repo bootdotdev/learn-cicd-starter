@@ -33,4 +33,4 @@ jobs:
         run: gcloud builds submit --tag us-central1-docker.pkg.dev/omega-monolith-452302-f0/notely-ar-repo/notely-app:TAG .
 
       - name: Deploy to Cloud Run
-        run: gcloud run deploy notely --image REGION-docker.pkg.dev/PROJECT_ID/REPOSITORY/IMAGE:TAG --region REGION --allow-unauthenticated --project PROJECT_ID --max-instances=4
+        run: gcloud run deploy notely --image REGION-docker.pkg.dev/omega-monolith-452302-f0/notely-ar-repo/notely-app:TAG --region REGION --allow-unauthenticated --project omega-monolith-452302-f0 --max-instances=4
