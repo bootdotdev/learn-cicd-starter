@@ -2,7 +2,6 @@ package main
 
 import (
 	"database/sql"
-	"embed"
 	"io"
 	"log"
 	"net/http"
@@ -22,7 +21,7 @@ type apiConfig struct {
 }
 
 //go:embed static/*
-var staticFiles embed.FS
+//var staticFiles embed.FS
 
 func main() {
 	err := godotenv.Load(".env")
