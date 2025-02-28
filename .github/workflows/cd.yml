@@ -16,21 +16,21 @@ jobs:
       - name: Set up Go
         uses: actions/setup-go@v5
         with:
-          go-version: "1.23.0"
+          go-version: '1.23.0'
 
-      - name: Build production binary
+      - name: Build app
         run: ./scripts/buildprod.sh
 
-      # Paso de autenticación modificado (¡clave aquí!)
-      - name: Authenticate to GCP
-        uses: google-github-actions/setup-gcloud@v2
+      - id: auth
+        uses: google-github-actions/auth@v2
         with:
-          service_account_key: ${{ secrets.GCP_CREDENTIALS }}
-          project_id: omega-monolith-452302-f0
-          export_default_credentials: true
-          auth: true  # ¡Este parámetro faltaba!
+          credentials_json: ${{ secrets.GCP_CREDENTIALS }}
 
-      - name: Build and Push Docker Image
-        run: |-
-          gcloud builds submit --quiet \
-            --tag us-central1-docker.pkg.dev/omega-monolith-452302-f0/notely-ar-repo/notely-app:${{ github.sha }} .
+      - name: Set up Cloud SDK
+        uses: google-github-actions/setup-gcloud@v2
+
+      - name: Use gcloud CLI
+        run: gcloud info
+
+      - name: Build and push Docker image
+        run: gcloud builds submit --tag REGION-docker.pkg.dev/PROJECT_ID/REPOSITORY/IMAGE:TAG .
