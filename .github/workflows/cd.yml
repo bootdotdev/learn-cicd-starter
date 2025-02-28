@@ -20,3 +20,19 @@ jobs:
 
       - name: Build production binary
         run: ./scripts/buildprod.sh
+
+      # Nuevos pasos añadidos
+      - name: Authenticate to GCP
+        uses: google-github-actions/setup-gcloud@v2
+        with:
+          service_account_key: ${{ secrets.GCP_CREDENTIALS }}
+          project_id: omega-monolith-452302-f0
+          export_default_credentials: true
+
+      - name: Build and Push Docker Image
+        run: |-
+          gcloud builds submit --quiet \
+            --tag us-central1-docker.pkg.dev/omega-monolith-452302-f0/notely-ar-repo/notely-app:${{ github.sha }} .
+        env:
+          CLOUDSDK_CORE_PROJECT: omega-monolith-452302-f0
+          CLOUDSDK_ARTIFACT_REGISTRY_REGION: us-central1
