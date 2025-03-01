@@ -20,3 +20,6 @@ jobs:
       
       - name: Build app
         run: scripts/buildprod.sh
+
+      - name: build Docker image and push it to Google Artifact Registry
+        run: gcloud builds submit --tag us-central1-docker.pkg.dev/notedly-452219/notely-ar-repo/notely:latest
