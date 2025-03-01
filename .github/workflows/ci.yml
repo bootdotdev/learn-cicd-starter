@@ -34,6 +34,9 @@ jobs:
           go-version: "1.23.0"
 
       - name: Check formatting
+        run: test -z $(go fmt ./...)
+
+      - name: Run staticcheck
         run: |
-          go fmt ./...
-          git diff --exit-code
+          go install honnef.co/go/tools/cmd/staticcheck@latest
+          staticcheck ./...
