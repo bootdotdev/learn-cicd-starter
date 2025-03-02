@@ -26,6 +26,7 @@ jobs:
         with:
           credentials_json: ${{ secrets.GCP_CREDENTIALS }}
 
+      # Debugging Steps
       - name: Debug - Show Current Directory
         run: pwd
 
@@ -37,6 +38,11 @@ jobs:
 
       - name: Debug - Test gcloud Auth
         run: gcloud auth list
+
+      # Explicit Docker Build
+      - name: Build Docker Image
+        run: |
+          docker build -t us-central1-docker.pkg.dev/notely-452421/notely-ar-repo/notely:latest .
 
       - name: Build and Push Docker Image
         run: gcloud builds submit --tag us-central1-docker.pkg.dev/notely-452421/notely-ar-repo/notely:latest .
