@@ -20,4 +20,6 @@ go build -o notely && ./notely
 
 *This starts the server in non-database mode.* It will serve a simple webpage at `http://localhost:8080`.
 
+"Michelle's version of Boot.dev's Notely app, take 2."
+
 You do *not* need to set up a database or any interactivity on the webpage yet. Instructions for that will come later in the course!
