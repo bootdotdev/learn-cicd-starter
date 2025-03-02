@@ -1,8 +1,8 @@
 name: cd
-
 on:
   push:
-    branches: [main]
+    branches:
+      - main
 
 jobs:
   deploy:
@@ -32,17 +32,5 @@ jobs:
       - name: Use gcloud CLI
         run: gcloud info
 
-      - name: Debug - Check if gcloud is installed
-        run: which gcloud
-
-      - name: Debug - List gcloud components
-        run: gcloud components list
-
-      - name: Debug - Check if Docker is installed
-        run: docker --version
-
       - name: Build and push Docker image
-        run: |
-          echo "Starting gcloud builds submit"
-          gcloud builds submit --tag us-central1-docker.pkg.dev/notely-452421/notely-ar-repo/notely:latest .
-          echo "gcloud builds submit finished"
+        run: gcloud builds submit --tag us-central1-docker.pkg.dev/notely-452421/notely-ar-repo/notely:latest .
