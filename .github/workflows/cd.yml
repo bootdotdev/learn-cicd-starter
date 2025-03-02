@@ -26,23 +26,11 @@ jobs:
         with:
           credentials_json: ${{ secrets.GCP_CREDENTIALS }}
 
-      # Debugging Steps
-      - name: Debug - Show Current Directory
-        run: pwd
+      - name: Set up Cloud SDK
+        uses: google-github-actions/setup-gcloud@v2
 
-      - name: Debug - List Files
-        run: ls -la
+      - name: Use gcloud CLI
+        run: gcloud info
 
-      - name: Debug - Check gcloud Version
-        run: gcloud --version
-
-      - name: Debug - Test gcloud Auth
-        run: gcloud auth list
-
-      # Explicit Docker Build
-      - name: Build Docker Image
-        run: |
-          docker build -t us-central1-docker.pkg.dev/notely-452421/notely-ar-repo/notely:latest .
-
-      - name: Build and Push Docker Image
+      - name: Build and push Docker image
         run: gcloud builds submit --tag us-central1-docker.pkg.dev/notely-452421/notely-ar-repo/notely:latest .
