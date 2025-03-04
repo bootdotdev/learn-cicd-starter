@@ -21,7 +21,15 @@ jobs:
           go-version: "1.23.0"
           
       - name: Run tests
-        run: go test ./...
+        run: go test ./... 
+
+      - name: Install gosec
+        run: go install github.com/securego/gosec/v2/cmd/gosec@latest
+      
+      - name: Run gosec
+        run: |
+          export PATH=$(go env GOPATH)/bin:$PATH
+          gosec ./...
 
   style:
     name: Style
