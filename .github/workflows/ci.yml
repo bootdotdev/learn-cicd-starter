@@ -23,3 +23,21 @@ jobs:
 
       - name: Force success
         run: (exit 0)
+  style:
+    name: Styles
+    runs-on: ubuntu-latest
+
+    steps:
+      - name: Check out code
+        uses: actions/checkout@v4
+
+      - name: Set up Go
+        uses: actions/setup-go@v5
+        with:
+          go-version: "1.23.0"
+
+      - name: Run formating
+        run: test -z $(go fmt ./...)
+
+      - name: Force success
+        run: (exit 0)
