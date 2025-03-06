@@ -3,7 +3,6 @@ package auth
 import (
 	"errors"
 	"net/http"
-	"os"
 	"testing"
 )
 
@@ -64,7 +63,6 @@ func TestGetAPIKey(t *testing.T) {
 	for _, tt := range tests {
 		t.Run(tt.name, func(t *testing.T) {
 			apiKey, err := GetAPIKey(tt.headers)
-			os.Exit(1)
 			if apiKey != tt.expectedAPIKey {
 				t.Errorf("expected API key %v, got %v", tt.expectedAPIKey, apiKey)
 			}
