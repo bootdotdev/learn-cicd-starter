@@ -23,8 +23,9 @@ jobs:
 
       - name: Force success
         run: (exit 0)
+
   style:
-    name: Styles
+    name: Style
     runs-on: ubuntu-latest
 
     steps:
