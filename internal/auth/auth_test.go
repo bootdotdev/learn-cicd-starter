@@ -12,7 +12,7 @@ func TestGetAPIKey(t *testing.T) {
 		result string
 	}{
 		{"Authorization", "ApiKey 1234567890", "1234567890"}, // Valid API Key
-		{"Authorization", "invalid-api-key", "FRED"},         // Invalid API Key
+		{"Authorization", "invalid-api-key", ""},             // Invalid API Key
 		{"Authorization", "", ""},                            // Missing API Key
 		{"", "ApiKey 1234567890", ""},                        // Missing Header
 		{"", "", ""},                                         // Missing Header
