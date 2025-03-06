@@ -1,4 +1,4 @@
-![Tests Badge](`https://github.com/Cygran/Notely/actions/workflows/ci.yml/badge.svg)
+![Tests Badge](https://github.com/Cygran/Notely/actions/workflows/ci.yml/badge.svg)
 
 # learn-cicd-starter (Notely)
 
