@@ -1,9 +1,12 @@
+# workflow's name
 name: ci
 
+# when the workflow should run
 on:
   pull_request:
     branches: [main]
 
+# list of jobs workflow has to do (only have one job now)
 jobs:
   tests:
     name: Tests
@@ -18,5 +21,5 @@ jobs:
         with:
           go-version: "1.23.0"
 
-      - name: Log Go version
-        run: go version
+      - name: Test auth package
+        run: go test ./...
