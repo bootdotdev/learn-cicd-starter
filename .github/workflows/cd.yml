@@ -19,5 +19,5 @@ jobs:
         with:
           go-version: "1.23.0"
 
-      - name: Build
+      - name: buildprod.sh
         run: /scripts/buildprod.sh
