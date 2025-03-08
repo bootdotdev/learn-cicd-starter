@@ -1,0 +1,10 @@
+{
+    "editor.formatOnSave": false,
+    "[go]":{
+        "editor.insertSpaces": false,
+        "editor.formatOnSave": false
+        "editor.codeActionsOnSave": {
+            "source.organizeImports": "explicit"
+        }
+    }
+}

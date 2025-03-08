@@ -17,14 +17,12 @@ import (
 	_ "github.com/tursodatabase/libsql-client-go/libsql"
 )
 
-type apiConfig struct {
-	DB *database.Queries
-}
+type apiConfig struct{ DB *database.Queries }
 
 //go:embed static/*
 var staticFiles embed.FS
 
-func main() {
+func main(){
 	err := godotenv.Load(".env")
 	if err != nil {
 		log.Printf("warning: assuming default configuration. .env unreadable: %v", err)
