@@ -5,7 +5,7 @@ on:
     branches: [main]
 
 jobs:
-  tests:
+  deploy:
     name: Deploy
     runs-on: ubuntu-latest
 
@@ -18,5 +18,8 @@ jobs:
         with:
           go-version: "1.23.0"
 
-      - name: Build
-        run: bash ./scripts/buildprod.sh
+      - name: Build app
+        run: ./scripts/buildprod.sh
+
+      - name: Build Docker Image and push it to Google Artifact Registry
+        run: gcloud builds submit --tag us-central1-docker.pkg.dev/notely-453322/notely-ar-repo/notely:latest .
