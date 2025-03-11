@@ -21,7 +21,7 @@ jobs:
       - name: Run tests
         run: go test ./... -cover
 
-  stlye:
+  Stlye:
     name: Stlye
     runs-on: ubuntu-latest
 
