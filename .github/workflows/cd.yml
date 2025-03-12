@@ -28,7 +28,7 @@ jobs:
         run: go install github.com/pressly/goose/v3/cmd/goose@latest
 
       - name: Migrate database
-        run: ./scripts/migrate.sh
+        run: ./scripts/migrateup.sh
 
       - name: Install Cloud SDK
         run: gcloud components install gcloud
