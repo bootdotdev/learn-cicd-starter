@@ -34,4 +34,4 @@ jobs:
 
       - name: Build and push Docker image to Google Artifact Registry
         run: |
-          gcloud builds submit --tag us-central1-docker.pkg.dev/notely-453609/notely-ar-repo/notely:latest .
+          gcloud builds submit --tag us-central1-docker.pkg.dev/notely-453609/notely-ar-repo/notely:latest .# Updated: Thu Mar 13 18:16:39 +04 2025
