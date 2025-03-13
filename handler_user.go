@@ -5,7 +5,6 @@ import (
 	"crypto/sha256"
 	"encoding/hex"
 	"encoding/json"
-	"log"
 	"net/http"
 	"time"
 
@@ -21,13 +20,13 @@ func (cfg *apiConfig) handlerUsersCreate(w http.ResponseWriter, r *http.Request)
 	params := parameters{}
 	err := decoder.Decode(&params)
 	if err != nil {
-		respondWithError(w, http.StatusInternalServerError, "Couldn't decode parameters")
+		respondWithError(w, http.StatusInternalServerError, "Couldn't decode parameters", err)
 		return
 	}
 
 	apiKey, err := generateRandomSHA256Hash()
 	if err != nil {
-		respondWithError(w, http.StatusInternalServerError, "Couldn't gen apikey")
+		respondWithError(w, http.StatusInternalServerError, "Couldn't gen apikey", err)
 		return
 	}
 
@@ -39,22 +38,19 @@ func (cfg *apiConfig) handlerUsersCreate(w http.ResponseWriter, r *http.Request)
 		ApiKey:    apiKey,
 	})
 	if err != nil {
-		log.Println(err)
-		respondWithError(w, http.StatusInternalServerError, "Couldn't create user")
+		respondWithError(w, http.StatusInternalServerError, "Couldn't create user", err)
 		return
 	}
 
 	user, err := cfg.DB.GetUser(r.Context(), apiKey)
 	if err != nil {
-		log.Println(err)
-		respondWithError(w, http.StatusInternalServerError, "Couldn't get user")
+		respondWithError(w, http.StatusInternalServerError, "Couldn't get user", err)
 		return
 	}
 
 	userResp, err := databaseUserToUser(user)
 	if err != nil {
-		log.Println(err)
-		respondWithError(w, http.StatusInternalServerError, "Couldn't convert user")
+		respondWithError(w, http.StatusInternalServerError, "Couldn't convert user", err)
 		return
 	}
 	respondWithJSON(w, http.StatusCreated, userResp)
@@ -75,8 +71,7 @@ func (cfg *apiConfig) handlerUsersGet(w http.ResponseWriter, r *http.Request, us
 
 	userResp, err := databaseUserToUser(user)
 	if err != nil {
-		log.Println(err)
-		respondWithError(w, http.StatusInternalServerError, "Couldn't convert user")
+		respondWithError(w, http.StatusInternalServerError, "Couldn't convert user", err)
 		return
 	}
 
