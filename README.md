@@ -8,13 +8,13 @@ Make sure you're on Go version 1.22+.
 
 Create a `.env` file in the root of the project with the following contents:
 
-```bash
+```zsh
 PORT="8080"
 ```
 
 Run the server:
 
-```bash
+```zsh
 go build -o notely && ./notely
 ```
 
