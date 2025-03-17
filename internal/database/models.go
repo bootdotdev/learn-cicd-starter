@@ -19,5 +19,5 @@ type User struct {
 	CreatedAt string
 	UpdatedAt string
 	Name      string
-	ApiKey    string
+	APIKey    string
 }
