@@ -1,8 +1,10 @@
 #!/bin/bash
 
-if [ -f .env ]; then
-    source .env
-fi
+# if [ -f .env ]; then
+#     source .env
+# fi
 
-cd sql/schema
-goose turso $DATABASE_URL up
+# cd sql/schema
+# goose turso $DATABASE_URL up
+
+echo "hello"
