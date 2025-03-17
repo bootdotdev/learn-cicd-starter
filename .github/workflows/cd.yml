@@ -1,0 +1,50 @@
+name: cd
+
+on:
+  push:
+    branches: [main]
+
+jobs:
+  Deployment:
+    name: Deploy
+    runs-on: ubuntu-latest
+
+    env: 
+      DATABASE_URL: ${{secrets.DATABASE_URL}} 
+
+    steps:
+      - name: Checkout the Code
+        uses: actions/checkout@v4
+
+      - name: Go Tool Chain
+        uses: actions/setup-go@v5
+        with:
+          go-version: '1.23.0'
+
+      - name: Install Goose
+        run: go install github.com/pressly/goose/v3/cmd/goose@latest
+
+
+      - name: Run The App
+        run: ./scripts/buildprod.sh
+
+      - id: auth
+        uses: 'google-github-actions/auth@v2'
+        with:
+          credentials_json: '${{secrets.GCP_CREDENTIALS}}'
+
+      - name: 'Set Up Google Cloud SDK'
+        uses: 'google-github-actions/setup-gcloud@v2'
+
+      - name: 'Use GCloud CLI'
+        run: 'gcloud info'
+
+      - name: 'build'
+        run: gcloud builds submit --tag asia-south2-docker.pkg.dev/notely-434910/notely-ar-repo/notely:latest .
+
+      - name: Database Migrations
+        run: ./scripts/migrateup.sh
+
+      - name: Deploy to Cloud Run
+        run: gcloud run deploy notely --image asia-south2-docker.pkg.dev/notely-434910/notely-ar-repo/notely:latest --region asia-south2 --allow-unauthenticated --project notely-434910 --max-instances=4
+
