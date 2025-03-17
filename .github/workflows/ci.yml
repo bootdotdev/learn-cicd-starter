@@ -1,7 +1,7 @@
 name: ci
 
 on:
-  pull_reques:
+  pull_request:
     branches: [main]
 
 jobs:
