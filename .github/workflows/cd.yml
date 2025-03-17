@@ -13,6 +13,9 @@ jobs:
       DATABASE_URL: ${{ secrets.DATABASE_URL }}
 
     steps:
+      - name: Add GOPATH to PATH
+        run: echo "$HOME/go/bin" >> $GITHUB_PATH
+
       - name: Check out code
         uses: actions/checkout@v4
 
