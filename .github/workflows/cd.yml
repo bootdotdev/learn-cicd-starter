@@ -21,16 +21,10 @@ jobs:
         with:
           go-version: "stable"
 
-      - name: Install goose
-        run: go install github.com/pressly/goose/v3/cmd/goose@latest
-
       - name: Build app
         run: |
           go mod tidy
           scripts/buildprod.sh
-
-      - name: Run database migrations
-        run: goose -dir ./sql/schema sqlite3 $DATABASE_URL up
 
       - id: "auth"
         uses: "google-github-actions/auth@v2"
@@ -41,6 +35,9 @@ jobs:
         uses: "google-github-actions/setup-gcloud@v2"
         with:
           version: "latest"
+
+      - name: Run database migrations
+        run: goose -dir ./sql/schema sqlite3 $DATABASE_URL up
 
       - name: "Deploy to Cloud Run"
         run: |
