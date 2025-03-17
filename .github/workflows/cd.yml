@@ -39,6 +39,15 @@ jobs:
       - name: Install goose
         run: go install github.com/pressly/goose/v3/cmd/goose@latest
 
+      - name: Check if the SQLite database exists
+        run: |
+          if [ -f "$(echo $DATABASE_URL | sed 's/sqlite3:\/\///')" ]; then
+            echo "Database file found."
+          else
+            echo "Database file NOT found. Creating it now..."
+            touch "$(echo $DATABASE_URL | sed 's/sqlite3:\/\///')"
+          fi
+
       - name: Run database migrations
         run: goose -dir ./sql/schema sqlite3 $DATABASE_URL up
 
