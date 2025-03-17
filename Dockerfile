@@ -1,7 +1,15 @@
-FROM --platform=linux/amd64 debian:stable-slim
+FROM debian:stable-slim
 
-RUN apt-get update && apt-get install -y ca-certificates
+RUN apt-get update && apt-get install -y ca-certificates file
 
-ADD notely /usr/bin/notely
+WORKDIR /app
+COPY notely .
 
-CMD ["notely"]
+RUN chmod +x notely
+
+EXPOSE 8080
+ENV PORT=8080
+
+# Be explicit about listening on all interfaces
+ENV HOST=0.0.0.0
+CMD ["./notely"]
