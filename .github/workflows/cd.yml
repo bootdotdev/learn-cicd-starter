@@ -1,0 +1,47 @@
+name: cd
+
+on:
+  push:
+    branches: [main]
+
+jobs:
+  deploy:
+    name: Deploy
+    runs-on: ubuntu-latest
+    env:
+      DATABASE_URL: ${{ secrets.DATABASE_URL }}
+
+    steps:
+      - name: Checking out code
+        uses: actions/checkout@v4
+
+      - name: Setting up Go
+        uses: actions/setup-go@v5
+        with:
+          go-version: '1.22'
+
+      - name: Installing Goose
+        run: go install github.com/pressly/goose/v3/cmd/goose@latest
+
+      - name: Building the App
+        run: ./scripts/buildprod.sh
+
+      - id: 'auth'
+        uses: 'google-github-actions/auth@v2'
+        with:
+          credentials_json: '${{ secrets.GCP_CREDENTIALS }}'
+
+      - name: 'Setting up Cloud SDK'
+        uses: 'google-github-actions/setup-gcloud@v2'
+
+      - name: 'Using gcloud CLI'
+        run: 'gcloud info'
+
+      - name: Building the Docker image and pushing it to Google Artifact Registry
+        run: gcloud builds submit --tag us-central1-docker.pkg.dev/notely-426103/notely-ar-repo/notely:v1 .
+
+      - name: Running the migrations
+        run: ./scripts/migrateup.sh
+
+      - name: Deploying to Google Cloud Run
+        run: gcloud run deploy notely --image us-central1-docker.pkg.dev/notely-426103/notely-ar-repo/notely:v1 --region us-central1 --allow-unauthenticated --project notely-426103 --max-instances=4
