@@ -1,8 +1,12 @@
-version: "2"
-sql:
-  - schema: "sql/schema"
-    queries: "sql/queries"
-    engine: "sqlite"
-    gen:
-      go:
-        out: "internal/database"
+formatting:
+  name: Formatting
+  runs-on: ubuntu-latest
+  steps:
+    - name: Check out code
+      uses: actions/checkout@v4
+    - name: Set up Go
+      uses: actions/setup-go@v5
+      with:
+        go-version: '1.22'
+    - name: Check formatting
+      run: test -z $(go fmt ./...)
