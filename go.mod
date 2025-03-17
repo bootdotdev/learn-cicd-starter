@@ -5,6 +5,7 @@ go 1.22
 require (
 	github.com/go-chi/chi v1.5.4
 	github.com/go-chi/cors v1.2.1
+	github.com/google/go-cmp v0.7.0
 	github.com/google/uuid v1.3.0
 	github.com/joho/godotenv v1.5.1
 	github.com/tursodatabase/libsql-client-go v0.0.0-20240220085343-4ae0eb9d0898
