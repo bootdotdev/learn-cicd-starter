@@ -2,6 +2,8 @@
 
 This repo contains the starter code for the "Notely" application for the "Learn CICD" course on [Boot.dev](https://boot.dev).
 
+![code coverage badge](https://github.com/jun-hf/learn-cicd-starter/actions/workflows/ci.yml/badge.svg)
+
 ## Local Development
 
 Make sure you're on Go version 1.22+.
@@ -17,6 +19,8 @@ Run the server:
 ```bash
 go build -o notely && ./notely
 ```
+
+
 
 *This starts the server in non-database mode.* It will serve a simple webpage at `http://localhost:8080`.
 
