@@ -13,9 +13,6 @@ jobs:
       DATABASE_URL: ${{ secrets.DATABASE_URL }}
 
     steps:
-      - name: Add GOPATH to PATH
-        run: echo "$HOME/go/bin" >> $GITHUB_PATH
-
       - name: Check out code
         uses: actions/checkout@v4
 
@@ -38,6 +35,9 @@ jobs:
         uses: "google-github-actions/setup-gcloud@v2"
         with:
           version: "latest"
+
+      - name: Install goose
+        run: go install github.com/pressly/goose/v3/cmd/goose@latest
 
       - name: Run database migrations
         run: goose -dir ./sql/schema sqlite3 $DATABASE_URL up
