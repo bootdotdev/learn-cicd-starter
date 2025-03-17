@@ -74,6 +74,7 @@ func (cfg *apiConfig) handlerUsersGet(w http.ResponseWriter, r *http.Request, us
 		respondWithError(w, http.StatusInternalServerError, "Couldn't convert user", err)
 		return
 	}
-
+  
+  //Comments
 	respondWithJSON(w, http.StatusOK, userResp)
 }
