@@ -63,9 +63,13 @@ jobs:
               echo "Database file NOT found. Creating it now..."
               touch "$DB_PATH"
             fi
+          elif [[ $DATABASE_URL == libsql://* ]]; then
+            echo "Using a remote Turso database. Skipping local file checks."
           else
-            echo "DATABASE_URL is not a local SQLite file. Skipping file checks."
+            echo "Unknown DATABASE_URL format: $DATABASE_URL"
+            exit 1
           fi
+
 
 
 
