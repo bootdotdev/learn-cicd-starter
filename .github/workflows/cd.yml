@@ -48,7 +48,9 @@ jobs:
 
       - name: Check if the SQLite database exists
         run: |
-          if [[ $DATABASE_URL == sqlite3://* ]]; then
+          echo "DATABASE_URL: $DATABASE_URL"
+
+          if [[ "$DATABASE_URL" == sqlite3://* ]]; then
             DB_PATH=$(echo "$DATABASE_URL" | sed 's#sqlite3://##')
             DB_DIR=$(dirname "$DB_PATH")
 
@@ -63,15 +65,12 @@ jobs:
               echo "Database file NOT found. Creating it now..."
               touch "$DB_PATH"
             fi
-          elif [[ $DATABASE_URL == libsql://* ]]; then
+          elif [[ "$DATABASE_URL" == libsql://* ]]; then
             echo "Using a remote Turso database. Skipping local file checks."
           else
             echo "Unknown DATABASE_URL format: $DATABASE_URL"
             exit 1
           fi
-
-
-
 
       - name: Run database migrations
         run: goose -dir ./sql/schema sqlite3 $DATABASE_URL up
