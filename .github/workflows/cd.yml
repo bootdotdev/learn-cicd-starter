@@ -46,7 +46,14 @@ jobs:
           echo "$(go env GOPATH)/bin" >> $GITHUB_PATH
 
       - name: Run database migrations
-        run: goose -dir ./sql/schema sqlite3 $DATABASE_URL up
+        run: |
+          if [[ "$DATABASE_URL" == libsql://* ]]; then
+            echo "⚠️ Skipping migrations: Goose does not support libsql:// (Turso) natively."
+            exit 0
+          fi
+
+          goose -dir ./sql/schema sqlite3 "$DATABASE_URL" up
+
 
       - name: "Deploy to Cloud Run"
         run: |
