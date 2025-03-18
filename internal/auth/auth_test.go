@@ -7,7 +7,7 @@ import (
 )
 
 func TestGoodApiKey(t *testing.T) {
-	authorizationHeader := "ApiKe jasfkjash812m3b!418h41"
+	authorizationHeader := "ApiKey jasfkjash812m3b!418h41"
 	expectedKey := "jasfkjash812m3b!418h41"
 
 	req, err := http.NewRequest("", "", nil)
