@@ -8,7 +8,6 @@ jobs:
   deploy:
     name: Deploy
     runs-on: ubuntu-latest
-    
     env:
       DATABASE_URL: ${{ secrets.DATABASE_URL }}
 
@@ -16,54 +15,35 @@ jobs:
       - name: Check out code
         uses: actions/checkout@v4
 
-      - name: Debug DATABASE_URL
-        run: |
-          echo "DATABASE_URL: $DATABASE_URL"
-
       - name: Set up Go
         uses: actions/setup-go@v5
         with:
-          go-version: "stable"
+          go-version: '1.23.0'
 
       - name: Build app
+        run: ./scripts/buildprod.sh
+
+      - id: auth
+        uses: google-github-actions/auth@v2
+        with:
+          credentials_json: ${{ secrets.GCP_CREDENTIALS }}
+
+      - name: Set up Cloud SDK
+        uses: google-github-actions/setup-gcloud@v1
+
+      - name: Build and push Docker image to Google Artifact Registry
         run: |
-          go mod tidy
-          scripts/buildprod.sh
-
-      - id: "auth"
-        uses: "google-github-actions/auth@v2"
-        with:
-          credentials_json: "${{ secrets.GCP_CREDENTIALS }}"
-
-      - name: "Set up Cloud SDK"
-        uses: "google-github-actions/setup-gcloud@v2"
-        with:
-          version: "latest"
-
+          gcloud builds submit --tag us-central1-docker.pkg.dev/notely-453609/notely-ar-repo/notely:latest .
+          
       - name: Install goose
-        run: |
-          go install github.com/pressly/goose/v3/cmd/goose@latest
-          echo "$(go env GOPATH)/bin" >> $GITHUB_PATH
+        run: go install github.com/pressly/goose/v3/cmd/goose@latest
 
-      - name: Run database migrations
-        run: |
-          if [[ "$DATABASE_URL" == libsql://* ]]; then
-            echo "⚠️ Skipping migrations: Goose does not support libsql:// (Turso) natively."
-            exit 0
-          fi
+      - name: Run migrations
+        run: ./scripts/migrateup.sh
 
-          goose -dir ./sql/schema sqlite3 "$DATABASE_URL" up
-
-
-      - name: "Deploy to Cloud Run"
-        run: |
-          gcloud info
-          gcloud builds submit --tag us-central1-docker.pkg.dev/notely-453609/notely-ar-repo/notely-app:latest .
-          gcloud run deploy notely \
-            --image us-central1-docker.pkg.dev/notely-453609/notely-ar-repo/notely-app:latest \
-            --region us-central1 \
-            --allow-unauthenticated \
-            --project notely
+      - name: Deploy to Cloud Run
+        run: gcloud run deploy notely --image us-central1-docker.pkg.dev/notely-453609/notely-ar-repo/notely:latest --region us-central1 --allow-unauthenticated --project notely-453609 --max-instances=4
+      
           
       # - name: Build app
 
