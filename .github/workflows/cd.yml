@@ -45,33 +45,6 @@ jobs:
           go install github.com/pressly/goose/v3/cmd/goose@latest
           echo "$(go env GOPATH)/bin" >> $GITHUB_PATH
 
-
-      - name: Check if the SQLite database exists
-        run: |
-          echo "DATABASE_URL: $DATABASE_URL"
-
-          if [[ "$DATABASE_URL" == sqlite3://* ]]; then
-            DB_PATH=$(echo "$DATABASE_URL" | sed 's#sqlite3://##')
-            DB_DIR=$(dirname "$DB_PATH")
-
-            if [[ ! -d "$DB_DIR" ]]; then
-              echo "Directory $DB_DIR does not exist. Creating it now..."
-              mkdir -p "$DB_DIR"
-            fi
-
-            if [[ -f "$DB_PATH" ]]; then
-              echo "Database file found."
-            else
-              echo "Database file NOT found. Creating it now..."
-              touch "$DB_PATH"
-            fi
-          elif [[ "$DATABASE_URL" == libsql://* ]]; then
-            echo "Using a remote Turso database. Skipping local file checks."
-          else
-            echo "Unknown DATABASE_URL format: $DATABASE_URL"
-            exit 1
-          fi
-
       - name: Run database migrations
         run: goose -dir ./sql/schema sqlite3 $DATABASE_URL up
 
