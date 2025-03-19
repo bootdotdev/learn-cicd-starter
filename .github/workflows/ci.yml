@@ -18,8 +18,14 @@ jobs:
         with:
           go-version: "1.23.0"
 
-      - name: Style
-        run: test -z $(fmt ./...)
-
       - name: Run Tests
-        run: go test ./... -cover
+        run: go test ./... -cover  
+        
+jobs:
+  tests: 
+    name: Style 
+    runs-on: ubuntu-latest 
+
+    steps: 
+      - name: Formatting Check 
+        run: test -z $(fmt ./...)
