@@ -2,7 +2,6 @@ package main
 
 import (
 	"encoding/json"
-	"log"
 	"net/http"
 	"time"
 
@@ -13,14 +12,13 @@ import (
 func (cfg *apiConfig) handlerNotesGet(w http.ResponseWriter, r *http.Request, user database.User) {
 	posts, err := cfg.DB.GetNotesForUser(r.Context(), user.ID)
 	if err != nil {
-		respondWithError(w, http.StatusInternalServerError, "Couldn't get posts for user")
+		respondWithError(w, http.StatusInternalServerError, "Couldn't get posts for user", err)
 		return
 	}
 
 	postsResp, err := databasePostsToPosts(posts)
 	if err != nil {
-		log.Println(err)
-		respondWithError(w, http.StatusInternalServerError, "Couldn't convert posts")
+		respondWithError(w, http.StatusInternalServerError, "Couldn't convert posts", err)
 		return
 	}
 
@@ -35,7 +33,7 @@ func (cfg *apiConfig) handlerNotesCreate(w http.ResponseWriter, r *http.Request,
 	params := parameters{}
 	err := decoder.Decode(&params)
 	if err != nil {
-		respondWithError(w, http.StatusInternalServerError, "Couldn't decode parameters")
+		respondWithError(w, http.StatusInternalServerError, "Couldn't decode parameters", err)
 		return
 	}
 
@@ -48,20 +46,19 @@ func (cfg *apiConfig) handlerNotesCreate(w http.ResponseWriter, r *http.Request,
 		UserID:    user.ID,
 	})
 	if err != nil {
-		respondWithError(w, http.StatusInternalServerError, "Couldn't create note")
+		respondWithError(w, http.StatusInternalServerError, "Couldn't create note", err)
 		return
 	}
 
 	note, err := cfg.DB.GetNote(r.Context(), id)
 	if err != nil {
-		respondWithError(w, http.StatusNotFound, "Couldn't get note")
+		respondWithError(w, http.StatusNotFound, "Couldn't get note", err)
 		return
 	}
 
 	noteResp, err := databaseNoteToNote(note)
 	if err != nil {
-		log.Println(err)
-		respondWithError(w, http.StatusInternalServerError, "Couldn't convert note")
+		respondWithError(w, http.StatusInternalServerError, "Couldn't convert note", err)
 		return
 	}
 

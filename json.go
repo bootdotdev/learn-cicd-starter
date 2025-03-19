@@ -6,7 +6,10 @@ import (
 	"net/http"
 )
 
-func respondWithError(w http.ResponseWriter, code int, msg string) {
+func respondWithError(w http.ResponseWriter, code int, msg string, logErr error) {
+	if logErr != nil {
+		log.Println(logErr)
+	}
 	if code > 499 {
 		log.Printf("Responding with 5XX error: %s", msg)
 	}
