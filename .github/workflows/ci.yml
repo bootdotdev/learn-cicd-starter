@@ -6,7 +6,7 @@ on:
 
 jobs:
   tests:
-    name: Run Tests
+    name: Tests
     runs-on: ubuntu-latest
 
     steps:
@@ -18,22 +18,8 @@ jobs:
         with:
           go-version: "1.23.0"
 
-      - name: Run Tests
-        run: go test ./...
+      # - name: Run Tests
+      #   run: go test ./...
 
-  coverage:
-    name: Check Coverage
-    runs-on: ubuntu-latest
-    needs: tests
-
-    steps:
-      - name: Check out code
-        uses: actions/checkout@v4
-
-      - name: Set up Go
-        uses: actions/setup-go@v5
-        with:
-          go-version: "1.23.0"
-
-      - name: Run Coverage
-        run: go test -cover ./...
+      - name: Run Tests with Coverage
+        run: go test ./... -cover
