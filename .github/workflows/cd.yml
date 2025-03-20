@@ -20,3 +20,12 @@ jobs:
 
       - name: Build Application
         run: scripts/buildprod.sh
+
+      - name: Setup gcloud CLI
+        uses: google-github-actions/setup-gcloud@v1
+        with:
+          service_account_key: ${{ secrets.GCP_CREDENTIALS }}
+          project_id: notely-454216
+
+      - name: Build and Push Docker Image
+        run: gcloud builds submit --tag us-central1-docker.pkg.dev/notely-454216/notely-ar-repo/notely:latest .
