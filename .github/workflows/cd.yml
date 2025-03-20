@@ -41,7 +41,7 @@ jobs:
         run: gcloud builds submit --tag us-central1-docker.pkg.dev/notely-454216/notely-ar-repo/notely:latest .
 
       - name: Run Database Migrations
-        run: goose -dir ./sql/schema postgres $DATABASE_URL up
+        run: ./scripts/migrateup.sh
 
       - name: Deploy to Cloud Run
         run: gcloud run deploy notely --image us-central1-docker.pkg.dev/notely-454216/notely-ar-repo/notely:latest --region us-central1 --allow-unauthenticated --project notely-454216 --max-instances=4
