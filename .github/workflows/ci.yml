@@ -8,7 +8,6 @@ jobs:
   tests:
     name: Tests
     runs-on: ubuntu-latest
-
     steps:
       - name: Check out code
         uses: actions/checkout@v4
@@ -21,19 +20,17 @@ jobs:
       - name: Go test
         run: go test -cover ./...
 
-jobs:
-  tests:
-    name: Style
+  style:
+    name: Style Check
     runs-on: ubuntu-latest
-      steps:
-        - name: Check out code
-          uses: actions/checkout@v4
+    steps:
+      - name: Check out code
+        uses: actions/checkout@v4
 
-        - name: Set up Go
-          uses: actions/setup-go@v5
-          with:
-            go-version: "1.23.0"
+      - name: Set up Go
+        uses: actions/setup-go@v5
+        with:
+          go-version: "1.23.0"
 
-        - name: Style cheking
-          run: test -z $(go fmt ./...)
-
+      - name: Style checking
+        run: test -z "$(go fmt ./...)"
