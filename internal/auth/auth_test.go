@@ -54,7 +54,3 @@ func TestGetAPIKey_MalformedHeader(t *testing.T) {
 		t.Error("expected error for malformed header (incorrect auth type), but got nil")
 	}
 }
-
-func TestIntentionalFailure(t *testing.T) {
-	t.Fatal("This test is intentionally broken to rule out false positives in CI")
-}
