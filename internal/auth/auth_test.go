@@ -9,7 +9,7 @@ func TestGetAPIKey_Success(t *testing.T) {
 	headers := http.Header{}
 	expectedAPIKey := "abcdef123456"
 	headers.Set("Authorization", "ApiKey "+expectedAPIKey)
-	
+
 	apiKey, err := GetAPIKey(headers)
 	if err != nil {
 		t.Errorf("expected no error, but got: %v", err)
@@ -32,7 +32,7 @@ func TestGetAPIKey_NoHeader(t *testing.T) {
 
 func TestGetAPIKey_MalformedHeader(t *testing.T) {
 	headers := http.Header{}
-	
+
 	// Test with a header that contains only one part.
 	headers.Set("Authorization", "ApiKey")
 	_, err := GetAPIKey(headers)
