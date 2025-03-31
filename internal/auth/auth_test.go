@@ -15,7 +15,7 @@ func TestGetAPIKey(t *testing.T) {
 		{input: "", expected: "", err: ErrNoAuthHeaderIncluded},
 		{input: "Apikey", expected: "", err: ErrMalformedAuthHeader},
 		{input: "Bearer token", expected: "", err: ErrMalformedAuthHeader},
-		{input: "ApiKey some_ke", expected: "some_key", err: nil},
+		{input: "ApiKey some_key", expected: "some_key", err: nil},
 	}
 
 	for _, tc := range tests {
