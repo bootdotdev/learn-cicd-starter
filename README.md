@@ -1,6 +1,6 @@
 [![ci](https://github.com/a-dubaj/learn-cicd-starter/actions/workflows/ci.yml/badge.svg)](https://github.com/a-dubaj/learn-cicd-starter/actions/workflows/ci.yml)
 
-https://github.com/a-dubaj/learn-cicd-starter/actions/workflows/ci.yml/badge.svg
+![alt text goes here](https://github.com/a-dubaj/learn-cicd-starter/actions/workflows/ci.yml/badge.svg)
 
 # learn-cicd-starter (Notely)
 
