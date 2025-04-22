@@ -1,3 +1,4 @@
+# build status
 ![test status ](https://github.com/nickabs/learn-cicd-starter/actions/workflows/ci.yml/badge.svg)
 
 # learn-cicd-starter (Notely)
