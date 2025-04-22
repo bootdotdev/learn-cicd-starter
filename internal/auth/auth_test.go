@@ -5,5 +5,4 @@ import (
 )
 
 func TestCleanInput(t *testing.T) {
-	return
 }
