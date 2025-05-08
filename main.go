@@ -7,6 +7,7 @@ import (
 	"log"
 	"net/http"
 	"os"
+	"time"
 
 	"github.com/go-chi/chi"
 	"github.com/go-chi/cors"
@@ -89,8 +90,12 @@ func main() {
 
 	router.Mount("/v1", v1Router)
 	srv := &http.Server{
-		Addr:    ":" + port,
-		Handler: router,
+		Addr:              ":" + port,
+		Handler:           router,
+		ReadHeaderTimeout: 5 * time.Second,   // give them 5s to send all headers
+		ReadTimeout:       10 * time.Second,  // total time to read request
+		WriteTimeout:      10 * time.Second,  // total time to write response
+		IdleTimeout:       120 * time.Second, // how long to keep idle connections alive
 	}
 
 	log.Printf("Serving on port: %s\n", port)
