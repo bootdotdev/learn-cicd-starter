@@ -2,3 +2,6 @@ out
 .env
 learn-cicd-starter
 notely
+/.idea/.gitignore
+/.idea/modules.xml
+/.idea/vcs.xml
