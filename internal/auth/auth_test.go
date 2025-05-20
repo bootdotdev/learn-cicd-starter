@@ -11,7 +11,7 @@ func TestGetAPIKey(t *testing.T) {
 
 	str, err := GetAPIKey(headers)
 
-	if str != "foo" {
+	if str != "" {
 		t.Fatalf("expected: %s, got: %s", "", str)
 	}
 
