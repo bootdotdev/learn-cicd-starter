@@ -1,0 +1,44 @@
+name: ci  # 工作流的名称，会在 GitHub 界面中显示
+
+on:  # 触发工作流的条件
+  pull_request:  # 当有拉取请求时触发
+    branches: [main]  # 仅针对 main 分支的拉取请求触发
+
+jobs:  # 工作流包含的任务
+  style:
+    name: Style
+    runs-on: ubuntu-latest  # 运行环境，这里选择最新的 Ubuntu 系统
+    steps:
+      - name: Check out code  # 步骤名称
+        uses: actions/checkout@v4  # 使用官方的 checkout 动作，将代码拉取到运行环境
+
+      - name: Set up Go  # 步骤名称
+        uses: actions/setup-go@v5  # 使用官方的 setup-go 动作，设置 Go 环境
+        with: # 传递给动作的参数
+          go-version: "1.23.5"  # 指定 Go 的版本为 1.23.5
+      - name: reformatting code
+        run: test -z $(go fmt ./...)
+      - name: install staitccheck
+        run:  go install honnef.co/go/tools/cmd/staticcheck@latest
+      - name: linting
+        run: staticcheck ./...
+  tests:  # 任务的 ID
+    name: Tests  # 任务的名称，会在 GitHub 界面中显示
+    runs-on: ubuntu-latest  # 运行环境，这里选择最新的 Ubuntu 系统
+
+    steps:  # 任务包含的步骤
+      - name: Check out code  # 步骤名称
+        uses: actions/checkout@v4  # 使用官方的 checkout 动作，将代码拉取到运行环境
+
+      - name: Set up Go  # 步骤名称
+        uses: actions/setup-go@v5  # 使用官方的 setup-go 动作，设置 Go 环境
+        with:  # 传递给动作的参数
+          go-version: "1.23.5"  # 指定 Go 的版本为 1.23.5
+
+      - name: Force Failure  # 步骤名称
+#        run: (exit 1)  # 执行 shell 命令，直接退出并返回错误码 1，导致构建失败
+        run: go test -cover ./...  # 执行 shell 命令，直接退出并返回错误码 1，导致构建失败
+      - name: Install gosec
+        run: go install github.com/securego/gosec/v2/cmd/gosec@latest
+      - name: gosec check
+        run: gosec ./...
