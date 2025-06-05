@@ -31,6 +31,8 @@ func main() {
 	}
 
 	port := os.Getenv("PORT")
+
+    log.Printf("PORT = %v", port)
 	if port == "" {
 		log.Fatal("PORT environment variable is not set")
 	}
