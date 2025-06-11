@@ -1,3 +1,5 @@
+![CI](https://github.com/ksaikarthik/dummy-cicd/actions/workflows/ci.yml/badge.svg)
+
 # learn-cicd-starter (Notely)
 
 "Karthik's version of Boot.dev's Notely app."
