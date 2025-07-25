@@ -1,6 +1,6 @@
 # learn-cicd-starter (Notely)
 
-This repo contains the starter code for the "Notely" application for the "Learn CICD" course on [Boot.dev](https://boot.dev).
+This repo contains the starter code for the my version of Boot.dev's Notely application for the "Learn CICD" course on [Boot.dev](https://boot.dev).
 
 ## Local Development
 
