@@ -68,7 +68,7 @@ func TestGetAPIKey(t *testing.T) {
 				t.Fatalf("got: %v; want: %v", str, tt.wantString)
 			}
 
-			if errors.Is(err, tt.wantError) {
+			if !errors.Is(err, tt.wantError) {
 				t.Fatalf("got: %v; want: %v", err, tt.wantError)
 			}
 		})
