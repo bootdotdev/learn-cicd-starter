@@ -13,10 +13,6 @@ jobs:
       - name: Check out code
         uses: actions/checkout@v4
 
-      - name: Set up Go
-        uses: actions/setup-go@v5
-        with:
-          go-version: "1.23.0"
-
-      - name: Show Go Version
-        run:  go version
+  
+       - name: Run Unit Tests
+         run: go test ./...
