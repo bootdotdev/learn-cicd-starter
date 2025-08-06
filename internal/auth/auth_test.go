@@ -27,5 +27,3 @@ func TestGetAPIKey_MissingHeader(t *testing.T) {
 		t.Fatal("Expected an error, got nil")
 	}
 }
-
-
