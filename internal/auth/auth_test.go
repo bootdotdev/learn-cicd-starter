@@ -28,6 +28,4 @@ func TestGetAPIKey_MissingHeader(t *testing.T) {
 	}
 }
 
-func TestGetAPIKey_MissingHeader(t *testing.T) {
-    t.Fatal("Intentionally failing test to verify CI catches failures")
-}
+
