@@ -13,7 +13,6 @@ jobs:
       - name: Check out code
         uses: actions/checkout@v4
 
-  
       - name: Set up Go
         uses: actions/setup-go@v5
         with:
@@ -21,12 +20,12 @@ jobs:
 
       - name: Run tests with coverage
         run: go test ./...
- 
-   style:
+
+  style:
     name: Style
     runs-on: ubuntu-latest
 
-     steps:
+    steps:
       - name: Check out code
         uses: actions/checkout@v4
 
@@ -37,3 +36,4 @@ jobs:
 
       - name: Run formatting check
         run: test -z $(go fmt ./...)
+
