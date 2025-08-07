@@ -25,5 +25,10 @@ jobs:
         with:
           go-version: '1.20'
       - name: Check Go formatting
-        run: test -z $(go fmt ./...)
+        run: |
+          if [ -n "$(gofmt -l .)" ]; then
+            echo "Files need formatting:"
+            gofmt -l .
+            exit 1
+          fi
 
