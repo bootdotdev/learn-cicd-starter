@@ -34,6 +34,18 @@ jobs:
         with:
           go-version: 1.22
 
-      - name: Check Go formatting
+      # ✅ STRICT STYLE CHECK (assignment requires this)
+      - name: Check Go formatting (strict)
         run: test -z "$(go fmt ./...)"
+
+      # 🟡 OPTIONAL: SOFT CHECK (uncomment if you don't want to fail CI)
+      # - name: Check Go formatting (soft, always passes)
+      #   run: |
+      #     files=$(go fmt ./...)
+      #     if [ -n "$files" ]; then
+      #       echo "These files are not formatted correctly:"
+      #       echo "$files"
+      #     else
+      #       echo "All files are properly formatted."
+      #     fi
 
