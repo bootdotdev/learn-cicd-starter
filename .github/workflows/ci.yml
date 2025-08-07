@@ -1,0 +1,51 @@
+name: ci
+
+on:
+  pull_request:
+    branches: [main]
+
+jobs:
+  tests:
+    name: Tests
+    runs-on: ubuntu-latest
+
+    steps:
+      - name: Check out code
+        uses: actions/checkout@v4
+
+      - name: Set up Go
+        uses: actions/setup-go@v5
+        with:
+          go-version: 1.22
+
+      - name: Run tests
+        run: go test -cover ./...
+
+  style:
+    name: Style
+    runs-on: ubuntu-latest
+
+    steps:
+      - name: Check out code
+        uses: actions/checkout@v4
+
+      - name: Set up Go
+        uses: actions/setup-go@v5
+        with:
+          go-version: 1.22
+
+      # ✅ STRICT STYLE CHECK (assignment requires this)
+      - name: Check Go formatting (strict)
+        run: test -z "$(go fmt ./...)"
+
+      # 🟡 OPTIONAL: SOFT CHECK (uncomment if you don't want to fail CI)
+      # - name: Check Go formatting (soft, always passes)
+      #   run: |
+      #     files=$(go fmt ./...)
+      #     if [ -n "$files" ]; then
+      #       echo "These files are not formatted correctly:"
+      #       echo "$files"
+      #     else
+      #       echo "All files are properly formatted."
+      #     fi
+
