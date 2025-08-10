@@ -21,3 +21,12 @@ go build -o notely && ./notely
 *This starts the server in non-database mode.* It will serve a simple webpage at `http://localhost:8080`.
 
 You do *not* need to set up a database or any interactivity on the webpage yet. Instructions for that will come later in the course!
+
+Felbote's version of Boot.dev's Notely app.
+
+#Create a new branch called addtests. I like to name my branches after the change I'm about to make, and in this case, we're about to add tests.
+git switch -c addtests
+
+When you create a new branch, it only exists locally. Push this new branch up to GitHub:
+git push origin addtests.
+
