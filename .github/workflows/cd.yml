@@ -1,0 +1,36 @@
+name: cd
+
+
+on:
+    push: 
+        branches: [main]
+
+jobs:
+    deploy:
+        name: Deploy
+        runs-on: ubuntu-latest
+
+        steps:
+          - name: Checkout Code
+            uses: actions/checkout@v4
+         
+          - name: Set up go
+            uses: actions/setup-go@v5
+        
+          - name: build app
+            run: ./scripts/buildprod.sh
+
+          - name: 'auth'
+            uses: 'google-github-actions/auth@v2'
+            with:
+              credentials_json: '${{ secrets.GCP_CREDENTIALS }}'
+
+          - name: 'Set up Cloud SDK'
+            uses: 'google-github-actions/setup-gcloud@v2'
+
+          - name: 'Use gcloud CLI'
+            run: 'gcloud info'
+              
+          - name: 'build docker image'
+            run: gcloud builds submit --tag us-central1-docker.pkg.dev/notely-467318/notely-ar-repo/notely:latest .
+              
