@@ -1,7 +1,30 @@
-FROM --platform=linux/amd64 debian:stable-slim
+# Use a specific Go version (1.22) as the build environment.
+FROM golang:1.22-alpine AS builder
 
-RUN apt-get update && apt-get install -y ca-certificates
+# Set the working directory
+WORKDIR /app
 
-ADD notely /usr/bin/notely
+# Copy go.mod and go.sum and download dependencies
+COPY go.mod go.sum ./
+RUN go mod download
 
-CMD ["notely"]
+# Copy the source code
+COPY . .
+
+# Build the application binary
+RUN CGO_ENABLED=0 go build -o server .
+
+# Final stage: create a small, efficient image to run the binary
+FROM alpine:latest
+
+# Set the working directory
+WORKDIR /app
+
+# Copy the compiled binary from the builder stage
+COPY --from=builder /app/server ./server
+
+# Expose the port your application listens on
+EXPOSE 8080
+
+# Command to run the application
+CMD ["./server"]

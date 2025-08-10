@@ -1,0 +1,59 @@
+# This workflow name is for display in GitHub's UI.
+name: Dynamic CD for ECS
+
+# This specifies when the workflow should run.
+# We'll trigger on pushes to the main branch and on pull requests.
+# This helps with dynamic tagging and allows for checks on PRs.
+on:
+  push:
+    branches: [main]
+  pull_request:
+    branches: [main]
+
+# A simple set of global environment variables for easy configuration.
+env:
+  AWS_REGION: us-east-1 # The AWS region where your resources are located.
+  ECR_REPOSITORY: notely-repo # The name of your ECR repository.
+  ECS_CLUSTER: notely-cluster # The name of your ECS cluster.
+  ECS_SERVICE: notely-service # The name of your ECS service.
+  ECS_TASK_DEFINITION: notely-deployment.json # The path to your task definition file.
+  CONTAINER_NAME: notely-container # The name of the container in your task definition.
+
+jobs:
+  deploy:
+    name: Deploy to Amazon ECS
+    # This ensures the job only runs on push events, not pull requests.
+    if: github.event_name == 'push'
+    runs-on: ubuntu-latest
+    permissions:
+      id-token: write # This is required for requesting the JWT for OIDC
+      contents: read
+    steps:
+      - name: Checkout code
+        uses: actions/checkout@v4
+
+      - name: Configure AWS credentials
+        uses: aws-actions/configure-aws-credentials@v4
+        with:
+          # Use a GitHub secret for your IAM role ARN to keep it secure.
+          role-to-assume: ${{ secrets.AWS_IAM_ROLE_ARN }}
+          aws-region: ${{ env.AWS_REGION }}
+
+      - name: Login to Amazon ECR
+        id: login-ecr
+        uses: aws-actions/amazon-ecr-login@v2
+
+      - name: Build and push Docker image
+        id: build-image
+        env:
+          ECR_REGISTRY: ${{ steps.login-ecr.outputs.registry }}
+          # The image tag is now a combination of the repository and the git commit SHA.
+          # This makes every image tag unique and traceable.
+          IMAGE_TAG: ${{ github.sha }}
+        run: |
+          # The `run` command is a multi-line script.
+          # It builds the image and tags it with the dynamic ECR registry URL and the git SHA.
+          # It then pushes the image to ECR.
+          docker build -t $ECR_REGISTRY/$ECR_REPOSITORY:$IMAGE_TAG .
+          docker push $ECR_REGISTRY/$ECR_REPOSITORY:$IMAGE_TAG
+
