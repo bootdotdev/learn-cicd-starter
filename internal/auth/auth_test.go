@@ -21,7 +21,7 @@ func TestGetAPIKey(t *testing.T) {
 		},
 		{
 			input:    "ApiKey R3JlZyBNYXJ0aW4=",
-			expected: "R3JlZyBNYXJ0aW4=",
+			expected: "R3JlZyBNYXJ0aW=",
 		},
 	}
 
