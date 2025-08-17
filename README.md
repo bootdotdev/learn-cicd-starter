@@ -1,4 +1,4 @@
-![Tests Status](https://github.com/<OWNER>/<REPOSITORY>/actions/workflows/<WORKFLOW_FILE>/badge.svg)
+[![ci](https://github.com/gcancel/learn-cicd-starter/actions/workflows/ci.yml/badge.svg)](https://github.com/gcancel/learn-cicd-starter/actions/workflows/ci.yml)
 # learn-cicd-starter (Notely)
 
 This repo contains the starter code for the "Notely" application for the "Learn CICD" course on [Boot.dev](https://boot.dev).
