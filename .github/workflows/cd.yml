@@ -1,0 +1,33 @@
+name: cd
+
+on:
+  push:
+    branches: [main]
+
+jobs:
+  deploy:
+    name: Deploy
+    runs-on: ubuntu-latest
+
+    steps:
+      - name: Check out code
+        uses: actions/checkout@v4
+
+      - name: Set up Go
+        uses: actions/setup-go@v5
+        with:
+          go-version: "1.24.6"
+
+      - name: Build application
+        run: ./scripts/buildprod.sh
+
+      - name: authenticate to gcloud
+        uses: google-github-actions/auth@v2
+        with:
+          credentials_json: ${{ secrets.GCP_CREDENTIALS }}
+      
+      - name: Setup Gcloud
+        uses: google-github-actions/setup-gcloud@v2
+
+      - name: GCloud build
+        run: gcloud builds submit --tag us-east1-docker.pkg.dev/notely-469820/notely-ar-repo/notely:v0.1.0
