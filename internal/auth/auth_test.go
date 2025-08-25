@@ -28,8 +28,8 @@ func TestGetApiKey(t *testing.T) {
 		},
 		{
 			name:    "valid header",
-			input:   http.Header{"Authorization": []string{"ApiKey validapikey"}},
-			want:    "validapikey",
+			input:   http.Header{"Authorization": []string{"ApiKey validApiKey"}},
+			want:    "validApiKey",
 			wantErr: nil,
 		},
 	}
