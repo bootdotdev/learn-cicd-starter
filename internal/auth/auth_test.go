@@ -44,7 +44,7 @@ func TestGetApiKey(t *testing.T) {
 				t.Fatalf("expected error, got nil (key=%q)", got)
 				return
 			}
-			if test.wantErr && err != nil {
+			if !test.wantErr && err != nil {
 				t.Fatalf("expected no error, got %v", err)
 				return
 			}
