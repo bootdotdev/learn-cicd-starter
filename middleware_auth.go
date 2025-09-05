@@ -7,22 +7,24 @@ import (
 	"github.com/bootdotdev/learn-cicd-starter/internal/database"
 )
 
-type authedHandler func(http.ResponseWriter, *http.Request, database.User)
-
-func (cfg *apiConfig) middlewareAuth(handler authedHandler) http.HandlerFunc {
+func (cfg *apiConfig) middlewareAuth(
+	handler func(http.ResponseWriter, *http.Request, database.User),
+) http.HandlerFunc {
 	return func(w http.ResponseWriter, r *http.Request) {
-		apiKey, err := auth.GetAPIKey(r.Header)
+		apiKey, err := auth.GetAPIKey(r)
 		if err != nil {
-			respondWithError(w, http.StatusUnauthorized, "Couldn't find api key", err)
+			http.Error(w, err.Error(), http.StatusUnauthorized)
 			return
 		}
 
+		// Look up the user in the database
 		user, err := cfg.DB.GetUser(r.Context(), apiKey)
 		if err != nil {
-			respondWithError(w, http.StatusNotFound, "Couldn't get user", err)
+			http.Error(w, "invalid API key", http.StatusUnauthorized)
 			return
 		}
 
+		// Call the actual handler with the authenticated user
 		handler(w, r, user)
 	}
 }
