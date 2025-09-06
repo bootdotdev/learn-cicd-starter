@@ -1,0 +1,17 @@
+name: cd
+
+on:
+  push:
+    branches: [main]
+
+jobs:
+  tests:
+    name: Deploy
+    runs-on: ubuntu-latest
+
+    steps:
+      - name: Check out code
+        uses: actions/checkout@v4
+
+      - name: Run Build
+        run: scripts/buildprod.sh
