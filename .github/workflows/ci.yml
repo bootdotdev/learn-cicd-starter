@@ -1,0 +1,26 @@
+name: ci
+
+on:
+  pull_request:
+    branches:[main]
+
+
+jobs:
+  tests:
+    name: Tests
+    runs-on: ubuntu-latest
+
+
+    steps:
+      - name: check out code
+        uses: actions/checkout@v4
+
+
+      - name: Set up Go 
+        uses: actoins/setup-go@v5
+        with:
+          go-version:"
+
+
+      - name: Force Failure
+        run: (exit 1)
