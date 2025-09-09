@@ -27,7 +27,7 @@ jobs:
           credentials_json: '${{ secrets.GCP_CREDENTIALS }}'
 
       - name: 'Set up Cloud SDK'
-        uses: 'google-github-actions/setup-gcloud'
+        uses: 'google-github-actions/setup-gcloud@v3'
         with:
           version: '>= 363.0.0'
 
