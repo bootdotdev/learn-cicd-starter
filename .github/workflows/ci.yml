@@ -28,7 +28,7 @@ jobs:
         run: go install github.com/securego/gosec/v2/cmd/gosec@latest
 
       - name: check Vulnerabilities
-        run: ./...
+        run: gosec ./...
 
 
 
