@@ -96,3 +96,9 @@ func main() {
 	log.Printf("Serving on port: %s\n", port)
 	log.Fatal(srv.ListenAndServe())
 }
+
+func goNothing(){
+
+	//this function does nothin
+	//apart from triggering an error
+}
