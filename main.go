@@ -97,7 +97,7 @@ func main() {
 	log.Fatal(srv.ListenAndServe())
 }
 
-func goNothing(){
+func goNothing() {
 
 	//this function does nothin
 	//apart from triggering an error
