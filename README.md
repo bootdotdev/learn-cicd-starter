@@ -1,4 +1,4 @@
-![Testing Badge - Status of Tests][https://github.com/mhv2408/learn-cicd-starter/actions/workflows/ci.yml/badge.svg]
+![Testing Badge - Status of Tests](https://github.com/mhv2408/learn-cicd-starter/actions/workflows/ci.yml/badge.svg)
 # learn-cicd-starter (Notely)
 
 This repo contains the starter code for the "Notely" application for the "Learn CICD" course on [Boot.dev](https://boot.dev).
