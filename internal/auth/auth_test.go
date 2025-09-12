@@ -11,7 +11,7 @@ func TestGetAPIKey(t *testing.T) {
 	testHeader := http.Header{}
 
 	key, err := GetAPIKey(testHeader)
-	assert.Nil(t, err)
+	assert.NotNil(t, err)
 	assert.Equal(t, err.Error(), "no authorization header included", "expected error message to be equal")
 
 	testHeader.Set("Authorization", "")
