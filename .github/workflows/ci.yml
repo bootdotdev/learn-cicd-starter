@@ -20,6 +20,3 @@ jobs:
 
       - name: Check version
         run: go version
-
-      - name: Force Failure
-        run: (exit 1)
