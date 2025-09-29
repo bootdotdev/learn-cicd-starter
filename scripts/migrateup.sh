@@ -1,8 +1,5 @@
 #!/bin/bash
-
-if [ -f .env ]; then
-    source .env
-fi
-
-cd sql/schema
-goose turso $DATABASE_URL up
+set -euo pipefail
+cd "$(dirname "$0")/../sql/schema"
+echo "Running: goose turso <REDACTED> up"
+goose turso "$DATABASE_URL" up
