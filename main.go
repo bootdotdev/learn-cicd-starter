@@ -35,7 +35,7 @@ func main() {
 		log.Fatal("PORT environment variable is not set")
 	}
 
-	apiCfg = apiConfig{}
+	apiCfg := apiConfig{}
 
 	// https://github.com/libsql/libsql-client-go/#open-a-connection-to-sqld
 	// libsql://[your-database].turso.io?authToken=[your-auth-token]
