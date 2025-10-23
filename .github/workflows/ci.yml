@@ -1,27 +1,3 @@
-
-      - name: Print Go version
-        run: go versionname: ci
-
-on:
-  pull_request:
-    branches: [main]
-
-jobs:
-  tests:
-    name: Tests
-    runs-on: ubuntu-latest
-
-    steps:
-      - name: Check out code
-        uses: actions/checkout@v4
-
-      - name: Set up Go
-        uses: actions/setup-go@v5
-        with:
-          go-version: "1.25.1"
-
-      - name: Print Go version
-        run: go version
 name: ci
 
 on:
@@ -40,33 +16,7 @@ jobs:
       - name: Set up Go
         uses: actions/setup-go@v5
         with:
-          go-version: "1.25.1"
+          go-version: '1.21.1'
 
       - name: Print Go version
         run: go version
-name: ci
-
-on:
-  pull_request:
-    branches: [main]
-
-jobs:
-  tests:
-    name: Tests
-    runs-on: ubuntu-latest
-
-    steps:
-      - name: Check out code
-        uses: actions/checkout@v4
-
-      - name: Set up Go
-        uses: actions/setup-go@v5
-        with:
-          go-version: "1.25.1"
-
-      - name: Force Failure
-        run: exit 1
-
-
-
-
