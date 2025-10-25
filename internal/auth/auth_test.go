@@ -22,7 +22,7 @@ func TestGetApiKey(t *testing.T) {
 		{
 			input:  http.Header{"Authorization": []string{"poodle"}},
 			outStr: "",
-			outErr: errors.New("malformed authorization headerr"),
+			outErr: errors.New("malformed authorization header"),
 		},
 		{
 			input:  http.Header{},
