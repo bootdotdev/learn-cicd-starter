@@ -17,7 +17,7 @@ func TestGetAPIKey(t *testing.T) {
 			t.Fatalf("Expected no error, got %v", err)
 		}
 		
-		expected := "wrong-key"
+		expected := "my-secret-key-123"
 		if apiKey != expected {
 			t.Errorf("Expected %s, got %s", expected, apiKey)
 		}
