@@ -36,3 +36,10 @@ jobs:
 
       - name: Check formatting
         run: test -z $(go fmt ./...)
+
+      - name: Print go Version
+        run: go version
+
+      - name: Run staticcheck
+        run: staticcheck ./...
+
