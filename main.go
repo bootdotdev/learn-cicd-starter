@@ -1,8 +1,6 @@
-
 package main
 
 import (
-	
 	"database/sql"
 	"embed"
 	"io"
@@ -26,7 +24,7 @@ type apiConfig struct {
 //go:embed static/*
 var staticFiles embed.FS
 
-func main(){
+func main() {
 	err := godotenv.Load(".env")
 	if err != nil {
 		log.Printf("warning: assuming default configuration. .env unreadable: %v", err)
@@ -98,5 +96,3 @@ func main(){
 	log.Printf("Serving on port: %s\n", port)
 	log.Fatal(srv.ListenAndServe())
 }
-
-
