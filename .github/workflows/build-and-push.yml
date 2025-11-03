@@ -5,45 +5,32 @@ on:
     branches: [ main ]
   workflow_dispatch:
 
+permissions:
+  contents: read
+  id-token: write
+
 jobs:
   build-and-push:
     runs-on: ubuntu-latest
-    permissions:
-      contents: read
-      id-token: write
 
     steps:
-      - name: Checkout code
+      - name: Checkout
         uses: actions/checkout@v4
 
-      - name: Authenticate to Google Cloud
+      # 1) Authenticate to Google Cloud (uses your JSON key in repo secret GCP_CREDENTIALS)
+      - name: Auth to Google Cloud
         uses: google-github-actions/auth@v2
         with:
           credentials_json: ${{ secrets.GCP_CREDENTIALS }}
 
+      # 2) Install gcloud and set the project
       - name: Setup gcloud
         uses: google-github-actions/setup-gcloud@v2
         with:
           project_id: disco-glass-477110-u7
 
-      - name: Verify gcloud
-        run: |
-          gcloud --version
-          gcloud auth list
-          gcloud config list
-
-      - name: Set up Go
-        uses: actions/setup-go@v5
-        with:
-          go-version-file: 'go.mod'   # uses the Go version in go.mod
-
-      - name: Build Notely binary
-        run: |
-          chmod +x ./buildprod || true
-          ./buildprod || go build -o notely .
-          ls -lh notely
-
-      - name: Build and Push Docker image
+      # 3) Build & push using Cloud Build (uses your Dockerfile)
+      - name: Cloud Build submit (build + push)
         run: |
           gcloud builds submit \
             --tag us-central1-docker.pkg.dev/disco-glass-477110-u7/notely-ar-repo/notely:latest .
