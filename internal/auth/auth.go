@@ -14,15 +14,11 @@ func GetAPIKey(headers http.Header) (string, error) {
   return "", ErrNoAuthHeaderIncluded
  }
 
- const prefix = "ApiKey "
- if !strings.HasPrefix(authHeader, prefix) {
+ parts := strings.Fields(authHeader)
+ if len(parts) != 2 || parts[0] != "ApiKey" {
   return "", errors.New("malformed authorization header")
  }
 
- key := strings.TrimSpace(strings.TrimPrefix(authHeader, prefix))
- if key == "" {
-  return "", errors.New("malformed authorization header")
- }
-
+ key := strings.TrimSpace(parts[1])
  return key, nil
 }
