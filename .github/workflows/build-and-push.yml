@@ -1,38 +1,35 @@
-name: Build & Push Notely image
+steps:
+  - name: Checkout code
+    uses: actions/checkout@v4
 
-on:
-  push:
-    branches: [ main ]
-  workflow_dispatch:
+  - name: Authenticate to Google Cloud
+    uses: google-github-actions/auth@v2
+    with:
+      credentials_json: ${{ secrets.GCP_CREDENTIALS }}
 
-jobs:
-  build-and-push:
-    runs-on: ubuntu-latest
-    permissions:
-      contents: read
-      id-token: write
+  - name: Setup gcloud
+    uses: google-github-actions/setup-gcloud@v2
+    with:
+      project_id: disco-glass-477110-u7
 
-    steps:
-      - name: Checkout code
-        uses: actions/checkout@v4
+  - name: Verify gcloud
+    run: |
+      gcloud --version
+      gcloud auth list
+      gcloud config list
 
-      - name: Authenticate to Google Cloud
-        uses: google-github-actions/auth@v2
-        with:
-          credentials_json: ${{ secrets.GCP_CREDENTIALS }}
+  - name: Set up Go
+    uses: actions/setup-go@v5
+    with:
+      go-version-file: 'go.mod'   # Uses Go version declared in go.mod
 
-      - name: Setup gcloud
-        uses: google-github-actions/setup-gcloud@v2
-        with:
-          project_id: disco-glass-477110-u7
+  - name: Build Notely binary
+    run: |
+      chmod +x ./buildprod || true
+      ./buildprod || go build -o notely .
+      ls -lh notely
 
-      - name: Verify gcloud
-        run: |
-          gcloud --version
-          gcloud auth list
-          gcloud config list
-
-      - name: Build and Push Docker image
-        run: |
-          gcloud builds submit \
-            --tag us-central1-docker.pkg.dev/disco-glass-477110-u7/notely-ar-repo/notely:latest .
+  - name: Build and Push Docker image
+    run: |
+      gcloud builds submit \
+        --tag us-central1-docker.pkg.dev/disco-glass-477110-u7/notely-ar-repo/notely:latest .
