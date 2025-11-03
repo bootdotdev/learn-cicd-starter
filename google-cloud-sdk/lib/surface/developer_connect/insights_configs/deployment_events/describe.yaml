@@ -1,0 +1,31 @@
+- release_tracks: [ALPHA]
+
+  help_text:
+    brief: Describe a deploymentEvent
+    description: Describe a deploymentEvent
+    examples: |-
+      To describe a deploymentEvent, run:
+
+          $ {command} projects/PROJECT/locations/LOCATION/insightsConfigs/INSIGHTS_CONFIG/deploymentEvents/DEPLOYMENT_EVENT
+  arguments:
+    params:
+    - help_text: |-
+        The deployment event to describe.
+        Format:
+        projects/{project}/locations/{location}/insightsConfigs/{insights_config}/deploymentEvents/{deployment_event}
+      is_positional: true
+      is_primary_resource: true
+      resource_spec: !REF googlecloudsdk.command_lib.developer_connect.v1_resources:projects_locations_insights_configs_deployment_events
+      required: true
+    - arg_name: show-previous-diff
+      help_text: |-
+        If true, shows the diff between this deployment and the previous one.
+      action: store_true
+  request:
+    api_version: v1
+    collection: developerconnect.projects.locations.insightsConfigs.deploymentEvents
+  response:
+    id_field: name
+    modify_response_hooks:
+    - googlecloudsdk.command_lib.developer_connect.insights_configs.deploymentevent_describe:AddArtifactDetailsToResponse
+    - googlecloudsdk.command_lib.developer_connect.insights_configs.deploymentevent_describe:AddPreviousDiffToResponse

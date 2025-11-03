@@ -1,0 +1,22 @@
+release_tracks: [ALPHA, BETA]
+
+help_text:
+  brief: |
+    Delete a Managed Service for Apache Kafka schema registry.
+  description: |
+    Delete a Managed Service for Apache Kafka schema registry.
+
+  examples: |
+    To delete a schema registry named myschemaregistry located in us-central1,
+    run the following:
+
+      $ {command} myschemaregistry \
+          --location=us-central1
+
+request:
+  collection: managedkafka.projects.locations.schemaRegistries
+
+arguments:
+  resource:
+    help_text: Identifies the schema registry for deletion.
+    spec: !REF googlecloudsdk.command_lib.managed_kafka.resources:schema_registry

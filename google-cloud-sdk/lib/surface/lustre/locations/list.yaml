@@ -1,0 +1,25 @@
+- release_tracks: [ALPHA, GA]
+  hidden: true
+  help_text:
+    brief: List locations.
+    description: |
+      List locations.
+    examples: |-
+      To list all locations, run:
+
+        $ {command}
+  arguments:
+    params:
+    - help_text: |-
+        The name of the location's parent resource.
+      is_positional: false
+      resource_spec: !REF googlecloudsdk.command_lib.lustre.custom_resources:project
+      required: true
+  request:
+    ALPHA:
+      api_version: v1alpha
+    GA:
+      api_version: v1
+    collection: lustre.projects.locations
+  response:
+    id_field: name

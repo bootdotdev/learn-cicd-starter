@@ -1,0 +1,26 @@
+- help_text:
+    brief: |
+      Show metadata for a Memorystore for Valkey location.
+    description: |
+      Display all metadata associated with a Memorystore for Valkey location given a valid
+      location name.
+
+      This command can fail for the following reasons:
+        * The location specified does not exist.
+        * The active account does not have permission to access the given
+          location.
+    examples: |
+      To display the metadata for the location `us-central1`, run:
+
+        $ {command} us-central1
+
+  arguments:
+    resource:
+      spec: !REF googlecloudsdk.command_lib.memorystore.resources:project_location
+      help_text: |
+        Arguments and flags that specify the Memorystore for Valkey location you
+        want to describe.
+
+  request:
+    api_version: v1
+    collection: memorystore.projects.locations

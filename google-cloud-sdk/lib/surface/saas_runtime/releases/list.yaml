@@ -1,0 +1,19 @@
+- release_tracks: [ALPHA, BETA]
+  help_text:
+    brief: List releases
+    description: List releases
+    examples: |-
+      To list releases in us-central1, run:
+
+      $ {command}
+  arguments:
+    resource:
+      help_text: |-
+        Parent value for ListReleasesRequest
+      spec: !REF googlecloudsdk.command_lib.saas_runtime.resources:project_location_with_default
+  request:
+    api_version: v1beta1
+    collection:
+    - saasservicemgmt.projects.locations.releases
+  response:
+    id_field: name

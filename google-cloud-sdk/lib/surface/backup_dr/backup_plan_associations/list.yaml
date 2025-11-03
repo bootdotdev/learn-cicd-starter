@@ -1,0 +1,33 @@
+- release_tracks: [ALPHA, GA]
+  help_text:
+    brief: List Backup and DR backup plan associations
+    description: List backup plan associations in the project for a specified location.
+    examples: |
+      To list backup plan associations for all locations, run:
+
+      $ {command}
+
+      To list backup plan associations in a location ``my-location'', run:
+
+      $ {command} --location=my-location
+
+  request:
+    collection: backupdr.projects.locations.backupPlanAssociations
+
+  response:
+    id_field: name
+
+  arguments:
+    resource:
+      help_text: Location for which backup plan associations should be listed.
+      spec: !REF googlecloudsdk.command_lib.backupdr.resources:locationDefaultGlobal
+
+  output:
+    format: |
+      table(
+        name.basename():label=NAME:sort=2,
+        resource,
+        resourceType,
+        backupPlan,
+        state:label=STATUS
+      )

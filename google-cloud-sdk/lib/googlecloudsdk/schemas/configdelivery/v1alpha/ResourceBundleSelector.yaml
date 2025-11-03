@@ -1,0 +1,17 @@
+$schema: "http://json-schema.org/draft-06/schema#"
+
+title: configdelivery v1alpha ResourceBundleSelector export schema
+description: A gcloud export/import command YAML validation schema.
+type: object
+additionalProperties: false
+properties:
+  cloudBuildRepository:
+    description: |-
+      cloud_build_repository points to a gen 2 cloud build repository to use as
+      the source of truth for KRM configs.
+    $ref: CloudBuildRepository.yaml
+  resourceBundle:
+    description: |-
+      resource_bundle refers to a resource bundle that will contain
+      configuration.
+    $ref: ResourceBundleTag.yaml

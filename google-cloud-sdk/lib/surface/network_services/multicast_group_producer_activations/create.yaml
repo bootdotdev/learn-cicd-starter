@@ -1,0 +1,53 @@
+release_tracks: [GA, BETA, ALPHA]
+help_text:
+  brief: |
+    Create a multicast group producer activation.
+  description: |
+    Create a multicast group producer activation in the specified location of the current project.
+  ALPHA:
+    examples: |
+      Create a multicast group producer activation with the name 'my-multicast-group-producer-activation',
+      multicast-producer-association 'path-to-mpa', multicast-group 'path-to-mg' and location 'zone'.
+
+      $ {command} my-multicast-group-producer-activation --multicast-producer-association=path-to-mpa --multicast-group=path-to-mg --location=zone
+  BETA:
+    examples: |
+      Create a multicast group producer activation with the name 'my-multicast-group-producer-activation',
+      multicast-producer-association 'path-to-mpa',
+      multicast-group-range-activation 'path-to-mg-range-activation',
+      and location 'zone'.
+
+      $ {command} my-multicast-group-producer-activation --multicast-producer-association=path-to-mpa --multicast-group-range-activation=path-to-mg-range-activation --location=zone
+arguments:
+  resource:
+    spec: !REF googlecloudsdk.command_lib.network_services.resources:multicastGroupProducerActivation
+    help_text: |
+      Name of the multicast group producer activation to be created.
+  params:
+  - arg_name:  multicast-producer-association
+    api_field: multicastGroupProducerActivation.multicastProducerAssociation
+    help_text: The multicast producer association to be used.
+    required: true
+  - arg_name:  multicast-group
+    api_field: multicastGroupProducerActivation.multicastGroup
+    release_tracks: [ALPHA]
+    help_text: The multicast group to be used.
+  - arg_name:  multicast-group-range-activation
+    api_field: multicastGroupProducerActivation.multicastGroupRangeActivation
+    help_text: The multicast group range activation to be used.
+  - arg_name: description
+    api_field: multicastGroupProducerActivation.description
+    help_text: The description for the multicast group producer activation.
+  labels:
+    api_field: multicastGroupProducerActivation.labels
+async:
+  collection: networkservices.projects.locations.operations
+request: &request
+  GA:
+    api_version: v1
+  ALPHA:
+    api_version: v1alpha1
+  BETA:
+    api_version: v1beta1
+  collection: networkservices.projects.locations.multicastGroupProducerActivations
+  method: create

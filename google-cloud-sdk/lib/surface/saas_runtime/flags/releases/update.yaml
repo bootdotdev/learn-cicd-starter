@@ -1,0 +1,53 @@
+- release_tracks:
+  - ALPHA
+  hidden: true
+  help_text:
+    brief: Update Flag Release
+    description: Update a Flag Release
+    examples: |-
+      To update a Flag Release, run:
+
+          $ {command}
+  arguments:
+    params:
+    - help_text: |-
+        ID of the Flag Release:
+
+          "projects/{project}/locations/{location}/flagReleases/{flag_release_id}"
+
+        This follows the standard Google Cloud naming scheme (URI).
+      is_positional: true
+      request_id_field: flagReleaseId
+      resource_spec: !REF googlecloudsdk.command_lib.saas_runtime.resources:flag_release
+      required: true
+
+    - arg_name: labels
+      api_field: flagRelease.labels
+      clearable: true
+      required: false
+      repeated: true
+      help_text: |-
+        The labels on the resource, which can be used for categorization.
+      spec:
+      - api_field: key
+      - api_field: value
+
+    - arg_name: annotations
+      api_field: flagRelease.annotations
+      clearable: true
+      required: false
+      repeated: true
+      help_text: |-
+        Unstructured key-value map stored with a resource that may be set by
+        external tools to store and retrieve arbitrary metadata. Annotations
+        are not queryable and should be preserved when modifying objects.
+      spec:
+      - api_field: key
+      - api_field: value
+
+  request:
+    api_version: v1beta1
+    collection:
+    - saasservicemgmt.projects.locations.flagReleases
+  update:
+    read_modify_update: true

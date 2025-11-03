@@ -1,0 +1,35 @@
+release_tracks: [BETA]
+
+help_text:
+  brief: |
+    List `LbEdgeExtension` resources.
+  description: |
+    List all `LbEdgeExtension` resources in the specified location of the
+    current project.
+  examples: |
+      To list all global `LbEdgeExtension` resources in the current project, run:
+
+        $ {command} --location=global
+
+request: &request
+  BETA:
+    api_version: v1beta1
+
+  collection: networkservices.projects.locations.lbEdgeExtensions
+
+arguments:
+  resource:
+    spec: !REF googlecloudsdk.command_lib.service_extensions.resources:location
+    help_text: |
+      The parent location.
+
+response:
+  id_field: name
+
+output:
+  format: |
+      table(
+        name.basename():label=NAME,
+        loadBalancingScheme,
+        updateTime.date(unit=1000, tz_default=UTC):label=LAST_MODIFIED
+      )

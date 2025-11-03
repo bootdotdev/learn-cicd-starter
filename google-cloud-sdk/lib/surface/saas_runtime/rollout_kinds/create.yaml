@@ -1,0 +1,101 @@
+- release_tracks: [ALPHA, BETA]
+  help_text:
+    brief: Create a Rollout Kind
+    description: Create a Rollout Kind
+    examples: |-
+      To create the Rollout Kind, run:
+
+      $ {command}
+  arguments:
+    params:
+    - group:
+        mutex: true
+        help_text: |-
+          Arguments for the  error budget.
+        params:
+        - group:
+            api_field: rolloutKind.errorBudget
+            required: false
+            help_text: |-
+              The configuration for error budget. If the number of failed units exceeds
+              max(allowed_count, allowed_ratio * total_units), the rollout will be paused.
+            params:
+            - arg_name: error-budget-allowed-count
+              api_field: rolloutKind.errorBudget.allowedCount
+              required: false
+              repeated: false
+              type: int
+              help_text: |-
+                The maximum number of failed units allowed in a location without pausing
+                the rollout.
+            - arg_name: error-budget-allowed-percentage
+              api_field: rolloutKind.errorBudget.allowedPercentage
+              required: false
+              repeated: false
+              type: int
+              help_text: |-
+                The maximum percentage of units allowed to fail (0, 100] within a location
+                without pausing the rollout.
+    - help_text: |-
+        Identifier. The resource name (full URI of the resource) following the standard naming
+        scheme:
+
+          "projects/{project}/locations/{location}/rolloutKinds/{rollout_kind_id}"
+      is_positional: true
+      is_primary_resource: true
+      request_id_field: rolloutKindId
+      resource_spec: !REF googlecloudsdk.command_lib.saas_runtime.resources:rollout_kind
+      required: true
+    - arg_name: unit-kind
+      required: true
+      repeated: false
+      resource_spec: !REF googlecloudsdk.command_lib.saas_runtime.resources:unit_kind
+      resource_method_params:
+        rolloutKind.unitKind: '{__relative_name__}'
+      help_text: |-
+        UnitKind that this rollout kind corresponds to. Rollouts stemming from this
+        rollout kind will target the units of this unit kind. In other words, this
+        defines the population of target units to be upgraded by rollouts.
+    - arg_name: rollout-orchestration-strategy
+      api_field: rolloutKind.rolloutOrchestrationStrategy
+      required: false
+      repeated: false
+      help_text: |-
+        The strategy to use for executing rollouts.
+    - arg_name: unit-filter
+      api_field: rolloutKind.unitFilter
+      required: false
+      repeated: false
+      help_text: |-
+        CEL(https://github.com/google/cel-spec) formatted filter string against Unit. The filter
+        will be applied to determine the eligible unit population. This filter can only reduce, but
+        not expand the scope of the rollout.
+    - arg_name: update-unit-kind-strategy
+      api_field: rolloutKind.updateUnitKindStrategy
+      required: false
+      help_text: |-
+        The config for updating the unit kind. By default, the unit kind will be
+        updated on the rollout start.
+      choices:
+      - arg_value: on-start
+        enum_value: UPDATE_UNIT_KIND_STRATEGY_ON_START
+        help_text: |-
+          Update the unit kind strategy on the rollout start.
+      - arg_value: never
+        enum_value: UPDATE_UNIT_KIND_STRATEGY_NEVER
+        help_text: |-
+          Never update the unit kind.
+    - arg_name: labels
+      api_field: rolloutKind.labels
+      required: false
+      repeated: true
+      help_text: |-
+        The labels on the resource, which can be used for categorization.
+        similar to Kubernetes resource labels.
+      spec:
+      - api_field: key
+      - api_field: value
+  request:
+    api_version: v1beta1
+    collection:
+    - saasservicemgmt.projects.locations.rolloutKinds

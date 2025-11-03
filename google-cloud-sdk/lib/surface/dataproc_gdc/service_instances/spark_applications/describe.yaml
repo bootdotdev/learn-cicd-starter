@@ -1,0 +1,18 @@
+- release_tracks: [ALPHA, GA]
+  help_text:
+    brief: Describe a Dataproc GDC spark application
+    description: Describe a Dataproc GDC spark application
+    examples: |
+      To describe a Dataproc GDC spark application named 'my-application' in service instance 'my-instance' in project `test-project` in `us-central1`, run:
+
+          $ {command} my-application --service-instance=my-instance --project=test-project --location=us-central1
+  request:
+    ALPHA:
+      api_version: v1alpha1
+    collection: dataprocgdc.projects.locations.serviceInstances.sparkApplications
+    method: get
+  arguments:
+    resource:
+      help_text: |
+        The Dataproc GDC spark application to describe.
+      spec: !REF googlecloudsdk.command_lib.dataproc_gdc.resources:spark_application

@@ -1,0 +1,17 @@
+release_tracks: [ALPHA]
+help_text:
+  brief: List all BigQuery Engine for Apache Flink deployments in a given location.
+  description: List all BigQuery Engine for Apache Flink deployments in a given location.
+  examples: |
+    To list all BigQuery Engine for Apache Flink deployments in a given location, run:
+
+        $ {command} us-central1
+
+request:
+  collection: managedflink.projects.locations.deployments
+
+arguments:
+  resource:
+    help_text: Identifies the Cloud location this command will be executed on.
+    spec: !REF googlecloudsdk.command_lib.managed_flink.resources:location
+    is_positional: true

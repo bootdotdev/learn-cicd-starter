@@ -30,5 +30,5 @@ jobs:
           GOOSE_DRIVER=turso GOOSE_DBSTRING="${{ secrets.DATABASE_URL }}" goose -dir migrations up
 
       - name: Deploy app
-        run: echo "✅ Deployment step - replace with your real deploy command"
+        run: echo 
 

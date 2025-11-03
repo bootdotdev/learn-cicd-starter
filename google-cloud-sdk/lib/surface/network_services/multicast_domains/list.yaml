@@ -1,0 +1,29 @@
+release_tracks: [GA, BETA, ALPHA]
+help_text:
+  brief: |
+    List multicast domains.
+  description: |
+    List all multicast domains in the specified location of the current project.
+  examples: |
+    To list multicast domains in the current project, run:
+
+      $ {command} --location=global
+request: &request
+  GA:
+    api_version: v1
+  ALPHA:
+    api_version: v1alpha1
+  BETA:
+    api_version: v1beta1
+  collection: networkservices.projects.locations.multicastDomains
+arguments:
+  resource:
+    spec: !REF googlecloudsdk.command_lib.network_services.resources:location
+    help_text: The location of the multicast domains to display.
+response:
+  id_field: name
+output:
+  format: |
+     table(
+        name.basename():label=NAME, create_time, connection, adminNetwork, nccHub, multicastDomainGroup
+      )

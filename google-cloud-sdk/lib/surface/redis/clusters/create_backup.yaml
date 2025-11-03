@@ -1,0 +1,47 @@
+- release_tracks: [ALPHA, BETA, GA]
+
+  help_text:
+    brief: |
+      Create a backup of a Redis cluster.
+    description: |
+      Create a backup of a Redis cluster. The backup can be used to seed a new cluster or
+      exported to a Google Cloud Storage bucket.
+
+      The created backup will be added into the backup collection associated with the cluster.
+      Describe the cluster to get the backup collection name.
+    example: |
+      To create a new backup, run:
+
+      $ {command} my-cluster --backup-id=my-backup --ttl=7d --region=us-central1
+
+  arguments:
+    resource:
+      spec: !REF googlecloudsdk.command_lib.redis.resources:cluster
+      help_text: |
+        Arguments and flags that specify the Memorystore Redis cluster to create a backup for.
+    params:
+    - arg_name: backup-id
+      api_field: backupClusterRequest.backupId
+      help_text: |
+        The ID of the backup.
+    - arg_name: ttl
+      api_field: backupClusterRequest.ttl
+      type: googlecloudsdk.core.util.times:ParseDuration
+      processor: googlecloudsdk.core.util.times:FormatDurationForJson
+      help_text: |
+        The time to live for the backup. The backup will be deleted automatically after the TTL
+        is reached. For example, "10d" for 10 days. The minimum value is 1 day. If not specified, the
+        default value is 100 years.
+
+  async:
+    collection: redis.projects.locations.operations
+
+  request:
+    ALPHA:
+      api_version: v1alpha1
+    BETA:
+      api_version: v1beta1
+    GA:
+      api_version: v1
+    collection: redis.projects.locations.clusters
+    method: backup

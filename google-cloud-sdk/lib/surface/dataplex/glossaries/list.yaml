@@ -1,0 +1,22 @@
+- release_tracks: [ALPHA, GA]
+  help_text:
+    brief: List Glossaries.
+    description: List Glossaries.
+
+    examples: |
+      To List Glossaries in project `test-dataplex` at location `us-central1`
+
+          $ {command} --location=us-central1 --project=test-dataplex
+
+  request:
+    collection: dataplex.projects.locations.glossaries
+    ALPHA:
+      api_version: v1
+
+  response:
+    id_field: name
+
+  arguments:
+    resource:
+      help_text: Location in which to list Glossaries.
+      spec: !REF googlecloudsdk.command_lib.dataplex.resources:location

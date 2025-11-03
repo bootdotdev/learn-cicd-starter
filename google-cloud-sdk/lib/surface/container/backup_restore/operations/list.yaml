@@ -1,0 +1,42 @@
+- release_tracks: [ALPHA, BETA]
+
+  help_text:
+    brief: List operations.
+    description: |
+      List Backup for GKE operations.
+
+      ## EXAMPLES
+
+      To list all operations in project ``my-project'' in location ``us-central1'', run:
+
+        $ {command} --project=my-project --location=us-central1
+
+      To list all operations in project ``my-project'' across all locations, run:
+
+        $ {command} --project=my-project
+
+  request:
+    collection: gkebackup.projects.locations.operations
+    api_version: v1
+
+  arguments:
+    resource:
+      help_text: |
+        Name of the location from which to list operations (provided via options or through
+        properties):
+        `--project=<project> --location=<location>`.
+      spec: !REF googlecloudsdk.command_lib.container.backup_restore.resources:default_location
+
+  response:
+    id_field: name
+
+  output:
+    format: |
+      table(
+        name.scope("operations"):label=ID,
+            name.scope("locations").segment(0):label=LOCATION,
+            metadata.target:label=TARGET,
+            metadata.verb:label=TYPE,
+            done:label=DONE,
+            error.code:label=ERROR_CODE
+      )

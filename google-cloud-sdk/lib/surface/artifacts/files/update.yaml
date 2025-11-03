@@ -1,0 +1,40 @@
+- release_tracks: [GA]
+  help_text:
+    brief: |
+      Update annotations on an Artifact Registry file.
+    description: |
+      Update annotations on an Artifact Registry file.
+
+    examples: |
+      To update annotations on a file named `my-file.txt` when the project ID, repository and location defaults are set, run the following command:
+
+      CAUTION: This command will overwrite any existing annotations on the file.
+
+          $ {command} my-file.txt --annotations=key1=value1,key2=value2
+
+      To clear all annotations on the file run the following command:
+
+          $ {command} my-file.txt --annotations={}
+
+  arguments:
+    resource:
+      spec: !REF googlecloudsdk.command_lib.artifacts.resources:file
+      help_text: |
+        The Artifact Registry file to update.
+    params:
+    - arg_name: annotations
+      metavar: KEY=VALUE
+      api_field: googleDevtoolsArtifactregistryV1File.annotations
+      spec:
+      - api_field: key
+      - api_field: value
+      help_text: |
+        List of annotations in the format of KEY=VALUE pairs to add, update, or remove.
+        Duplicate keys will be overwritten. For more details on annotations,
+        see https://google.aip.dev/148#annotations.
+
+  request: &request
+    api_version: v1
+    collection: artifactregistry.projects.locations.repositories.files
+    modify_request_hooks:
+    - googlecloudsdk.command_lib.artifacts.file_util:EscapeFileNameHook

@@ -1,0 +1,35 @@
+- release_tracks: [ALPHA, BETA]
+  help_text:
+    brief: Update tenants
+    description: Update a tenant
+    examples: |-
+      To update the tenant, run:
+
+      $ {command}
+  arguments:
+    params:
+    - help_text: |-
+        Identifier. The resource name (full URI of the resource) following the standard naming
+        scheme:
+
+          "projects/{project}/locations/{location}/tenants/{tenant}"
+      is_positional: true
+      resource_spec: !REF googlecloudsdk.command_lib.saas_runtime.resources:tenant
+      required: true
+    - arg_name: labels
+      api_field: tenant.labels
+      required: false
+      repeated: true
+      help_text: |-
+        The labels on the resource, which can be used for categorization.
+        similar to Kubernetes resource labels.
+      clearable: true
+      spec:
+      - api_field: key
+      - api_field: value
+  request:
+    api_version: v1beta1
+    collection:
+    - saasservicemgmt.projects.locations.tenants
+  update:
+    read_modify_update: true

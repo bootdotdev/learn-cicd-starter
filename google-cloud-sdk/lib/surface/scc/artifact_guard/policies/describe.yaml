@@ -1,0 +1,24 @@
+- release_tracks: [ALPHA]
+  hidden: true
+  help_text:
+    brief: |
+      Describe an artifact guard policy.
+    description: |
+      Returns the details of an artifact guard policy for a given policy name.
+    examples: |
+      To describe a policy named "organizations/123/locations/global/policies/myPolicy",
+        $ {command} organizations/123/locations/global/policies/myPolicy
+        OR
+        $ {command} myPolicy --location=global --organization=123
+
+  request:
+    collection: artifactscanguard.organizations.locations.policies
+    api_version: v1alpha
+    method: get
+
+  arguments:
+    resource:
+      spec: !REF googlecloudsdk.command_lib.scc.resources:policy
+      help_text: |
+        The full name of the policy to create. For example:
+        organizations/123/locations/global/policies/myPolicy

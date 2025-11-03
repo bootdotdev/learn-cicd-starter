@@ -1,0 +1,58 @@
+- release_tracks: [ALPHA, BETA, GA]
+
+  command_type: LIST
+
+  help_text:
+    brief: Search for and list all Privileged Access Manager (PAM) grants you have created, have approved, or can approve.
+    description: Search for and list all Privileged Access Manager (PAM) grants you have created, have approved, or can approve.
+    examples: |
+      The following command searches for and lists all grants you have created which are associated
+      with an entitlement with the full name ``ENTITLEMENT_NAME'':
+
+      $ {command} --entitlement=ENTITLEMENT_NAME --caller-relationship=had-created
+
+      The following command searches for and lists all grants you have approved or denied which are
+      associated with an entitlement with the full name ``ENTITLEMENT_NAME'':
+
+      $ {command} --entitlement=ENTITLEMENT_NAME --caller-relationship=had-approved
+
+      The following command searches for and lists all grants you can approve which are associated
+      with an entitlement with the full name ``ENTITLEMENT_NAME'':
+
+      $ {command} --entitlement=ENTITLEMENT_NAME --caller-relationship=can-approve
+
+  request:
+    ALPHA:
+      api_version: v1alpha
+    BETA:
+      api_version: v1beta
+    GA:
+      api_version: v1
+    method: search
+    collection:
+    - privilegedaccessmanager.projects.locations.entitlements.grants
+    - privilegedaccessmanager.folders.locations.entitlements.grants
+    - privilegedaccessmanager.organizations.locations.entitlements.grants
+
+  arguments:
+    params:
+    - arg_name: entitlement
+      resource_spec: !REF googlecloudsdk.command_lib.pam.resources:entitlement
+      is_parent_resource: true
+      is_primary_resource: true
+      is_positional: false
+      required: true
+      help_text: |
+        Entitlement the grants are associated with.
+    - api_field: callerRelationship
+      arg_name: caller-relationship
+      required: true
+      choices:
+      - arg_value: had-created
+        enum_value: HAD_CREATED
+      - arg_value: had-approved
+        enum_value: HAD_APPROVED
+      - arg_value: can-approve
+        enum_value: CAN_APPROVE
+      help_text: |
+        Whether to return grants you have created, have approved, or can approve.

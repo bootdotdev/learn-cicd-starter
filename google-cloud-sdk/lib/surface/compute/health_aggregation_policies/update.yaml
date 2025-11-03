@@ -1,0 +1,74 @@
+- release_tracks: [ALPHA, BETA]
+  help_text:
+    brief: "Update a health aggregation policy."
+    description: "Update a health aggregation policy."
+    examples: |
+      The following command updates a health aggregation policy:
+
+        $ {command} <HEALTH_AGGREGATION_POLICY_NAME> \
+          --region=<REGION> \
+          --healthy-percent-threshold 60 \
+          --min-healthy-threshold 2 \
+
+  request:
+    ALPHA:
+      api_version: alpha
+    BETA:
+      api_version: beta
+    collection: compute.regionHealthAggregationPolicies
+    method: patch
+
+  async:
+    collection: compute.regionOperations
+    response_name_field: selfLink
+    state:
+      field: status
+      success_values: ['DONE']
+
+  arguments:
+    resource:
+      help_text: The health aggregation policy you want to update.
+      spec: !REF googlecloudsdk.command_lib.compute.resources:health_aggregation_policy
+
+    params:
+    - group:
+        mutex: false
+        required: true
+        params:
+        - arg_name: description
+          api_field: healthAggregationPolicyResource.description
+          help_text: |
+            A textual description of the health aggregation policy.
+
+        - arg_name: healthy-percent-threshold
+          api_field: healthAggregationPolicyResource.healthyPercentThreshold
+          help_text: |
+            Can only be set if the policyType field is
+            BACKEND_SERVICE_POLICY. Specifies the threshold (as a
+            percentage) of healthy endpoints required in order to consider the
+            aggregated health result HEALTHY. Defaults to 60. Must be in
+            range [0, 100]. Not applicable if the policyType field is
+            DNS_PUBLIC_IP_POLICY. Can be mutated. This field is optional,
+            and will be set to the default if unspecified. Note that both this
+            threshold and minHealthyThreshold must be satisfied in order
+            for HEALTHY to be the aggregated result. "Endpoints" refers to network
+            endpoints within a Network Endpoint Group or instances within an Instance
+            Group.
+          type: int
+
+        - arg_name: min-healthy-threshold
+          api_field: healthAggregationPolicyResource.minHealthyThreshold
+          help_text: |
+            Can only be set if the policyType field is
+            BACKEND_SERVICE_POLICY. Specifies the minimum number of
+            healthy endpoints required in order to consider the aggregated health
+            result HEALTHY. Defaults to 1. Must be positive. Not
+            applicable if the policyType field is DNS_PUBLIC_IP_POLICY. Can be mutated. This field is
+            optional, and will be set to the default if unspecified. Note that both this
+            threshold and healthyPercentThreshold must be satisfied in
+            order for HEALTHY to be the aggregated result. "Endpoints" refers to
+            network endpoints within a Network Endpoint Group or instances within an
+            Instance Group.
+          type: int
+  update:
+    read_modify_update: true

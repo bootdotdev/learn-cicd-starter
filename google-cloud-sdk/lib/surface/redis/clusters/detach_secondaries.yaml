@@ -1,0 +1,45 @@
+- release_tracks: [ALPHA, BETA, GA]
+
+  help_text:
+    brief: |
+      Detach one or more secondary clusters from the primary cluster.
+    description: |
+      Detach one or more secondary clusters from the primary cluster.
+
+      After detachment, the secondary clusters become independent clusters, i.e. they stop replicating
+      from the primary cluster and will now accept both read and write requests.
+
+      This command is only supported on primary clusters.
+
+    examples: |
+      To detach the secondary clusters `my-secondary-cluster1` and `my-secondary-cluster2` from the primary cluster `my-primary-cluster`, run:
+
+      $ {command} my-primary-cluster --region=us-central1 --clusters-to-detach=projects/my-project/locations/us-east1/clusters/my-secondary-cluster1,projects/my-project/locations/asia-east1/clusters/my-secondary-cluster2
+
+  arguments:
+    resource:
+      spec: !REF googlecloudsdk.command_lib.redis.resources:cluster
+      help_text: |
+        Arguments and flags that specify the Memorystore Redis cluster you want to update.
+    params:
+    - arg_name: clusters-to-detach
+      required: true
+      help_text: |
+        Comma separated list of secondary clusters to detach from the primary cluster.
+
+        Each element in the list should be in the format: `projects/PROJECT_ID/locations/REGION/clusters/CLUSTER_ID`.
+
+  async:
+    collection: redis.projects.locations.operations
+
+  request:
+    ALPHA:
+      api_version: v1alpha1
+    BETA:
+      api_version: v1beta1
+    GA:
+      api_version: v1
+    collection: redis.projects.locations.clusters
+    method: patch
+    modify_request_hooks:
+    - googlecloudsdk.command_lib.redis.clusters_ccr_util:DetachSecondaries

@@ -1,0 +1,27 @@
+- release_tracks: [ALPHA, GA]
+  help_text:
+    brief: Remove an IP override from a key.
+    description: Remove an IP override from a key.
+    examples: $ {command} test-key --ip=1.2.3.4 --override=allow
+
+  request:
+    collection: recaptchaenterprise.projects.keys
+    method: removeIpOverride
+
+  arguments:
+    resource:
+      spec: !REF googlecloudsdk.command_lib.recaptcha.resources:keys
+      help_text: The reCAPTCHA key from which to remove the IP override.
+
+    params:
+    - arg_name: ip
+      required: true
+      api_field: googleCloudRecaptchaenterpriseV1RemoveIpOverrideRequest.ipOverrideData.ip
+      help_text: IP address to override for the key.
+    - arg_name: override
+      required: true
+      api_field: googleCloudRecaptchaenterpriseV1RemoveIpOverrideRequest.ipOverrideData.overrideType
+      help_text: If set to allow, the IP address/CIDR range will be removed from the allowlisted IPs.
+
+  output:
+    format: none

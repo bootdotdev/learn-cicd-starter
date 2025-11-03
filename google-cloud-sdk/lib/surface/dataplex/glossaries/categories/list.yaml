@@ -1,0 +1,24 @@
+- release_tracks: [ALPHA, GA]
+  help_text:
+    brief: |
+      List glossary categories.
+    description: |
+      List glossary categories.
+
+    examples: |
+      To list glossary categories in glossary `test-glossary` in location `us-central1`  in project `test-project`, run :
+
+       $ {command} --glossary=test-glossary --location=us-central1 --project=test-project
+
+  request:
+    ALPHA:
+      api_version: v1
+    collection: dataplex.projects.locations.glossaries.categories
+  arguments:
+    resource:
+      help_text: |
+        Arguments and flags that define the glossary in which to list glossary categories.
+      spec: !REF googlecloudsdk.command_lib.dataplex.resources:glossary
+
+  response:
+    id_field: name

@@ -1,0 +1,21 @@
+- release_tracks:
+  - ALPHA
+  hidden: true
+  help_text:
+    brief: Describe Flag Revision
+    description: Describe a Flag Release
+    examples: |-
+      To describe a Flag Release, run:
+
+          $ {command}
+  arguments:
+    params:
+    - help_text: |-
+        Flag Release ID of the Flag Release to describe.
+      is_positional: true
+      resource_spec: !REF googlecloudsdk.command_lib.saas_runtime.resources:flag_release
+      required: true
+  request:
+    api_version: v1beta1
+    collection:
+    - saasservicemgmt.projects.locations.flagReleases
