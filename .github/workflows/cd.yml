@@ -7,6 +7,15 @@ on:
 jobs:
   Deploy:
     runs-on: ubuntu-latest
+
+    env:
+      PROJECT_ID: disco-glass-477110-u7         # <- your GCP project
+      REGION: us-central1                        # <- assignment requires this region
+      REPO_NAME: notely-ar-repo                  # <- your Artifact Registry repo
+      IMAGE_NAME: notely
+      IMAGE_TAG: latest
+      IMAGE_URI: us-central1-docker.pkg.dev/disco-glass-477110-u7/notely-ar-repo/notely:latest
+
     steps:
       - name: Checkout
         uses: actions/checkout@v4
@@ -22,24 +31,35 @@ jobs:
       - name: Build (prod)
         run: GOFLAGS=-mod=mod scripts/buildprod.sh
 
-      # --- Authenticate to Google Cloud using your existing secret
+      # ---------- AUTH & GCLOUD ----------
       - name: Auth to Google Cloud
         uses: google-github-actions/auth@v2
         with:
+          # You already have this secret set
           credentials_json: ${{ secrets.GCP_CREDENTIALS }}
 
-      # --- Install and configure gcloud CLI
       - name: Set up gcloud
         uses: google-github-actions/setup-gcloud@v2
         with:
-          project_id: disco-glass-477110-u7
+          project_id: ${{ env.PROJECT_ID }}
 
-      # --- Deploy to Cloud Run
+      - name: Debug gcloud context
+        run: |
+          set -x
+          gcloud --version
+          gcloud auth list
+          gcloud config get-value project
+          echo "IMAGE_URI=${IMAGE_URI}"
+          echo "REGION=${REGION}"
+
+      # ---------- DEPLOY ----------
       - name: Deploy to Cloud Run
         run: |
+          set -euo pipefail
           gcloud run deploy notely \
-            --image us-central1-docker.pkg.dev/disco-glass-477110-u7/notely-ar-repo/notely:latest \
-            --region us-central1 \
+            --image "${IMAGE_URI}" \
+            --region "${REGION}" \
             --platform managed \
             --allow-unauthenticated \
-            --quiet
+            --quiet \
+            --verbosity=info
