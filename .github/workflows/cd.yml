@@ -9,9 +9,9 @@ jobs:
     runs-on: ubuntu-latest
 
     env:
-      PROJECT_ID: disco-glass-477110-u7         # <- your GCP project
-      REGION: us-central1                        # <- assignment requires this region
-      REPO_NAME: notely-ar-repo                  # <- your Artifact Registry repo
+      PROJECT_ID: disco-glass-477110-u7         
+      REGION: us-central1                        
+      REPO_NAME: notely-ar-repo                  
       IMAGE_NAME: notely
       IMAGE_TAG: latest
       IMAGE_URI: us-central1-docker.pkg.dev/disco-glass-477110-u7/notely-ar-repo/notely:latest
@@ -31,7 +31,6 @@ jobs:
       - name: Build (prod)
         run: GOFLAGS=-mod=mod scripts/buildprod.sh
 
-      # ---------- AUTH & GCLOUD ----------
       - name: Auth to Google Cloud
         uses: google-github-actions/auth@v2
         with:
@@ -52,7 +51,6 @@ jobs:
           echo "IMAGE_URI=${IMAGE_URI}"
           echo "REGION=${REGION}"
 
-      # ---------- DEPLOY ----------
       - name: Deploy to Cloud Run
         run: |
           set -euo pipefail
