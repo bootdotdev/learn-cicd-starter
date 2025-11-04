@@ -4,6 +4,7 @@ import (
 	"errors"
 	"net/http"
 	"strings"
+	"testing"
 )
 
 var ErrNoAuthHeaderIncluded = errors.New("no authorization header included")
@@ -20,4 +21,20 @@ func GetAPIKey(headers http.Header) (string, error) {
 	}
 
 	return splitAuth[1], nil
+}
+
+func TestGetAPIKey(t *testing.T) {
+	headers := http.Header{}
+	headers.Set("Authorization", "ApiKey my-secret-key")
+	got, err := GetAPIKey(headers)
+
+	if err != nil {
+		t.Errorf("unexpected error: %v", err)
+	}
+
+	want := "my-secret-key"
+
+	if got != want {
+		t.Errorf("expected %q, got %q", want, got)
+	}
 }
