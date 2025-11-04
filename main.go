@@ -7,7 +7,7 @@ import (
 	"log"
 	"net/http"
 	"os"
-        "time"
+	"time"
 
 	"github.com/go-chi/chi/v5"
 	"github.com/go-chi/cors"
@@ -26,8 +26,7 @@ type apiConfig struct {
 var staticFiles embed.FS
 
 func main() {
-	err := godotenv.Load(".env")
-	if err != nil {
+	if err := godotenv.Load(".env"); err != nil {
 		log.Printf("warning: assuming default configuration. .env unreadable: %v", err)
 	}
 
@@ -38,8 +37,7 @@ func main() {
 
 	apiCfg := apiConfig{}
 
-	// https://github.com/libsql/libsql-client-go/#open-a-connection-to-sqld
-	// libsql://[your-database].turso.io?authToken=[your-auth-token]
+	// Optional DB hookup (runs without CRUD if DATABASE_URL is missing)
 	dbURL := os.Getenv("DATABASE_URL")
 	if dbURL == "" {
 		log.Println("DATABASE_URL environment variable is not set")
@@ -49,13 +47,11 @@ func main() {
 		if err != nil {
 			log.Fatal(err)
 		}
-		dbQueries := database.New(db)
-		apiCfg.DB = dbQueries
+		apiCfg.DB = database.New(db)
 		log.Println("Connected to database!")
 	}
 
 	router := chi.NewRouter()
-
 	router.Use(cors.Handler(cors.Options{
 		AllowedOrigins:   []string{"https://*", "http://*"},
 		AllowedMethods:   []string{"GET", "POST", "PUT", "DELETE", "OPTIONS"},
@@ -65,6 +61,7 @@ func main() {
 		MaxAge:           300,
 	}))
 
+	// Root serves embedded static file
 	router.Get("/", func(w http.ResponseWriter, r *http.Request) {
 		f, err := staticFiles.Open("static/index.html")
 		if err != nil {
@@ -77,18 +74,18 @@ func main() {
 		}
 	})
 
-	v1Router := chi.NewRouter()
-
+	// v1 API routes
+	v1 := chi.NewRouter()
 	if apiCfg.DB != nil {
-		v1Router.Post("/users", apiCfg.handlerUsersCreate)
-		v1Router.Get("/users", apiCfg.middlewareAuth(apiCfg.handlerUsersGet))
-		v1Router.Get("/notes", apiCfg.middlewareAuth(apiCfg.handlerNotesGet))
-		v1Router.Post("/notes", apiCfg.middlewareAuth(apiCfg.handlerNotesCreate))
+		v1.Post("/users", apiCfg.handlerUsersCreate)
+		v1.Get("/users", apiCfg.middlewareAuth(apiCfg.handlerUsersGet))
+		v1.Get("/notes", apiCfg.middlewareAuth(apiCfg.handlerNotesGet))
+		v1.Post("/notes", apiCfg.middlewareAuth(apiCfg.handlerNotesCreate))
 	}
+	v1.Get("/healthz", handlerReadiness)
+	router.Mount("/v1", v1)
 
-	v1Router.Get("/healthz", handlerReadiness)
-
-	router.Mount("/v1", v1Router)
+	// HTTP server configured for Cloud Run
 	srv := &http.Server{
 		Addr:              ":" + port,
 		Handler:           router,
@@ -98,6 +95,6 @@ func main() {
 		IdleTimeout:       60 * time.Second,
 	}
 
-	log.Printf("Serving on port: %s\n", port)
+	log.Printf("Serving on port %s ...", port)
 	log.Fatal(srv.ListenAndServe())
 }
