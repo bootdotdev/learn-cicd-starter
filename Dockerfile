@@ -1,7 +1,23 @@
-FROM --platform=linux/amd64 debian:stable-slim
+# syntax=docker/dockerfile:1
 
-RUN apt-get update && apt-get install -y ca-certificates
+############# Build stage #############
+FROM golang:1.22-alpine AS builder
+WORKDIR /app
 
-ADD notely /usr/bin/notely
+# Cache dependencies
+COPY go.mod go.sum ./
+RUN go mod download
 
-CMD ["notely"]
+# Copy source files
+COPY . .
+
+# Build a static Linux binary
+RUN CGO_ENABLED=0 GOOS=linux GOARCH=amd64 go build -o /app/notely .
+
+############# Runtime stage #############
+FROM gcr.io/distroless/static:nonroot
+COPY --from=builder /app/notely /usr/local/bin/notely
+
+USER nonroot:nonroot
+ENTRYPOINT ["/usr/local/bin/notely"]
+
