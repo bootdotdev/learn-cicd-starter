@@ -1,4 +1,5 @@
-[![Tests](https://github.com/Basel-Saadeh/learn-cicd-starter/actions/workflows/ci.yml/badge.svg?branch=main)
+![CI](https://github.com/basel-saadeh/go-ci-exercise/actions/workflows/ci.yml/badge.svg?branch=main)
+
 # learn-cicd-starter (Notely)
 
 This repo contains the starter code for the "Notely" application for the "Learn CICD" course on [Boot.dev](https://boot.dev).
