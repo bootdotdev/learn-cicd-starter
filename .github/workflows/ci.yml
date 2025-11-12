@@ -22,7 +22,7 @@ jobs:
         run: go test -cover ./... 
   style:
     name: style
-    runs_on: ubuntu-latest
+    runs-on: ubuntu-latest
 
     steps: 
       - name: Checkout Repo
