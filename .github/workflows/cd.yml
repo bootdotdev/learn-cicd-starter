@@ -1,0 +1,84 @@
+name: Continuous Deployment
+
+# Triggers the workflow on a push to the 'main' branch
+on:
+  push:
+    branches:
+      - main
+  # Allows manual triggering from the GitHub Actions UI (optional but useful)
+  workflow_dispatch:
+
+jobs:
+  Deploy:
+    name: Deploy
+    runs-on: ubuntu-latest
+
+    # 1. ADD THIS SECTION
+    env:
+      DATABASE_URL: ${{ secrets.DATABASE_URL }}
+
+    steps:
+      # Step 1: Checkout the code
+      - name: Checkout Repository
+        uses: actions/checkout@v4
+
+      # 2. ADD THIS NEW STEP
+      - name: Install Goose Migrator
+        run: go install github.com/pressly/goose/v3/cmd/goose@latest
+
+      # Step 2: Set up the Go toolchain
+      - name: Set up Go
+        uses: actions/setup-go@v5
+        with:
+          # Use your required Go version (e.g., 1.22)
+          go-version: "1.22"
+
+      # Step 3: Build the production binary
+      # This step builds the Linux-ready executable
+      - name: Build Production App
+        run: ./scripts/buildprod.sh
+
+      # 1. AUTHENTICATION: Authenticate GitHub Actions with GCP
+      - name: Authenticate Google Cloud
+        uses: google-github-actions/auth@v1
+        with:
+          # Uses the sensitive JSON key stored as a GitHub Repository Secret
+          credentials_json: ${{ secrets.GCP_CREDENTIALS }}
+
+      # 2. CONFIGURATION: Set up gcloud CLI and Project ID
+      - name: Set up gcloud CLI
+        uses: google-github-actions/setup-gcloud@v1
+        with:
+          # Setting the project ID for all subsequent gcloud commands
+          project_id: infinite-bruin-477014-h1
+
+      # 3. BUILD & PUSH: Execute the Cloud Build submission command
+      - name: Build and Push Docker Image to Artifact Registry
+        run: |
+          # Use your specific, validated image path directly in the command.
+          IMAGE_URI="us-central1-docker.pkg.dev/infinite-bruin-477014-h1/notely-ar-repo/notely:latest"
+
+          echo "Submitting build to Cloud Build for image: ${IMAGE_URI}"
+
+          # This command triggers the Cloud Build service to build the Dockerfile
+          # in the current directory and push the resulting image to Artifact Registry.
+          gcloud builds submit --tag "${IMAGE_URI}" .
+
+      # 4. RUN MIGRATIONS: Execute database migrations
+      - name: Run Database Migrations
+        run: ./scripts/migrateup.sh
+
+      # Add this step to the 'deploy' job in your workflow file (.yml)
+      - name: Deploy to Cloud Run
+        run: |
+          # The image path, project ID, and region are configured here
+          IMAGE_PATH="us-central1-docker.pkg.dev/infinite-bruin-477014-h1/notely-ar-repo/notely:latest"
+          PROJECT_ID="infinite-bruin-477014-h1"
+          REGION="us-central1"
+
+          gcloud run deploy notely \
+            --image $IMAGE_PATH \
+            --region $REGION \
+            --project $PROJECT_ID \
+            --allow-unauthenticated \
+            --max-instances=4
