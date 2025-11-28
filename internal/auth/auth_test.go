@@ -18,7 +18,7 @@ func TestGetAPIKey(t *testing.T) {
 				"Authorization": []string{"ApiKey abc123"},
 			},
 			expectedKey: "abc123",
-			expectError: true,
+			expectError: false,
 		},
 		{
 			name: "missing authorization header",
