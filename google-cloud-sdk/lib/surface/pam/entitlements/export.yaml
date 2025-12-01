@@ -1,0 +1,41 @@
+- release_tracks: [ALPHA, BETA, GA]
+
+  help_text:
+    brief: Export a Privileged Access Manager (PAM) entitlement into a local YAML file.
+    description: Export a Privileged Access Manager (PAM) entitlement into a local YAML file.
+    examples: |
+      The following command exports an entitlement with a name of `sample-entitlement`, in a
+      project named `sample-project`, and in location `global` to a local YAML file named
+      `sample-entitlement.yaml`:
+
+      $ {command} sample-entitlement --project=sample-project --location=global --destination=sample-entitlement.yaml
+
+      The following command exports an entitlement with a name of `sample-entitlement`, in a folder
+      with ID ``FOLDER_ID'', and in location `global` to a local YAML file named
+      `sample-entitlement.yaml`:
+
+      $ {command} sample-entitlement --folder=FOLDER_ID --location=global --destination=sample-entitlement.yaml
+
+      The following command exports an entitlement with a name of `sample-entitlement`, in an
+      organization with ID ``ORGANIZATION_ID'', and in location `global` to a local YAML file named
+      `sample-entitlement.yaml`:
+
+      $ {command} sample-entitlement --organization=ORGANIZATION_ID --location=global --destination=sample-entitlement.yaml
+
+  request:
+    ALPHA:
+      api_version: v1alpha
+    BETA:
+      api_version: v1beta
+    GA:
+      api_version: v1
+    collection:
+    - privilegedaccessmanager.projects.locations.entitlements
+    - privilegedaccessmanager.folders.locations.entitlements
+    - privilegedaccessmanager.organizations.locations.entitlements
+
+  arguments:
+    resource:
+      spec: !REF googlecloudsdk.command_lib.pam.resources:entitlement
+      help_text: |
+        Name of the entitlement to export.

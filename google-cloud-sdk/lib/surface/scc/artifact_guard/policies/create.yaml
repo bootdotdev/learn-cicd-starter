@@ -1,0 +1,45 @@
+- release_tracks: [ALPHA]
+  hidden: true
+  help_text:
+    brief: |
+      Create a new artifact guard policy.
+    description: |
+      Create a new artifact policy, which is used to guardrail the vulnerabilities that can
+      be present in an artifact. Each policy has two defining components:
+      1. Policy Definition: The various rules a given image must adhere to. For this release, the
+        policy definition is limited to a list of allowed vulnerabilities.
+      2. Scope: This defines the resources that the policy will be applied to. For this release, the
+        scope is limited to pipeline type.
+    examples: |
+      Create a policy with full name:
+      $ {command} organizations/123/locations/global/policies/my-policy --policy-file-path=/usr/local/home/user/policy.yaml
+
+      Create a policy with policy id:
+      $ {command} my-policy --policy-file-path=/usr/local/home/user/policy.yaml --location=global --organization=123
+
+  request:
+    collection: artifactscanguard.organizations.locations.policies
+    api_version: v1alpha
+    method: create
+
+  arguments:
+    resource:
+      spec: !REF googlecloudsdk.command_lib.scc.resources:policy
+      help_text: |
+        The full name of the policy to create. For example:
+        organizations/123/locations/global/policies/myPolicy
+
+    params:
+    - arg_name: policy-file-path
+      api_field: policy
+      required: true
+      type: "googlecloudsdk.calliope.arg_parsers:FileContents:"
+      processor: googlecloudsdk.core.yaml:load
+      help_text: |
+        YAML file containing the body of the policy to be created.
+
+    - arg_name: validate-only
+      api_field: validateOnly
+      type: bool
+      help_text: |
+        If set, the request will be validated but not executed.

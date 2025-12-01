@@ -1,0 +1,24 @@
+release_tracks: [ALPHA, BETA, GA]
+
+help_text:
+  brief: |
+    Delete a Managed Service for Apache Kafka connector.
+  description: |
+    Delete a Managed Service for Apache Kafka connector.
+
+  examples: |
+    To delete a connector named myconnector located in us-central1,
+    run the following:
+
+      $ {command} myconnector \
+          --location=us-central1 \
+          --connect-cluster=mycluster
+
+request:
+  collection: managedkafka.projects.locations.connectClusters.connectors
+
+arguments:
+  resource:
+    help_text: Identifies the cluster for deletion.
+    spec: !REF googlecloudsdk.command_lib.managed_kafka.resources:connector
+    is_positional: true

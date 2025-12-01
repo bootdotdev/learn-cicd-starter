@@ -1,0 +1,38 @@
+- release_tracks: [GA]
+
+  help_text:
+    brief: |
+      List Artifact Registry attachments.
+    description: |
+      List all Artifact Registry attachments in the specified repository and project.
+
+      To specify the maximum number of attachments to list, use the `--limit` flag.
+    examples: |
+      The following command lists a maximum of five attachments:
+
+          $ {command} --limit=5
+
+      The following command lists attachments with target `projects/my-project/locations/us/repositories/my-repo/packages/my-package/versions/sha256:123`:
+
+          $ {command} --target=projects/my-project/locations/us/repositories/my-repo/packages/my-package/versions/sha256:123
+
+  arguments:
+    resource:
+      spec: !REF googlecloudsdk.command_lib.artifacts.resources:repository
+      help_text: |
+        Parent repository for the list of attachments.
+    params:
+    - arg_name: target
+      help_text: |
+        Target for the list of attachments.
+    - arg_name: attachment-type
+      hidden: true
+      help_text: |
+        Type for the list of attachments.
+
+  request: &request
+    api_version: v1
+    collection: artifactregistry.projects.locations.repositories.attachments
+    modify_request_hooks:
+    - googlecloudsdk.command_lib.artifacts.util:AddTargetForAttachments
+    - googlecloudsdk.command_lib.artifacts.util:AddTypeForAttachments

@@ -1,0 +1,157 @@
+project:
+  name: project
+  collection: managedkafka.projects
+  attributes:
+  - &project
+    parameter_name: projectsId
+    attribute_name: project
+    help: |
+      The project name.
+    property: core/project
+
+location:
+  name: location
+  collection: managedkafka.projects.locations
+  attributes:
+  - *project
+  - &location
+    parameter_name: locationsId
+    attribute_name: location
+    help: |
+      ID of the location of the Managed Service for Apache Kafka resource. See
+      https://cloud.google.com/managed-service-for-apache-kafka/docs/locations for a list of supported
+      locations.
+
+cluster:
+  name: cluster
+  collection: managedkafka.projects.locations.clusters
+  request_id_field: clusterId
+  attributes:
+  - *location
+  - &cluster
+    parameter_name: clustersId
+    attribute_name: cluster
+    help: |
+      The cluster name.
+
+connect_cluster:
+  name: connect_cluster
+  collection: managedkafka.projects.locations.connectClusters
+  request_id_field: connectClusterId
+  attributes:
+  - *location
+  - &connect_cluster
+    parameter_name: connectClustersId
+    attribute_name: connect_cluster
+    help: |
+      The connect cluster name.
+
+connector:
+  name: connector
+  collection: managedkafka.projects.locations.connectClusters.connectors
+  request_id_field: connectorId
+  attributes:
+  - *location
+  - *connect_cluster
+  - &connector
+    parameter_name: connectorsId
+    attribute_name: connector
+    help: |
+      The connector name.
+
+topic:
+  name: topic
+  collection: managedkafka.projects.locations.clusters.topics
+  request_id_field: topicId
+  attributes:
+  - *location
+  - *cluster
+  - &topic
+    parameter_name: topicsId
+    attribute_name: topic
+    help: |
+      The topic name.
+
+consumer_group:
+  name: consumer_group
+  collection: managedkafka.projects.locations.clusters.consumerGroups
+  request_id_field: consumerGroupId
+  attributes:
+  - *location
+  - *cluster
+  - &consumer_group
+    parameter_name: consumerGroupsId
+    attribute_name: consumer_group
+    help: |
+      The consumer group name.
+
+acl:
+  name: acl
+  collection: managedkafka.projects.locations.clusters.acls
+  request_id_field: aclId
+  attributes:
+  - *location
+  - *cluster
+  - &acl
+    parameter_name: aclsId
+    attribute_name: acl
+    help: |
+      The acl name. Represents a single Kafka resource pattern for which the acl's entries apply in
+      the Kafka cluster, based on the structure of the acl ID. The acl ID must be structured like
+      one of the following:
+
+        For acls on the cluster:
+          cluster
+
+        For acls on a single resource within the cluster:
+          topic/{resource_name}
+          consumerGroup/{resource_name}
+          transactionalId/{resource_name}
+
+        For acls on all resources that match a prefix:
+          topicPrefixed/{resource_name}
+          consumerGroupPrefixed/{resource_name}
+          transactionalIdPrefixed/{resource_name}
+
+        For acls on all resources of a given type (i.e. the wildcard literal "*"):
+          allTopics (represents topic/*)
+          allConsumerGroups (represents consumerGroup/*)
+          allTransactionalIds (represents transactionalId/*)
+
+operation:
+  name: operation
+  collection: managedkafka.projects.locations.operations
+  attributes:
+  - *location
+  - &operation
+    parameter_name: operationsId
+    attribute_name: operation
+    help: |
+      The operation name.
+
+schema_registry:
+  name: schema_registry
+  collection: managedkafka.projects.locations.schemaRegistries
+  request_id_field: createSchemaRegistryRequest.schemaRegistryId
+  attributes:
+  - *project
+  - *location
+  - &schema_registry
+    parameter_name: schemaRegistriesId
+    attribute_name: schema_registry
+    help: |
+      The schema registry name.
+
+subject:
+  name: subject
+  collection: managedkafka.projects.locations.schemaRegistries.subjects
+  request_id_field: createSubjectRequest.subjectId
+  attributes:
+  - *project
+  - *location
+  - *schema_registry
+  - &subject
+    parameter_name: subjectsId
+    attribute_name: subject
+    help: |
+      The subject name.

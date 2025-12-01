@@ -1,0 +1,35 @@
+# -*- coding: utf-8 -*- #
+# Copyright 2024 Google LLC. All Rights Reserved.
+#
+# Licensed under the Apache License, Version 2.0 (the "License");
+# you may not use this file except in compliance with the License.
+# You may obtain a copy of the License at
+#
+#    http://www.apache.org/licenses/LICENSE-2.0
+#
+# Unless required by applicable law or agreed to in writing, software
+# distributed under the License is distributed on an "AS IS" BASIS,
+# WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
+# See the License for the specific language governing permissions and
+# limitations under the License.
+release_tracks: [GA]
+
+help_text:
+  brief: Set the IAM policy for a workload identity pool.
+  description: Replaces the existing IAM policy for a workload identity pool given a workload identity pool ID
+    and a file encoded in JSON or YAML that contains the IAM policy.
+
+  examples: |
+    The following command reads an IAM policy defined in a JSON file `policy.json` and sets it
+    for the workload identity pool with ID `my-workload-identity-pool`:
+
+      $ {command} my-workload-identity-pool policy.json --location="global"
+
+request:
+  collection: iam.projects.locations.workloadIdentityPools
+
+arguments:
+  resource:
+    help_text: The workload identity pool for which you want to set IAM policy for.
+    spec: !REF googlecloudsdk.command_lib.iam.resources:workload_identity_pool
+    is_positional: true

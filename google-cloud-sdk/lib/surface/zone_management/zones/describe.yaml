@@ -1,0 +1,15 @@
+- release_tracks: [ALPHA]
+  help_text:
+    brief: describe zone
+    description: Describes a zone.
+    examples: |
+      To describe a zone called `test-zone` in organization `test-org` and location `us-central1`, run:
+      $ {command} test-zone --location=us-central1 --organization=test-org
+  request:
+    collection: edgecontainer.organizations.locations.zones
+    api_version: v1alpha
+    method: get
+  arguments:
+    resource:
+      help_text: Zone
+      spec: !REF googlecloudsdk.command_lib.zone_management.zone.resources:zone

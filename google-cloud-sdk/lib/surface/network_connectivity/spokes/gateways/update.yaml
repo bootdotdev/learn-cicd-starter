@@ -1,0 +1,46 @@
+- release_tracks: [BETA]
+
+  help_text:
+    brief: Update a Gateway spoke.
+    description: Update the details of a Gateway spoke.
+
+    examples: |
+      To update the description of a Gateway spoke named ``my-spoke'', run:
+
+        $ {command} my-spoke --region=us-central1 --description="new spoke description"
+
+  arguments:
+    resource:
+      spec: !REF googlecloudsdk.command_lib.network_connectivity.resources:spoke
+      help_text: Name of the spoke to update.
+    params:
+    - arg_name: description
+      BETA:
+        api_field: googleCloudNetworkconnectivityV1betaSpoke.description
+      help_text: New description of the spoke.
+    - arg_name: capacity
+      BETA:
+        api_field: googleCloudNetworkconnectivityV1betaSpoke.gateway.capacity
+      choices:
+      - enum_value: CAPACITY_1_GBPS
+        arg_value: 1g
+      - enum_value: CAPACITY_10_GBPS
+        arg_value: 10g
+      - enum_value: CAPACITY_100_GBPS
+        arg_value: 100g
+      help_text: New gateway capacity of the spoke.
+    labels:
+      BETA:
+        api_field: googleCloudNetworkconnectivityV1betaSpoke.labels
+
+  update:
+    read_modify_update: true
+
+  async:
+    collection: networkconnectivity.projects.locations.operations
+
+  request:
+    BETA:
+      api_version: v1beta
+    collection: networkconnectivity.projects.locations.spokes
+    method: patch

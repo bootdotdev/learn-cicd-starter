@@ -1,0 +1,28 @@
+- release_tracks: [ALPHA, GA]
+  help_text:
+    brief: Describe a Cloud Security Command Center (SCC) IaC Validation Report.
+    description: |
+      Describe a Cloud Security Command Center (SCC) IaC Validation Report. Takes the name of the report as an argument.
+
+      Returns IAC Validation Report as response.
+    examples: |
+      Describe an IAC Validation report named `organizations/123/locations/global/reports/abcef-gh` :
+
+        $ {command} organizations/123/locations/global/reports/abcef-gh
+
+        or, run:
+
+        $ {command} abcef-gh --organization=123 --location=global
+
+  request:
+    collection: securityposture.organizations.locations.reports
+    api_version: v1alpha
+    method: get
+    GA:
+      api_version: v1
+
+  arguments:
+    resource:
+      spec: !REF googlecloudsdk.command_lib.scc.resources:report
+      help_text: |
+          IAC Validation report to be described. For example `organizations/123/locations/global/reports/abcef-gh`.

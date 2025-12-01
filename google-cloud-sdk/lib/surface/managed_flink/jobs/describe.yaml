@@ -1,0 +1,21 @@
+release_tracks: [ALPHA]
+
+help_text:
+  brief: |
+    Describe a BigQuery Engine for Apache Flink job.
+  description: |
+    Describe a BigQuery Engine for Apache Flink job.
+
+  examples: |
+    To describe a BigQuery Engine for Apache Flink whose ID is myjob, run the following:
+
+      $ {command} myjob \
+          --location=us-central1
+
+request:
+  collection: managedflink.projects.locations.jobs
+
+arguments:
+  resource:
+    help_text: Identifies the Flink job whose details are to be displayed.
+    spec: !REF googlecloudsdk.command_lib.managed_flink.resources:job

@@ -1,0 +1,34 @@
+- release_tracks: [ALPHA, BETA, GA]
+
+  help_text:
+    brief: Update a Certificate Issuance Config.
+    description: |
+      Update a Certificate Issuance Config.
+    examples: |
+      To update a Certificate Issuance Config called `my-cic`, run:
+
+        $ {command} my-cic --description="updated description" --update-labels=my-key1=my-updated-value1 --remove-labels=my-key2
+
+  request:
+    collection: certificatemanager.projects.locations.certificateIssuanceConfigs
+    api_version: v1
+
+  async:
+    collection: certificatemanager.projects.locations.operations
+
+  arguments:
+    resource:
+      help_text: Name of the Certificate Issuance Config to update.
+      spec: !REF googlecloudsdk.command_lib.certificate_manager.resources:certificateIssuanceConfig
+
+    params:
+    - arg_name: description
+      api_field: certificateIssuanceConfig.description
+      help_text: |
+        Human-readable description of the resource.
+
+    labels:
+      api_field: certificateIssuanceConfig.labels
+
+  update:
+    read_modify_update: true

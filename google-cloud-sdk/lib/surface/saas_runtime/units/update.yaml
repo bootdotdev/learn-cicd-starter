@@ -1,0 +1,73 @@
+- release_tracks: [ALPHA, BETA]
+  help_text:
+    brief: Update a Unit
+    description: Update a Unit
+    examples: |-
+      To update the Unit, run:
+
+      $ {command}
+  arguments:
+    params:
+    - help_text: |-
+        Identifier. The resource name (full URI of the resource) following the standard naming
+        scheme:
+
+          "projects/{project}/locations/{location}/units/{unit}"
+      is_positional: true
+      resource_spec: !REF googlecloudsdk.command_lib.saas_runtime.resources:unit
+      required: true
+    - arg_name: unit-kind
+      help_text: |-
+        Reference to the UnitKind this Unit belongs to. Immutable once set.
+      is_positional: false
+      resource_spec: !REF googlecloudsdk.command_lib.saas_runtime.resources:unit_kind
+      resource_method_params:
+        unit.unitKind: '{__relative_name__}'
+      required: false
+      clearable: true
+    - arg_name: tenant
+      help_text: |-
+        Reference to the Saas Tenant resource this unit belongs to. This for
+        example informs the maintenance policies to use for scheduling future
+        updates on a unit. (optional and immutable once created)
+      is_positional: false
+      resource_spec: !REF googlecloudsdk.command_lib.saas_runtime.resources:tenant
+      resource_method_params:
+        unit.tenant: '{__relative_name__}'
+      required: false
+      clearable: true
+    - group:
+        required: false
+        help_text: |-
+          Captures requested directives for performing future maintenance on the
+          unit. This includes a request for the unit to skip maintenance for a period
+          of time and remain pinned to its current release as well as controls for
+          postponing maintenance scheduled in future.
+        params:
+        - arg_name: maintenance-pinned-until-time
+          api_field: unit.maintenance.pinnedUntilTime
+          required: false
+          repeated: false
+          type: googlecloudsdk.core.util.times:ParseDateTime
+          processor: googlecloudsdk.core.util.times:FormatDateTime
+          help_text: |-
+            If present, it fixes the release on the unit until the given time; i.e.
+            changes to the release field will be rejected. Rollouts should and will
+            also respect this by not requesting an upgrade in the first place.
+    - arg_name: labels
+      api_field: unit.labels
+      required: false
+      repeated: true
+      help_text: |-
+        The labels on the resource, which can be used for categorization.
+        similar to Kubernetes resource labels.
+      clearable: true
+      spec:
+      - api_field: key
+      - api_field: value
+  request:
+    api_version: v1beta1
+    collection:
+    - saasservicemgmt.projects.locations.units
+  update:
+    read_modify_update: true

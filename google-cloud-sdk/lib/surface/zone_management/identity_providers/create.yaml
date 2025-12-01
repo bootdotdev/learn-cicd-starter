@@ -1,0 +1,25 @@
+- release_tracks: [ALPHA]
+
+  help_text:
+    brief: create identity provider
+    description: Creates an identity provider.
+    examples: |
+      To create an identity provider called `test-identity-provider` in organization `test-org`, location `us-central1` with the contents of `test-config.json`:
+
+      $ {command} test-identity-provider --location=us-central1 --organization=test-org --config=test-config.json
+
+  request:
+    collection: edgecontainer.organizations.locations.identityProviders
+    api_version: v1alpha
+    method: create
+    modify_request_hooks:
+    - googlecloudsdk.command_lib.zone_management.identity_provider.hooks:AddOidcConfigToRequest
+
+  arguments:
+    resource:
+      help_text: Identity Provider to create.
+      spec: !REF googlecloudsdk.command_lib.zone_management.identity_provider.resources:identityProvider
+    params:
+    - arg_name: config
+      help_text: The identity provider configuration file.
+      required: true

@@ -1,0 +1,50 @@
+release_tracks: [ALPHA]
+help_text:
+  brief: |
+    Create a multicast group definition.
+  description: |
+    Create a multicast group definition in the specified location of the current project.
+  examples: |
+    Create a multicast group definition with the name 'my-multicast-group-definition',
+    reserved-internal-range 'path-to-ir',
+    multicast-domain 'path-to-md',
+    and location 'global'.
+
+      $ {command} my-multicast-group-definition --reserved-internal-range=path-to-ir  --multicast-domain=path-to-md --location=global
+arguments:
+  resource:
+    spec: !REF googlecloudsdk.command_lib.network_services.resources:multicastGroupDefinition
+    help_text: |
+      Name of the multicast group definition to be created.
+  params:
+  - arg_name:  reserved-internal-range
+    api_field: multicastGroupDefinition.reservedInternalRange
+    help_text: The reserved internal range to be used.
+    required: true
+  - arg_name:  multicast-domain
+    api_field: multicastGroupDefinition.multicastDomain
+    help_text: The multicast domain to be used.
+    required: true
+  - arg_name: consumer-accept-list
+    repeated: true
+    api_field: multicastGroupDefinition.consumerAcceptList
+    help_text: An optional list of consumer projects that can use this multicast group definition.
+  - arg_name: require-explicit-accept
+    api_field: multicastGroupDefinition.requireExplicitAccept
+    help_text: Whether an empty consumer accept list will reject all consumer projects.
+  - arg_name: enable-logging
+    api_field: multicastGroupDefinition.logConfig.enabled
+    help_text: Whether to enable logging for this multicast group definition.
+    action: store_true_false
+  - arg_name: description
+    api_field: multicastGroupDefinition.description
+    help_text: The description for the multicast group definition.
+  labels:
+    api_field: multicastGroupDefinition.labels
+async:
+  collection: networkservices.projects.locations.operations
+request: &request
+  ALPHA:
+    api_version: v1alpha1
+  collection: networkservices.projects.locations.multicastGroupDefinitions
+  method: create

@@ -1,0 +1,61 @@
+- release_tracks: [ALPHA]
+  hidden: true
+  help_text:
+    brief: |
+      Update an existing artifact guard policy.
+    description: |
+      Updates an existing artifact guard policy.
+      Update Mask: It updates the policy with the fields specified in the update mask.
+      If the update mask is not specified or is set to "*", all the fields are updated.
+      Partial field updates are not supported. The following fields are supported:
+      - "display_name"
+      - "description"
+      - "scope"
+      - "enablement_state"
+      - "vulnerability_policy"
+      - "annotations"
+
+      Allow missing: If set, the policy will be created if it does not exist.
+    examples: |
+      To update a policy named "organizations/123/locations/global/policies/myPolicy",
+        $ {command} organizations/123/locations/global/policies/myPolicy --policy-file-path=policy.yaml
+        OR
+        $ {command} myPolicy --location=global --organization=123 --policy-file-path=policy.yaml
+
+  request:
+    collection: artifactscanguard.organizations.locations.policies
+    api_version: v1alpha
+    method: patch
+
+  arguments:
+    resource:
+      spec: !REF googlecloudsdk.command_lib.scc.resources:policy
+      help_text: |
+        The full name of the policy to update. For example:
+        organizations/123/locations/global/policies/myPolicy
+
+    params:
+    - arg_name: policy-file-path
+      api_field: policy
+      required: true
+      type: "googlecloudsdk.calliope.arg_parsers:FileContents:"
+      processor: googlecloudsdk.core.yaml:load
+      help_text: |
+        YAML file containing the body of the policy to be created.
+
+    - arg_name: update-mask
+      api_field: updateMask
+      help_text: |
+        The list of fields to update. Eg: "description,display_name"
+
+    - arg_name: validate-only
+      api_field: validateOnly
+      type: bool
+      help_text: |
+        If set, the request will be validated but not executed.
+
+    - arg_name: allow-missing
+      api_field: allowMissing
+      type: bool
+      help_text: |
+        If set, the policy will be created if it does not exist.

@@ -1,0 +1,38 @@
+release_tracks: [BETA, GA]
+help_text:
+  brief: |
+    Import an `AuthzExtension` resource.
+  description: |
+    Import an `AuthzExtension` resource defined in a YAML file.
+  examples: |
+    To import an `AuthzExtension` resource named
+    `my-authz-extension` from a YAML file in `us-central1`, run:
+
+        $ {command} my-authz-extension --source=my-authz-extension.yaml --location=us-central1
+
+request:
+  collection: networkservices.projects.locations.authzExtensions
+  BETA:
+    api_version: v1beta1
+  GA:
+    api_version: v1
+
+arguments:
+  resource:
+    spec: !REF googlecloudsdk.command_lib.service_extensions.resources:authzExtension
+    help_text: |
+      The ID of the new or updated `AuthzExtension` resource.
+
+async:
+  collection: networkservices.projects.locations.operations
+
+import:
+  abort_if_equivalent: true
+  create_if_not_exists: true
+  create_request:
+    collection: networkservices.projects.locations.authzExtensions
+    BETA:
+      api_version: v1beta1
+    GA:
+      api_version: v1
+    method: create

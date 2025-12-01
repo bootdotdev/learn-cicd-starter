@@ -1,0 +1,21 @@
+- release_tracks:
+  - ALPHA
+  hidden: true
+  help_text:
+    brief: List Flags Revisions
+    description: List Flags Revisions
+    examples: |-
+      To list Flags Revisions, run:
+
+          $ {command}
+  arguments:
+    resource:
+      help_text: |-
+        Parent value for ListFlagRevisionsRequest
+      spec: !REF googlecloudsdk.command_lib.saas_runtime.resources:project_location_with_default
+  request:
+    api_version: v1beta1
+    collection:
+    - saasservicemgmt.projects.locations.flagRevisions
+  response:
+    id_field: name

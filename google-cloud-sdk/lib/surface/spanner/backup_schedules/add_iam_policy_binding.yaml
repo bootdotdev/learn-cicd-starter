@@ -1,0 +1,43 @@
+- release_tracks: [ALPHA, BETA, GA]
+
+  help_text:
+    brief: Add IAM policy binding to a Cloud Spanner backup schedule.
+    description: |
+      Add an IAM policy binding to a Cloud Spanner backup schedule. One binding consists of
+      a member, a role, and an optional condition.
+
+    examples: |
+      To add an IAM policy binding for the role of 'roles/editor' for the user
+      'test-user@gmail.com', run:
+
+        $ {command} backup-schedule-id \
+            --instance=instance-id \
+            --database=database-id \
+            --member='user:test-user@gmail.com' \
+            --role='roles/editor'
+
+      To add an IAM policy binding which expires at the end of the year 2025 for the role of
+      'roles/editor' and the user 'test-user@gmail.com', run:
+
+        $ {command} backup-schedule-id \
+            --instance=instance-id \
+            --database=database-id \
+            --member='user:test-user@gmail.com' \
+            --role='roles/editor' \
+            --condition='expression=request.time < timestamp("2026-01-01T00:00:00Z"),title=expires_end_of_2025,description=Expires at midnight on 2025-12-31'
+
+      See https://cloud.google.com/iam/docs/managing-policies for details of
+      policy role and member types.
+
+  request:
+    collection: spanner.projects.instances.databases.backupSchedules
+
+  arguments:
+    resource:
+      help_text: The Cloud Spanner backup schedule to which to add the IAM policy binding.
+      spec: !REF googlecloudsdk.command_lib.spanner.resources:backupSchedule
+
+  iam:
+    enable_condition: true
+    policy_version: 3
+    get_iam_policy_version_path: getIamPolicyRequest.options.requestedPolicyVersion

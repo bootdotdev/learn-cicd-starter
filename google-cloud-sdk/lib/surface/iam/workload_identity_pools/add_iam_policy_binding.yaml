@@ -1,0 +1,54 @@
+# -*- coding: utf-8 -*- #
+# Copyright 2024 Google LLC. All Rights Reserved.
+#
+# Licensed under the Apache License, Version 2.0 (the "License");
+# you may not use this file except in compliance with the License.
+# You may obtain a copy of the License at
+#
+#    http://www.apache.org/licenses/LICENSE-2.0
+#
+# Unless required by applicable law or agreed to in writing, software
+# distributed under the License is distributed on an "AS IS" BASIS,
+# WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
+# See the License for the specific language governing permissions and
+# limitations under the License.
+release_tracks: [GA]
+
+help_text:
+  brief: Add IAM policy binding for a workload identity pool.
+  description: |
+    Adds a policy binding to the IAM policy of a workload identity pool, given a
+    workload identity pool ID and the binding. A binding consists of at least one member, a role, and
+    an optional condition.
+
+  examples: |
+    To add an IAM policy binding for the role of `roles/iam.workloadIdentityPoolViewer` for the user
+    `test-user@gmail.com` on a workload identity pool with identifier `my-workload-identity-pool`, run:
+
+      $ {command} my-workload-identity-pool --location="global" --member='user:test-user@gmail.com' --role='roles/iam.workloadIdentityPoolViewer'
+
+    To add an IAM policy binding for the role of `roles/iam.workloadIdentityPoolViewer` for
+    all authenticated users on a workload identity pool with identifier `my-workload-identity-pool`, run:
+
+      $ {command} my-workload-identity-pool --location="global" --member='allAuthenticatedUsers' --role='roles/iam.workloadIdentityPoolViewer'
+
+    To add an IAM policy binding that expires at the end of the year 2024 for the role of `roles/iam.workloadIdentityPoolViewer`
+    and the user `test-user@gmail.com` on a workload identity pool with identifier `my-workload-identity-pool`, run:
+
+      $ {command} my-workload-identity-pool --location="global" --member='user:test-user@gmail.com' --role='roles/iam.workloadIdentityPoolViewer' --condition='expression=request.time < timestamp("2019-01-01T00:00:00Z"),title=expires_end_of_2024,description=Expires at midnight on 2024-12-31'
+
+    See https://cloud.google.com/iam/docs/managing-policies for details on
+    policy role and member types.
+
+request:
+  collection: iam.projects.locations.workloadIdentityPools
+
+arguments:
+  resource:
+    help_text: The workload identity pool to add the IAM policy binding for.
+    spec: !REF googlecloudsdk.command_lib.iam.resources:workload_identity_pool
+
+iam:
+  enable_condition: true
+  policy_version: 3
+  get_iam_policy_version_path: getIamPolicyRequest.options.requestedPolicyVersion

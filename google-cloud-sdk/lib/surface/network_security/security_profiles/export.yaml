@@ -1,0 +1,25 @@
+release_tracks: [ALPHA, BETA]
+help_text:
+  brief: |
+    Export Security Profile.
+  description: |
+    Export a Security Profile.
+  examples: |
+      To export a Security Profile, run:
+
+        $ {command} my-security-profile --organization=1234 --location=global --destination=my-security-profile.yaml
+
+request:
+  ALPHA:
+    api_version: v1alpha1
+  BETA:
+    api_version: v1beta1
+  GA:
+    api_version: v1
+  collection: networksecurity.organizations.locations.securityProfiles
+
+arguments:
+  resource:
+    spec: !REF googlecloudsdk.command_lib.network_security.resources:securityProfile
+    help_text: |
+      Name of the Security Profile to export.

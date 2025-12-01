@@ -1,0 +1,17 @@
+release_tracks: [ALPHA]
+help_text:
+  brief: Delete an Investigation.
+  description:  Delete a Gemini Cloud Assist Investigation.
+  examples: |
+    The following command deletes an Investigation with ID `foo-bar-1`
+
+      $ {command} foo-bar-1
+
+request:
+  collection: geminicloudassist.projects.locations.investigations
+  method: delete
+
+arguments:
+  resource:
+    help_text: The investigation you want to delete.
+    spec: !REF googlecloudsdk.command_lib.gemini.cloud_assist.resources:investigation

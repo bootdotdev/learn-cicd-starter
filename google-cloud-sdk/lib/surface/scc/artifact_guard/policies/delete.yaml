@@ -1,0 +1,36 @@
+- release_tracks: [ALPHA]
+  hidden: true
+  help_text:
+    brief: |
+      Delete an artifact guard policy.
+    description: |
+      Delete an artifact guard policy for a given policy name. A policy in active state cannot be deleted.
+    examples: |
+      To delete a policy named "organizations/123/locations/global/policies/myPolicy",
+        $ {command} organizations/123/locations/global/policies/myPolicy
+        OR
+        $ {command} myPolicy --location=global --organization=123
+
+  request:
+    collection: artifactscanguard.organizations.locations.policies
+    api_version: v1alpha
+    method: delete
+
+  arguments:
+    resource:
+      spec: !REF googlecloudsdk.command_lib.scc.resources:policy
+      help_text: |
+        The full name of the policy to create. For example:
+        organizations/123/locations/global/policies/myPolicy
+
+    params:
+    - arg_name: etag
+      api_field: etag
+      help_text: |
+        The etag of the policy to delete.
+
+    - arg_name: validate-only
+      api_field: validateOnly
+      type: bool
+      help_text: |
+        If set, the request will be validated but not executed.

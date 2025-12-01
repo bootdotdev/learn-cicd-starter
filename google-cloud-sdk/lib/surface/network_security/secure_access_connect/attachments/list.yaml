@@ -1,0 +1,24 @@
+release_tracks: [ALPHA, BETA]
+
+help_text:
+  brief: |
+    List SAC attachments.
+  description: |
+    List all SAC attachments within a given location.
+  examples: |
+    To list all attachments in the location `us-central1`, run:
+
+      $ {command} --location=us-central1
+
+arguments:
+  resource:
+    spec: !REF googlecloudsdk.command_lib.network_security.resources:location
+    help_text: |
+      Region of the attachments to display.
+
+request: &request
+  ALPHA:
+    api_version: v1alpha1
+  BETA:
+    api_version: v1beta1
+  collection: networksecurity.projects.locations.sacAttachments

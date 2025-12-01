@@ -1,0 +1,23 @@
+- release_tracks: [GA]
+  help_text:
+    brief: List resource changes
+    description: List resource changes for a preview
+    examples: |-
+      To list all resource changes for preview projects/p1/locations/us-central1/previews/pr1, run:
+
+      $ {command} --preview=projects/p1/locations/us-central1/previews/pr1
+  arguments:
+    resource:
+      spec: !REF googlecloudsdk.command_lib.infra_manager.resources:preview
+      help_text: The preview for which we want to list all resource changes.
+  request:
+    collection: config.projects.locations.previews.resourceChanges
+  response:
+    id_field: name
+  output:
+    format: |
+      table(
+      name.basename(),
+      intent,
+      terraformInfo.address:label=TF_ADDRESS
+      )

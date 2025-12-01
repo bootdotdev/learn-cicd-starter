@@ -1,0 +1,64 @@
+- release_tracks: [BETA, GA]
+  help_text:
+    brief: Promote a Filestore standby replication instance.
+    description: |
+      Promote a Filestore standby replication instance to a regular instance. This command can be
+      called directly on the standby instance or on the active instance with the standby peer
+      instance parameter.
+      When used on the standby instance promotes the standby instance to a regular instance even if
+      the active instance is unavailable.
+      When used on the active instance detaches the standby instance from the active instance even
+      if the standby instance is unavailable.
+
+      This command can fail for the following reasons:
+        * The target instance does not exist.
+        * The instance is not a standby replication member.
+        * The instance is an active instance and the peer instance parameter is missing or invalid.
+    examples: |
+      To promote a standby instance with the name ``my-replica-instance'' located in
+      ``us-central1'', run:
+
+        $ {command} my-replica-instance --zone=us-central1
+
+      To promote a standby instance with the name ``my-replica-instance'' located in
+      ``us-central1'', attached to the active peer instance ``my-active-instance'' located in
+      ``us-west1'', run:
+
+        $ {command} my-active-instance --zone=us-west1 \
+        --peer-instance=projects/my-project/locations/us-central1/instances/my-replica-instance
+
+  arguments:
+    resource:
+      spec: !REF googlecloudsdk.command_lib.filestore.resources:instance
+      help_text: |
+        Arguments and flags that specify the Filestore instance to promote.
+      command_level_fallthroughs:
+        zone:
+        - arg_name: location
+          release_tracks: [BETA, GA]
+    params:
+    - arg_name: location
+      release_tracks: [BETA, GA]
+      help_text: |
+        Location of the Filestore instance to promote.
+    - arg_name: peer-instance
+      release_tracks: [BETA, GA]
+      api_field: promoteReplicaRequest.peerInstance
+      help_text: |
+        The name of the standby peer instance to promote.
+
+  request:
+    BETA:
+      api_version: v1beta1
+    GA:
+      api_version: v1
+    collection: file.projects.locations.instances
+    method: promoteReplica
+
+  async:
+    collection: file.projects.locations.operations
+
+  input:
+    confirmation_prompt: |
+      Warning: You are about to promote a replication standby instance, this action will
+      permanently remove replication settings and convert the standby into a regular instance.

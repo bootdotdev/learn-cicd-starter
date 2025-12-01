@@ -1,0 +1,24 @@
+release_tracks: [ALPHA, BETA]
+
+help_text:
+  brief: |
+    Describe a SAC attachment.
+  description: |
+    Show details for the specified SAC attachment.
+  examples: |
+    To describe an attachment named `my-attachment` in the location `us-central1`, run:
+
+      $ {command} my-attachment --location=us-central1
+
+arguments:
+  resource:
+    spec: !REF googlecloudsdk.command_lib.network_security.resources:sacAttachment
+    help_text: |
+      Attachment to be described.
+
+request: &request
+  ALPHA:
+    api_version: v1alpha1
+  BETA:
+    api_version: v1beta1
+  collection: networksecurity.projects.locations.sacAttachments

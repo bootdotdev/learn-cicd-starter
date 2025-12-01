@@ -1,0 +1,49 @@
+release_tracks: [ALPHA, BETA, GA]
+
+help_text:
+  brief: |
+    Create a Managed Service for Apache Kafka connect cluster.
+  description: |
+    Create a Managed Service for Apache Kafka connect cluster.
+
+  examples: |
+    To create a connector cluster, run the following:
+
+      $ {command} myconnectorCluster \
+          --location=us-central1 \
+          --cpu=3 \
+          --memory=3GiB \
+          --primary-subnet=projects/PROJECT_ID/regions/us-central1/subnetworks/default
+          --kafka-cluster=my-kafka-cluster OR --kafka-cluster=projects/PROJECT_ID/locations/us-central1/clusters/my-kafka-cluster
+
+request:
+  collection: managedkafka.projects.locations.connectClusters
+  modify_request_hooks:
+  - googlecloudsdk.command_lib.managed_kafka.util:PrepareConnectClusterCreate
+  - googlecloudsdk.command_lib.managed_kafka.util:MapConnectParamsToNetworkConfig
+
+async:
+  collection: managedkafka.projects.locations.operations
+
+arguments:
+  resource:
+    help_text: Identifies the connect cluster that is created.
+    spec: !REF googlecloudsdk.command_lib.managed_kafka.resources:connect_cluster
+  params:
+  - _REF_: googlecloudsdk.command_lib.managed_kafka.flags:kafka-cluster
+    required: true
+  - group:
+      mutex: true
+      params:
+      - _REF_: googlecloudsdk.command_lib.managed_kafka.flags:connectCluster-configs
+      - _REF_: googlecloudsdk.command_lib.managed_kafka.flags:connectCluster-config-file
+  - _REF_: googlecloudsdk.command_lib.managed_kafka.flags:connect-cpu
+    required: true
+  - _REF_: googlecloudsdk.command_lib.managed_kafka.flags:connect-memory
+    required: true
+  - _REF_: googlecloudsdk.command_lib.managed_kafka.flags:connect-primary-subnet
+    required: true
+  - _REF_: googlecloudsdk.command_lib.managed_kafka.flags:connect-additional-subnet
+  - _REF_: googlecloudsdk.command_lib.managed_kafka.flags:dns-name
+  - _REF_: googlecloudsdk.command_lib.managed_kafka.flags:secret
+  - _REF_: googlecloudsdk.command_lib.managed_kafka.flags:connect-labels

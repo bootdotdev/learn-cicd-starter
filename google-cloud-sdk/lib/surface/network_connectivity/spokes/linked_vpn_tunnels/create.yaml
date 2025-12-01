@@ -1,0 +1,148 @@
+- release_tracks: [BETA]
+
+  help_text:
+    brief: Create a new VPN spoke.
+    description: Create a new [VPN spoke](https://cloud.google.com/network-connectivity/docs/network-connectivity-center/how-to/working-with-hubs-spokes#create-vpn-spoke).
+    examples: |
+      To create a VPN spoke in region ``us-central1'' that uses data transfer and has
+      two tunnels, run:
+
+        $ {command} my-spoke --hub="https://www.googleapis.com/networkconnectivity/v1beta/projects/my-project/locations/global/hubs/my-hub" --region=us-central1 --vpn-tunnels=https://www.googleapis.com/compute/v1/projects/my-project/regions/us-central1/vpnTunnels/vpn-tunnel1,https://www.googleapis.com/compute/v1/projects/my-project/regions/us-central1/vpnTunnels/vpn-tunnel2 --site-to-site-data-transfer
+
+  arguments:
+    resource:
+      spec: !REF googlecloudsdk.command_lib.network_connectivity.resources:spoke
+      help_text: Name of the spoke to be created.
+    params:
+    - arg_name: hub
+      required: true
+      api_field: googleCloudNetworkconnectivityV1betaSpoke.hub
+      help_text: Hub that the spoke will attach to. The hub must already exist.
+    - arg_name: description
+      api_field: googleCloudNetworkconnectivityV1betaSpoke.description
+      help_text: Description of the spoke to create.
+    - arg_name: vpn-tunnels
+      required: true
+      api_field: googleCloudNetworkconnectivityV1betaSpoke.linkedVpnTunnels.uris
+      type: arg_list
+      help_text: HA VPN tunnels that the spoke provides connectivity to. The resources must already exist.
+    - arg_name: site-to-site-data-transfer
+      api_field: googleCloudNetworkconnectivityV1betaSpoke.linkedVpnTunnels.siteToSiteDataTransfer
+      help_text: |
+        Whether to enable site-to-site data transfer for this spoke. Data transfer is available only
+        in [supported locations](https://cloud.google.com/network-connectivity/docs/network-connectivity-center/concepts/locations).
+    - arg_name: include-import-ranges
+      api_field: googleCloudNetworkconnectivityV1betaSpoke.linkedVpnTunnels.includeImportRanges
+      type: arg_list
+      help_text: |
+        IP address range(s) allowed to be imported from hub subnets. Only ``ALL_IPV4_RANGES`` can be
+        added to the list. If it's empty, the spoke does not import any subnets from the hub.
+    - arg_name: exclude-import-ranges
+      api_field: googleCloudNetworkconnectivityV1betaSpoke.linkedVpnTunnels.excludeImportRanges
+      type: arg_list
+      hidden: true
+      help_text: |
+        Hub routes overlapped/encompassed by exclude import ranges are excluded during import from hub.
+    - arg_name: include-export-ranges
+      api_field: googleCloudNetworkconnectivityV1betaSpoke.linkedVpnTunnels.includeExportRanges
+      type: arg_list
+      hidden: true
+      help_text: |
+        Dynamic routes fully encompassed by include export ranges are included during export to hub.
+        If it's empty, the spoke exports all dynamic routes to the hub.
+    - arg_name: exclude-export-ranges
+      api_field: googleCloudNetworkconnectivityV1betaSpoke.linkedVpnTunnels.excludeExportRanges
+      type: arg_list
+      hidden: true
+      help_text: |
+        Dynamic routes overlapped/encompassed by exclude export ranges are excluded during export to hub.
+    - arg_name: group
+      api_field: googleCloudNetworkconnectivityV1betaSpoke.group
+      help_text: |
+        The group that the spoke will be added to. The group must already exist. If unset, the spoke
+        will be added to the ``default`` group.
+    labels:
+      api_field: googleCloudNetworkconnectivityV1betaSpoke.labels
+
+  async:
+    collection: networkconnectivity.projects.locations.operations
+
+  request:
+    api_version: v1beta
+    method: create
+    collection: networkconnectivity.projects.locations.spokes
+
+
+- release_tracks: [GA]
+
+  help_text:
+    brief: Create a new VPN spoke.
+    description: Create a new [VPN spoke](https://cloud.google.com/network-connectivity/docs/network-connectivity-center/how-to/working-with-hubs-spokes#create-vpn-spoke).
+    examples: |
+      To create a VPN spoke in region ``us-central1'' that uses data transfer and has
+      two tunnels, run:
+
+        $ {command} my-spoke --hub="https://www.googleapis.com/networkconnectivity/v1/projects/my-project/locations/global/hubs/my-hub" --region=us-central1 --vpn-tunnels=https://www.googleapis.com/compute/v1/projects/my-project/regions/us-central1/vpnTunnels/vpn-tunnel1,https://www.googleapis.com/compute/v1/projects/my-project/regions/us-central1/vpnTunnels/vpn-tunnel2 --site-to-site-data-transfer
+
+  arguments:
+    resource:
+      spec: !REF googlecloudsdk.command_lib.network_connectivity.resources:spoke
+      help_text: Name of the spoke to be created.
+    params:
+    - arg_name: hub
+      required: true
+      api_field: spoke.hub
+      help_text: Hub that the spoke will attach to. The hub must already exist.
+    - arg_name: description
+      api_field: spoke.description
+      help_text: Description of the spoke to create.
+    - arg_name: vpn-tunnels
+      required: true
+      api_field: spoke.linkedVpnTunnels.uris
+      type: arg_list
+      help_text: HA VPN tunnels that the spoke provides connectivity to. The resources must already exist.
+    - arg_name: site-to-site-data-transfer
+      api_field: spoke.linkedVpnTunnels.siteToSiteDataTransfer
+      help_text: |
+        Whether to enable site-to-site data transfer for this spoke. Data transfer is available only
+        in [supported locations](https://cloud.google.com/network-connectivity/docs/network-connectivity-center/concepts/locations).
+    - arg_name: include-import-ranges
+      api_field: spoke.linkedVpnTunnels.includeImportRanges
+      type: arg_list
+      help_text: |
+        IP address range(s) allowed to be imported from hub subnets. Only ``ALL_IPV4_RANGES`` can be
+        added to the list. If it's empty, the spoke does not import any subnets from the hub.
+    - arg_name: exclude-import-ranges
+      api_field: spoke.linkedVpnTunnels.excludeImportRanges
+      type: arg_list
+      hidden: true
+      help_text: |
+        Hub routes overlapped/encompassed by exclude import ranges are excluded during import from hub.
+    - arg_name: include-export-ranges
+      api_field: spoke.linkedVpnTunnels.includeExportRanges
+      type: arg_list
+      hidden: true
+      help_text: |
+        Dynamic routes fully encompassed by include export ranges are included during export to hub.
+        If it's empty, the spoke exports all dynamic routes to the hub.
+    - arg_name: exclude-export-ranges
+      api_field: spoke.linkedVpnTunnels.excludeExportRanges
+      type: arg_list
+      hidden: true
+      help_text: |
+        Dynamic routes overlapped/encompassed by exclude export ranges are excluded during export to hub.
+    - arg_name: group
+      api_field: spoke.group
+      help_text: |
+        The group that the spoke will be added to. The group must already exist. If unset, the spoke
+        will be added to the ``default`` group.
+    labels:
+      api_field: spoke.labels
+
+  async:
+    collection: networkconnectivity.projects.locations.operations
+
+  request:
+    api_version: v1
+    method: create
+    collection: networkconnectivity.projects.locations.spokes

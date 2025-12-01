@@ -1,0 +1,25 @@
+release_tracks: [ALPHA, BETA, GA]
+help_text:
+  brief: Add an IAM policy binding to a Secure Source Manager repository.
+  description: Add an IAM policy binding to a Secure Source Manager repository.
+
+  examples: |
+    To add an IAM policy binding for the Repository Admin role (`roles/securesourcemanager.repoAdmin`)
+    for the user `test-user@gmail.com` in a repository named `my-repo` and location `us-central1`,
+    run the following command:
+
+      $ {command} my-repo --region=us-central1 --member=user:test-user@gmail.com --role=roles/securesourcemanager.repoAdmin
+
+    See https://cloud.google.com/iam/docs/managing-policies for details of policy role and member types.
+
+request:
+  api_version: v1
+  collection: securesourcemanager.projects.locations.repositories
+
+arguments:
+  resource:
+    help_text: Secure Source Manager repository to add the IAM policy binding to.
+    spec: !REF googlecloudsdk.command_lib.source_manager.resources:repository
+
+iam:
+  enable_condition: false

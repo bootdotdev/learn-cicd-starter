@@ -1,0 +1,23 @@
+release_tracks: [BETA]
+
+help_text:
+  brief: |
+    Describe an `LbTcpExtension` resource.
+  description: |
+    Show details about an `LbTcpExtension` resource.
+  examples: |
+    To show details about the `LbTcpExtension` resource named
+    `my-tcp-extension` located in `us-central1`.
+
+      $ {command} my-tcp-extension --location=us-central1
+
+arguments:
+  resource:
+    spec: !REF googlecloudsdk.command_lib.service_extensions.resources:lbTcpExtension
+    help_text: The ID of the `LbTcpExtension` resource.
+
+request: &request
+  BETA:
+    api_version: v1beta1
+
+  collection: networkservices.projects.locations.lbTcpExtensions

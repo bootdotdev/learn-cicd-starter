@@ -1,0 +1,27 @@
+- release_tracks: [ALPHA, BETA]
+  help_text:
+    brief: "Delete a health aggregation policy."
+    description: "Delete a health aggregation policy."
+    examples: |
+      To delete a single health aggregation policy, run the following command:
+
+      $ {command} <HEALTH_AGGREGATION_POLICY_NAME> --region=<REGION>
+
+  request:
+    ALPHA:
+      api_version: alpha
+    BETA:
+      api_version: beta
+    collection: compute.regionHealthAggregationPolicies
+
+  async:
+    collection: compute.regionOperations
+    response_name_field: selfLink
+    state:
+      field: status
+      success_values: ['DONE']
+
+  arguments:
+    resource:
+      help_text: Name of the health aggregation policy you want to delete.
+      spec: !REF googlecloudsdk.command_lib.compute.resources:health_aggregation_policy

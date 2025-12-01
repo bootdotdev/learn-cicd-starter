@@ -1,0 +1,18 @@
+- release_tracks: [ALPHA, GA]
+  help_text:
+    brief: |
+      Deletes a glossary category.
+    description: |
+      Deletes a glossary category.
+    examples: |
+      To delete glossary category `test-category` in glossary `test-glossary` in project `test-project` in location `us-central1`, run:
+          $ {command} test-category --glossary=test-glossary --location=us-central1 --project=test-project
+  request:
+    ALPHA:
+      api_version: v1
+    collection: dataplex.projects.locations.glossaries.categories
+  arguments:
+    resource:
+      help_text: |
+        Arguments and flags that define the glossary category you want to delete.
+      spec: !REF googlecloudsdk.command_lib.dataplex.resources:glossary_category
