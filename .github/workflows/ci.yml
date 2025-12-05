@@ -20,3 +20,6 @@ jobs:
 
       - name: Print Go version and exit successfully.
         run: go version
+
+      - name: Run Auth test cases
+        run: go test ./...
