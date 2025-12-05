@@ -1,4 +1,4 @@
-name: ci
+name: ci_ContinuousIntegration
 
 on:
   pull_request:
