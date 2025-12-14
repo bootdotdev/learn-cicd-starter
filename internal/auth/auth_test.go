@@ -17,7 +17,7 @@ func TestGetAPIKey(t *testing.T) {
 		{
 			name:          "No Authorization Header",
 			headers:       http.Header{}, // Empty headers
-			expectedKey:   "asdf",
+			expectedKey:   "",
 			expectedError: ErrNoAuthHeaderIncluded,
 		},
 		{
