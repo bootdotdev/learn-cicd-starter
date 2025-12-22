@@ -1,3 +1,5 @@
+![example workflow](https://github.com/cekapitan/learn-cicd-starter/actions/workflows/ci.yml/badge.svg)
+
 # learn-cicd-starter (Notely)
 
 More to come later
