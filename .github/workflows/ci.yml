@@ -17,9 +17,6 @@ jobs:
         uses: actions/setup-go@v5
         with:
           go-version: "1.25.1"
-
-      - name: Echo Go version
-        run: go version
       
       - name: tests
         run: go test ../.

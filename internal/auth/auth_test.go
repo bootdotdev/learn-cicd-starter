@@ -20,7 +20,7 @@ func TestGetAPIKey(t *testing.T) {
 		{
 			name:        "malformed header",
 			headerValue: "ApiKey",
-			wantErr:     ErrMalformedAuthHeader,
+			wantErr:     ErrNoAuthHeaderIncluded,
 		},
 		{
 			name:        "wrong auth scheme",
