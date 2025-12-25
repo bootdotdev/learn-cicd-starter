@@ -1,0 +1,35 @@
+name: cd
+
+on:
+  push:
+    branches: [main]
+
+jobs:
+  deploy:
+    name: Deploy
+    runs-on: ubuntu-latest
+    steps:
+      - name: Check out code
+        uses: actions/checkout@v4
+
+      - name: Set up Go
+        uses: actions/setup-go@v5
+        with:
+          go-version: "1.25.1"
+
+      - name: Build production binary
+        run: ./scripts/buildprod.sh
+
+      # 🔐 GCP-Login mit deinem Secret
+      - name: Set up gcloud
+        uses: google-github-actions/setup-gcloud@v2
+        with:
+          project_id: notely-476707
+          service_account_key: ${{ secrets.GCP_CREDENTIALS }}
+          export_default_credentials: true
+
+      # 🐳 Image in Artifact Registry bauen & pushen
+      - name: Build and push to Artifact Registry
+        run: |
+          gcloud builds submit \
+            --tag us-central1-docker.pkg.dev/notely-476707/notely-ar-repo/notely:latest .
