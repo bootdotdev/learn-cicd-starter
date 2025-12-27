@@ -1,0 +1,24 @@
+- release_tracks: [GA, BETA, ALPHA]
+  hidden: true  # TODO(b/420436006): unhide the CLI for GA.
+
+  help_text:
+    brief: Describe a Bigtable schema bundle.
+    description: Describe a Bigtable schema bundle.
+    examples: |
+      To describe the schema bundle `my-schema-bundle` in instance `my-instance` and table
+      `my-table`:
+
+        $ {command} my-schema-bundle --instance=test-instance --table=test-table
+
+  request:
+    collection: bigtableadmin.projects.instances.tables.schemaBundles
+    method: get
+
+  response:
+    modify_response_hooks:
+    - googlecloudsdk.api_lib.bigtable.schema_bundles:PrintParsedProtoDescriptorsInGetResponse
+
+  arguments:
+    resource:
+      help_text: Bigtable schema bundle to describe.
+      spec: !REF googlecloudsdk.command_lib.bigtable.resources:schema_bundle

@@ -1,0 +1,29 @@
+- release_tracks: [ALPHA, GA]
+  help_text:
+    brief: List Backups
+    description: Displays all backups in a project.
+    examples: |
+      To list backups for all data sources, backup vaults and locations, run:
+
+      $ {command}
+
+      To list all backups for a data source ``my-data-source'' and a backup vault ``my-vault'' in a location ``my-location'', run:
+
+      $ {command} --data-source=my-data-source --backup-vault=my-vault --location=my-location
+  request:
+    collection: backupdr.projects.locations.backupVaults.dataSources.backups
+    modify_request_hooks:
+    - googlecloudsdk.command_lib.backupdr.declarative:SetBasicViewByDefaultRequestHook
+
+  response:
+    id_field: name
+
+  arguments:
+    resource:
+      help_text: Data source to list backups from.
+      spec: !REF googlecloudsdk.command_lib.backupdr.resources:dataSourceDefault
+      is_positional: false
+
+  output:
+    format: |
+      json

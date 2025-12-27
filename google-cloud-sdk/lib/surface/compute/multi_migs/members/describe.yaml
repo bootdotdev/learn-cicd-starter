@@ -1,0 +1,22 @@
+- release_tracks: [ALPHA]
+  help_text:
+    brief: Describe a member of a multi-MIG.
+    description: Describe a member of a multi-MIG.
+    examples: |
+      To describe a multi-MIG member with the name 'example-member' for the multi-MIG with the name 'example-multimig', run:
+
+        $ {command} example-member --multi-mig=example-multimig
+
+      or pass the full resource name:
+
+        $ {command} projects/my-project/regions/us-central1/multiMigs/example-multimig/multiMigMembers/example-member
+
+  request:
+    collection: compute.regionMultiMigMembers
+    ALPHA:
+      api_version: alpha
+
+  arguments:
+    resource:
+      help_text: The name of the multi-MIG member.
+      spec: !REF googlecloudsdk.command_lib.compute.multi_migs.resources:member

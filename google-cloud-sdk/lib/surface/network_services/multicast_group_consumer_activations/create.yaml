@@ -1,0 +1,57 @@
+release_tracks: [GA, BETA, ALPHA]
+help_text:
+  brief: |
+    Create a multicast group consumer activation.
+  description: |
+    Create a multicast group consumer activation in the specified location of the current project.
+  ALPHA:
+    examples: |
+      Create a multicast group consumer activation with the name 'my-multicast-group-consumer-activation',
+      multicast-consumer-association 'path-to-mca', multicast-group 'path-to-mg' and location 'zone'.
+
+      $ {command} my-multicast-group-consumer-activation --multicast-consumer-association=path-to-mca --multicast-group=path-to-mg --location=zone
+  BETA:
+    examples: |
+      Create a multicast group consumer activation with the name 'my-multicast-group-consumer-activation',
+      multicast-consumer-association 'path-to-mca',
+      multicast-group-range-activation 'path-to-mg-range-activation'
+      and location 'zone'.
+
+      $ {command} my-multicast-group-consumer-activation --multicast-consumer-association=path-to-mca --multicast-group-range-activation=path-to-mg-range-activation --location=zone
+arguments:
+  resource:
+    spec: !REF googlecloudsdk.command_lib.network_services.resources:multicastGroupConsumerActivation
+    help_text: |
+      Name of the multicast group consumer activation to be created.
+  params:
+  - arg_name:  multicast-consumer-association
+    api_field: multicastGroupConsumerActivation.multicastConsumerAssociation
+    help_text: The multicast consumer association to be used.
+    required: true
+  - arg_name:  multicast-group
+    api_field: multicastGroupConsumerActivation.multicastGroup
+    release_tracks: [ALPHA]
+    help_text: The multicast group to be used.
+  - arg_name:  multicast-group-range-activation
+    api_field: multicastGroupConsumerActivation.multicastGroupRangeActivation
+    help_text: The multicast group range activation to be used.
+  - arg_name: description
+    api_field: multicastGroupConsumerActivation.description
+    help_text: The description for the multicast group consumer activation.
+  - arg_name: enable-logging
+    api_field: multicastGroupConsumerActivation.logConfig.enabled
+    help_text: Whether to enable logging for this multicast group consumer activation.
+    action: store_true_false
+  labels:
+    api_field: multicastGroupConsumerActivation.labels
+async:
+  collection: networkservices.projects.locations.operations
+request: &request
+  GA:
+    api_version: v1
+  ALPHA:
+    api_version: v1alpha1
+  BETA:
+    api_version: v1beta1
+  collection: networkservices.projects.locations.multicastGroupConsumerActivations
+  method: create

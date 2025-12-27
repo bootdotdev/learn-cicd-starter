@@ -1,0 +1,232 @@
+- release_tracks: [ALPHA, BETA, GA]
+
+  help_text:
+    brief: |
+      Update Memorystore Cluster for Redis instance.
+    description: |
+      Update the metadata and/or configuration parameters of a Redis cluster.
+
+      This command can fail for the following reasons:
+        * The cluster specified does not exist.
+        * The active account does not have permission to update the given
+          cluster.
+    examples: |
+      To update a Redis cluster with 5 shard and 2 replica, run:
+
+        $ {command} my-redis-cluster --shard-count=5 --replica-count=2
+
+  arguments:
+    resource:
+      spec: !REF googlecloudsdk.command_lib.redis.resources:cluster
+      help_text: |
+        Arguments and flags that specify the Memorystore Redis cluster you want to update.
+    params:
+    - arg_name: node-type
+      api_field: cluster.nodeType
+      help_text: Node Type of the redis cluster Node.
+      choices:
+      - enum_value: REDIS_HIGHMEM_MEDIUM
+        arg_value: redis-highmem-medium
+      - enum_value: REDIS_HIGHMEM_XLARGE
+        arg_value: redis-highmem-xlarge
+      - enum_value: REDIS_STANDARD_SMALL
+        arg_value: redis-standard-small
+      - enum_value: REDIS_SHARED_CORE_NANO
+        arg_value: redis-shared-core-nano
+    - arg_name: replica-count
+      api_field: cluster.replicaCount
+      type: int
+      help_text: |
+        The replica count of each shard.
+    - arg_name: maintenance-version
+      api_field: cluster.maintenanceVersion
+      help_text: |
+        The maintenance version of the cluster.
+    - arg_name: shard-count
+      api_field: cluster.shardCount
+      type: int
+      help_text: |
+        The shard count of the cluster.
+    - arg_name: deletion-protection
+      api_field: cluster.deletionProtectionEnabled
+      type: bool
+      help_text: |
+        Enable deletion protection for the Redis Cluster. Use
+        `--deletion-protection`/`--no-deletion-protection` to enable/disable it.
+    - arg_name: persistence-mode
+      api_field: cluster.persistenceConfig.mode
+      help_text: |
+        Operation mode for persistence.
+      choices:
+      - enum_value: DISABLED
+        arg_value: disabled
+        help_text: Persistence mode is disabled
+      - enum_value: RDB
+        arg_value: RDB
+        help_text: RDB-based persistence
+      - enum_value: AOF
+        arg_value: AOF
+        help_text: AOF-based persistence
+    - arg_name: rdb-snapshot-period
+      api_field: cluster.persistenceConfig.rdbConfig.rdbSnapshotPeriod
+      help_text: |
+        Attempted period between RDB snapshots.
+      choices:
+      - enum_value: ONE_HOUR
+        arg_value: 1h
+        help_text: 1 hour
+      - enum_value: SIX_HOURS
+        arg_value: 6h
+        help_text: 6 hours
+      - enum_value: TWELVE_HOURS
+        arg_value: 12h
+        help_text: 12 hours
+      - enum_value: TWENTY_FOUR_HOURS
+        arg_value: 24h
+        help_text: (default) 24 hours
+    - arg_name: rdb-snapshot-start-time
+      api_field: cluster.persistenceConfig.rdbConfig.rdbSnapshotStartTime
+      help_text: |
+        Date and time of the first snapshot in the ISO 1801 format, and alignment time for future snapshots. For example, 2024-01-01T01:00:00Z.
+        If not specified, the current time will be used.
+    - arg_name: aof-append-fsync
+      api_field: cluster.persistenceConfig.aofConfig.appendFsync
+      help_text: |
+        Fsync configuration.
+      choices:
+      - enum_value: NO  # yamllint disable-line rule:truthy
+        arg_value: no  # yamllint disable-line rule:truthy
+        help_text: |
+          Redis will not explicitly call fsync.
+      - enum_value: EVERYSEC
+        arg_value: everysec
+        help_text: |
+          (default) Redis explicitly calls fsync every second.
+      - enum_value: ALWAYS
+        arg_value: always
+        help_text: |
+          Redis explicitly calls fsync for every write command.
+    - arg_name: automated-backup-mode
+      api_field: cluster.automatedBackupConfig.automatedBackupMode
+      help_text: |
+        Automated backup mode
+      choices:
+      - enum_value: DISABLED
+        arg_value: disabled
+        help_text: |
+          (default) Automated backup is disabled.
+      - enum_value: ENABLED
+        arg_value: enabled
+        help_text: |
+          Automated backup is enabled.
+    - arg_name: automated-backup-start-time
+      api_field: cluster.automatedBackupConfig.fixedFrequencySchedule.startTime
+      help_text: |
+        One-hour window when you want automated-backup operations to start. Specify the time in the format HH:00 on a 24-hour cycle in UTC time.
+      ALPHA:
+        processor: googlecloudsdk.command_lib.redis.cluster_util:ParseTimeOfDayAlpha
+      BETA:
+        processor: googlecloudsdk.command_lib.redis.cluster_util:ParseTimeOfDayBeta
+      GA:
+        processor: googlecloudsdk.command_lib.redis.cluster_util:ParseTimeOfDayGa
+    - arg_name: automated-backup-ttl
+      api_field: cluster.automatedBackupConfig.retention
+      type: googlecloudsdk.core.util.times:ParseDuration
+      processor: googlecloudsdk.core.util.times:FormatDurationForJson
+      help_text: |
+        Time to live for automated backups. A backup will be deleted automatically after the TTL
+        is reached. It ranges from 1 day to 365 days. For example, "10d" for 10 days. If not specified, the default value is 35 days.
+    - group:
+        mutex: true
+        params:
+        - arg_name: maintenance-window-any
+          action: store_true
+          help_text: |
+            Removes the user-specified maintenance window.
+        - group:
+            params:
+            - arg_name: maintenance-window-day
+              api_field: cluster.maintenancePolicy.weeklyMaintenanceWindow.day
+              choices:
+              - arg_value: monday
+                enum_value: MONDAY
+              - arg_value: tuesday
+                enum_value: TUESDAY
+              - arg_value: wednesday
+                enum_value: WEDNESDAY
+              - arg_value: thursday
+                enum_value: THURSDAY
+              - arg_value: friday
+                enum_value: FRIDAY
+              - arg_value: saturday
+                enum_value: SATURDAY
+              - arg_value: sunday
+                enum_value: SUNDAY
+              help_text: |
+               The day of week when the window starts, e.g. `sunday`.
+            - arg_name: maintenance-window-hour
+              api_field: cluster.maintenancePolicy.weeklyMaintenanceWindow.startTime.hours
+              help_text: |
+               Hour of day (`0` to `23`) for the start of maintenance window, in UTC time zone.
+              processor: googlecloudsdk.command_lib.redis.clusters_update_util:CheckMaintenanceWindowStartTimeField
+    - arg_name: simulate-maintenance-event
+      action: store_true
+      help_text: |
+        Trigger a simulation for maintenance event.
+      type: bool
+    additional_arguments_hook: googlecloudsdk.command_lib.redis.cluster_util:AdditionalClusterUpdateArguments
+
+  async:
+    collection: redis.projects.locations.operations
+
+  request:
+    ALPHA:
+      api_version: v1alpha1
+      modify_request_hooks:
+      - googlecloudsdk.command_lib.redis.clusters_update_util:UpdateReplicaCount
+      - googlecloudsdk.command_lib.redis.clusters_update_util:UpdateShardCount
+      - googlecloudsdk.command_lib.redis.clusters_update_util:UpdateDeletionProtection
+      - googlecloudsdk.command_lib.redis.clusters_update_util:UpdatePersistenceConfig
+      - googlecloudsdk.command_lib.redis.clusters_update_util:RemoveRedisConfigs
+      - googlecloudsdk.command_lib.redis.clusters_update_util:UpdateRedisConfigs
+      - googlecloudsdk.command_lib.redis.clusters_update_util:UpdateMaintenanceWindowAny
+      - googlecloudsdk.command_lib.redis.clusters_update_util:UpdateMaintenanceWindowPolicy
+      - googlecloudsdk.command_lib.redis.clusters_update_util:UpdateSimulateMaintenanceEvent
+      - googlecloudsdk.command_lib.redis.clusters_update_util:UpdateAutomatedBackupConfig
+      - googlecloudsdk.command_lib.redis.clusters_update_util:UpdateNodeType
+      - googlecloudsdk.command_lib.redis.clusters_update_util:UpdateMaintenanceVersion
+    BETA:
+      api_version: v1beta1
+      modify_request_hooks:
+      - googlecloudsdk.command_lib.redis.clusters_update_util:UpdateReplicaCount
+      - googlecloudsdk.command_lib.redis.clusters_update_util:UpdateShardCount
+      - googlecloudsdk.command_lib.redis.clusters_update_util:UpdateDeletionProtection
+      - googlecloudsdk.command_lib.redis.clusters_update_util:UpdatePersistenceConfig
+      - googlecloudsdk.command_lib.redis.clusters_update_util:RemoveRedisConfigs
+      - googlecloudsdk.command_lib.redis.clusters_update_util:UpdateRedisConfigs
+      - googlecloudsdk.command_lib.redis.clusters_update_util:UpdateMaintenanceWindowAny
+      - googlecloudsdk.command_lib.redis.clusters_update_util:UpdateMaintenanceWindowPolicy
+      - googlecloudsdk.command_lib.redis.clusters_update_util:UpdateSimulateMaintenanceEvent
+      - googlecloudsdk.command_lib.redis.clusters_update_util:UpdateAutomatedBackupConfig
+      - googlecloudsdk.command_lib.redis.clusters_update_util:UpdateNodeType
+      - googlecloudsdk.command_lib.redis.clusters_update_util:UpdateMaintenanceVersion
+    GA:
+      api_version: v1
+      modify_request_hooks:
+      - googlecloudsdk.command_lib.redis.clusters_update_util:UpdateReplicaCount
+      - googlecloudsdk.command_lib.redis.clusters_update_util:UpdateShardCount
+      - googlecloudsdk.command_lib.redis.clusters_update_util:UpdateDeletionProtection
+      - googlecloudsdk.command_lib.redis.clusters_update_util:UpdatePersistenceConfig
+      - googlecloudsdk.command_lib.redis.clusters_update_util:RemoveRedisConfigs
+      - googlecloudsdk.command_lib.redis.clusters_update_util:UpdateRedisConfigs
+      - googlecloudsdk.command_lib.redis.clusters_update_util:UpdateMaintenanceWindowAny
+      - googlecloudsdk.command_lib.redis.clusters_update_util:UpdateMaintenanceWindowPolicy
+      - googlecloudsdk.command_lib.redis.clusters_update_util:UpdateSimulateMaintenanceEvent
+      - googlecloudsdk.command_lib.redis.clusters_update_util:UpdateAutomatedBackupConfig
+      - googlecloudsdk.command_lib.redis.clusters_update_util:UpdateNodeType
+      - googlecloudsdk.command_lib.redis.clusters_update_util:UpdateMaintenanceVersion
+    collection: redis.projects.locations.clusters
+
+  update:
+    read_modify_update: true
+    disable_auto_field_mask: true

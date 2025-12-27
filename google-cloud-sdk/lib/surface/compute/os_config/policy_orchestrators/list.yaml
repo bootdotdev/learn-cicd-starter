@@ -1,0 +1,44 @@
+- release_tracks: [GA, BETA, ALPHA]
+
+  help_text:
+    brief: List policy orchestrators.
+    description: |
+      List policy orchestrators.
+
+      ## EXAMPLES
+
+      To list the policy orchestrators in folder `123456`, run:
+
+        $ {command} --folder 123456
+
+  request:
+    collection:
+    - osconfig.projects.locations.global.policyOrchestrators
+    - osconfig.folders.locations.global.policyOrchestrators
+    - osconfig.organizations.locations.global.policyOrchestrators
+    modify_request_hooks:
+    - googlecloudsdk.command_lib.compute.os_config.utils:ModifyOrchestrorPolicyListRequest
+    ALPHA:
+      api_version: v2alpha
+    BETA:
+      api_version: v2beta
+    GA:
+      api_version: v2
+
+  response:
+    id_field: name
+
+  arguments:
+    resource:
+      help_text: Project, folder or organization to list policy orchestrators from.
+      spec: !REF googlecloudsdk.command_lib.compute.os_config.resources:project_folder_organization
+
+  output:
+    format: |
+      table(
+         name.basename():label=POLICY_ORCHESTRATOR_ID,
+         action,
+         orchestrationState.currentIterationState.state,
+         createTime.date("%Y-%m-%dT%H:%M:%SZ"),
+         updateTime.date("%Y-%m-%dT%H:%M:%SZ")
+      )

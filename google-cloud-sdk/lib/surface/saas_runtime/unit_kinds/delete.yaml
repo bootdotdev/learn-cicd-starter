@@ -1,0 +1,19 @@
+- release_tracks: [ALPHA, BETA]
+  help_text:
+    brief: Delete a Unit Kind
+    description: Delete a Unit Kind
+    examples: |-
+      To delete the Unit Kind, run:
+
+      $ {command}
+  arguments:
+    params:
+    - help_text: |-
+        Name of the resource
+      is_positional: true
+      resource_spec: !REF googlecloudsdk.command_lib.saas_runtime.resources:unit_kind
+      required: true
+  request:
+    api_version: v1beta1
+    collection:
+    - saasservicemgmt.projects.locations.unitKinds

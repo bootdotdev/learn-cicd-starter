@@ -1,0 +1,25 @@
+- release_tracks: [ALPHA, GA]
+  help_text:
+    brief: |
+      Delete a Dataplex Glossary.
+    description: |
+      Delete a Dataplex Glossary.
+    examples: |
+      To Delete Glossary `test-glossary` in project `test-dataplex` at location `us-central1`, run:
+          $ {command} test-glossary --location=us-central1 --project=test-dataplex
+  request:
+    ALPHA:
+      api_version: v1
+    collection: dataplex.projects.locations.glossaries
+  arguments:
+    resource:
+      help_text: |
+        Arguments and flags that define the Dataplex Glossary you want to delete.
+      spec: !REF googlecloudsdk.command_lib.dataplex.resources:glossary
+    params:
+    - arg_name: etag
+      api_field: etag
+      help_text: |
+        etag value for particular Glossary.
+  async:
+    collection: dataplex.projects.locations.operations

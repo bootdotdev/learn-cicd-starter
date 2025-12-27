@@ -1,0 +1,37 @@
+release_tracks: [ALPHA, BETA, GA]
+help_text:
+  brief: |
+    Import BackendAuthenticationConfigs.
+  description: |
+    Import a BackendAuthenticationConfigs.
+  examples: |
+      To import a BackendAuthenticationConfigs from a YAML file, run:
+
+        $ {command} my-backend-authentication-config --source=my-backend-authentication-config.yaml --location=global
+
+request:
+  collection: networksecurity.projects.locations.backendAuthenticationConfigs
+  ALPHA:
+    api_version: v1alpha1
+  BETA:
+    api_version: v1beta1
+  GA:
+    api_version: v1
+
+arguments:
+  resource:
+    spec: !REF googlecloudsdk.command_lib.network_security.resources:backendAuthenticationConfig
+    help_text: |
+      Name of the BackendAuthenticationConfigs to import.
+
+async:
+  collection: networksecurity.projects.locations.operations
+
+import:
+  abort_if_equivalent: true
+  create_if_not_exists: true
+  create_request:
+    collection: networksecurity.projects.locations.backendAuthenticationConfigs
+    ALPHA:
+      api_version: v1alpha1
+    method: create

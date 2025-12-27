@@ -1,0 +1,40 @@
+- release_tracks: [ALPHA]
+  command_type: UPDATE
+  help_text:
+    brief: |
+      Sets the zone drains for an instance.
+    description: |
+      Sets a list of zones to drain for an instance. Draining a zone prevents tasks from being
+      scheduled there. Zone can be drained fully or partially, with higher drain percentage
+      preventing more tasks from being scheduled there.
+    examples: |
+      $ gcloud remote-build-execution instances set-drained-zones default_instance \
+        --drains zone=us-central1-a,percentage=100 \
+        --drains zone=us-central1-b,percentage=50
+
+  request:
+    collection: remotebuildexecution.projects.instances
+
+  async:
+    collection: remotebuildexecution.projects.operations
+
+  arguments:
+    resource:
+      spec: !REF googlecloudsdk.command_lib.remote_build_execution.resources:instance
+      help_text: |
+        Arguments describing the drains to set.
+    params:
+    - api_field: googleDevtoolsRemotebuildexecutionAdminV1alphaInstance.zoneDrains
+      arg_name: drains
+      required: true
+      help_text: |
+        A list of zone drains to set.
+      type:
+        arg_dict:
+          flatten: false
+          spec:
+          - api_field: zone
+            arg_name: zone
+          - api_field: percent
+            arg_name: percent
+            type: int

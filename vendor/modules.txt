@@ -20,6 +20,8 @@ github.com/klauspost/compress/flate
 ## explicit; go 1.19
 github.com/libsql/sqlite-antlr4-parser/sqliteparser
 github.com/libsql/sqlite-antlr4-parser/sqliteparserutils
+# github.com/stretchr/testify v1.11.1
+## explicit; go 1.17
 # github.com/tursodatabase/libsql-client-go v0.0.0-20240220085343-4ae0eb9d0898
 ## explicit; go 1.20
 github.com/tursodatabase/libsql-client-go/libsql

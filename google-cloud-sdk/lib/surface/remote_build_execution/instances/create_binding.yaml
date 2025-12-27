@@ -1,0 +1,37 @@
+- release_tracks: [ALPHA]
+  command_type: UPDATE
+  help_text:
+    brief: |
+      Create a backend IAM binding for an instance.
+    description: |
+      Creates a backend IAM binding on the backend project of a Remote Build Execution instance,
+      which will add the specified IAM role for the specified principal on the IAM policy of the
+      backend project in question.
+    examples: |
+      The following creates an example backend IAM binding:
+
+        $ {command} default_instance --principal=group:foo@twosync.google.com \
+        --role=roles/servicemanagement.quotaAdmin
+
+  request:
+    collection: remotebuildexecution.projects.instances
+    api_version: v1alpha
+    method: createBackendIAMBinding
+
+  arguments:
+    resource:
+      spec: !REF googlecloudsdk.command_lib.remote_build_execution.resources:instance
+      help_text: |
+        Arguments describing the instance to update backend IAM bindings for.
+    params:
+    - api_field: googleDevtoolsRemotebuildexecutionAdminV1alphaCreateBackendIAMBindingRequest.backendIamBinding.principal
+      arg_name: principal
+      required: true
+      help_text: |
+        The IAM binding principal formatted as <PRINCIPAL_TYPE_IDENTIFIER>:<PRINCIPAL>. For example,
+        `user:foo@google.com`.
+    - api_field: googleDevtoolsRemotebuildexecutionAdminV1alphaCreateBackendIAMBindingRequest.backendIamBinding.role
+      arg_name: role
+      required: true
+      help_text: |
+        The IAM binding role formatted as roles/<ROLE>. For example, `roles/editor`.

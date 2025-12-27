@@ -1,0 +1,26 @@
+- release_tracks: [GA, BETA, ALPHA]
+  hidden: true  # TODO(b/420436006): unhide the CLI for GA.
+
+  help_text:
+    brief: List all schema bundles of a Bigtable table.
+    description: List all schema bundles of a Bigtable table.
+    examples: |
+      To list the schema bundles in instance `my-instance` and table `my-table`:
+
+        $ {command} --instance=my-instance --table=my-table
+
+      To list all schema bundles that match the given filter:
+
+        $ {command} --instance=my-instance --table=my-table --filter="name=( `NAME` ... )"
+
+  request:
+    collection: bigtableadmin.projects.instances.tables.schemaBundles
+    method: list
+
+  response:
+    id_field: name
+
+  arguments:
+    resource:
+      help_text: Bigtable table for which to list all schema bundles.
+      spec: !REF googlecloudsdk.command_lib.bigtable.resources:table

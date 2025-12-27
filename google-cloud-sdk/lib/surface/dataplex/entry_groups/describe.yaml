@@ -1,0 +1,20 @@
+- release_tracks: [ALPHA, GA]
+  help_text:
+    brief: |
+      Describe a Dataplex Entry Group.
+    description: |
+      Displays all details of an Entry Group given a valid Entry Group ID.
+    examples: |
+       To describe a Dataplex Entry Group `test-entry-group` in location `us-central1` and in project `test-project`, run:
+
+          $ {command} test-entry-group --location=us-central1 --project=test-project
+  request:
+    ALPHA:
+      api_version: v1
+    collection: dataplex.projects.locations.entryGroups
+    method: get
+  arguments:
+    resource:
+      help_text: |
+        Arguments and flags that define the Dataplex Entry Group you want to retrieve.
+      spec: !REF googlecloudsdk.command_lib.dataplex.resources:entry_group

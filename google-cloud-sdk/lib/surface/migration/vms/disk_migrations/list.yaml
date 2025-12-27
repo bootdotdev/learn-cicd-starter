@@ -1,0 +1,28 @@
+- release_tracks: [ALPHA]
+  help_text:
+    brief: List disk migration resources.
+    description: |
+      {command} prints a detailed list of disk migration resources.
+      To use this command, you must enable VM Migration API in your project.
+
+    examples: |
+      To list the disk migration resources in us-central1 in the AWS source my-aws-source in the
+      default project, run:
+
+        $ {command} --location=us-central1 --source=my-aws-source
+
+  request:
+    collection: vmmigration.projects.locations.sources.diskMigrationJobs
+
+  response:
+    id_field: name
+
+  arguments:
+    resource:
+      help_text: |
+        The source environment resource of the disk migration resources.
+        This is the parent resource of the disk migration resources.
+      spec: !REF googlecloudsdk.command_lib.migration.vms.resources:source
+
+  output:
+    format: table(name.basename(), state, awsSourceDiskDetails.volumeId, targetDetails.targetProject.basename(), targetDetails.targetDisk.zone, targetDetails.targetDisk.diskId, targetDetails.targetDisk.diskType, createTime)

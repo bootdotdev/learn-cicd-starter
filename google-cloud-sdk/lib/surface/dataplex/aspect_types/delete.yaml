@@ -1,0 +1,26 @@
+- release_tracks: [ALPHA, GA]
+  help_text:
+    brief: |
+      Delete a Dataplex Aspect Type.
+    description: |
+      Delete a Dataplex Aspect Type.
+    examples: |
+      To delete Aspect Type `test-aspect-type` in project `test-project` and in location `us-central1`, run:
+
+          $ {command} test-aspect-type --location=us-central1 --project=test-project
+  request:
+    ALPHA:
+      api_version: v1
+    collection: dataplex.projects.locations.aspectTypes
+  arguments:
+    resource:
+      help_text: |
+        Arguments and flags that define the Dataplex Aspect Type you want to delete.
+      spec: !REF googlecloudsdk.command_lib.dataplex.resources:aspect_type
+    params:
+    - arg_name: etag
+      api_field: etag
+      help_text: |
+        etag for the Aspect Type you want to delete.
+  async:
+    collection: dataplex.projects.locations.operations

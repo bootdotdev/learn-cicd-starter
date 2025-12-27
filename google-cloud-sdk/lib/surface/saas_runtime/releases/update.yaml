@@ -1,0 +1,64 @@
+- release_tracks: [ALPHA, BETA]
+  help_text:
+    brief: Update a Release
+    description: Update a Release
+    examples: |-
+      To update the Release, run:
+
+      $ {command}
+  arguments:
+    params:
+    - help_text: |-
+        Identifier. The resource name (full URI of the resource) following the standard naming
+        scheme:
+
+          "projects/{project}/locations/{location}/releases/{release}"
+      is_positional: true
+      resource_spec: !REF googlecloudsdk.command_lib.saas_runtime.resources:release
+      required: true
+    - arg_name: upgradeable-from-releases
+      api_field: release.releaseRequirements.upgradeableFromReleases
+      required: false
+      repeated: true
+      help_text: |-
+        A list of releases from which a unit can be upgraded to this one
+        (optional). If left empty no constraints will be applied. When provided,
+        unit upgrade requests to this release will check and enforce this
+        constraint.
+      clearable: true
+    - arg_name: input-variable-defaults
+      api_field: release.inputVariableDefaults
+      required: false
+      repeated: true
+      help_text: |-
+        Mapping of input variables to default values. Maximum 100
+      clearable: true
+      spec:
+      - api_field: variable
+        help_text: |-
+          Name of the variable from actuation configs.
+      - api_field: type
+        help_text: |-
+          Name of a supported variable type. Supported types are string, int, bool.
+      - api_field: value
+        help_text: |-
+          String encoded value for the variable.
+    - arg_name: labels
+      api_field: release.labels
+      required: false
+      repeated: true
+      help_text: |-
+        The labels on the resource, which can be used for categorization.
+        similar to Kubernetes resource labels.
+      clearable: true
+      spec:
+      - api_field: key
+      - api_field: value
+  request:
+    api_version: v1beta1
+    collection:
+    - saasservicemgmt.projects.locations.releases
+    modify_request_hooks:
+    - googlecloudsdk.command_lib.saas_runtime.releases:AddParentToUpgradeableFromReleases
+  update:
+    read_modify_update: true

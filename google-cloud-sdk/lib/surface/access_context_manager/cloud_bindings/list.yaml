@@ -1,0 +1,186 @@
+- release_tracks: [GA, ALPHA]
+
+  help_text:
+    brief: List cloud access bindings under an organization.
+    description: List cloud access bindings.
+    GA:
+      examples: |
+        To list cloud access bindings, run:
+
+          $ {command}
+
+        This command prints a list of Google Cloud user access bindings, `gcpUserAccessBindings`,
+        in YAML format. By default, the binding is printed in the following format:
+
+          ---
+          accessLevels:
+          - accessPolicies/9522/accessLevels/device_trusted
+          dryRunAccessLevels:
+          - accessPolicies/9522/accessLevels/specific_location
+          groupKey: a3dad
+          name: organizations/256/gcpUserAccessBindings/b3-BhcX_Ud5N
+          sessionSettings:
+            sessionLength: 57600s
+            sessionLengthEnabled: true
+            sessionReauthMethod: LOGIN
+
+        Or
+
+          ---
+          accessLevels:
+          - accessPolicies/9522/accessLevels/device_trusted
+          dryRunAccessLevels:
+          - accessPolicies/9522/accessLevels/specific_location
+          groupKey: a3dad
+          name: organizations/256/gcpUserAccessBindings/b3-BhcX_Ud5N
+          scopedAccessSettings:
+          - activeSettings:
+              accessLevels:
+              - accessPolicies/9522/accessLevels/device_trusted
+            dryRunSettings:
+              accessLevels:
+              - accessPolicies/9522/accessLevels/specific_location
+            scope:
+              clientScope:
+                restrictedClientApplication:
+                  clientId: 123.apps.googleusercontent.com
+          - activeSettings:
+              accessLevels:
+              - accessPolicies/9522/accessLevels/device_trusted
+            dryRunSettings:
+              accessLevels:
+              - accessPolicies/9522/accessLevels/specific_location
+            scope:
+              clientScope:
+                restrictedClientApplication:
+                  name: Cloud Console
+          - activeSettings:
+              sessionSettings:
+                sessionLength: 57600s
+                sessionLengthEnabled: true
+                sessionReauthMethod: LOGIN
+            scope:
+              clientScope:
+                restrictedClientApplication:
+                  clientId: 123.apps.googleusercontent.com
+          sessionSettings:
+            sessionLength: 57600s
+            sessionLengthEnabled: true
+            sessionReauthMethod: LOGIN
+    ALPHA:
+      examples: |
+        To list cloud access bindings, run:
+
+          $ {command}
+
+        This command prints a list of Google Cloud user access bindings, `gcpUserAccessBindings`,
+        in YAML format. By default, the binding is printed in the following format:
+
+          ---
+          accessLevels:
+          - accessPolicies/9522/accessLevels/device_trusted
+          dryRunAccessLevels:
+          - accessPolicies/9522/accessLevels/specific_location
+          groupKey: a3dad
+          name: organizations/256/gcpUserAccessBindings/b3-BhcX_Ud5N
+
+        Or
+
+          ---
+          accessLevels:
+          - accessPolicies/9522/accessLevels/device_trusted
+          dryRunAccessLevels:
+          - accessPolicies/9522/accessLevels/specific_location
+          groupKey: a3dad
+          name: organizations/256/gcpUserAccessBindings/b3-BhcX_Ud5N
+          scopedAccessSettings:
+          - activeSettings:
+              accessLevels:
+              - accessPolicies/9522/accessLevels/device_trusted
+            dryRunSettings:
+              accessLevels:
+              - accessPolicies/9522/accessLevels/specific_location
+            scope:
+              clientScope:
+                restrictedClientApplication:
+                  clientId: 123.apps.googleusercontent.com
+          - activeSettings:
+              accessLevels:
+              - accessPolicies/9522/accessLevels/device_trusted
+            dryRunSettings:
+              accessLevels:
+              - accessPolicies/9522/accessLevels/specific_location
+            scope:
+              clientScope:
+                restrictedClientApplication:
+                  name: Cloud Console
+          - activeSettings:
+              sessionSettings:
+                sessionLength: 57600s
+                sessionLengthEnabled: true
+                sessionReauthMethod: LOGIN
+            scope:
+              clientScope:
+                restrictedClientApplication:
+                  clientId: 123.apps.googleusercontent.com
+          sessionSettings:
+            sessionLength: 57600s
+            sessionLengthEnabled: true
+            sessionReauthMethod: LOGIN
+
+        If filter is specified as
+        `principal:serviceAccount OR principal:serviceAccountProjectNumber`,
+        the output is printed in the following format:
+
+          ---
+          accessLevels:
+          - accessPolicies/9522/accessLevels/device_trusted
+          dryRunAccessLevels:
+          - accessPolicies/9522/accessLevels/specific_location
+          principal:
+          serviceAccount: service_account@project.iam.gserviceaccount.com
+          name: organizations/256/gcpUserAccessBindings/b3-BhcX_Ud5N
+
+        Or
+
+          ---
+          accessLevels:
+          - accessPolicies/9522/accessLevels/device_trusted
+          dryRunAccessLevels:
+          - accessPolicies/9522/accessLevels/specific_location
+          principal:
+          serviceAccountProjectNumber: 123456789
+          name: organizations/256/gcpUserAccessBindings/b3-BhcX_Ud5N
+
+        If filter is specified as
+        `principal:federatedPrincipal`,
+        the output is printed in the following format:
+
+          ---
+          accessLevels:
+          - accessPolicies/9522/accessLevels/device_trusted
+          dryRunAccessLevels:
+          - accessPolicies/9522/accessLevels/specific_location
+          principal:
+          federatedPrincipal: principal://iam.googleapis.com/projects/123/locations/global/workloadIdentityPools/pool-id/subject/subject-id
+          name: organizations/256/gcpUserAccessBindings/b3-BhcX_Ud5N
+
+  request:
+    collection: accesscontextmanager.organizations.gcpUserAccessBindings
+    GA:
+      api_version: v1
+    ALPHA:
+      api_version: v1alpha
+      modify_request_hooks:
+      - googlecloudsdk.command_lib.accesscontextmanager.cloud_bindings:ProcessFilter
+
+  arguments:
+    resource:
+      help_text: The parent organization of the bindings you want to list.
+      spec: !REF googlecloudsdk.command_lib.accesscontextmanager.resources:organization
+
+  output:
+    GA:
+      format: yaml(name, groupKey, accessLevels, dryRunAccessLevels, sessionSettings, restrictedClientApplications, scopedAccessSettings)
+    ALPHA:
+      format: yaml(name, groupKey, principal, accessLevels, dryRunAccessLevels, sessionSettings, restrictedClientApplications, scopedAccessSettings)

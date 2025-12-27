@@ -1,0 +1,30 @@
+- release_tracks: [ALPHA]
+
+  help_text:
+    brief: Get the IAM policy for a Cloud Run worker pool.
+    description: |
+      This command gets the IAM policy for a worker pool. If
+      formatted as JSON, the output can be edited and used as a policy
+      file for *set-iam-policy*. The output includes an "etag" field
+      identifying the version emitted and allowing detection of
+      concurrent policy updates; see
+      $ gcloud alpha run registries set-iam-policy for additional details.
+    examples: |
+      To print the IAM policy for a given worker pool, run:
+
+        $ {command} --region=us-central1 my-worker-pool
+
+  request:
+    collection: run.projects.locations.workerpools
+    modify_request_hooks:
+    - googlecloudsdk.command_lib.run.platforms:ValidatePlatformIsManaged
+
+  arguments:
+    resource:
+      help_text: The worker pool for which to display the IAM policy.
+      spec: !REF googlecloudsdk.command_lib.run.resources:workerpool
+
+  ALPHA:
+    iam:
+      policy_version: 3
+      get_iam_policy_version_path: options_requestedPolicyVersion

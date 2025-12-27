@@ -1,0 +1,40 @@
+- release_tracks: [GA]
+  help_text:
+    brief: |
+      Update annotations on an Artifact Registry package.
+    description: |
+      Update annotations on an Artifact Registry package.
+
+    examples: |
+      To update annotations on a package named `my-pkg` when the project ID, repository and location defaults are set, run the following command:
+
+      CAUTION: This command will overwrite any existing annotations on the package.
+
+          $ {command} my-pkg --annotations=key1=value1,key2=value2
+
+      To clear all annotations on the package run the following command:
+
+          $ {command} my-pkg --annotations={}
+
+  arguments:
+    resource:
+      spec: !REF googlecloudsdk.command_lib.artifacts.resources:package
+      help_text: |
+        The Artifact Registry package to update.
+    params:
+    - arg_name: annotations
+      api_field: package.annotations
+      required: false
+      help_text: |
+        List of annotations in the format of KEY=VALUE pairs to add, update, or remove.
+        Duplicate keys will be overwritten. For more details on annotations,
+        see https://google.aip.dev/148#annotations.
+      spec:
+      - api_field: key
+      - api_field: value
+
+  request: &request
+    api_version: v1
+    collection: artifactregistry.projects.locations.repositories.packages
+    modify_request_hooks:
+    - googlecloudsdk.command_lib.artifacts.util:EscapePackageNameHook

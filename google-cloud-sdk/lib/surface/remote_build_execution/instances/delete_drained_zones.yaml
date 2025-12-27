@@ -1,0 +1,25 @@
+- release_tracks: [ALPHA]
+  help_text:
+    brief: |
+      Deletes all drained zones for an instance.
+    description: |
+      Removes all existing drains for an instance.
+    examples: |
+      The following deletes the feature policy for an instance named 'default_instance':
+
+        $ {command} default_instance
+
+  request:
+    collection: remotebuildexecution.projects.instances
+    method: patch
+    modify_request_hooks:
+    - googlecloudsdk.command_lib.remote_build_execution.instance_update_util:RemoveZoneDrains
+
+  async:
+    collection: remotebuildexecution.projects.operations
+
+  arguments:
+    resource:
+      spec: !REF googlecloudsdk.command_lib.remote_build_execution.resources:instance
+      help_text: |
+        Arguments describing the instance to remove drains from.

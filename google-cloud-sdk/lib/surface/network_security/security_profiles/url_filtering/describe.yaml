@@ -1,0 +1,28 @@
+release_tracks: [ALPHA, BETA]
+
+help_text:
+  brief: |
+    Describe a URL Filtering Security Profile.
+  description: Show details of the Security Profile.
+
+  examples: |
+    To show details of a Security Profile named `my-urlf-sp` run:
+
+      $ {command} my-urlf-sp --organization=1234 --location=global
+
+arguments:
+  resource:
+    spec: !REF googlecloudsdk.command_lib.network_security.resources:securityProfile
+    help_text: Name of the Security Profile to be described.
+
+output:
+  format: json
+
+request: &request
+  ALPHA:
+    api_version: v1alpha1
+  BETA:
+    api_version: v1beta1
+  GA:
+    api_version: v1
+  collection: networksecurity.organizations.locations.securityProfiles

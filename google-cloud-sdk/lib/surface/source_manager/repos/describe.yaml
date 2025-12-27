@@ -1,0 +1,18 @@
+- release_tracks: [ALPHA, BETA, GA]
+
+  help_text:
+    brief: Describe a Secure Source Manager repository.
+    description: Get metadata of a Secure Source Manager repository.
+    examples: |
+      To describe a repository called `my-repo` in location `us-central1`, run the following command:
+
+      $ {command} my-repo --region=us-central1
+
+  request:
+    api_version: v1
+    collection: securesourcemanager.projects.locations.repositories
+
+  arguments:
+    resource:
+      help_text: The Secure Source Manager repository to describe.
+      spec: !REF googlecloudsdk.command_lib.source_manager.resources:repository

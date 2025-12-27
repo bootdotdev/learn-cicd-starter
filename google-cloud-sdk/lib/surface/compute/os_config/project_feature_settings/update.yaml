@@ -1,0 +1,44 @@
+- release_tracks: [GA]
+  help_text:
+    brief: |
+      Update VM Manager project feature settings.
+    description: |
+      Update VM Manager project feature settings.
+    examples: |
+      To update project feature settings for project `my-project`:
+
+         $ {command} --project=my-project --patch-and-config-feature-set=full
+
+  arguments:
+    resource:
+      spec: !REF googlecloudsdk.command_lib.compute.os_config.resources:project_global
+      is_positional: false
+      help_text: |
+        The project to modify the feature settings for.
+    params:
+    - arg_name: patch-and-config-feature-set
+      api_field: projectFeatureSettings.patchAndConfigFeatureSet
+      help_text: |
+        Specifies the feature set for VM Manager.
+      required: true
+      choices:
+      - arg_value: osconfig-b
+        enum_value: OSCONFIG_B
+        help_text: Limited feature set. Enables only the basic set of features.
+      - arg_value: limited
+        enum_value: OSCONFIG_B
+        help_text: Limited feature set. Enables only the basic set of features (alias for osconfig-b).
+      - arg_value: osconfig-c
+        enum_value: OSCONFIG_C
+        help_text: Full set of VM Manager functionality.
+      - arg_value: full
+        enum_value: OSCONFIG_C
+        help_text: Full set of VM Manager functionality (alias for osconfig-c).
+
+  request:
+    api_version: v1
+    disable_resource_check: true
+    collection: osconfig.projects.locations.global
+    method: updateProjectFeatureSettings
+    modify_request_hooks:
+    - googlecloudsdk.command_lib.compute.os_config.utils:UpdateProjectFeatureSettingsResource

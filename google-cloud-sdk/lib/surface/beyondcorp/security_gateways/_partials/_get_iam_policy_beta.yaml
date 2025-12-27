@@ -1,0 +1,22 @@
+- release_tracks: [BETA]
+
+  help_text:
+    brief: Get the IAM policy for a security gateway.
+    description: Gets the IAM policy for the given security gateway.
+    examples: |
+      To get the IAM policy for a security gateway ``my-security-gateway'' run:
+
+      $ {command} my-security-gateway --project=consumer-project-id --location=global
+
+  request:
+    collection: beyondcorp.projects.locations.securityGateways
+    BETA:
+      api_version: v1
+
+  arguments:
+    resource:
+      help_text: The security gateway for which to get the IAM policy.
+      spec: !REF googlecloudsdk.command_lib.beyondcorp.v1_resources:projects_locations_security_gateways
+
+  output:
+    format: json

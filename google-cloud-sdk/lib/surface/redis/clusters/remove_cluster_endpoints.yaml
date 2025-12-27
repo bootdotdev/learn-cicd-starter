@@ -1,0 +1,53 @@
+- release_tracks: [ALPHA, BETA, GA]
+  help_text:
+    brief: |
+      Remove existing Memorystore cluster endpoints.
+    description: |
+      To remove one cluster endpoint from an existing Redis cluster, two PSC connections MUST be removed as a pair: one to the Redis cluster's discovery service attachment and the other to its additional service attachment.
+
+      Multiple cluster endpoints COULD be removed simultaneously.
+
+      This command can fail for the following reasons:
+        * The cluster specified does not exist.
+        * Some connections in the to be removed list do not exist.
+    examples: |
+      To remove an endpoint from redis cluster, run:
+
+        $ {command} my-redis-cluster remove-cluster-endpoints --cluster-endpoint='["psc-connection":[{"psc-connection-id":"$PSC_CONNECTION_ID"},{$ADDITIONAL_PSC_CONNECTION}]]' --cluster_endpoint=$ADDITIONAL_CLUSTER_ENDPOINT
+        $PSCConnectionID SHOULD be extracted from forwarding rules. E.g. 75311697652483351
+
+  arguments:
+    resource:
+      spec: !REF googlecloudsdk.command_lib.redis.resources:cluster
+      help_text: |
+        Arguments and flags that specify the Memorystore Redis cluster you want to update.
+    params:
+    - arg_name: cluster-endpoint
+      api_field: cluster.clusterEndpoints
+      repeated: true
+      required: true
+      help_text: |
+        Resource details of a redis cluster endpoint
+      type: arg_object
+      spec:
+      - api_field: connections
+        json_name: psc-connection
+        type: arg_object
+        spec:
+        - api_field: pscConnection.pscConnectionId
+          json_name: psc-connection-id
+
+  async:
+    collection: redis.projects.locations.operations
+
+  request:
+    ALPHA:
+      api_version: v1alpha1
+    BETA:
+      api_version: v1beta1
+    GA:
+      api_version: v1
+    modify_request_hooks:
+    - googlecloudsdk.command_lib.redis.psc_update_util:RemoveClusterEndpoints
+    collection: redis.projects.locations.clusters
+    method: patch

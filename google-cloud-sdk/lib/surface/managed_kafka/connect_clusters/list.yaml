@@ -1,0 +1,33 @@
+release_tracks: [ALPHA, BETA, GA]
+
+help_text:
+  brief: |
+    List all Managed Service for Apache Kafka connect clusters in a given location.
+  description: |
+    List all Managed Service for Apache Kafka connect clusters in a given location.
+    To specify the maximum number of clusters to list, use the --limit flag.
+
+  examples: |
+    To list all connect clusters in a given location, such as us-central1, run the following:
+
+      $ {command} --location=us-central1
+
+request:
+  collection: managedkafka.projects.locations.connectClusters
+
+arguments:
+  resource:
+    help_text: Identifies the region which contains all the connector clusters to be listed.
+    spec: !REF googlecloudsdk.command_lib.managed_kafka.resources:location
+
+output:
+  format: |
+    table[box](
+      name.segment(5):label=NAME,
+      capacityConfig.vcpuCount:label=VCPU,
+      capacityConfig.memoryBytes:label=MEMORY_BYTES,
+      state:label=STATE,
+      gcpConfig.accessConfig.networkConfigs.primarySubnet,
+      gcpConfig.accessConfig.networkConfigs.additionalSubnets.list(separator="
+    "):label=NETWORK
+    )

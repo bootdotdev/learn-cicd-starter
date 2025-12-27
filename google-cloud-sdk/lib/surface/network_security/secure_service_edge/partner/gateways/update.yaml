@@ -1,0 +1,42 @@
+release_tracks: [ALPHA]
+
+help_text:
+  brief: |
+    Update a partner SSE gateway.
+  description: |
+    Update an existing partner gateway with additional fields.
+    This is only supported for Symantec gateways.
+  examples: |
+    The following command updates an existing partner gateway named `my-gateway` in the location `us-central1`.
+
+      $ {command} my-gateway --location=us-central1 --vni=12345 --symantec-target-host=10.0.0.0 --symantec-location-uuid=my-location
+
+    Customer traffic with the Virtual Network Identifier `12345`, associated with the location UUID `my-location`, will hit the Symantec endpoint with IP address `10.0.0.0`.
+
+arguments:
+  resource:
+    spec: !REF googlecloudsdk.command_lib.network_security.resources:partnerSSEGateway
+    help_text: |
+      The partner gateway to be updated.
+  params:
+  - arg_name: vni
+    api_field: partnerSSEGateway.vni
+    help_text: |
+      Virtual Network Identifier for the customer associated with this gateway.
+  - arg_name: symantec-target-host
+    api_field: partnerSSEGateway.symantecOptions.symantecSiteTargetHost
+    help_text: |
+      IPv4 address used as the destination for customer packets to the partner.
+  - arg_name: symantec-location-uuid
+    api_field: partnerSSEGateway.symantecOptions.symantecLocationUuid
+    help_text: |
+      UUID of the Symantec location associated with this gateway.
+
+async:
+  collection: networksecurity.projects.locations.operations
+
+request: &request
+  ALPHA:
+    api_version: v1alpha1
+  collection: networksecurity.projects.locations.partnerSSEGateways
+  method: patch

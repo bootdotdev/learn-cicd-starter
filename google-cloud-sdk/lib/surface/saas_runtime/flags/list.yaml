@@ -1,0 +1,21 @@
+- release_tracks:
+  - ALPHA
+  hidden: true
+  help_text:
+    brief: List Flags
+    description: List Flags
+    examples: |-
+      To list Flags, run:
+
+        $ {command}
+  arguments:
+    resource:
+      help_text: |-
+        Location in which to list Flags.
+      spec: !REF googlecloudsdk.command_lib.saas_runtime.resources:project_location_with_default
+  request:
+    api_version: v1beta1
+    collection:
+    - saasservicemgmt.projects.locations.flags
+  response:
+    id_field: name

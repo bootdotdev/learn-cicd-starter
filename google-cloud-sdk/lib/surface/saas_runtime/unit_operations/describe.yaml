@@ -1,0 +1,19 @@
+- release_tracks: [ALPHA, BETA]
+  help_text:
+    brief: Describe a Unit Operation
+    description: Describe a Unit Operation
+    examples: |-
+      To describe the Unit Operation, run:
+
+      $ {command}
+  arguments:
+    params:
+    - help_text: |-
+        The resource name of the resource within a service.
+      is_positional: true
+      resource_spec: !REF googlecloudsdk.command_lib.saas_runtime.resources:unit_operation
+      required: true
+  request:
+    api_version: v1beta1
+    collection:
+    - saasservicemgmt.projects.locations.unitOperations
