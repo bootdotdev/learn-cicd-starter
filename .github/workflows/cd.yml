@@ -1,0 +1,37 @@
+name: cd
+
+on:
+  push:
+    branches: [main]
+
+jobs:
+  deploy:
+    name: Deploy
+    runs-on: ubuntu-latest
+
+    steps:
+      - name: Check out code
+        uses: actions/checkout@v4
+
+      - name: Set up Go
+        uses: actions/setup-go@v5
+        with:
+          go-version: "1.25.1"
+
+      - name: Build production binary
+        run: ./scripts/buildprod.sh
+
+      # ---- Install gcloud and authenticate with service account JSON ----
+      - name: Set up gcloud
+        uses: google-github-actions/setup-gcloud@v1
+        with:
+          project_id: notely-478601
+          service_account_key: ${{ secrets.GCP_CREDENTIALS }}
+          export_default_credentials: true
+
+      # ---- Build & push Docker image via Cloud Build ----
+      - name: Build and push image with Cloud Build
+        run: >
+          gcloud builds submit
+          --tag us-central1-docker.pkg.dev/notely-478601/notely-ar-repo/notely:latest
+          .
