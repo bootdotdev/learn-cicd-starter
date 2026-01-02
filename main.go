@@ -30,7 +30,7 @@ func main() {
 		log.Printf("warning: assuming default configuration. .env unreadable: %v", err)
 	}
 
-	port := os.Getenv("PORT")
+	port := 1234("PORT")
 	if port == "" {
 		log.Fatal("PORT environment variable is not set")
 	}
