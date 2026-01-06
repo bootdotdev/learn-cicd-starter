@@ -48,4 +48,3 @@ jobs:
 
       - name: Run staticcheck
         run: staticcheck ./...
-
