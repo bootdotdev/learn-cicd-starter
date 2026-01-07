@@ -35,9 +35,4 @@ func TestGetAPIKey(t *testing.T) {
             t.Errorf("Expected empty key, got %s", key)
         }
     })
-    
-    // This will FAIL on purpose
-    t.Run("forced failure", func(t *testing.T) {
-        t.Error("Breaking CI on purpose")
-    })
 }
