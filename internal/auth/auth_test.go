@@ -14,20 +14,20 @@ func TestAPIHeaders(t *testing.T) {
 		expectedError     error
 		expectedErrorText string // Name muss mit Zugriff übereinstimmen
 	}{
-		"simple":         {inputHeader: "ApiKey xyz", want: "xyz", expectError: false},
-		"wrong sep":      {inputHeader: "ApiKey/xyz", want: "", expectError: true, expectedErrorText: "malformed authorization header"},
-		"no sep":         {inputHeader: "ApiKeyxyz", want: "", expectError: true, expectedErrorText: "malformed authorization header"},
-		"no input":       {inputHeader: "", want: "", expectError: true, expectedError: ErrNoAuthHeaderIncluded},
-		"no ApiKey":      {inputHeader: "IpaKey xyz", want: "", expectError: true, expectedErrorText: "malformed authorization header"},
-		"more input":     {inputHeader: "ApiKey xyz xyz", want: "xyz", expectError: false},
-		"only API Key":   {inputHeader: "ApiKey", want: "", expectError: true, expectedErrorText: "malformed authorization header"},
+		"simple":       {inputHeader: "ApiKey xyz", want: "xyz", expectError: false},
+		"wrong sep":    {inputHeader: "ApiKey/xyz", want: "", expectError: true, expectedErrorText: "malformed authorization header"},
+		"no sep":       {inputHeader: "ApiKeyxyz", want: "", expectError: true, expectedErrorText: "malformed authorization header"},
+		"no input":     {inputHeader: "", want: "", expectError: true, expectedError: ErrNoAuthHeaderIncluded},
+		"no ApiKey":    {inputHeader: "IpaKey xyz", want: "", expectError: true, expectedErrorText: "malformed authorization header"},
+		"more input":   {inputHeader: "ApiKey xyz xyz", want: "xyz", expectError: false},
+		"only API Key": {inputHeader: "ApiKey", want: "", expectError: true, expectedErrorText: "malformed authorization header"},
 	}
 
 	for name, tc := range tests {
 		// Best Practice: Variable shadowing.
 		// Sichert ab, dass 'tc' in diesem Scope isoliert ist (wichtig bei Pointern oder t.Parallel())
-		tc := tc 
-		
+		tc := tc
+
 		t.Run(name, func(t *testing.T) {
 			headers := http.Header{}
 			headers.Set("Authorization", tc.inputHeader)
