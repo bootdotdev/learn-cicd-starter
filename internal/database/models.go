@@ -4,8 +4,6 @@
 
 package database
 
-import ()
-
 type Note struct {
 	ID        string
 	CreatedAt string

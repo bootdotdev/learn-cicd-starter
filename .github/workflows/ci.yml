@@ -69,4 +69,4 @@ jobs:
 
       - name: Check Go formatting
         run: |
-          test -z "$(go fmt ./...)"
+          test -z "$(go fmt ./...)" 
