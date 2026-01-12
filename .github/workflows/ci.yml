@@ -5,40 +5,7 @@ on:
     branches: [main]
 
 jobs:
-  tests:
-    name: Tests
-    runs-on: ubuntu-latest
-    steps:
-      - name: Check out code
-        uses: actions/checkout@v4
-      - name: Set up Go
-        uses: actions/setup-go@v5
-        with:
-          go-version: "1.25.1"
-      - name: Run tests with coverage
-        run: go test ./... -cover
-
-  Style:
-    name: Style
-    runs-on: ubuntu-latest
-    steps:
-      - name: Check out code
-        uses: actions/checkout@v4
-      - name: Set up Go
-        uses: actions/setup-go@v5
-        with:
-          go-version: "1.25.1"
-      - name: Check formatting with test -z
-        run: test -z "$(go fmt ./...)"
-
-        name: ci
-
-on:
-  pull_request:
-    branches: [main]
-
-jobs:
-  tests:
+  tests:        ← HERE (this already exists)
     name: Tests
     runs-on: ubuntu-latest
 
@@ -54,7 +21,7 @@ jobs:
       - name: Run tests with coverage
         run: go test ./... -cover
 
-  style:
+  style:        ← SAME LEVEL as tests (no folder)
     name: Style
     runs-on: ubuntu-latest
 
@@ -69,4 +36,4 @@ jobs:
 
       - name: Check Go formatting
         run: |
-          test -z "$(go fmt ./...)" 
+          test -z "$(go fmt ./...)"
