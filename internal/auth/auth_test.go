@@ -30,7 +30,7 @@ func TestInvalidGetAPIKey(t *testing.T) {
 	headers := http.Header{}
 	headers.Add("Classification", "Private Stuff")
 	got, err := GetAPIKey(headers)
-	want := "Wrong"
+	want := ""
 	if !reflect.DeepEqual(want, got) {
 		t.Fatalf("%v\nexpected: %v, got: %v", err, want, got)
 	}
