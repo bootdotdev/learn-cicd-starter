@@ -19,4 +19,4 @@ jobs:
           go-version: "1.25.1"
 
       - name: Accurate Test
-        run: go version
+        run: go test ./...
