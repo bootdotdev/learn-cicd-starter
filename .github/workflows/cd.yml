@@ -19,4 +19,4 @@ jobs:
           go-version: "1.25.1"
 
       - name: Build app
-        uses: ./scripts/buildprod.sh
+        run: ./scripts/buildprod.sh
