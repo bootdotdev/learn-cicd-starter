@@ -1,6 +1,9 @@
 package main
 
 import (
+	"crypto/rand"
+	"crypto/sha256"
+	"encoding/hex"
 	"encoding/json"
 	"net/http"
 	"time"
@@ -9,25 +12,9 @@ import (
 	"github.com/google/uuid"
 )
 
-func (cfg *apiConfig) handlerNotesGet(w http.ResponseWriter, r *http.Request, user database.User) {
-	posts, err := cfg.DB.GetNotesForUser(r.Context(), user.ID)
-	if err != nil {
-		respondWithError(w, http.StatusInternalServerError, "Couldn't get posts for user", err)
-		return
-	}
-
-	postsResp, err := databasePostsToPosts(posts)
-	if err != nil {
-		respondWithError(w, http.StatusInternalServerError, "Couldn't convert posts", err)
-		return
-	}
-
-	respondWithJSON(w, http.StatusOK, postsResp)
-}
-
-func (cfg *apiConfig) handlerNotesCreate(w http.ResponseWriter, r *http.Request, user database.User) {
+func (cfg *apiConfig) handlerUsersCreate(w http.ResponseWriter, r *http.Request) {
 	type parameters struct {
-		Note string `json:"note"`
+		Name string `json:"name"`
 	}
 	decoder := json.NewDecoder(r.Body)
 	params := parameters{}
@@ -37,30 +24,56 @@ func (cfg *apiConfig) handlerNotesCreate(w http.ResponseWriter, r *http.Request,
 		return
 	}
 
-	id := uuid.New().String()
-	err = cfg.DB.CreateNote(r.Context(), database.CreateNoteParams{
-		ID:        id,
+	apiKey, err := generateRandomSHA256Hash()
+	if err != nil {
+		respondWithError(w, http.StatusInternalServerError, "Couldn't gen apikey", err)
+		return
+	}
+
+	err = cfg.DB.CreateUser(r.Context(), database.CreateUserParams{
+		ID:        uuid.New().String(),
 		CreatedAt: time.Now().UTC().Format(time.RFC3339),
 		UpdatedAt: time.Now().UTC().Format(time.RFC3339),
-		Note:      params.Note,
-		UserID:    user.ID,
+		Name:      params.Name,
+		ApiKey:    apiKey,
 	})
 	if err != nil {
-		respondWithError(w, http.StatusInternalServerError, "Couldn't create note", err)
+		respondWithError(w, http.StatusInternalServerError, "Couldn't create user", err)
 		return
 	}
 
-	note, err := cfg.DB.GetNote(r.Context(), id)
+	user, err := cfg.DB.GetUser(r.Context(), apiKey)
 	if err != nil {
-		respondWithError(w, http.StatusNotFound, "Couldn't get note", err)
+		respondWithError(w, http.StatusInternalServerError, "Couldn't get user", err)
 		return
 	}
 
-	noteResp, err := databaseNoteToNote(note)
+	userResp, err := databaseUserToUser(user)
 	if err != nil {
-		respondWithError(w, http.StatusInternalServerError, "Couldn't convert note", err)
+		respondWithError(w, http.StatusInternalServerError, "Couldn't convert user", err)
+		return
+	}
+	respondWithJSON(w, http.StatusCreated, userResp)
+}
+
+func generateRandomSHA256Hash() (string, error) {
+	randomBytes := make([]byte, 32)
+	_, err := rand.Read(randomBytes)
+	if err != nil {
+		return "", err
+	}
+	hash := sha256.Sum256(randomBytes)
+	hashString := hex.EncodeToString(hash[:])
+	return hashString, nil
+}
+
+func (cfg *apiConfig) handlerUsersGet(w http.ResponseWriter, r *http.Request, user database.User) {
+
+	userResp, err := databaseUserToUser(user)
+	if err != nil {
+		respondWithError(w, http.StatusInternalServerError, "Couldn't convert user", err)
 		return
 	}
 
-	respondWithJSON(w, http.StatusCreated, noteResp)
+	respondWithJSON(w, http.StatusOK, userResp)
 }
