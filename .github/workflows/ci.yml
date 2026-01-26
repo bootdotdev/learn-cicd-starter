@@ -20,3 +20,19 @@ jobs:
 
       - name: Run automated tests
         run: go test -cover ./...
+
+  style:
+    name: Style
+    runs-on: ubuntu-latest
+
+    steps:
+      - name: Check out code
+        uses: actions/checkout@v4
+
+      - name: Set up Go
+        uses: actions/setup-go@v5
+        with:
+          go-version: "1.25.1"
+
+      - name: Use Go's fmt command to ensure (& repair) incorrectly formatted code
+        run: go test -z $(go fmt ./...)
