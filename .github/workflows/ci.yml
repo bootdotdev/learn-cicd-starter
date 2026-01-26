@@ -35,4 +35,4 @@ jobs:
           go-version: "1.25.1"
 
       - name: Use Go's fmt command to ensure (& repair) incorrectly formatted code
-        run: go test -z $(go fmt ./...)
+        run: test -z $(go fmt ./...)
