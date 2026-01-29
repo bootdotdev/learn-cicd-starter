@@ -21,7 +21,7 @@ func TestGetAPIKey(t *testing.T) {
 		{
 			name: "Has API token amidst other headers",
 			header: http.Header{
-				"Authorization": []string{"ApiKey TOKEN_STING", "Other SOME_OTHER_STRING"},
+				"Authorization": []string{"ApiKey TOKEN_STRING", "Other SOME_OTHER_STRING"},
 				"Non-Authorization": []string{"ApiKey NON_AUTH_TOKEN_STRING", "Another SOMETHING_ELSE"},
 			},
 			wantErr: false,
