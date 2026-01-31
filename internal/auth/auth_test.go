@@ -8,10 +8,10 @@ import (
 
 func TestGetAPIKey(t *testing.T) {
 	tests := map[string]struct {
-		authHeader     string
-		wantKey        string
-		wantErr        error
-		wantErrSubstr  string
+		authHeader    string
+		wantKey       string
+		wantErr       error
+		wantErrSubstr string
 	}{
 		"valid ApiKey header": {
 			authHeader: "ApiKey abc123",
