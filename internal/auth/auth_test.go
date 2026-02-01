@@ -6,9 +6,9 @@ import (
 )
 
 func TestGetAPIKey(t *testing.T) {
-	tests := []struct{
-		name string
-		header http.Header
+	tests := []struct {
+		name    string
+		header  http.Header
 		wantErr bool
 	}{
 		{
@@ -21,7 +21,7 @@ func TestGetAPIKey(t *testing.T) {
 		{
 			name: "Has API token amidst other headers",
 			header: http.Header{
-				"Authorization": []string{"ApiKey TOKEN_STRING", "Other SOME_OTHER_STRING"},
+				"Authorization":     []string{"ApiKey TOKEN_STRING", "Other SOME_OTHER_STRING"},
 				"Non-Authorization": []string{"ApiKey NON_AUTH_TOKEN_STRING", "Another SOMETHING_ELSE"},
 			},
 			wantErr: false,
@@ -29,7 +29,7 @@ func TestGetAPIKey(t *testing.T) {
 		{
 			name: "API token is missing amidst other headers",
 			header: http.Header{
-				"Authorization": []string{"Access-token TOKEN_STRING", "Other SOME_OTHER_STRING"},
+				"Authorization":     []string{"Access-token TOKEN_STRING", "Other SOME_OTHER_STRING"},
 				"Non-Authorization": []string{"ApiKey NON_AUTH_TOKEN_STRING", "Another SOMETHING_ELSE"},
 			},
 			wantErr: true,
@@ -43,7 +43,7 @@ func TestGetAPIKey(t *testing.T) {
 		},
 	}
 	for _, tt := range tests {
-		t.Run(tt.name, func (t *testing.T){
+		t.Run(tt.name, func(t *testing.T) {
 			token, err := GetAPIKey(tt.header)
 			if (err != nil) != tt.wantErr {
 				t.Errorf("GetAPIKey() error = %v, wantErr = %v", err, tt.wantErr)
