@@ -5,7 +5,7 @@ on:
     branches: [main]
 
 jobs:
-  tests:
+    tests:
     name: Tests
     runs-on: ubuntu-latest
 
@@ -20,6 +20,15 @@ jobs:
 
       - name: Run tests with coverage
         run: go test ./... -cover
+
+      - name: Install gosec
+        run: |
+          go install github.com/securego/gosec/v2/cmd/gosec@latest
+          echo "$(go env GOPATH)/bin" >> $GITHUB_PATH
+
+      - name: Run gosec
+        run: gosec ./...
+
 
   style:
     name: Style
