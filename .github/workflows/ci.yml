@@ -20,3 +20,5 @@ jobs:
 
       - name: run local tests
         run: go test -v -coverprofile=coverage.out ./...
+      - name: Style
+        run: test -z $(go fmt ./...)
