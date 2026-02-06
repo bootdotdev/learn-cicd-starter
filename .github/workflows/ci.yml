@@ -5,7 +5,7 @@ on:
     branches: [main]
 
 jobs:
-    tests:
+  tests:
     name: Tests
     runs-on: ubuntu-latest
 
@@ -28,7 +28,6 @@ jobs:
 
       - name: Run gosec
         run: gosec ./...
-
 
   style:
     name: Style
