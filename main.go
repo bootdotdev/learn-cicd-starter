@@ -1,4 +1,3 @@
-cat > main.go <<'EOF'
 package main
 
 import (
@@ -38,8 +37,6 @@ func main() {
 
 	apiCfg := apiConfig{}
 
-	// https://github.com/libsql/libsql-client-go/#open-a-connection-to-sqld
-	// libsql://[your-database].turso.io?authToken=[your-auth-token]
 	dbURL := os.Getenv("DATABASE_URL")
 	if dbURL == "" {
 		log.Println("DATABASE_URL environment variable is not set")
@@ -109,10 +106,7 @@ func main() {
 	}
 
 	log.Printf("Serving on port: %s\n", port)
-
 	if err := srv.ListenAndServe(); err != nil && err != http.ErrServerClosed {
 		log.Fatal(err)
 	}
 }
-EOF
-
