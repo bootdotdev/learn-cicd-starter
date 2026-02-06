@@ -1,3 +1,4 @@
+cat > main.go <<'EOF'
 package main
 
 import (
@@ -9,11 +10,10 @@ import (
 	"os"
 	"time"
 
+	"github.com/bootdotdev/learn-cicd-starter/internal/database"
 	"github.com/go-chi/chi"
 	"github.com/go-chi/cors"
 	"github.com/joho/godotenv"
-
-	"github.com/bootdotdev/learn-cicd-starter/internal/database"
 
 	_ "github.com/tursodatabase/libsql-client-go/libsql"
 )
@@ -49,6 +49,12 @@ func main() {
 		if err != nil {
 			log.Fatal(err)
 		}
+		defer func() {
+			if cerr := db.Close(); cerr != nil {
+				log.Printf("warning: failed to close db: %v", cerr)
+			}
+		}()
+
 		dbQueries := database.New(db)
 		apiCfg.DB = dbQueries
 		log.Println("Connected to database!")
@@ -71,9 +77,15 @@ func main() {
 			http.Error(w, err.Error(), http.StatusInternalServerError)
 			return
 		}
-		defer f.Close()
+		defer func() {
+			if cerr := f.Close(); cerr != nil {
+				log.Printf("warning: failed to close static file: %v", cerr)
+			}
+		}()
+
 		if _, err := io.Copy(w, f); err != nil {
 			http.Error(w, err.Error(), http.StatusInternalServerError)
+			return
 		}
 	})
 
@@ -89,6 +101,7 @@ func main() {
 	v1Router.Get("/healthz", handlerReadiness)
 
 	router.Mount("/v1", v1Router)
+
 	srv := &http.Server{
 		Addr:              ":" + port,
 		Handler:           router,
@@ -96,5 +109,10 @@ func main() {
 	}
 
 	log.Printf("Serving on port: %s\n", port)
-	log.Fatal(srv.ListenAndServe())
+
+	if err := srv.ListenAndServe(); err != nil && err != http.ErrServerClosed {
+		log.Fatal(err)
+	}
 }
+EOF
+
