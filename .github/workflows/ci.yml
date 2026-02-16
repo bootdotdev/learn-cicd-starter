@@ -20,6 +20,11 @@ jobs:
 
       - name: version of Go #- name: Force Failure
         run: go test ./... -cover #flag to code coverage metric
+
+      - name: Install gosec
+        run: go intstall github.com/securego/gosec/v2/cmd/gosec@latest
+      -name: run gosec
+        run: gosec ./...
   style: 
     name: Style
     runs-on: ubuntu-latest
@@ -34,4 +39,4 @@ jobs:
 
       - name: Check formatting
         run: test -z $(go fmt ./...)
-        
+              
