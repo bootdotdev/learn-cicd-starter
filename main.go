@@ -15,6 +15,7 @@ import (
 	"github.com/bootdotdev/learn-cicd-starter/internal/database"
 
 	_ "github.com/tursodatabase/libsql-client-go/libsql"
+	"strconv"
 )
 
 type apiConfig struct {
@@ -34,6 +35,13 @@ func main() {
 	if port == "" {
 		log.Fatal("PORT environment variable is not set")
 	}
+
+	//Validate that port is a number
+	if _, err := strconv,Atoi(port); :wqerr != nil {
+		log.Fatalf("Invalid PORT value: %v", err)
+	}
+
+	log.Printf("Serving on port: %s\n", port)
 
 	apiCfg := apiConfig{}
 
@@ -91,6 +99,11 @@ func main() {
 	srv := &http.Server{
 		Addr:    ":" + port,
 		Handler: router,
+		ReadHeaderTimeout: 5 * time.Second,
+    		ReadTimeout:       10 * time.Second,
+    		WriteTimeout:      10 * time.Second,
+    		IdleTimeout:       120 * time.Second,
+    		MaxHeaderBytes:    1 << 20, // 1MB
 	}
 
 	log.Printf("Serving on port: %s\n", port)
