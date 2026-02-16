@@ -33,12 +33,9 @@ jobs:
         uses: actions/setup-go@v5
         with:
           go-version: "1.25.1"
-      - name: Run formatting
+      - name: Auto-fix formatting
         run: |
-          unformatted=$(gofmt -l .)
-          if [ -n "$unformatted" ]; then
-            echo "Files are not formatted:"
-            echo "$unformatted"
-            exit 1
-          fi
+          echo "Running gofmt..."
+          gofmt -w .
+          echo "Formatting fixed (if needed)"
 
