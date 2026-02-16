@@ -34,4 +34,11 @@ jobs:
         with:
           go-version: "1.25.1"
       - name: Run formatting
-        run: test -z $(go fmt ./...)
+        run: |
+          unformatted=$(gofmt -l .)
+          if [ -n "$unformatted" ]; then
+            echo "Files are not formatted:"
+            echo "$unformatted"
+            exit 1
+          fi
+
