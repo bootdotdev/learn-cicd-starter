@@ -100,6 +100,6 @@ func main() {
 	if _, err := strconv.Atoi(port); err != nil {
 	    log.Fatal("PORT must be numeric")
 	}
-	log.Printf("Serving on port: %s\n", port)
+	log.Printf("Serving on port: 8080\n")
 	log.Fatal(srv.ListenAndServe())
 }
