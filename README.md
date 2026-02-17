@@ -27,3 +27,4 @@ You do *not* need to set up a database or any interactivity on the webpage yet. 
 Elizandro's version of Boot.dev's Notely app.
 
 - Run go fmt ./... in the root of your project. You should see the code get formatted properly.
+test
