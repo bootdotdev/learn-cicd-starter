@@ -104,8 +104,10 @@ func main() {
 		IdleTimeout:       120 * time.Second,
 		MaxHeaderBytes:    1 << 20, // 1MB
 	}
-
-	log.Printf("Serving on port: %s\n", port)
+	
+	cleanPort := strings.ReplaceAll(port, "\n", "")
+	cleanPort = strings.ReplaceAll(cleanPort, "\r", "")
+	log.Printf("Serving on port: %s\n", cleanPort)
 	log.Fatal(srv.ListenAndServe())
 }
 func unused() {
