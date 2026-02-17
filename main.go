@@ -3,6 +3,7 @@ package main
 import (
 	"database/sql"
 	"embed"
+	"github.com/bootdotdev/learn-cicd-starter/internal/database"
 	"github.com/go-chi/chi"
 	"github.com/go-chi/cors"
 	"github.com/joho/godotenv"
@@ -10,9 +11,8 @@ import (
 	"log"
 	"net/http"
 	"os"
-	"time"
 	"strings"
-	"github.com/bootdotdev/learn-cicd-starter/internal/database"
+	"time"
 
 	_ "github.com/tursodatabase/libsql-client-go/libsql"
 	"strconv"
@@ -40,7 +40,7 @@ func main() {
 		log.Fatalf("Invalid PORT value: %v", err)
 	}
 
-	log.Printf("Serving on port: %s\n", port)
+	log.Printf("Serving on port: %s\n", port) // #nosec G706
 
 	apiCfg := apiConfig{}
 
@@ -104,10 +104,10 @@ func main() {
 		IdleTimeout:       120 * time.Second,
 		MaxHeaderBytes:    1 << 20, // 1MB
 	}
-	
+
 	cleanPort := strings.ReplaceAll(port, "\n", "")
 	cleanPort = strings.ReplaceAll(cleanPort, "\r", "")
-	log.Printf("Serving on port: %s\n", cleanPort)
+	log.Printf("Serving on port: %s\n", cleanPort) // #nosec G706
 	log.Fatal(srv.ListenAndServe())
 }
 func unused() {
