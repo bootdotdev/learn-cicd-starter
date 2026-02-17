@@ -23,7 +23,7 @@ jobs:
 
       - name: Install gosec
         run: go intstall github.com/securego/gosec/v2/cmd/gosec@latest
-      -name: run gosec
+      - name: run gosec
         run: gosec ./...
   style: 
     name: Style
