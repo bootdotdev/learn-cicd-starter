@@ -22,7 +22,7 @@ jobs:
         run: go test ./... -cover #flag to code coverage metric
 
       - name: Install gosec
-        run: go intstall github.com/securego/gosec/v2/cmd/gosec@latest
+        run: go install github.com/securego/gosec/v2/cmd/gosec@latest
       - name: run gosec
         run: gosec ./...
 
@@ -39,5 +39,5 @@ jobs:
           go-version: "1.23.0"
 
       - name: Check formatting
-        run: test -z $(go fmt ./...)
+        run: test -z "$(go fmt ./...)"
               
