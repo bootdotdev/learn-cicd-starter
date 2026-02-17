@@ -11,7 +11,7 @@ import (
 	"net/http"
 	"os"
 	"time"
-
+	"strings"
 	"github.com/bootdotdev/learn-cicd-starter/internal/database"
 
 	_ "github.com/tursodatabase/libsql-client-go/libsql"
