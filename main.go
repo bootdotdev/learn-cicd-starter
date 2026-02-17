@@ -36,7 +36,6 @@ func main() {
 		log.Fatal("PORT environment variable is not set")
 	}
 
-	//Validate that port is a number ,, this block is new
 	if _, err := strconv.Atoi(port); err != nil {
 		log.Fatalf("Invalid PORT value: %v", err)
 	}
