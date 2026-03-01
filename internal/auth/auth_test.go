@@ -5,16 +5,20 @@ import (
 	"testing"
 )
 
-func TestGetAPIKey_Failure(t *testing.T) {
+func TestGetAPIKey_Success(t *testing.T) {
+	// 1. Arrange: Create a mock header with the correct "ApiKey" prefix
 	headers := http.Header{}
 	headers.Set("Authorization", "ApiKey red-panda-99")
 
-	got, _ := GetAPIKey(headers)
+	// 2. Act: Call your function
+	key, err := GetAPIKey(headers)
 
-	// CHANGE THIS: Expect a different value than what is actually sent
-	want := "wrong-key-to-force-ci-failure"
+	// 3. Assert: Verify the key is extracted and no error occurred
+	if err != nil {
+		t.Fatalf("Expected no error, but got: %v", err)
+	}
 
-	if got != want {
-		t.Errorf("FAILING FOR CI TEST: got %q, want %q", got, want)
+	if key != "red-panda-99" {
+		t.Errorf("Expected key 'red-panda-99', but got: %s", key)
 	}
 }
