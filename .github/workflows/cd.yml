@@ -1,0 +1,48 @@
+name: cd
+
+on:
+  push:
+    branches:
+      - main
+  workflow_dispatch:
+
+jobs:
+  Deploy:
+    runs-on: ubuntu-latest
+
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v4
+
+      - name: Set up Node.js
+        uses: actions/setup-node@v4
+        with:
+          node-version: '20'
+
+      - name: Build app
+        run: |
+          if [ -f package.json ]; then
+            npm ci
+            npm run build
+          else
+            echo "package.json not found, skipping npm build"
+          fi
+
+      - name: Authenticate to Google Cloud
+        uses: google-github-actions/auth@v2
+        with:
+          credentials_json: '${{ secrets.GCP_CREDENTIALS }}'
+
+      - name: Set up gcloud
+        uses: google-github-actions/setup-gcloud@v2
+
+      - name: Build and push Docker image
+        env:
+          GAR_IMAGE_TAG: ${{ vars.GAR_IMAGE_TAG }}
+        run: |
+          if [ -z "$GAR_IMAGE_TAG" ]; then
+            echo "Repository variable GAR_IMAGE_TAG is not set."
+            echo "Set it to your full Artifact Registry tag, e.g. us-central1-docker.pkg.dev/my-project/my-repo/notely:${GITHUB_SHA}."
+            exit 1
+          fi
+          gcloud builds submit --tag "$GAR_IMAGE_TAG" .
