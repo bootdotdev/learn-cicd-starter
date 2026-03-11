@@ -12,6 +12,7 @@
     "start:worker": "node dist/worker.js",
     "test": "vitest run",
     "migrate": "tsx src/db/migrate.ts",
+    "migrate:prod": "node dist/db/migrate.js",
     "seed": "tsx src/db/seed.ts"
   },
   "engines": {

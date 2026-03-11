@@ -19,7 +19,7 @@ services:
 
   migrate:
     build: .
-    command: ["npm", "run", "migrate"]
+    command: ["npm", "run", "migrate:prod"]
     environment:
       DATABASE_URL: postgresql://pipeline:pipeline@postgres:5432/pipeline_db
     depends_on:
