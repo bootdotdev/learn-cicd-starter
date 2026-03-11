@@ -9,28 +9,37 @@ on:
 
 jobs:
   Deploy:
+    if: ${{ secrets.DATABASE_URL != '' && (secrets.GCP_CREDENTIALS != '' || (secrets.GCP_WORKLOAD_IDENTITY_PROVIDER != '' && secrets.GCP_SERVICE_ACCOUNT != '')) }}
     runs-on: ubuntu-latest
-    env:
-      DATABASE_URL: ${{ secrets.DATABASE_URL }}
 
     steps:
       - name: Checkout
         uses: actions/checkout@v4
 
-      - name: Set up Go
-        uses: actions/setup-go@v5
+      - name: Set up Node
+        uses: actions/setup-node@v4
         with:
-          go-version-file: go.mod
+          node-version: 20
+          cache: npm
 
-      - name: Install goose
-        run: |
-          go install github.com/pressly/goose/v3/cmd/goose@latest
-          echo "$(go env GOPATH)/bin" >> "$GITHUB_PATH"
+      - name: Install dependencies
+        run: npm install
 
-      - name: Authenticate to Google Cloud
+      - name: Build
+        run: npm run build
+
+      - name: Authenticate to Google Cloud (Service Account Key)
+        if: ${{ secrets.GCP_CREDENTIALS != '' }}
         uses: google-github-actions/auth@v2
         with:
           credentials_json: ${{ secrets.GCP_CREDENTIALS }}
+
+      - name: Authenticate to Google Cloud (Workload Identity)
+        if: ${{ secrets.GCP_CREDENTIALS == '' && secrets.GCP_WORKLOAD_IDENTITY_PROVIDER != '' && secrets.GCP_SERVICE_ACCOUNT != '' }}
+        uses: google-github-actions/auth@v2
+        with:
+          workload_identity_provider: ${{ secrets.GCP_WORKLOAD_IDENTITY_PROVIDER }}
+          service_account: ${{ secrets.GCP_SERVICE_ACCOUNT }}
 
       - name: Set up gcloud
         uses: google-github-actions/setup-gcloud@v2
@@ -42,7 +51,9 @@ jobs:
         run: gcloud builds submit --tag us-central1-docker.pkg.dev/notely-dana/notely-ar-repo/notely-app:notely-latest .
 
       - name: Run database migrations
-        run: npm run db:migrate
+        env:
+          DATABASE_URL: ${{ secrets.DATABASE_URL }}
+        run: npm run migrate:prod
 
       - name: Deploy to Cloud Run
         run: gcloud run deploy notely --image us-central1-docker.pkg.dev/notely-dana/notely-ar-repo/notely-app:notely-latest --region us-central1 --allow-unauthenticated --project notely-dana --max-instances=4
