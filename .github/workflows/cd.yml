@@ -9,51 +9,78 @@ on:
 
 jobs:
   Deploy:
-    if: ${{ secrets.DATABASE_URL != '' && (secrets.GCP_CREDENTIALS != '' || (secrets.GCP_WORKLOAD_IDENTITY_PROVIDER != '' && secrets.GCP_SERVICE_ACCOUNT != '')) }}
     runs-on: ubuntu-latest
 
     steps:
       - name: Checkout
         uses: actions/checkout@v4
 
+      - name: Evaluate deployment secrets
+        id: prereq
+        run: |
+          skip=false
+          if [ -z "${{ secrets.DATABASE_URL }}" ]; then
+            skip=true
+          elif [ -z "${{ secrets.GCP_CREDENTIALS }}" ] && { [ -z "${{ secrets.GCP_WORKLOAD_IDENTITY_PROVIDER }}" ] || [ -z "${{ secrets.GCP_SERVICE_ACCOUNT }}" ]; }; then
+            skip=true
+          fi
+          if [ "$skip" = "true" ]; then
+            echo "Missing required secrets for deploy; workflow will stop early."
+          fi
+          echo "skip=$skip" >> "$GITHUB_OUTPUT"
+
+      - name: Early exit when prerequisites missing
+        if: ${{ steps.prereq.outputs.skip == 'true' }}
+        run: |
+          echo "Skipping deploy because required secrets are not configured."
+        continue-on-error: false
+
       - name: Set up Node
+        if: ${{ steps.prereq.outputs.skip != 'true' }}
         uses: actions/setup-node@v4
         with:
           node-version: 20
           cache: npm
 
       - name: Install dependencies
+        if: ${{ steps.prereq.outputs.skip != 'true' }}
         run: npm install
 
       - name: Build
+        if: ${{ steps.prereq.outputs.skip != 'true' }}
         run: npm run build
 
       - name: Authenticate to Google Cloud (Service Account Key)
-        if: ${{ secrets.GCP_CREDENTIALS != '' }}
+        if: ${{ steps.prereq.outputs.skip != 'true' && secrets.GCP_CREDENTIALS != '' }}
         uses: google-github-actions/auth@v2
         with:
           credentials_json: ${{ secrets.GCP_CREDENTIALS }}
 
       - name: Authenticate to Google Cloud (Workload Identity)
-        if: ${{ secrets.GCP_CREDENTIALS == '' && secrets.GCP_WORKLOAD_IDENTITY_PROVIDER != '' && secrets.GCP_SERVICE_ACCOUNT != '' }}
+        if: ${{ steps.prereq.outputs.skip != 'true' && secrets.GCP_CREDENTIALS == '' && secrets.GCP_WORKLOAD_IDENTITY_PROVIDER != '' && secrets.GCP_SERVICE_ACCOUNT != '' }}
         uses: google-github-actions/auth@v2
         with:
           workload_identity_provider: ${{ secrets.GCP_WORKLOAD_IDENTITY_PROVIDER }}
           service_account: ${{ secrets.GCP_SERVICE_ACCOUNT }}
 
       - name: Set up gcloud
+        if: ${{ steps.prereq.outputs.skip != 'true' }}
         uses: google-github-actions/setup-gcloud@v2
 
       - name: Set GCP project
+        if: ${{ steps.prereq.outputs.skip != 'true' }}
         run: gcloud config set project notely-dana
 
       - name: Build and push Docker image
+        if: ${{ steps.prereq.outputs.skip != 'true' }}
         run: gcloud builds submit --tag us-central1-docker.pkg.dev/notely-dana/notely-ar-repo/notely-app:notely-latest .
 
       - name: Run database migrations
         env:
           DATABASE_URL: ${{ secrets.DATABASE_URL }}
+        if: ${{ steps.prereq.outputs.skip != 'true' }}
         run: npm run migrate:prod
 
       - name: Deploy to Cloud Run
+        if: ${{ steps.prereq.outputs.skip != 'true' }}
         run: gcloud run deploy notely --image us-central1-docker.pkg.dev/notely-dana/notely-ar-repo/notely-app:notely-latest --region us-central1 --allow-unauthenticated --project notely-dana --max-instances=4
