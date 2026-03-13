@@ -137,23 +137,30 @@ dashboardRouter.get("/", async (req, res, next) => {
             body {
               font-family: 'Inter', system-ui, sans-serif;
               color: #0f172a;
-              background: radial-gradient(circle at top, #eef2ff, #f8fafc 45%, #e2e8f0);
+              background: radial-gradient(circle at top, #eef2ff, #f8fafc 40%, #e0f2fe 80%);
               margin: 0;
+            }
+            .page-shell {
+              padding: 3rem 1rem 4rem;
+              min-height: 100vh;
+              background-image: radial-gradient(circle at 20% 20%, rgba(37, 99, 235, 0.12), transparent 40%),
+                radial-gradient(circle at 80% 0%, rgba(59, 130, 246, 0.08), transparent 40%);
             }
             main {
               padding: 2.5rem;
               max-width: 1200px;
-              margin: -40px auto 3rem;
-              background: rgba(255, 255, 255, 0.96);
-              border-radius: 32px;
-              box-shadow: 0 20px 40px rgba(15, 23, 42, 0.15);
+              margin: 0 auto;
+              background: rgba(255, 255, 255, 0.97);
+              border-radius: 36px;
+              box-shadow: 0 30px 60px rgba(15, 23, 42, 0.12);
+              border: 1px solid rgba(148, 163, 184, 0.25);
             }
             h1 {
               margin-bottom: 0.25rem;
-              font-size: 2rem;
+              font-size: 2.1rem;
             }
             .page-subtitle {
-              margin: 0 0 1rem;
+              margin: 0;
               color: #475569;
               font-size: 0.95rem;
             }
@@ -161,15 +168,16 @@ dashboardRouter.get("/", async (req, res, next) => {
               display: grid;
               grid-template-columns: repeat(auto-fit, minmax(160px, 1fr));
               gap: 0.75rem;
-              margin-bottom: 1rem;
+              margin: 1.25rem 0;
             }
             .pill {
               background: #ffffff;
               border-radius: 999px;
-              padding: 0.4rem 1rem;
+              padding: 0.5rem 1rem;
               font-weight: 600;
-              font-size: 0.85rem;
-              box-shadow: 0 10px 25px rgba(15, 23, 42, 0.08);
+              font-size: 0.9rem;
+              box-shadow: 0 15px 25px rgba(15, 23, 42, 0.12);
+              text-align: center;
             }
             .header-actions {
               margin-bottom: 1rem;
@@ -181,8 +189,8 @@ dashboardRouter.get("/", async (req, res, next) => {
             .button {
               display: inline-flex;
               align-items: center;
-              gap: 0.4rem;
-              padding: 0.5rem 1.1rem;
+              gap: 0.5rem;
+              padding: 0.6rem 1.4rem;
               border-radius: 999px;
               border: none;
               background: #2563eb;
@@ -191,16 +199,17 @@ dashboardRouter.get("/", async (req, res, next) => {
               font-weight: 600;
               font-size: 0.9rem;
               transition: transform 0.15s ease, box-shadow 0.15s ease;
-              box-shadow: 0 6px 14px rgba(37, 99, 235, 0.35);
-            }
-            .button:hover {
-              transform: translateY(-1px);
               box-shadow: 0 10px 20px rgba(37, 99, 235, 0.35);
             }
+            .button:hover {
+              transform: translateY(-2px);
+              box-shadow: 0 14px 25px rgba(37, 99, 235, 0.35);
+            }
             .button--ghost {
-              background: transparent;
+              background: rgba(37, 99, 235, 0.08);
               color: #2563eb;
-              box-shadow: inset 0 0 0 1px rgba(37, 99, 235, 0.4);
+              box-shadow: none;
+              border: 1px solid rgba(37, 99, 235, 0.4);
             }
             .job-grid {
               display: grid;
@@ -209,10 +218,10 @@ dashboardRouter.get("/", async (req, res, next) => {
             }
             .job-card {
               background: linear-gradient(180deg, #ffffff 0%, #fefefe 100%);
-              border-radius: 24px;
-              padding: 1.2rem;
-              box-shadow: 0 15px 30px rgba(15, 23, 42, 0.08);
-              border: 1px solid rgba(148, 163, 184, 0.15);
+              border-radius: 26px;
+              padding: 1.6rem;
+              box-shadow: 0 20px 45px rgba(15, 23, 42, 0.08);
+              border: 1px solid rgba(148, 163, 184, 0.18);
             }
             .job-card__top {
               display: flex;
@@ -220,8 +229,12 @@ dashboardRouter.get("/", async (req, res, next) => {
               gap: 1rem;
               align-items: flex-start;
             }
-            .job-card__action {
+            .job-card h3 {
               margin: 0;
+              font-size: 1.15rem;
+            }
+            .job-card__meta {
+              margin: 0.15rem 0 0;
               color: #475569;
               font-size: 0.85rem;
             }
@@ -235,29 +248,24 @@ dashboardRouter.get("/", async (req, res, next) => {
               font-size: 0.8rem;
             }
             .job-card__id {
-              margin: 0.75rem 0 0;
-              font-size: 0.9rem;
-              color: #1f2937;
+              margin: 0.85rem 0 0;
+              font-size: 0.95rem;
+              color: #0f172a;
               font-weight: 600;
             }
             .job-card__timestamp {
-              margin: 0.25rem 0 0.75rem;
-              font-size: 0.8rem;
-              color: #475569;
-            }
-            .job-card__meta {
-              margin: 0;
-              color: #475569;
-              font-size: 0.85rem;
+              margin: 0.2rem 0 0.6rem;
+              font-size: 0.78rem;
+              color: #64748b;
             }
             .job-card__summary {
               margin: 0;
-              font-size: 0.8rem;
+              font-size: 0.85rem;
               font-weight: 600;
               color: #1f2937;
             }
             .job-card__deliveries-title {
-              margin: 0;
+              margin: 1rem 0 0.4rem;
               font-size: 0.9rem;
               font-weight: 600;
               color: #1f2937;
@@ -265,22 +273,22 @@ dashboardRouter.get("/", async (req, res, next) => {
             table {
               width: 100%;
               border-collapse: collapse;
-              margin-top: 0.5rem;
+              margin-top: 0.4rem;
               font-size: 0.8rem;
             }
             th,
             td {
-              padding: 0.4rem 0.6rem;
+              padding: 0.35rem 0.6rem;
               color: #0f172a;
             }
             th {
-              background: #e5e7eb;
+              background: #e2e8f0;
               font-weight: 600;
               font-size: 0.75rem;
               letter-spacing: 0.01em;
             }
             td {
-              border-bottom: 1px solid #e5e7eb;
+              border-bottom: 1px solid #e2e8f0;
             }
             tbody tr:last-child td {
               border-bottom: none;
@@ -292,6 +300,7 @@ dashboardRouter.get("/", async (req, res, next) => {
           </style>`,
       `</head>`,
       `<body>`,
+      `<div class="page-shell">`,
       `<main>`,
       `<h1>Pipeline observability</h1>`,
       `<p class="empty">Last updated: ${new Date().toISOString()}</p>`,
@@ -369,7 +378,7 @@ dashboardRouter.get("/", async (req, res, next) => {
       );
     }
 
-    html.push("</div>", "</main>", "</body>", "</html>");
+    html.push("</div>", "</main>", "</div>", "</body>", "</html>");
 
     res.setHeader("Content-Type", "text/html; charset=utf-8");
     res.send(html.join("\n"));
