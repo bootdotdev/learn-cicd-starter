@@ -184,6 +184,30 @@ dashboardRouter.get("/", async (req, res, next) => {
               gap: 0.5rem;
               align-items: center;
             }
+            .badge {
+              display: inline-flex;
+              align-items: center;
+              gap: 0.25rem;
+              border-radius: 999px;
+              padding: 0.3rem 0.8rem;
+              font-size: 0.8rem;
+              font-weight: 700;
+              text-transform: capitalize;
+            }
+            .badge.ok {
+              background: linear-gradient(135deg, #4ade80, #16a34a);
+              color: white;
+              box-shadow: 0 6px 15px rgba(34, 197, 94, 0.35);
+            }
+            .badge.pending {
+              background: linear-gradient(135deg, #fde047, #f97316);
+              color: #1f2937;
+            }
+            .badge.failed {
+              background: linear-gradient(135deg, #fb7185, #dc2626);
+              color: white;
+              box-shadow: 0 6px 15px rgba(220, 38, 38, 0.35);
+            }
             .button {
               display: inline-flex;
               align-items: center;
