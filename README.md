@@ -101,10 +101,36 @@ In another terminal:
 npm run dev:worker
 ```
 
-## CI
+## Demo flow (ready-made script)
 
-GitHub Actions pipeline runs:
+Run the helper once the Docker stack is healthy to capture the entire end-to-end experience:
 
-- `npm ci`
-- `npm test`
-- `npm run build`
+```bash
+cp .env.example .env
+npm run build
+docker compose up --build -d
+curl http://localhost:8080/health        # must return {"ok":true }
+./scripts/demo-flow.sh
+```
+
+Output includes:
+1. `sourceUrl` from pipeline creation and the webhook `Accepted` response.
+2. Worker log segment showing job pickup and delivery.
+3. Latest `jobs`/`deliveries` rows from PostgreSQL.
+4. The mock subscriber log with the final payload (includes `_metadata`).
+
+Use `./scripts/demo-flow.sh | tee demo-output.log` to preserve the narrative for your video.
+
+## Observability UI
+
+You can now visit `http://localhost:8080/dashboard` after the stack is running. The UI renders a dashboard of the 20 most recent jobs, their parent pipeline/action, status badges, retry counts, and a delivery table with per-subscriber attempts. Above the grid there are summary pills that show the succeeded/pending/failed counts for the last hour, along with total job and delivery counts, so you can explain the service’s health without dropping into SQL.
+
+If you need machine-readable metrics (for a dashboard, alert, or external monitoring), hit `http://localhost:8080/dashboard?format=json`. That endpoint returns the same stats and job list as structured JSON.
+
+## CI/CD status
+
+- `ci.yml` (Node build + tests) passes on the main branch and mirrors the local `npm ci`, `npm test`, and `npm run build` workflow.
+- `cd.yml` builds the Docker image and deploys to Cloud Run but currently requires a linked GCP billing account because the Cloud Build step fails if the `notely-dana` project billing is not active (`google-github-actions/auth` and `gcloud builds submit`). Run `gh workflow run cd` after enabling billing and supplying the required secrets (`DATABASE_URL`, `GCP_CREDENTIALS` or workload identity inputs).
+
+During the demo video, narrate:
+1. Stack composition (API + worker + Postgres). 2. Pipeline creation + webhook ingestion. 3. Job lifecycle (`jobs` rows showing `dispatching -> succeeded`). 4. Delivery retries/exhaustion and the mock subscriber log confirming payload delivery. 5. CI/CD status and next steps for finishing the Cloud Run publish.
