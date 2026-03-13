@@ -123,9 +123,14 @@ Use `./scripts/demo-flow.sh | tee demo-output.log` to preserve the narrative for
 
 ## Observability UI
 
-You can now visit `http://localhost:8080/dashboard` after the stack is running. The UI renders a dashboard of the 20 most recent jobs, their parent pipeline/action, status badges, retry counts, and a delivery table with per-subscriber attempts. Above the grid there are summary pills that show the succeeded/pending/failed counts for the last hour, along with total job and delivery counts, so you can explain the service’s health without dropping into SQL.
+The new `/dashboard` route gives you a live view of the pipeline runtime data without dropping to SQL:
 
-If you need machine-readable metrics (for a dashboard, alert, or external monitoring), hit `http://localhost:8080/dashboard?format=json`. That endpoint returns the same stats and job list as structured JSON.
+- **Summary pills** track succeeded/pending/failed counts for the last hour and the total number of jobs/deliveries so you can talk about overall health at a glance.
+- **Job grid** shows the 20 most recent jobs with status badges, retry counts, timestamps, and the pipeline + action that created them.
+- **Delivery tables** under each job card list every subscriber, attempt count, and last error to explain why retries happen.
+- **JSON export**: add `?format=json` for the same payload as structured data, which you can plug into monitoring dashboards or automated alerts.
+
+Pointing your browser to `http://localhost:8080/dashboard` after starting the stack (`npm run build && docker compose up --build -d`) is enough to exercise the UI.
 
 ## CI/CD status
 

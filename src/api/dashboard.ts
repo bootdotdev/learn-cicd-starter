@@ -133,24 +133,151 @@ dashboardRouter.get("/", async (req, res, next) => {
       `<meta charset="utf-8"/>`,
       `<title>Pipeline Dashboard</title>`,
       `<style>
-            body { font-family: 'Inter', system-ui, sans-serif; color: #0f172a; background: #f5f5ff; margin: 0; }
-            main { padding: 2rem; max-width: 1200px; margin: 0 auto; }
-            h1 { margin-bottom: 0.5rem; }
-            .summary { display: flex; flex-wrap: wrap; gap: 0.75rem; margin-bottom: 1.5rem; }
-            .pill { background: white; border-radius: 999px; padding: 0.35rem 0.9rem; font-weight: 600; box-shadow: 0 2px 6px rgba(15,23,42,0.08); }
-            .job-grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(320px, 1fr)); gap: 1rem; }
-            .job-card { background: white; border-radius: 16px; padding: 1rem; box-shadow: 0 8px 18px rgba(15,23,42,0.08); }
-            .job-card h3 { margin: 0 0 0.35rem; font-size: 1rem; }
-            .badge { display: inline-flex; align-items: center; gap: 0.25rem; border-radius: 999px; padding: 0.2rem 0.65rem; font-size: 0.75rem; font-weight: 600; }
-            .badge.ok { background: #16a34a; color: white; }
-            .badge.pending { background: #facc15; color: #1f2937; }
-            .badge.failed { background: #dc2626; color: white; }
-            table { width: 100%; border-collapse: collapse; margin-top: 0.5rem; }
-            th, td { padding: 0.35rem 0.6rem; font-size: 0.8rem; color: #0f172a; }
-            th { background: #e2e8f0; text-align: left; }
-            td { border-bottom: 1px solid #e2e8f0; }
-            tbody tr:last-child td { border-bottom: none; }
-            .empty { font-size: 0.85rem; color: #475569; }
+            :root { color-scheme: light; }
+            body {
+              font-family: 'Inter', system-ui, sans-serif;
+              color: #0f172a;
+              background: radial-gradient(circle at top, #eef2ff, #f8fafc 45%, #e2e8f0);
+              margin: 0;
+            }
+            main {
+              padding: 2.5rem;
+              max-width: 1200px;
+              margin: -40px auto 3rem;
+              background: rgba(255, 255, 255, 0.96);
+              border-radius: 32px;
+              box-shadow: 0 20px 40px rgba(15, 23, 42, 0.15);
+            }
+            h1 {
+              margin-bottom: 0.25rem;
+              font-size: 2rem;
+            }
+            .page-subtitle {
+              margin: 0 0 1rem;
+              color: #475569;
+              font-size: 0.95rem;
+            }
+            .summary {
+              display: grid;
+              grid-template-columns: repeat(auto-fit, minmax(160px, 1fr));
+              gap: 0.75rem;
+              margin-bottom: 1rem;
+            }
+            .pill {
+              background: #ffffff;
+              border-radius: 999px;
+              padding: 0.4rem 1rem;
+              font-weight: 600;
+              font-size: 0.85rem;
+              box-shadow: 0 10px 25px rgba(15, 23, 42, 0.08);
+            }
+            .header-actions {
+              margin-bottom: 1rem;
+              display: flex;
+              flex-wrap: wrap;
+              gap: 0.5rem;
+              align-items: center;
+            }
+            .button {
+              display: inline-flex;
+              align-items: center;
+              gap: 0.4rem;
+              padding: 0.5rem 1.1rem;
+              border-radius: 999px;
+              border: none;
+              background: #2563eb;
+              color: white;
+              text-decoration: none;
+              font-weight: 600;
+              font-size: 0.9rem;
+              transition: transform 0.15s ease, box-shadow 0.15s ease;
+              box-shadow: 0 6px 14px rgba(37, 99, 235, 0.35);
+            }
+            .button:hover {
+              transform: translateY(-1px);
+              box-shadow: 0 10px 20px rgba(37, 99, 235, 0.35);
+            }
+            .button--ghost {
+              background: transparent;
+              color: #2563eb;
+              box-shadow: inset 0 0 0 1px rgba(37, 99, 235, 0.4);
+            }
+            .job-grid {
+              display: grid;
+              grid-template-columns: repeat(auto-fit, minmax(320px, 1fr));
+              gap: 1rem;
+            }
+            .job-card {
+              background: linear-gradient(180deg, #ffffff 0%, #fefefe 100%);
+              border-radius: 24px;
+              padding: 1.2rem;
+              box-shadow: 0 15px 30px rgba(15, 23, 42, 0.08);
+              border: 1px solid rgba(148, 163, 184, 0.15);
+            }
+            .job-card__top {
+              display: flex;
+              justify-content: space-between;
+              gap: 1rem;
+              align-items: flex-start;
+            }
+            .job-card__action {
+              margin: 0;
+              color: #475569;
+              font-size: 0.85rem;
+            }
+            .job-card__status-group {
+              text-align: right;
+            }
+            .job-card__retry {
+              display: block;
+              margin-top: 0.25rem;
+              color: #475569;
+              font-size: 0.8rem;
+            }
+            .job-card__id {
+              margin: 0.75rem 0 0;
+              font-size: 0.9rem;
+              color: #1f2937;
+              font-weight: 600;
+            }
+            .job-card__timestamp {
+              margin: 0.25rem 0 0.75rem;
+              font-size: 0.8rem;
+              color: #475569;
+            }
+            .job-card__deliveries-title {
+              margin: 0;
+              font-size: 0.9rem;
+              font-weight: 600;
+              color: #1f2937;
+            }
+            table {
+              width: 100%;
+              border-collapse: collapse;
+              margin-top: 0.5rem;
+              font-size: 0.8rem;
+            }
+            th,
+            td {
+              padding: 0.4rem 0.6rem;
+              color: #0f172a;
+            }
+            th {
+              background: #e5e7eb;
+              font-weight: 600;
+              font-size: 0.75rem;
+              letter-spacing: 0.01em;
+            }
+            td {
+              border-bottom: 1px solid #e5e7eb;
+            }
+            tbody tr:last-child td {
+              border-bottom: none;
+            }
+            .empty {
+              font-size: 0.85rem;
+              color: #475569;
+            }
           </style>`,
       `</head>`,
       `<body>`,
@@ -164,6 +291,11 @@ dashboardRouter.get("/", async (req, res, next) => {
       `<span class="pill">Total jobs: ${stats.totalJobs}</span>`,
       `<span class="pill">Total deliveries: ${stats.totalDeliveries}</span>`,
       `</div>`,
+      `<p class="page-subtitle">Here are the most recent runs that hit your subscribers. Refresh the page to see live updates.</p>`,
+      `<div class="header-actions">`,
+      `<a class="button" href="?format=json" target="_blank">Download JSON</a>`,
+      `<a class="button button--ghost" href="javascript:location.reload()">Refresh</a>`,
+      `</div>`,
       `<p class="empty">Showing ${jobsResult.length} most recent jobs</p>`,
       `<div class="job-grid">`
     ];
@@ -175,17 +307,22 @@ dashboardRouter.get("/", async (req, res, next) => {
     };
 
     for (const job of jobs) {
-      html.push(
-        `<article class="job-card">
-            <h3>${job.pipeline} / ${job.action}</h3>
-            <p><strong>Job</strong> ${job.jobId}</p>
-            <p>
-              <span class="${badgeClass(job.status)}">${job.status}</span>
-              <span class="empty">retries: ${job.retryCount}</span>
-            </p>
-            <p class="empty">Updated at: ${new Date(job.updatedAt).toISOString()}</p>
-            <div>
-              <p style="margin-bottom:0.25rem"><strong>Deliveries</strong></p>
+    html.push(
+      `<article class="job-card">
+            <div class="job-card__top">
+              <div>
+                <h3>${job.pipeline}</h3>
+                <p class="job-card__action">${job.action}</p>
+              </div>
+              <div class="job-card__status-group">
+                <span class="${badgeClass(job.status)}">${job.status}</span>
+                <span class="job-card__retry">Retries: ${job.retryCount}</span>
+              </div>
+            </div>
+            <p class="job-card__id">Job ${job.jobId}</p>
+            <p class="job-card__timestamp">Updated ${new Date(job.updatedAt).toLocaleString()}</p>
+            <div class="job-card__deliveries">
+              <p class="job-card__deliveries-title">Deliveries</p>
               ${job.deliveries.length ? `
                 <table>
                   <thead>
