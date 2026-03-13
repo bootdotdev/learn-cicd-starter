@@ -137,23 +137,21 @@ dashboardRouter.get("/", async (req, res, next) => {
             body {
               font-family: 'Inter', system-ui, sans-serif;
               color: #0f172a;
-              background: radial-gradient(circle at top, #eef2ff, #f8fafc 40%, #e0f2fe 80%);
               margin: 0;
+              background: linear-gradient(180deg, #eef2ff 0%, #f6f6f6 45%, #e8ebff 100%);
             }
             .page-shell {
-              padding: 3rem 1rem 4rem;
+              padding: 2.5rem 1rem 4rem;
               min-height: 100vh;
-              background-image: radial-gradient(circle at 20% 20%, rgba(37, 99, 235, 0.12), transparent 40%),
-                radial-gradient(circle at 80% 0%, rgba(59, 130, 246, 0.08), transparent 40%);
             }
             main {
               padding: 2.5rem;
               max-width: 1200px;
               margin: 0 auto;
-              background: rgba(255, 255, 255, 0.97);
-              border-radius: 36px;
-              box-shadow: 0 30px 60px rgba(15, 23, 42, 0.12);
-              border: 1px solid rgba(148, 163, 184, 0.25);
+              background: #ffffff;
+              border-radius: 28px;
+              box-shadow: 0 30px 50px rgba(15, 23, 42, 0.12);
+              border: 1px solid rgba(148, 163, 184, 0.2);
             }
             h1 {
               margin-bottom: 0.25rem;
@@ -270,16 +268,25 @@ dashboardRouter.get("/", async (req, res, next) => {
               font-weight: 600;
               color: #1f2937;
             }
+            .job-card__deliveries {
+              overflow-x: auto;
+              margin-top: 0.2rem;
+              border-radius: 12px;
+              background: #f8fafc;
+              padding: 0.25rem;
+            }
             table {
               width: 100%;
               border-collapse: collapse;
               margin-top: 0.4rem;
               font-size: 0.8rem;
+              table-layout: fixed;
             }
             th,
             td {
               padding: 0.35rem 0.6rem;
               color: #0f172a;
+              word-break: break-word;
             }
             th {
               background: #e2e8f0;
