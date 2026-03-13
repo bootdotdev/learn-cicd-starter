@@ -245,6 +245,17 @@ dashboardRouter.get("/", async (req, res, next) => {
               font-size: 0.8rem;
               color: #475569;
             }
+            .job-card__meta {
+              margin: 0;
+              color: #475569;
+              font-size: 0.85rem;
+            }
+            .job-card__summary {
+              margin: 0;
+              font-size: 0.8rem;
+              font-weight: 600;
+              color: #1f2937;
+            }
             .job-card__deliveries-title {
               margin: 0;
               font-size: 0.9rem;
@@ -307,12 +318,17 @@ dashboardRouter.get("/", async (req, res, next) => {
     };
 
     for (const job of jobs) {
+    const successfulDeliveries = job.deliveries.filter((d) => d.status === "succeeded").length;
+    const deliverySummary = job.deliveries.length
+      ? `${successfulDeliveries} succeeded / ${job.deliveries.length} total`
+      : "No deliveries yet";
+
     html.push(
       `<article class="job-card">
             <div class="job-card__top">
               <div>
-                <h3>${job.pipeline}</h3>
-                <p class="job-card__action">${job.action}</p>
+                <h3>${job.pipeline} / ${job.action}</h3>
+                <p class="job-card__meta">${job.pipeline} · ${job.action}</p>
               </div>
               <div class="job-card__status-group">
                 <span class="${badgeClass(job.status)}">${job.status}</span>
@@ -321,6 +337,7 @@ dashboardRouter.get("/", async (req, res, next) => {
             </div>
             <p class="job-card__id">Job ${job.jobId}</p>
             <p class="job-card__timestamp">Updated ${new Date(job.updatedAt).toLocaleString()}</p>
+            <p class="job-card__summary">${deliverySummary}</p>
             <div class="job-card__deliveries">
               <p class="job-card__deliveries-title">Deliveries</p>
               ${job.deliveries.length ? `
