@@ -121,6 +121,21 @@ Output includes:
 
 Use `./scripts/demo-flow.sh | tee demo-output.log` to preserve the narrative for your video.
 
+## Quick Start
+
+1. Copy environment defaults and build the TypeScript artifacts:
+   ```bash
+   cp .env.example .env
+   npm run build
+   ```
+2. Start the full stack (database, migrations, API, worker) and confirm health:
+   ```bash
+   docker compose up --build -d
+   curl http://localhost:8080/health
+   ```
+3. Open `http://localhost:8080/dashboard` to see the observability view. Use `Download JSON` for machine-readable output or refresh the page to move data.
+4. Run `./scripts/demo-flow.sh | tee demo-output.log` while the stack is running to record pipeline creation, webhook ingestion, worker logs, and PostgreSQL rows for your demo.
+
 ## Observability UI
 
 The new `/dashboard` route gives you a live view of the pipeline runtime data without dropping to SQL:
