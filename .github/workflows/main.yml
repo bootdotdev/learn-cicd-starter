@@ -1,0 +1,46 @@
+on:
+  push:
+    branches: [main]
+
+jobs:
+  deploy:
+    name: Deploy
+    runs-on: ubuntu-latest
+    steps:
+      - name: Check out code
+        uses: actions/checkout@v4
+
+      - name: Set up Go
+        uses: actions/setup-go@v5
+        with:
+          go-version: "1.25.1"
+
+      - name: Build Go application for Linux
+        run: GOOS=linux go build -o notely .
+
+      - name: Log in to Docker Hub
+        uses: docker/login-action@v3
+        with:
+          username: ${{ secrets.DOCKERHUB_USERNAME }}
+          password: ${{ secrets.DOCKERHUB_TOKEN }}
+
+      - name: Build and push the Docker image
+        run: |
+          docker build -t veronicalobos87/notely:latest .
+          docker push veronicalobos87/notely:latest
+      
+      # Authenticate to Google Cloud
+      - name: Authenticate to Google Cloud
+        uses: 'google-github-actions/auth@v2'
+        with:
+          credentials_json: '${{ secrets.GCP_SA_KEY }}'
+
+      # Deploy to Cloud Run
+      - name: Deploy to Cloud Run
+        run: >-
+          gcloud run deploy notely 
+          --image docker.io/veronicalobos87/notely:latest 
+          --region us-central1 
+          --allow-unauthenticated 
+          --project ${{ secrets.GCP_PROJECT_ID }} 
+          --max-instances=4
