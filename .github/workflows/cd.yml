@@ -1,0 +1,54 @@
+#cd.yml
+name: Continuous Deployment
+
+on:
+  workflow_run:
+    workflows: ["Security Pipeline"]
+    types: [completed]
+
+jobs:
+  deploy:
+    name: Deploy to Cloud Run
+    runs-on: ubuntu-latest
+    if: ${{ github.event.workflow_run.conclusion == 'success' }}
+    env:
+      DATABASE_URL: ${{ secrets.DATABASE_URL }}
+
+    steps:
+      - name: Checkout code
+        uses: actions/checkout@v4
+
+      - name: Set up Go
+        uses: actions/setup-go@v5
+        with:
+          go-version: "1.25.1"
+
+      - name: Install Goose
+        run: go install github.com/pressly/goose/v3/cmd/goose@latest
+
+      - name: Run database migrations
+        run: ./scripts/migrateup.sh
+
+      - name: Set up gcloud
+        uses: google-github-actions/setup-gcloud@v2
+        with:
+          project_id: tensile-core-474113-t6
+          service_account_key: ${{ secrets.GCP_SA_KEY }}
+          export_default_credentials: true
+
+      - name: Configure Docker for Artifact Registry
+        run: gcloud auth configure-docker us-central1-docker.pkg.dev --quiet
+
+      - name: Build and push Docker image
+        run: |
+          docker build --platform=linux/amd64 -t us-central1-docker.pkg.dev/tensile-core-474113-t6/notely-ar-repo/notely:latest .
+          docker push us-central1-docker.pkg.dev/tensile-core-474113-t6/notely-ar-repo/notely:latest
+
+      - name: Deploy to Cloud Run
+        run: |
+          gcloud run deploy notely \
+            --image us-central1-docker.pkg.dev/tensile-core-474113-t6/notely-ar-repo/notely:latest \
+            --region us-central1 \
+            --allow-unauthenticated \
+            --project tensile-core-474113-t6 \
+            --max-instances=4
