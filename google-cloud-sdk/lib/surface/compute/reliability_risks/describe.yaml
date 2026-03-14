@@ -1,0 +1,14 @@
+- release_tracks: [ALPHA]
+  help_text:
+    brief: "Describe a reliability risk."
+    description: "Describe a reliability risk."
+    examples: |
+      The following command retrieves a single reliability risk and prints its properties.
+        $ {command} my-reliability-risk
+  request:
+    collection: compute.reliabilityRisks
+    api_version: alpha
+  arguments:
+    resource:
+      help_text: The name of the reliability risk you want to inspect.
+      spec: !REF googlecloudsdk.command_lib.compute.resources:reliability_risk

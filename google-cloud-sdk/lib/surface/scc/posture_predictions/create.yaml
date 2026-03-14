@@ -1,0 +1,59 @@
+- release_tracks: [ALPHA]
+  hidden: true
+  help_text:
+    brief: Create a Cloud Security Command Center (SCC) posture prediction resource using AI.
+    description: |
+      Create a Cloud Security Command Center (SCC) posture prediction using AI.
+
+      Created posture prediction is returned as the response of the command.
+
+    examples: |
+      Create a BASIC posture prediction within parent `organizations/123/locations/global`(i.e. in organization `123`, location `global`):
+
+        $ {command} --parent=organizations/123/locations/global --prediction-type=basic-posture
+
+      Create a BASIC posture prediction within parent `organizations/123/locations/global`(i.e. in organization `123`, location `global`),
+      considering the user environment options:
+
+        $ {command} --parent=organizations/123/locations/global --prediction-type=basic-posture --environment-options=path/to/env_options_file.yaml
+
+  request:
+    collection: securityposture.organizations.locations.predictions
+    disable_resource_check: true
+    api_version: v1alpha
+    method: createPrediction
+
+  arguments:
+    params:
+    - arg_name: parent
+      api_field: parent
+      required: true
+      help_text: |
+        Name of the parent for which posture prediction is to be created. Format:
+        organizations/<organizationID>/locations/<location>
+
+    - arg_name: prediction-type
+      api_field: createPredictionRequest.predictionType
+      required: true
+      help_text: |
+        The type of posture prediction to be created, one of [basic-posture]
+
+    - arg_name: environment-options
+      api_field: createPredictionRequest.environmentOptions
+      required: false
+      type: "googlecloudsdk.calliope.arg_parsers:FileContents:"
+      processor: googlecloudsdk.core.yaml:load
+      help_text: |
+        Path to the YAML file containing the environment options for the prediction
+
+    - arg_name: intent
+      api_field: createPredictionRequest.intent
+      required: false
+      help_text: |
+        Custom USER query string to create the prediction
+
+  async:
+    collection: securityposture.organizations.locations.operations
+
+  output:
+    format: yaml

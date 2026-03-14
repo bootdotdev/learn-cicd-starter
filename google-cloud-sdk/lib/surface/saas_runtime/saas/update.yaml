@@ -1,0 +1,46 @@
+- release_tracks: [ALPHA, BETA]
+  help_text:
+    brief: Update a SaaS
+    description: Update a SaaS
+    examples: |-
+      To update the SaaS, run:
+
+      $ {command} my-saas
+  arguments:
+    params:
+    - help_text: |-
+        Identifier. The resource name (full URI of the resource) following the standard naming
+        scheme:
+
+          "projects/{project}/locations/{location}/saas/{saas}"
+      is_positional: true
+      resource_spec: !REF googlecloudsdk.command_lib.saas_runtime.resources:saas
+      required: true
+    - arg_name: locations
+      api_field: saas.locations
+      clearable: true
+      repeated: true
+      help_text: |-
+        List of locations that the service is available in. Rollout refers to the
+        list to generate a rollout plan.
+      spec:
+      - api_field: name
+        help_text: |-
+          Name of location. Example flag usage: --locations=name=us-central1
+    - arg_name: labels
+      api_field: saas.labels
+      required: false
+      repeated: true
+      help_text: |-
+        The labels on the resource, which can be used for categorization.
+        similar to Kubernetes resource labels.
+      clearable: true
+      spec:
+      - api_field: key
+      - api_field: value
+  request:
+    api_version: v1beta1
+    collection:
+    - saasservicemgmt.projects.locations.saas
+  update:
+    read_modify_update: true

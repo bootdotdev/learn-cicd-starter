@@ -1,0 +1,49 @@
+release_tracks: [ALPHA, BETA, GA]
+
+help_text:
+  brief: |
+    Reschedule maintenance window for a Memorystore for
+        Redis Cluster instance.
+  description: |
+    Reschedule maintenance window for a Memorystore for
+        Redis Cluster instance.
+  examples: |
+    To reschedule maintenance window for an instance with the name 'my-redis-cluster' in region
+    'us-central-1' with immediate, run:
+
+      $ {command} my-redis-cluster --region=us-central1 --reschedule-type=IMMEDIATE
+
+arguments:
+  resource:
+    spec: !REF googlecloudsdk.command_lib.redis.resources:cluster
+    help_text: |
+      Arguments and flags that specify the Cloud Memorystore for Redis cluster instance you
+      want to reschedule maintenance window.
+  params:
+  - arg_name: reschedule-type
+    api_field: rescheduleClusterMaintenanceRequest.rescheduleType
+    required: true
+    choices:
+    - arg_value: IMMEDIATE
+      enum_value: IMMEDIATE
+      help_text: Reschedule the maintenance to perform now.
+    - arg_value: SPECIFIC-TIME
+      enum_value: SPECIFIC_TIME
+      help_text: Reschedule the maintenance to a specific time.
+    help_text: |
+      Reschedule type to use for the reschedule maintenance window.
+  - arg_name: schedule-time
+    api_field: rescheduleClusterMaintenanceRequest.scheduleTime
+    help_text: |
+      Time in RFC3339 format, for example: 2012-11-15T16:19:00.094Z
+
+async:
+  collection: redis.projects.locations.operations
+
+request:
+  ALPHA:
+    api_version: v1alpha1
+    modify_request_hooks:
+    - googlecloudsdk.command_lib.redis.clusters_reschedule_util:CheckSpecificTimeField
+  collection: redis.projects.locations.clusters
+  method: rescheduleClusterMaintenance

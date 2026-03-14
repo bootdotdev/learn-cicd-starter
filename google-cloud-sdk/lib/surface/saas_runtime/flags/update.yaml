@@ -1,0 +1,86 @@
+- release_tracks:
+  - ALPHA
+  hidden: true
+  help_text:
+    brief: Update Flag
+    description: Update a Flag
+    examples: |-
+      To update a Flag, run:
+
+          $ {command}
+  arguments:
+    params:
+    - help_text: |-
+        ID of the Flag:
+
+          "projects/{project}/locations/{location}/flags/{flag_id}"
+
+        This follows the standard Google Cloud naming scheme (URI).
+      is_positional: true
+      request_id_field: flagId
+      resource_spec: !REF googlecloudsdk.command_lib.saas_runtime.resources:flag
+      required: true
+
+    - arg_name: evaluation-spec
+      api_field: flag.evaluationSpec
+      clearable: true
+      help_text: |-
+        Specification of how the Flag value should be evaluated.
+      is_positional: false
+      required: false
+      repeated: false
+      spec:
+      - api_field: defaultTarget
+        help_text: |-
+          Default variant for the flag.
+      - api_field: variants
+        help_text: |-
+          A list of variants.
+          Variant is an identifier for a value (name assigned to a value).
+        spec:
+        - api_field: name
+          help_text: |-
+            Name of the variant.
+            Max length: 128 bytes.
+        - api_field: boolValue
+          help_text: |-
+            Value is a single flag value for the variant.
+
+    - arg_name: description
+      api_field: flag.description
+      clearable: true
+      required: false
+      help_text: |-
+        A description of the flag. Max length: 500 bytes.
+      is_positional: false
+
+    - arg_name: labels
+      api_field: flag.labels
+      clearable: true
+      required: false
+      repeated: true
+      help_text: |-
+        The labels on the resource, which can be used for categorization.
+      spec:
+      - api_field: key
+      - api_field: value
+
+    - arg_name: annotations
+      api_field: flag.annotations
+      clearable: true
+      required: false
+      repeated: true
+      help_text: |-
+        Unstructured key-value map stored with a resource that may be set by
+        external tools to store and retrieve arbitrary metadata. Annotations
+        are not queryable and should be preserved when modifying objects.
+      spec:
+      - api_field: key
+      - api_field: value
+
+  request:
+    api_version: v1beta1
+    collection:
+    - saasservicemgmt.projects.locations.flags
+  update:
+    read_modify_update: true

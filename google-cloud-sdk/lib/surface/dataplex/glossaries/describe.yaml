@@ -1,0 +1,21 @@
+- release_tracks: [ALPHA, GA]
+  help_text:
+    brief: |
+      Describe a Glossary.
+    description: |
+      Describe a Glossary.
+      Displays all details of a Glossary given a valid Glossary ID.
+    examples: |
+       To describe a Dataplex Glossary `test-glossary` within location `us-central1` and in project `test-project`
+
+          $ {command} test-glossary --location=us-central1 --project=test-project
+  request:
+    ALPHA:
+      api_version: v1
+    collection: dataplex.projects.locations.glossaries
+    method: get
+  arguments:
+    resource:
+      help_text: |
+        Glossary you want to describe.
+      spec: !REF googlecloudsdk.command_lib.dataplex.resources:glossary

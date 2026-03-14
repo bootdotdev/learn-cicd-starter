@@ -1,0 +1,21 @@
+- release_tracks:
+  - ALPHA
+  hidden: true
+  help_text:
+    brief: Delete Flag Revision
+    description: Delete a Flag Revision
+    examples: |-
+      To delete a Flag Revision, run:
+
+          $ {command}
+  arguments:
+    params:
+    - help_text: |-
+        Flag Revision ID of the Flag Revision to delete.
+      is_positional: true
+      resource_spec: !REF googlecloudsdk.command_lib.saas_runtime.resources:flag_revision
+      required: true
+  request:
+    api_version: v1beta1
+    collection:
+    - saasservicemgmt.projects.locations.flagRevisions

@@ -1,0 +1,21 @@
+- release_tracks: [ALPHA]
+  help_text:
+    brief: Describe a disk migration resource.
+    description: |
+      {command} describes a disk migration resource.
+      The disk migration resource tracks the disk migration progress.
+      To use this command, you must enable VM Migration API in your project.
+
+    examples: |
+      To describe my-disk-migration resource in us-central1 in the AWS source my-aws-source in the
+      default project, run:
+
+        $ {command} my-disk-migration --location=us-central1 --source=my-aws-source
+
+  request:
+    collection: vmmigration.projects.locations.sources.diskMigrationJobs
+
+  arguments:
+    resource:
+      help_text: The disk migration resource you want to describe.
+      spec: !REF googlecloudsdk.command_lib.migration.vms.resources:diskMigration

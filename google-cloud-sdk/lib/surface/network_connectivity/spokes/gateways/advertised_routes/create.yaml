@@ -1,0 +1,57 @@
+- release_tracks: [BETA]
+
+  help_text:
+    brief: Create a new gateway advertised route.
+    description: Create a new gateway advertised route with the given name.
+    examples: |
+      Create an advertised route with name ``my-route'' for gateway spoke ``my-gateway'' in region ``us-central1'':
+
+        $ {command} my-route --spoke=my-gateway --region=us-central1 --ip-range=10.0.1.0/24
+
+  arguments:
+    resource:
+      spec: !REF googlecloudsdk.command_lib.network_connectivity.resources:gatewayAdvertisedRoute
+      help_text: Name of the gateway advertised route to be created.
+    params:
+    - arg_name: description
+      BETA:
+        api_field: googleCloudNetworkconnectivityV1betaGatewayAdvertisedRoute.description
+      help_text: Description of the advertised route to be created.
+    - arg_name: ip-range
+      BETA:
+        api_field: googleCloudNetworkconnectivityV1betaGatewayAdvertisedRoute.ipRange
+      required: true
+      help_text: Advertise this IP range.
+    - group:
+        mutex: true
+        required: true
+        params:
+        - arg_name: advertise-to-hub
+          type: bool
+          help_text: The gateway should advertise this route toward the hub.
+    - arg_name: priority
+      BETA:
+        api_field: googleCloudNetworkconnectivityV1betaGatewayAdvertisedRoute.priority
+      help_text: This route's priority. Must be between 0 and 65335.
+    - arg_name: labels
+      BETA:
+        api_field: googleCloudNetworkconnectivityV1betaGatewayAdvertisedRoute.labels.additionalProperties
+      metavar: KEY=VALUE
+      help_text: |
+        List of label KEY=VALUE pairs to add.
+      type:
+        arg_dict:
+          flatten: true
+          spec:
+          - api_field: key
+          - api_field: value
+  async:
+    collection: networkconnectivity.projects.locations.operations
+
+  request: &request
+    BETA:
+      api_version: v1beta
+    modify_request_hooks:
+    - googlecloudsdk.command_lib.network_connectivity.util:SetGatewayAdvertisedRouteRecipient
+    method: create
+    collection: networkconnectivity.projects.locations.spokes.gatewayAdvertisedRoutes

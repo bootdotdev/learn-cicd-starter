@@ -1,0 +1,116 @@
+- release_tracks: [BETA]
+
+  help_text:
+    brief: Update a VPN spoke.
+    description: Update the details of a VPN spoke.
+
+    examples: |
+      To update the description of a VPN spoke named ``my-spoke'', run:
+
+        $ {command} my-spoke --region=us-central1 --description="new spoke description"
+
+  arguments:
+    resource:
+      spec: !REF googlecloudsdk.command_lib.network_connectivity.resources:spoke
+      help_text: Name of the spoke to update.
+    params:
+    - arg_name: description
+      api_field: googleCloudNetworkconnectivityV1betaSpoke.description
+      help_text: New description of the spoke.
+    - arg_name: include-import-ranges
+      api_field: googleCloudNetworkconnectivityV1betaSpoke.linkedVpnTunnels.includeImportRanges
+      type: arg_list
+      help_text: |
+        IP address range(s) allowed to be imported from hub subnets. Only ``ALL_IPV4_RANGES`` can be
+        added to the list. If it's empty, the spoke does not import any subnets from the hub.
+    - arg_name: exclude-import-ranges
+      api_field: googleCloudNetworkconnectivityV1betaSpoke.linkedVpnTunnels.excludeImportRanges
+      type: arg_list
+      hidden: true
+      help_text: |
+        Hub routes overlapped/encompassed by exclude import ranges are excluded during import from hub.
+    - arg_name: include-export-ranges
+      api_field: googleCloudNetworkconnectivityV1betaSpoke.linkedVpnTunnels.includeExportRanges
+      type: arg_list
+      hidden: true
+      help_text: |
+        Dynamic routes fully encompassed by include export ranges are included during export to hub.
+        If it's empty, the spoke exports all dynamic routes to the hub.
+    - arg_name: exclude-export-ranges
+      api_field: googleCloudNetworkconnectivityV1betaSpoke.linkedVpnTunnels.excludeExportRanges
+      type: arg_list
+      hidden: true
+      help_text: |
+        Dynamic routes overlapped/encompassed by exclude export ranges are excluded during export to hub.
+    labels:
+      api_field: googleCloudNetworkconnectivityV1betaSpoke.labels
+
+  update:
+    read_modify_update: true
+
+  async:
+    collection: networkconnectivity.projects.locations.operations
+
+  request:
+    api_version: v1beta
+    collection: networkconnectivity.projects.locations.spokes
+    method: patch
+
+
+- release_tracks: [GA]
+
+  help_text:
+    brief: Update a VPN spoke.
+    description: Update the details of a VPN spoke.
+
+    examples: |
+      To update the description of a VPN spoke named ``my-spoke'', run:
+
+        $ {command} my-spoke --region=us-central1 --description="new spoke description"
+
+  arguments:
+    resource:
+      spec: !REF googlecloudsdk.command_lib.network_connectivity.resources:spoke
+      help_text: Name of the spoke to update.
+    params:
+    - arg_name: description
+      api_field: spoke.description
+      help_text: New description of the spoke.
+    - arg_name: include-import-ranges
+      api_field: spoke.linkedVpnTunnels.includeImportRanges
+      type: arg_list
+      help_text: |
+        IP address range(s) allowed to be imported from hub subnets. Only ``ALL_IPV4_RANGES`` can be
+        added to the list. If it's empty, the spoke does not import any subnets from the hub.
+    - arg_name: exclude-import-ranges
+      api_field: spoke.linkedVpnTunnels.excludeImportRanges
+      type: arg_list
+      hidden: true
+      help_text: |
+        Hub routes overlapped/encompassed by exclude import ranges are excluded during import from hub.
+    - arg_name: include-export-ranges
+      api_field: spoke.linkedVpnTunnels.includeExportRanges
+      type: arg_list
+      hidden: true
+      help_text: |
+        Dynamic routes fully encompassed by include export ranges are included during export to hub.
+        If it's empty, the spoke exports all dynamic routes to the hub.
+    - arg_name: exclude-export-ranges
+      api_field: spoke.linkedVpnTunnels.excludeExportRanges
+      type: arg_list
+      hidden: true
+      help_text: |
+        Dynamic routes overlapped/encompassed by exclude export ranges are excluded during export to hub.
+    labels:
+      api_field: spoke.labels
+
+  update:
+    read_modify_update: true
+
+  async:
+    collection: networkconnectivity.projects.locations.operations
+
+  request:
+    api_version: v1
+    collection: networkconnectivity.projects.locations.spokes
+    method: patch

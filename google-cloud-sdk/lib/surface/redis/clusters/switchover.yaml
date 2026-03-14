@@ -1,0 +1,39 @@
+- release_tracks: [ALPHA, BETA, GA]
+
+  help_text:
+    brief: |
+      Switchover to a secondary cluster.
+    description: |
+      This command promotes the secondary cluster to become the new primary cluster. The old primary
+      and other secondary clusters will automatically become the secondary clusters of this cluster.
+
+      After the successful completion of this operation, the new primary cluster will accept both read
+      and write requests.
+
+      This command is only supported on secondary clusters.
+
+    examples: |
+      To switchover to a secondary cluster with name `my-secondary-cluster` in region `us-central1`, run:
+
+        $ {command} my-secondary-cluster --region=us-central1
+
+  arguments:
+    resource:
+      spec: !REF googlecloudsdk.command_lib.redis.resources:cluster
+      help_text: |
+        Arguments and flags that specify the Memorystore Redis cluster you want to update.
+
+  async:
+    collection: redis.projects.locations.operations
+
+  request:
+    ALPHA:
+      api_version: v1alpha1
+    BETA:
+      api_version: v1beta1
+    GA:
+      api_version: v1
+    collection: redis.projects.locations.clusters
+    method: patch
+    modify_request_hooks:
+    - googlecloudsdk.command_lib.redis.clusters_ccr_util:Switchover

@@ -1,0 +1,103 @@
+- release_tracks: [GA, BETA, ALPHA]
+
+  help_text:
+    brief: Update a policy orchestrator
+    description: |
+      Update a policy orchestrator.
+      ## EXAMPLES
+
+      To update an policy orchestrator `my-orchestrator` in folder `123456` with config file
+      `/path/to/file/config.yaml`, run:
+
+        $ {command} my-orchestrator --folder=123456 --policy-file=/path/to/file/config.yaml
+
+      To update an policy orchestrator `my-orchestrator` in folder `123456` with state STOPPED, run:
+
+        $ {command} my-orchestrator --folder=123456 --state=stopped
+
+  request:
+    collection:
+    - osconfig.projects.locations.global.policyOrchestrators
+    - osconfig.folders.locations.global.policyOrchestrators
+    - osconfig.organizations.locations.global.policyOrchestrators
+    method: patch
+    modify_request_hooks:
+    - googlecloudsdk.command_lib.compute.os_config.utils:ModifyOrchestrorPolicyUpdateRequest
+    ALPHA:
+      api_version: v2alpha
+    BETA:
+      api_version: v2beta
+    GA:
+      api_version: v2
+
+  async:
+    collection:
+    - osconfig.projects.locations.operations
+    - osconfig.folders.locations.operations
+    - osconfig.organizations.locations.operations
+    ALPHA:
+      api_version: v2alpha
+    BETA:
+      api_version: v2beta
+    GA:
+      api_version: v2
+
+  arguments:
+    resource:
+      help_text: Policy orchestrator to update.
+      spec: !REF googlecloudsdk.command_lib.compute.os_config.resources:policy_orchestrator
+    params:
+    - arg_name: action
+      help_text: Action to be taken on policy.
+      choices:
+      - arg_value: UPSERT
+        help_text: Create or update a policy. `policy-file` must be specified.
+      - arg_value: DELETE
+        help_text: Delete a policy with a given name. `policy-id` must be specified.
+    - arg_name: policy-id
+      help_text: Policy id. Must be specified for `DELETE` action.
+    - arg_name: state
+      help_text: State of the policy orchestrator.
+      choices:
+      - arg_value: ACTIVE
+        help_text: Updates the policy orchestrator to `ACTIVE` state.
+      - arg_value: STOPPED
+        help_text: Updates the policy orchestrator to `STOPPED` state.
+    - _REF_: googlecloudsdk.command_lib.compute.os_config.flags:policy-file
+    - group:
+        help_text: |
+            Projects to include in the policy orchestrator. Comma separated list of project numbers.
+            If `include-projects` is set, `clear-projects` must not be set.
+        mutex: true
+        params:
+        - arg_name: include-projects
+          help_text: Applies policy to selected projects only.
+        - arg_name: clear-projects
+          help_text: Clears included projects from policy orchestrator selectors.
+          type: bool
+    - group:
+        help_text: |
+            Folders to include in the policy orchestrator. Comma-separated list of folder numbers.
+            If `--include-folders` is set, `--clear-folders` must not be set.
+        mutex: true
+        params:
+        - arg_name: include-folders
+          help_text: Applies policy to selected folders only.
+        - arg_name: clear-folders
+          help_text: Clears included folders from policy orchestrator selectors.
+          type: bool
+    - group:
+        help_text: |
+            Locations to include in the policy orchestrator, e.g. `us-central1-a`.
+            If `include-locations` is set, `clear-locations` must not be set.
+        mutex: true
+        params:
+        - arg_name: include-locations
+          help_text: Applies policy to selected locations only.
+        - arg_name: clear-locations
+          help_text: Clears included locations from policy orchestrator selectors.
+          type: bool
+
+  update:
+    read_modify_update: true
+    disable_auto_field_mask: true

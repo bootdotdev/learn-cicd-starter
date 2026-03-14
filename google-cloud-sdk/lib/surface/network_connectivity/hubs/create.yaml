@@ -1,0 +1,117 @@
+- release_tracks: [BETA]
+
+  help_text:
+    brief: Create a new hub.
+    description: Create a new hub with the given name.
+    examples: |
+      To create a hub with the name ``my-hub'' and the description ``optional description'', run:
+
+        $ {command} my-hub --description="optional description"
+
+  arguments:
+    resource:
+      spec: !REF googlecloudsdk.command_lib.network_connectivity.resources:hub
+      help_text: Name of the hub to be created.
+    params:
+    - arg_name: description
+      api_field: googleCloudNetworkconnectivityV1betaHub.description
+      help_text: Description of the hub.
+    - arg_name: policy-mode
+      api_field: googleCloudNetworkconnectivityV1betaHub.policyMode
+      help_text: Policy mode of the hub.
+    - arg_name: preset-topology
+      api_field: googleCloudNetworkconnectivityV1betaHub.presetTopology
+      help_text: Topology of the hub. Only applicable when ``--policy-mode=PRESET''.
+    - group:
+        mutex: true
+        required: false
+        params:
+        - arg_name: export-psc
+          api_field: googleCloudNetworkconnectivityV1betaHub.exportPsc
+          default: null
+          help_text: |-
+            This boolean controls whether Private Service Connect transitivity is enabled for the hub.
+        - group:
+            hidden: true
+            required: false
+            params:
+            - arg_name: export-psc-published-services-and-regional-google-apis
+              api_field: googleCloudNetworkconnectivityV1betaHub.exportPscConfig.publishedServicesAndRegionalGoogleApis
+              hidden: true
+              default: null
+              help_text: |-
+                This boolean control whether Private Service Connect endpoints for regional ILBs and regional Google APIs should be propagated.
+            - arg_name: export-psc-global-google-apis
+              api_field: googleCloudNetworkconnectivityV1betaHub.exportPscConfig.globalGoogleApis
+              hidden: true
+              default: null
+              help_text: |-
+                This boolean controls whether Private Service Connect endpoints for global Google APIs should be propagated.
+    labels:
+      api_field: googleCloudNetworkconnectivityV1betaHub.labels
+
+  async:
+    collection: networkconnectivity.projects.locations.operations
+
+  request:
+    BETA:
+      api_version: v1beta
+    collection: networkconnectivity.projects.locations.global.hubs
+    method: create
+    modify_request_hooks:
+    - googlecloudsdk.command_lib.network_connectivity.util:AppendLocationsGlobalToParent
+    - googlecloudsdk.command_lib.network_connectivity.util:SetExportPscBeta
+
+- release_tracks: [ALPHA, GA]
+
+  help_text:
+    brief: Create a new hub.
+    description: Create a new hub with the given name.
+    examples: |
+      To create a hub with the name ``my-hub'' and the description ``optional description'', run:
+
+        $ {command} my-hub --description="optional description"
+
+  arguments:
+    resource:
+      spec: !REF googlecloudsdk.command_lib.network_connectivity.resources:hub
+      help_text: Name of the hub to be created.
+    params:
+    - arg_name: description
+      api_field: hub.description
+      help_text: Description of the hub.
+    - arg_name: policy-mode
+      release_tracks: [GA]
+      api_field: hub.policyMode
+      help_text: Policy mode of the hub.
+    - arg_name: preset-topology
+      release_tracks: [GA]
+      api_field: hub.presetTopology
+      help_text: Topology of the hub. Only applicable when ``--policy-mode=PRESET''.
+    - group:
+        release_tracks: [GA]
+        mutex: true
+        required: false
+        params:
+        - arg_name: export-psc
+          release_tracks: [GA]
+          api_field: hub.exportPsc
+          help_text: |-
+            This boolean controls whether Private Service Connect transitivity is enabled for the hub.
+    labels:
+      api_field: hub.labels
+
+  async:
+    collection: networkconnectivity.projects.locations.operations
+
+  request:
+    ALPHA:
+      api_version: v1alpha1
+    GA:
+      api_version: v1
+    collection: networkconnectivity.projects.locations.global.hubs
+    method: create
+    modify_request_hooks:
+    - googlecloudsdk.command_lib.network_connectivity.util:AppendLocationsGlobalToParent
+    # TODO: b/420998347 - Remove this hook once v1 supports HYBRID_INSPECTION.
+    - googlecloudsdk.command_lib.network_connectivity.util:ProhibitHybridInspection

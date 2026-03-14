@@ -1,0 +1,43 @@
+release_tracks: [GA, BETA, ALPHA]
+help_text:
+  brief: |
+    Create a multicast consumer association.
+  description: |
+    Create a multicast consumer association in the specified location of the current project.
+  examples: |
+    Create a multicast consumer association with the name 'my-multicast-consumer-association',
+    multicast-domain-activation 'path-to-mda',
+    network 'path-to-network',
+    and location 'zone'.
+
+      $ {command} my-multicast-consumer-association --multicast-domain-activation=path-to-mda --network=path-to-network --location=zone
+arguments:
+  resource:
+    spec: !REF googlecloudsdk.command_lib.network_services.resources:multicastConsumerAssociation
+    help_text: |
+      Name of the multicast consumer association to be created.
+  params:
+  - arg_name:  multicast-domain-activation
+    api_field: multicastConsumerAssociation.multicastDomainActivation
+    help_text: The multicast domain activation to be used.
+    required: true
+  - arg_name:  network
+    api_field: multicastConsumerAssociation.network
+    help_text: The path of the multicast consumer VPC network.
+    required: true
+  - arg_name: description
+    api_field: multicastConsumerAssociation.description
+    help_text: The description for the multicast consumer association.
+  labels:
+    api_field: multicastConsumerAssociation.labels
+async:
+  collection: networkservices.projects.locations.operations
+request: &request
+  GA:
+    api_version: v1
+  ALPHA:
+    api_version: v1alpha1
+  BETA:
+    api_version: v1beta1
+  collection: networkservices.projects.locations.multicastConsumerAssociations
+  method: create

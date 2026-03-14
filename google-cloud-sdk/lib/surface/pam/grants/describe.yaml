@@ -1,0 +1,27 @@
+- release_tracks: [ALPHA, BETA, GA]
+
+  help_text:
+    brief: Show details of a Privileged Access Manager (PAM) grant.
+    description: Show details of a Privileged Access Manager (PAM) grant.
+    examples: |
+      The following command describes a grant with the full name ``GRANT_NAME'':
+
+      $ {command} GRANT_NAME
+
+  request:
+    ALPHA:
+      api_version: v1alpha
+    BETA:
+      api_version: v1beta
+    GA:
+      api_version: v1
+    collection:
+    - privilegedaccessmanager.projects.locations.entitlements.grants
+    - privilegedaccessmanager.folders.locations.entitlements.grants
+    - privilegedaccessmanager.organizations.locations.entitlements.grants
+
+  arguments:
+    resource:
+      spec: !REF googlecloudsdk.command_lib.pam.resources:grant
+      help_text: |
+        Name of the grant to describe.

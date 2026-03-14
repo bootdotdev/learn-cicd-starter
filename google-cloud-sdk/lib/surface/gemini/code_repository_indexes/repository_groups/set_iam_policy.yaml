@@ -1,0 +1,27 @@
+- release_tracks: [ALPHA, GA]
+
+  help_text:
+    brief: Get the IAM policy for a code repository index repository group.
+    description: |
+      *{command}* sets the IAM policy for a code repository index repository group
+      as defined in a JSON or YAML file.
+
+      See https://cloud.google.com/iam/docs/managing-policies for details of
+      the policy file format and contents.
+    examples: |
+      The following command will read an IAM policy defined in a JSON file
+      'policy.json' and set it for the repository group named 'my-repository-group':
+
+        $ {command} my-repository-group policy.json --region=us-central1 --code-repository-index=my-index
+
+  request:
+    ALPHA:
+      api_version: v1alpha
+    GA:
+      api_version: v1
+    collection: cloudaicompanion.projects.locations.codeRepositoryIndexes.repositoryGroups
+
+  arguments:
+    resource:
+      help_text: The repository group for which to set the IAM policy.
+      spec: !REF googlecloudsdk.command_lib.gemini.resources:repository_group

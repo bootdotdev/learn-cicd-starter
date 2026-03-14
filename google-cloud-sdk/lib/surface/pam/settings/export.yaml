@@ -1,0 +1,44 @@
+- release_tracks: [ALPHA, BETA]
+  help_text:
+    brief: |
+      Export Privileged Access Manager (PAM) settings configured on a project, folder, or
+      organization to a local YAML file.
+    description: |
+      Export the Privileged Access Manager (PAM) settings configured for a specified project,
+      folder, or organization to a local YAML file.
+    examples: |
+      The following command exports PAM settings for the project named `sample-project` in location
+      `global` to a local YAML file named `pam-settings.yaml`:
+
+      $ {command} --project=sample-project --location=global --destination=pam-settings.yaml
+
+      The following command exports PAM settings for the folder with ID `FOLDER_ID` in location
+      `global` to a local YAML file named `pam-settings.yaml`:
+
+      $ {command} --folder=FOLDER_ID --location=global --destination=pam-settings.yaml
+
+      The following command exports PAM settings for the organization with ID `ORGANIZATION_ID` in
+      location `global` to a local YAML file named `pam-settings.yaml`:
+
+      $ {command} --organization=ORGANIZATION_ID --location=global --destination=pam-settings.yaml
+
+  request:
+    ALPHA:
+      api_version: v1alpha
+    BETA:
+      api_version: v1beta
+    method: getSettings
+    collection:
+    - privilegedaccessmanager.projects.locations
+    - privilegedaccessmanager.folders.locations
+    - privilegedaccessmanager.organizations.locations
+    modify_request_hooks:
+    - googlecloudsdk.command_lib.pam.util:UpdateSettingsResource
+
+  arguments:
+    resource:
+      arg_name: location
+      spec: !REF googlecloudsdk.command_lib.pam.resources:location
+      is_positional: false
+      help_text: |
+        The project/organization/folder location for which the settings needs to be exported.

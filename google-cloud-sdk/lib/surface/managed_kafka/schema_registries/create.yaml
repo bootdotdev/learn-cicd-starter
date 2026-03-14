@@ -1,0 +1,21 @@
+release_tracks: [ALPHA, BETA]
+
+help_text:
+  brief: |
+    Create a Managed Service for Apache Kafka schema registry.
+  description: |
+    Create a Managed Service for Apache Kafka schema registry.
+
+  examples: |
+    To create a schema registry, run the following:
+
+      $ {command} myschemaregistry \
+          --location=us-central1
+
+request:
+  collection: managedkafka.projects.locations.schemaRegistries
+
+arguments:
+  resource:
+    help_text: Identifies the schema registry for which the command runs.
+    spec: !REF googlecloudsdk.command_lib.managed_kafka.resources:schema_registry

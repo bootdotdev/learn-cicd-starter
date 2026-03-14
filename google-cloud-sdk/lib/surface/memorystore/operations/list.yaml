@@ -1,0 +1,24 @@
+- release_tracks: [ALPHA, BETA, GA]
+  help_text:
+    brief: List Memorystore operations.
+    description: List Memorystore operations.
+    examples: |
+      To list Memorystore operations in project `my-project` and location `us-central1`, run:
+
+      $ {command} --project=my-project --location=us-central1
+  arguments:
+    params:
+    - help_text: The parent collection of the Memorystore operations.
+      is_positional: false
+      resource_spec: !REF googlecloudsdk.command_lib.memorystore.resources:project_location
+      required: true
+  request:
+    ALPHA:
+      api_version: v1alpha
+    BETA:
+      api_version: v1beta
+    GA:
+      api_version: v1
+    collection: memorystore.projects.locations.operations
+  response:
+    id_field: name

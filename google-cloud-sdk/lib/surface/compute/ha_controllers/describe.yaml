@@ -1,0 +1,20 @@
+- release_tracks: [ALPHA]
+  help_text:
+    brief: View the details and configuration of a specified HA Controller.
+    description: Describe an High Availability (HA) Controller to view its details and configurations.
+    examples: |
+      To view the details of an HA Controller named `my-ha-controller` in the `us-central1` region, run the following command:
+
+        $ {command} my-ha-controller \
+            --region=us-central1
+
+  request:
+    api_version: alpha
+    collection: compute.haControllers
+    method: get
+
+  arguments:
+    resource:
+      help_text: The HA Controller that you want to describe.
+      spec: !REF googlecloudsdk.command_lib.compute.ha_controllers.resources:ha_controller
+      is_positional: true

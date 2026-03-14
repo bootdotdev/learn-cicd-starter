@@ -1,0 +1,22 @@
+release_tracks: [ALPHA, BETA, GA]
+
+help_text:
+  brief: |
+    Describe a Managed Service for Apache Kafka connect cluster.
+  description: |
+    Describe a Managed Service for Apache Kafka for BigQuery connect cluster.
+
+  examples: |
+    To describe a connect cluster named myconnectcluster located in us-central1,
+    run the following:
+
+      $ {command} myconnectcluster \
+          --location=us-central1
+
+request:
+  collection: managedkafka.projects.locations.connectClusters
+
+arguments:
+  resource:
+    help_text: Identifies the connect cluster.
+    spec: !REF googlecloudsdk.command_lib.managed_kafka.resources:connect_cluster

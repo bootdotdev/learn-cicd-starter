@@ -1,0 +1,19 @@
+- release_tracks: [ALPHA, BETA]
+  help_text:
+    brief: List Rollout Kinds
+    description: List Rollout Kinds
+    examples: |-
+      To list all Rollout Kinds, run:
+
+      $ {command}
+  arguments:
+    resource:
+      help_text: |-
+        Parent value for ListRolloutKindsRequest
+      spec: !REF googlecloudsdk.command_lib.saas_runtime.resources:project_location_with_default
+  request:
+    api_version: v1beta1
+    collection:
+    - saasservicemgmt.projects.locations.rolloutKinds
+  response:
+    id_field: name

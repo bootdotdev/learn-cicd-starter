@@ -1,0 +1,27 @@
+- release_tracks: [ALPHA, BETA, GA]
+
+  help_text:
+    brief: Show details of a Privileged Access Manager (PAM) long running operation.
+    description: Show details of a Privileged Access Manager (PAM) long running operation.
+    examples: |
+      The following command describes an operation with the full name ``OPERATION_NAME'':
+
+      $ {command} OPERATION_NAME
+
+  request:
+    ALPHA:
+      api_version: v1alpha
+    BETA:
+      api_version: v1beta
+    GA:
+      api_version: v1
+    collection:
+    - privilegedaccessmanager.projects.locations.operations
+    - privilegedaccessmanager.folders.locations.operations
+    - privilegedaccessmanager.organizations.locations.operations
+
+  arguments:
+    resource:
+      spec: !REF googlecloudsdk.command_lib.pam.resources:operation
+      help_text: |
+        Name of the operation to describe.

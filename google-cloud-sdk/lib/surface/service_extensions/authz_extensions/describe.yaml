@@ -1,0 +1,25 @@
+release_tracks: [BETA, GA]
+
+help_text:
+  brief: |
+    Describe an `AuthzExtension` resource.
+  description: |
+    Show details about an `AuthzExtension` resource.
+  examples: |
+    To show details about the `AuthzExtension` resource named
+    `my-authz-extension` located in `us-central1`.
+
+      $ {command} my-authz-extension --location=us-central1
+
+arguments:
+  resource:
+    spec: !REF googlecloudsdk.command_lib.service_extensions.resources:authzExtension
+    help_text: The ID of the `AuthzExtension` resource.
+
+request: &request
+  BETA:
+    api_version: v1beta1
+  GA:
+    api_version: v1
+
+  collection: networkservices.projects.locations.authzExtensions

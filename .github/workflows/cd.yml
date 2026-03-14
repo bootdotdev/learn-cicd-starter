@@ -1,0 +1,67 @@
+name: cd
+
+on:
+  push:
+    branches: [main]
+
+jobs:
+  deploy:
+    name: Deploy
+    runs-on: ubuntu-latest
+
+    env:
+      PROJECT_ID: notely-475312
+      REGION: us-central1
+      REPO: cloud-run-source-deploy
+      SERVICE: notely
+      IMAGE: us-central1-docker.pkg.dev/notely-475312/cloud-run-source-deploy/notely:${{ github.sha }}
+      # IMPORTANT: create a GitHub Actions secret named DATABASE_URL that contains your full libsql URL (no quotes)
+      DATABASE_URL: ${{ secrets.DATABASE_URL }}
+
+    steps:
+      - name: Check out code
+        uses: actions/checkout@v4
+
+      # Install Go so we can install goose for migrations
+      - name: Set up Go
+        uses: actions/setup-go@v5
+        with:
+          go-version: "1.22.x"
+
+      - name: Install goose
+        run: go install github.com/pressly/goose/v3/cmd/goose@latest
+
+      - id: auth
+        uses: google-github-actions/auth@v2
+        with:
+          credentials_json: ${{ secrets.GCP_CREDENTIALS }}
+
+      - name: Set up Cloud SDK
+        uses: google-github-actions/setup-gcloud@v2
+
+      - name: Ensure Artifact Registry repo
+        run: |
+          gcloud artifacts repositories create "$REPO" \
+            --repository-format=docker --location="$REGION" || true
+
+      - name: Build and push image
+        run: gcloud builds submit --tag "$IMAGE"
+
+      # Run DB migrations AFTER build, BEFORE deploy
+      - name: Migrate database
+        run: ./scripts/migrateup.sh
+        env:
+          # (Optional redundancy) Ensure the script sees it even if job-level env changes later
+          DATABASE_URL: ${{ secrets.DATABASE_URL }}
+
+      - name: List pushed images (debug)
+        run: gcloud artifacts docker images list "$REGION-docker.pkg.dev/$PROJECT_ID/$REPO" --include-tags
+
+      - name: Deploy to Cloud Run
+        run: |
+          gcloud run deploy "$SERVICE" \
+            --image "$IMAGE" \
+            --region "$REGION" \
+            --allow-unauthenticated \
+            --project "$PROJECT_ID" \
+            --max-instances=3

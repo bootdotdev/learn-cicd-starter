@@ -1,0 +1,19 @@
+- release_tracks: [ALPHA, GA]
+  help_text:
+    brief: |
+      Deletes a glossary term.
+    description: |
+      Deletes a glossary term.
+    examples: |
+      To delete the glossary term `test-term` in glossary `test-glossary` in project `test-project` in location `us-central1`, run:
+
+          $ {command} test-term --glossary=test-glossary --location=us-central1 --project=test-project
+  request:
+    ALPHA:
+      api_version: v1
+    collection: dataplex.projects.locations.glossaries.terms
+  arguments:
+    resource:
+      help_text: |
+        Arguments and flags that define the glossary term you want to delete.
+      spec: !REF googlecloudsdk.command_lib.dataplex.resources:glossary_term

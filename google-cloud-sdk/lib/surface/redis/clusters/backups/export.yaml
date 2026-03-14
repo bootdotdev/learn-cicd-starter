@@ -1,0 +1,40 @@
+- release_tracks: [ALPHA, BETA, GA]
+  command_type: GENERIC
+  help_text:
+    brief: |
+      Export a Redis cluster backup to a Google Cloud Storage bucket.
+    description: |
+      This command exports a Redis cluster backup to a Google Cloud Storage bucket.
+      A new folder will be created in the bucket with the backup name. And the backup files will be
+      stored in the folder.
+
+    examples: |
+      To export a backup with name `my-backup` under backup collection `my-collection`
+      in `us-central` region to `my-bucket` Google Cloud Storage bucket, run:
+
+      $ {command} my-backup --backup-collection=my-collection --region=us-central1 --bucket-name=my-bucket
+
+  arguments:
+    resource:
+      spec: !REF googlecloudsdk.command_lib.redis.resources:backup
+      help_text:
+        Arguments and flags that specify the Redis backup you want to export.
+    params:
+    - arg_name: gcs-bucket
+      api_field: exportBackupRequest.gcsBucket
+      required: true
+      help_text: |
+        The name of the Google Cloud Storage bucket to export the backup to.
+
+  async:
+    collection: redis.projects.locations.operations
+
+  request:
+    ALPHA:
+      api_version: v1alpha1
+    BETA:
+      api_version: v1beta1
+    GA:
+      api_version: v1
+    collection: redis.projects.locations.backupCollections.backups
+    method: export

@@ -1,0 +1,43 @@
+release_tracks: [ALPHA]
+help_text:
+  brief: Create a BigQuery Engine for Apache Flink deployment.
+  description: Create a BigQuery Engine for Apache Flink deployment.
+  examples: |
+    To create a BigQuery Engine for Apache Flink deployment, run:
+
+        $ {command} my-deployment \
+            --location=us-central1
+
+    To create a BigQuery Engine for Apache Flink deployment with all optional parameters set, run:
+
+        $ {command} my-deployment \
+            --location=us-central1
+            --max-slots=100 \
+            --network-config-vpc=my-vpc \
+            --network-config-subnetwork=my-subnetwork
+
+request:
+  collection: managedflink.projects.locations.deployments
+  method: create
+
+async:
+  collection: managedflink.projects.locations.operations
+
+arguments:
+  resource:
+    help_text: Identifies the deployment for which the command runs.
+    spec: !REF googlecloudsdk.command_lib.managed_flink.resources:deployment
+
+  params:
+  - _REF_: googlecloudsdk.command_lib.managed_flink.flags:max-slots
+    required: true
+  - _REF_: googlecloudsdk.command_lib.managed_flink.flags:display-name
+  - _REF_: googlecloudsdk.command_lib.managed_flink.flags:secrets-paths
+    hidden: true
+  - _REF_: googlecloudsdk.command_lib.managed_flink.flags:workload-identity
+  - group:
+      params:
+      - _REF_: googlecloudsdk.command_lib.managed_flink.flags:network-config-vpc
+        required: true
+      - _REF_: googlecloudsdk.command_lib.managed_flink.flags:network-config-subnetwork
+        required: true

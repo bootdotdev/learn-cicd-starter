@@ -1,0 +1,24 @@
+release_tracks: [ALPHA]
+
+help_text:
+  brief: |
+    Delete a BigQuery Engine for Apache Flink deployment.
+  description: |
+    Delete a BigQuery Engine for Apache Flink deployment.
+
+  examples: |
+    To delete a BigQuery Engine for Apache Flink whose ID is mydeployment, run the following:
+
+      $ {command} mydeployment \
+          --location=us-central1
+
+request:
+  collection: managedflink.projects.locations.deployments
+
+async:
+  collection: managedflink.projects.locations.operations
+
+arguments:
+  resource:
+    help_text: Identifies the Flink deployment to be deleted.
+    spec: !REF googlecloudsdk.command_lib.managed_flink.resources:deployment

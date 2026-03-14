@@ -1,0 +1,20 @@
+- release_tracks: [ALPHA]
+
+  help_text:
+    brief: get IAM policy for a project on the zone
+    description: Gets the IAM policy for a project on the zone.
+    examples: |
+      To get the IAM policy for a project called `test-project` on the zone `test-zone` in location `us-central1`, run:
+
+      $ {command} test-zone --project=test-project --location=us-central1
+
+  request:
+    collection: edgecontainer.projects.locations.zones
+    api_version: v1alpha
+
+  arguments:
+    resource:
+      help_text: |
+        The name of the zone where the project is enabled.
+      is_positional: true
+      spec: !REF googlecloudsdk.command_lib.zone_management.zone.resources:projzone

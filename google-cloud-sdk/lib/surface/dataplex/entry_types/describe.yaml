@@ -1,0 +1,20 @@
+- release_tracks: [ALPHA, GA]
+  help_text:
+    brief: |
+      Describe a Dataplex Entry Type.
+    description: |
+      Displays all details of an Entry Type given a valid Entry Type ID.
+    examples: |
+       To describe a Dataplex Entry Type `test-entry-type` in location `us-central1` and in project `test-project`, run:
+
+          $ {command} test-entry-type --location=us-central1 --project=test-project
+  request:
+    ALPHA:
+      api_version: v1
+    collection: dataplex.projects.locations.entryTypes
+    method: get
+  arguments:
+    resource:
+      help_text: |
+        Arguments and flags that define the Dataplex Entry Type you want to retrieve.
+      spec: !REF googlecloudsdk.command_lib.dataplex.resources:entry_type

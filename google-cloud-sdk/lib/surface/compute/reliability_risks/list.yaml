@@ -1,0 +1,26 @@
+- release_tracks: [ALPHA]
+  help_text:
+    brief: "List reliability risks."
+    description: "List reliability risks."
+    examples: |
+      The following command lists all reliability risks.
+        $ {command} my-reliability-risk
+  request:
+    collection: compute.reliabilityRisks
+    api_version: alpha
+
+  response:
+    id_field: name
+
+  arguments:
+    resource:
+      help_text: The project of the reliability risks to list.
+      spec: !REF googlecloudsdk.command_lib.compute.resources:compute_project
+      override_resource_collection: true
+  output:
+    format: |
+      table(
+        name,
+        details.type,
+        details.severity,
+        recommendation.content)

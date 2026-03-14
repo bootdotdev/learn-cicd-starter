@@ -1,0 +1,28 @@
+- release_tracks: [ALPHA, BETA]
+
+  help_text:
+    brief: Describe a backup channel.
+    description: |
+      Describe a Backup for GKE backup channel.
+
+      ## EXAMPLES
+
+      To describe a backup channel ``my-backup-channel'' in project ``my-project'' in location ``us-central1'', run:
+
+        $ {command} my-backup-channel --project=my-project --location=us-central1
+
+  request:
+    collection: gkebackup.projects.locations.backupChannels
+    api_version: v1
+
+  arguments:
+    resource:
+      help_text: |
+        Name of the backup channel to describe. The name may be provided either as a relative name,
+        e.g.
+        `projects/<project>/locations/<location>/backupChannels/<backupChannel>`
+        or as a single ID name (with the parent resources provided via options or through
+        properties), e.g.
+        `BACKUP_CHANNEL --project=<project> --location=<location>`
+
+      spec: !REF googlecloudsdk.command_lib.container.backup_restore.resources:positional_backup_channel

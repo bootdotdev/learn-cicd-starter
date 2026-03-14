@@ -1,0 +1,19 @@
+release_tracks: [ALPHA]
+
+help_text:
+  brief: describe zonal project
+  description: Describe a zonal project.
+  examples: |
+    To describe a zonal project `test-zonal-project` in zone `test-zone` in organization `test-org` and location `us-central1`, run:
+
+    $ {command} test-zonal-project --location=us-central1 --zone=test-zone --organization=test-org
+
+request:
+  collection: edgecontainer.organizations.locations.zones.zonalProjects
+  api_version: v1alpha
+  method: get
+
+arguments:
+  resource:
+    help_text: Zonal Project
+    spec: !REF googlecloudsdk.command_lib.zone_management.project.resources:zonalProject

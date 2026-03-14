@@ -1,0 +1,32 @@
+- release_tracks: [GA]
+  help_text:
+    brief: List Mapping Rules.
+    description: List mapping rules.
+    examples: |
+      To list all mapping rules in a project and location `us-central1`, run:
+
+        $ {command} --conversion-workspace=my-conversion-workspace --region=us-central1
+
+  request:
+    collection: datamigration.projects.locations.conversionWorkspaces.mappingRules
+    api_version: v1
+
+  response:
+    id_field: name
+    modify_response_hooks:
+    - googlecloudsdk.command_lib.database_migration.conversion_workspaces.hooks:ModifyMappingRuleResponse
+
+  arguments:
+    resource:
+      arg_name: conversion-workspace
+      help_text: The conversion workspace you want to list mapping rules for.
+      spec: !REF googlecloudsdk.command_lib.database_migration.resources:conversion_workspace
+
+  output:
+    format: |
+      table(
+        name.basename():label=MAPPING_RULE_ID,
+        displayName,
+        ruleScope:label=scope,
+        filter
+      )

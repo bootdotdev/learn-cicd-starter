@@ -1,0 +1,29 @@
+release_tracks: [BETA, GA]
+
+help_text:
+  brief: |
+    Delete an `AuthzPolicy` resource.
+  description: |
+    Delete the specified `AuthzPolicy` resource.
+  examples: |
+      To delete an `AuthzPolicy` resource named
+      `my-authz-policy` in `us-central1`, run:
+
+        $ {command} my-authz-policy --location=us-central1
+
+arguments:
+  resource:
+    spec: !REF googlecloudsdk.command_lib.network_security.resources:authzPolicy
+    help_text: |
+      The ID of the deleted `AuthzPolicy` resource.
+
+async:
+  collection: networksecurity.projects.locations.operations
+
+request: &request
+  BETA:
+    api_version: v1beta1
+  GA:
+    api_version: v1
+
+  collection: networksecurity.projects.locations.authzPolicies

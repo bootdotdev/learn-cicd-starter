@@ -1,0 +1,19 @@
+- release_tracks: [ALPHA, BETA]
+  help_text:
+    brief: List Rollouts
+    description: List Rollouts
+    examples: |-
+      To list all Rollouts, run:
+
+      $ {command}
+  arguments:
+    resource:
+      help_text: |-
+        Parent value for ListRolloutsRequest
+      spec: !REF googlecloudsdk.command_lib.saas_runtime.resources:project_location_with_default
+  request:
+    api_version: v1beta1
+    collection:
+    - saasservicemgmt.projects.locations.rollouts
+  response:
+    id_field: name

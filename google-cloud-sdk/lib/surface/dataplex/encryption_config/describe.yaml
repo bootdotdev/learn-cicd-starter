@@ -1,0 +1,20 @@
+- release_tracks: [ALPHA, GA]
+  help_text:
+    brief: |
+      Describe an EncryptionConfig.
+    description: |
+      Describe an EncryptionConfig.
+      Displays all the details of an EncryptionConfig used for CMEK with valid organization and location.
+    examples: |
+      To describe an EncryptionConfig:
+      $ {command} default --location=us-central1 --organization=test-org
+  request:
+    ALPHA:
+      api_version: v1
+    collection: dataplex.organizations.locations.encryptionConfigs
+    method: get
+  arguments:
+    resource:
+      help_text: |
+        encryption_config you want to Describe
+      spec: !REF googlecloudsdk.command_lib.dataplex.resources:encryption_config

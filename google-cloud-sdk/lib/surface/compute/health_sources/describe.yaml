@@ -1,0 +1,21 @@
+- release_tracks: [ALPHA, BETA]
+  help_text:
+    brief: "Describe a health source."
+    description: "Describe a health source."
+    examples: |
+      To retrieve a single health source and print its properties, run the following
+      command:
+
+      $ {command} <HEALTH_SOURCE_NAME> --region=<REGION>
+
+  request:
+    ALPHA:
+      api_version: alpha
+    BETA:
+      api_version: beta
+    collection: compute.regionHealthSources
+
+  arguments:
+    resource:
+      help_text: Name of the health source you want to inspect.
+      spec: !REF googlecloudsdk.command_lib.compute.resources:health_source

@@ -1,0 +1,36 @@
+# -*- coding: utf-8 -*- #
+# Copyright 2025 Google LLC. All Rights Reserved.
+#
+# Licensed under the Apache License, Version 2.0 (the "License");
+# you may not use this file except in compliance with the License.
+# You may obtain a copy of the License at
+#
+#    [http://www.apache.org/licenses/LICENSE-2.0](http://www.apache.org/licenses/LICENSE-2.0)
+#
+# Unless required by applicable law or agreed to in writing, software
+# distributed under the License is distributed on an "AS IS" BASIS,
+# WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
+# See the License for the specific language governing permissions and
+# limitations under the License.
+#
+# Implementation definition for gcloud iam workforce-pools providers scim-tenants undelete
+
+- release_tracks: [ALPHA, BETA, GA]
+  help_text:
+    brief: Undelete an IAM workforce identity pool provider SCIM tenant token.
+    description: |
+      Undelete a SCIM token associated with a specific workforce identity pool provider SCIM tenant.
+    examples: |
+      To undelete a SCIM token with ID `my-token` under tenant `my-tenant` provider `my-provider` in pool `my-pool` located in `global`:
+
+        $ {command} my-token --location=global --workforce-pool=my-pool --provider=my-provider --scim-tenant=my-tenant
+
+  request:
+    collection: iam.locations.workforcePools.providers.scimTenants.tokens
+    method: undelete
+
+  arguments:
+    resource:
+      help_text: The SCIM token to undelete.
+      spec: !REF googlecloudsdk.command_lib.iam.resources:workforce_pool_provider_scim_token
+      is_positional: true

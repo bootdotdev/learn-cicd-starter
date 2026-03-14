@@ -1,0 +1,72 @@
+release_tracks: [ALPHA, BETA, GA]
+
+help_text:
+  brief: |
+    Update a Managed Service for Apache Kafka for BigQuery connect cluster.
+  description: |
+    Update an Managed Service for Apache Kafka for BigQuery connect cluster.
+
+  examples: |
+    To update a connect cluster, run the following:
+
+      $ {command} myconnectorCluster \
+          --location=us-central1 \
+          --configs=KEY1=VALUE1,KEY2=VALUE2... OR --config-file=my-config-file.yaml \
+          --cpu=3 \
+          --memory=3GiB \
+          --primary-subnet=projects/my-project/regions/us-central1/subnetworks/default/1 \
+          --additional-subnet=projects/my-project/regions/us-central1/subnetworks/default/2 \
+          --dns-name=bootstrap.myconnectorCluster.us-central1.managedkafka.my-project.cloud.goog:9092 \
+          --secret=projects/my-project/secrets/my-secret/versions/1 \
+          --labels=KEY1=VALUE1,KEY2=VALUE2...
+
+request:
+  collection: managedkafka.projects.locations.connectClusters
+  modify_request_hooks:
+  - googlecloudsdk.command_lib.managed_kafka.util:PrepareConnectClusterUpdate
+  - googlecloudsdk.command_lib.managed_kafka.util:MapConnectParamsToNetworkConfig
+
+async:
+  collection: managedkafka.projects.locations.operations
+
+arguments:
+  resource:
+    help_text: Identifies the connect cluster for which the command runs.
+    spec: !REF googlecloudsdk.command_lib.managed_kafka.resources:connect_cluster
+  params:
+  - group:
+      required: true
+      params:
+      - group:
+          mutex: true
+          params:
+          - _REF_: googlecloudsdk.command_lib.managed_kafka.flags:connectCluster-configs
+          - _REF_: googlecloudsdk.command_lib.managed_kafka.flags:connectCluster-config-file
+          - _REF_: googlecloudsdk.command_lib.managed_kafka.flags:clear-configs
+      - _REF_: googlecloudsdk.command_lib.managed_kafka.flags:connect-cpu
+      - _REF_: googlecloudsdk.command_lib.managed_kafka.flags:connect-memory
+      # Require primary subnet to be provided iff additional subnet is provided.
+      - group:
+          mutex: true
+          required: false
+          params:
+          - group:
+              params:
+              - _REF_: googlecloudsdk.command_lib.managed_kafka.flags:connect-primary-subnet
+                required: true
+              - _REF_: googlecloudsdk.command_lib.managed_kafka.flags:connect-additional-subnet
+      - group:
+          mutex: true
+          params:
+          - _REF_: googlecloudsdk.command_lib.managed_kafka.flags:dns-name
+          - _REF_: googlecloudsdk.command_lib.managed_kafka.flags:clear-dns-names
+      - group:
+          mutex: true
+          params:
+          - _REF_: googlecloudsdk.command_lib.managed_kafka.flags:secret
+          - _REF_: googlecloudsdk.command_lib.managed_kafka.flags:clear-secrets
+      - group:
+          mutex: true
+          params:
+          - _REF_: googlecloudsdk.command_lib.managed_kafka.flags:connect-labels
+          - _REF_: googlecloudsdk.command_lib.managed_kafka.flags:clear-connect-labels

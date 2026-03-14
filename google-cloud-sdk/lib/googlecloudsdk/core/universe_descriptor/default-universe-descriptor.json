@@ -1,0 +1,11 @@
+{
+  "universeDomain": "googleapis.com",
+  "universeShortName": "",
+  "authenticationDomain": "auth.cloud.google.com",
+  "projectPrefix": "",
+  "cloudWebDomain": "cloud.google.com",
+  "documentationDomain": "cloud.google.com",
+  "version": "1.0.0",
+  "state": "primary",
+  "artifactRegistryDomain": "pkg.dev"
+}

@@ -1,0 +1,61 @@
+- release_tracks: [ALPHA]
+  help_text:
+    brief: Create a disk migration resource to migrate a disk to Compute Engine.
+    description: |
+      {command} lets you create disk migration resource. You must create a disk migration resource
+      before you can migrate your disk from any migration source to a Compute Engine disk. The disk
+      migration resource tracks the progress of the disk migration.
+      To use this command, you must enable VM Migration API in your project.
+
+      Note that this command only creates a disk migration resource. It does not initiate the disk
+      migration process. After creating the disk migration resource, you must initiate the
+      migration process using the run command.
+
+    examples: |
+      To create a disk migration resource to migrate a volume vol-12345 from an AWS source
+      my-aws-source to my-target-project in us-central1, create the my-disk-migration disk migration
+      resource in my-project in us-central1, run:
+
+        $ {command} my-disk-migration \
+          --project=my-project \
+          --location=us-central1 \
+          --source=my-aws-source \
+          --source-volume-id=vol-12345 \
+          --disk-id=gcp-disk1 \
+          --target-project=projects/my-project/locations/global/targetProjects/my-target-project
+
+  request:
+    collection: vmmigration.projects.locations.sources.diskMigrationJobs
+    modify_request_hooks:
+    - googlecloudsdk.command_lib.migration.vms.disk_migration.hooks:FixCreateDiskMigrationsRequest
+
+  arguments:
+    resource:
+      help_text: The disk migration resource you want to create. This would be the disk ID if --disk-id is not given.
+      spec: !REF googlecloudsdk.command_lib.migration.vms.resources:diskMigration
+
+    params:
+    - _REF_: googlecloudsdk.command_lib.migration.vms.disk_migration.flags:source_volume_id
+    - _REF_: googlecloudsdk.command_lib.migration.vms.disk_migration.flags:labels
+    - _REF_: googlecloudsdk.command_lib.migration.vms.disk_migration.flags:target_project
+    - _REF_: googlecloudsdk.command_lib.migration.vms.disk_migration.flags:kms_key
+    - _REF_: googlecloudsdk.command_lib.migration.vms.disk_migration.flags:disk_id
+    - _REF_: googlecloudsdk.command_lib.migration.vms.disk_migration.flags:zone
+    - _REF_: googlecloudsdk.command_lib.migration.vms.disk_migration.flags:disk_type
+      choices:
+      - arg_value: compute-engine-disk-type-standard
+        enum_value: COMPUTE_ENGINE_DISK_TYPE_STANDARD
+        help_text: |-
+          Compute Engine Disk Type Standard.
+      - arg_value: compute-engine-disk-type-ssd
+        enum_value: COMPUTE_ENGINE_DISK_TYPE_SSD
+        help_text: |-
+          Compute Engine Disk Type SSD.
+      - arg_value: compute-engine-disk-type-balanced
+        enum_value: COMPUTE_ENGINE_DISK_TYPE_BALANCED
+        help_text: |-
+          Compute Engine Disk Type Balanced.
+      - arg_value: compute-engine-disk-type-hyperdisk-balanced
+        enum_value: COMPUTE_ENGINE_DISK_TYPE_HYPERDISK_BALANCED
+        help_text: |-
+          Compute Engine Disk Type hyperdisk-balanced.

@@ -1,0 +1,20 @@
+- release_tracks: [ALPHA, GA]
+  help_text:
+    brief: |
+      Cancel a Metadata Job run.
+    description: |
+      Cancels an existing Metadata Job run.
+    examples: |
+       To cancel a Dataplex Metadata Job run `test-metadata-job` within location `us-central1` and in project `test-project`
+
+          $ {command} test-metadata-job --location=us-central1 --project=test-project
+  request:
+    ALPHA:
+      api_version: v1
+    collection: dataplex.projects.locations.metadataJobs
+    method: cancel
+  arguments:
+    resource:
+      help_text: |
+        Arguments and flags that define the Dataplex metadata job you want to cancel.
+      spec: !REF googlecloudsdk.command_lib.dataplex.resources:metadata_job

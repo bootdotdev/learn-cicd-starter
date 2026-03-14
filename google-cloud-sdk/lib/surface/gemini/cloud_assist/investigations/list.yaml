@@ -1,0 +1,23 @@
+release_tracks: [ALPHA]
+help_text:
+  brief: List Gemini Cloud Assist Investigations.
+  description: List Gemini Cloud Assist Investigations.
+  examples: |
+    To list Gemini Cloud Assist Investigations, run:
+
+        $ {command}
+
+request:
+  collection: geminicloudassist.projects.locations.investigations
+  method: list
+
+arguments:
+  resource:
+    help_text: Location to list investigations for.
+    spec: !REF googlecloudsdk.command_lib.gemini.cloud_assist.resources:location
+
+output:
+  format: |
+    table(name,
+          title,
+          executionState)

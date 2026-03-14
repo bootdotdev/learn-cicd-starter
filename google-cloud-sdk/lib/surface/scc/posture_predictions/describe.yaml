@@ -1,0 +1,31 @@
+- release_tracks: [ALPHA]
+  hidden: true
+  help_text:
+    brief: Describes a Cloud Security Command Center (SCC) posture prediction resource.
+    description: |
+      Describes a Cloud Security Command Center (SCC) posture prediction.
+
+      Posture prediction resource is returned as the response of the command.
+
+    examples: |
+      Desribe a posture prediction named `organizations/123/locations/global/predictions/abcd-ef`:
+
+        $ {command} organizations/123/locations/global/predictions/abcd-ef
+
+        or, run:
+
+        $ {command} abcd-ef --organization=123 --location=global
+
+  request:
+    collection: securityposture.organizations.locations.predictions
+    disable_resource_check: true
+    api_version: v1alpha
+    method: get
+
+  arguments:
+    resource:
+      spec: !REF googlecloudsdk.command_lib.scc.resources:prediction
+      help_text: |
+          Posture prediction resource to be described. For example `organizations/123/locations/global/predictions/abcd-ef`.
+  output:
+    format: yaml

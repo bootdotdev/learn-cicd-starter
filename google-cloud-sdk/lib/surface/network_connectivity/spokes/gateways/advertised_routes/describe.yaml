@@ -1,0 +1,20 @@
+- release_tracks: [BETA]
+
+  help_text:
+    brief: Describe a gateway advertised route.
+    description: Retrieve and display details about a gateway advertised route.
+
+    examples: |
+      To display details about a gateway advertised route named ``my-route'', run:
+
+        $ {command} my-route --region=us-central1 --spoke=my-gateway
+
+  arguments:
+    resource:
+      spec: !REF googlecloudsdk.command_lib.network_connectivity.resources:gatewayAdvertisedRoute
+      help_text: Name of the gateway advertised route to be described.
+
+  request: &request
+    BETA:
+      api_version: v1beta
+    collection: networkconnectivity.projects.locations.spokes.gatewayAdvertisedRoutes

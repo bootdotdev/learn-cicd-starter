@@ -1,0 +1,30 @@
+- release_tracks: [ALPHA]
+  help_text:
+    brief: View a list of all HA Controllers in a project and in a specified region.
+    description: |
+      List High Availability (HA) Controllers in a specific region.
+    examples: |
+      To list all HA Controllers in the `us-central1` region, run the following command:
+
+        $ {command} --region=us-central1
+
+  request:
+    api_version: alpha
+    collection: compute.haControllers
+    method: list
+
+  arguments:
+    resource:
+      help_text: The region of the HA Controllers to list.
+      spec: !REF googlecloudsdk.command_lib.compute.resources:region
+
+  output:
+    format: |
+      table(
+        name,
+        region.basename(),
+        instanceName,
+        failoverInitiation,
+        secondaryZoneCapacity,
+        creationTimestamp
+      )

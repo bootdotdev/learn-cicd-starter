@@ -1,0 +1,25 @@
+release_tracks: [ALPHA, BETA, GA]
+help_text:
+  brief: |
+    Export BackendAuthenticationConfig.
+  description: |
+    Export a BackendAuthenticationConfig.
+  examples: |
+      To export a BackendAuthenticationConfig, run:
+
+        $ {command} my-backend-authentication-config --destination=my-backend-authentication-config.yaml --location=global
+
+request:
+  collection: networksecurity.projects.locations.backendAuthenticationConfigs
+  ALPHA:
+    api_version: v1alpha1
+  BETA:
+    api_version: v1beta1
+  GA:
+    api_version: v1
+
+arguments:
+  resource:
+    spec: !REF googlecloudsdk.command_lib.network_security.resources:backendAuthenticationConfig
+    help_text: |
+      Name of the BackendAuthenticationConfig to export.

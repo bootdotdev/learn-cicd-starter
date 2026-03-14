@@ -1,0 +1,51 @@
+$schema: "http://json-schema.org/draft-06/schema#"
+
+title: networksecurity v1alpha1 WildfireInlineMlOverride export schema
+description: A gcloud export/import command YAML validation schema.
+type: object
+required:
+- action
+- protocol
+additionalProperties: false
+properties:
+  COMMENT:
+    type: object
+    description: User specified info ignored by gcloud import.
+    additionalProperties: false
+    properties:
+      template-id:
+        type: string
+      region:
+        type: string
+      description:
+        type: string
+      date:
+        type: string
+      version:
+        type: string
+  UNKNOWN:
+    type: array
+    description: Unknown API fields that cannot be imported.
+    items:
+      type: string
+  action:
+    description: The action to take for WildFire Inline ML override.
+    type: string
+    enum:
+    - WILDFIRE_ALERT
+    - WILDFIRE_ALLOW
+    - WILDFIRE_DEFAULT_ACTION
+    - WILDFIRE_DENY
+    - WILDFIRE_THREAT_ACTION_UNSPECIFIED
+  protocol:
+    description: Protocol to match for WildFire Inline ML override.
+    type: string
+    enum:
+    - WILDFIRE_FTP
+    - WILDFIRE_HTTP
+    - WILDFIRE_HTTP2
+    - WILDFIRE_IMAP
+    - WILDFIRE_POP3
+    - WILDFIRE_PROTOCOL_UNSPECIFIED
+    - WILDFIRE_SMB
+    - WILDFIRE_SMTP

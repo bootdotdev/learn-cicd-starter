@@ -1,0 +1,88 @@
+- release_tracks: [GA, BETA, ALPHA]
+
+  help_text:
+    brief: Create a policy orchestrator
+    description: |
+      Create a policy orchestrator.
+      ## EXAMPLES
+
+      To create a policy orchestrator `my-orchestrator` in folder `123456` for OS policy assignment
+      with config file `/path/to/file/config.yaml`, run:
+
+        $ {command} my-orchestrator --folder=123456 --policy-type os_policy_assignment_v1 \
+            --policy-file=/path/to/file/config.yaml
+
+      To create a policy orchestrator `my-orchestrator` in folder `123456` that deletes OS Policy
+      assignments with id `my-policy`, run:
+
+        $ {command} my-orchestrator --folder=123456 --policy-type os_policy_assignment_v1 \
+            --action delete --policy-id my-policy
+
+  request:
+    collection:
+    - osconfig.projects.locations.global.policyOrchestrators
+    - osconfig.folders.locations.global.policyOrchestrators
+    - osconfig.organizations.locations.global.policyOrchestrators
+    method: create
+    modify_request_hooks:
+    - googlecloudsdk.command_lib.compute.os_config.utils:ModifyOrchestrorPolicyCreateRequest
+    ALPHA:
+      api_version: v2alpha
+    BETA:
+      api_version: v2beta
+    GA:
+      api_version: v2
+
+  async:
+    collection:
+    - osconfig.projects.locations.operations
+    - osconfig.folders.locations.operations
+    - osconfig.organizations.locations.operations
+    ALPHA:
+      api_version: v2alpha
+    BETA:
+      api_version: v2beta
+    GA:
+      api_version: v2
+
+  arguments:
+    resource:
+      help_text: Policy orchestrator to create.
+      spec: !REF googlecloudsdk.command_lib.compute.os_config.resources:policy_orchestrator
+    params:
+    - arg_name: action
+      help_text: Action to be taken on policy.
+      default: upsert
+      choices:
+      - arg_value: UPSERT
+        help_text: Create or update a policy. `policy-file` must be specified.
+      - arg_value: DELETE
+        help_text: Delete a policy with a given name. `policy-id` must be specified.
+    - arg_name: policy-id
+      help_text: Policy id. Must be specified for `DELETE` action.
+    - arg_name: policy-type
+      help_text: Policy type to use.
+      required: true
+      choices:
+      - arg_value: OS_POLICY_ASSIGNMENT_V1
+        help_text: OS policy assignment v1.
+    - arg_name: state
+      help_text: State of the policy orchestrator.
+      default: ACTIVE
+      choices:
+      - arg_value: ACTIVE
+        help_text: Creates a policy orchestrator in `ACTIVE` state.
+      - arg_value: STOPPED
+        help_text: Creates a policy orchestrator in `STOPPED` state.
+    - _REF_: googlecloudsdk.command_lib.compute.os_config.flags:policy-file
+    - arg_name: include-projects
+      help_text: |
+        Applies policy to selected projects. Comma-separated list of project numbers. Can be used
+        together with `--include-folders`.
+    - arg_name: include-folders
+      help_text: |
+        Applies policy to selected folders. Comma-separated list of folder numbers. Can beused
+        together with `--include-projects`.
+    - arg_name: include-locations
+      help_text: |
+        Applies policy to selected locations, e.g. `us-central1-a`.

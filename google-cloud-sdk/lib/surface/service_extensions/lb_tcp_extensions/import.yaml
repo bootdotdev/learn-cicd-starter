@@ -1,0 +1,35 @@
+release_tracks: [BETA]
+help_text:
+  brief: |
+    Import an `LbTcpExtension` resource.
+  description: |
+    Import an `LbTcpExtension` resource defined in a YAML file.
+  examples: |
+    To import an `LbTcpExtension` resource named
+    `my-tcp-extension` from a YAML file in `us-central1`, run:
+
+        $ {command} my-tcp-extension --source=my-tcp-extension.yaml --location=us-central1
+
+request:
+  collection: networkservices.projects.locations.lbTcpExtensions
+  BETA:
+    api_version: v1beta1
+
+
+arguments:
+  resource:
+    spec: !REF googlecloudsdk.command_lib.service_extensions.resources:lbTcpExtension
+    help_text: |
+      The ID of the new or updated `LbTcpExtension` resource.
+
+async:
+  collection: networkservices.projects.locations.operations
+
+import:
+  abort_if_equivalent: true
+  create_if_not_exists: true
+  create_request:
+    collection: networkservices.projects.locations.lbTcpExtensions
+    BETA:
+      api_version: v1beta1
+    method: create

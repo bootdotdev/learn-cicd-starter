@@ -1,0 +1,255 @@
+---
+unsupported:
+- path:
+    admin_api: inboundServices
+    app_yaml: inbound_services
+  severity: major
+  reason: Cloud Run does not support GAE Inbound Services.
+- path:
+    admin_api: handlers
+    app_yaml: handlers
+  severity: major
+  reason: Cloud Run does not support GAE Handlers.
+- path:
+    admin_api: errorHandlers
+    app_yaml: error_handlers
+  severity: major
+  reason: Cloud Run does not support GAE Error Handlers.
+- path:
+    admin_api: appEngineApis
+    app_yaml: app_engine_apis
+  severity: major
+  reason: Cloud Run does not support GAE Bundled Services.
+- path:
+    admin_api: buildEnvVariables
+    app_yaml: build_env_variables
+  severity: major
+  reason: No support for passing environment vars to configure buildpacks.
+range_limited:
+- path:
+    admin_api: resources.cpu
+    app_yaml: resources.cpu
+  range:
+    max: 8
+    min: 0
+  severity: minor
+  reason: Cloud Run supports CPU values between 0 to 8.
+  flags:
+  - --cpu
+- path:
+    admin_api: resources.memoryGb
+    app_yaml: resources.memory_gb
+  range:
+    max: 32
+    min: 0.5
+  severity: minor
+  reason: Cloud Run supports memory values between 0.5 to 32Gi.
+  flags:
+  - --memory
+- path:
+    admin_api: automaticScaling.standardSchedulerSettings.minInstances
+    app_yaml: automatic_scaling.min_instances
+  range:
+    max: 1000
+    min: 0
+  severity: minor
+  reason: Cloud Run supports automatic scaling min instances values between 0 to 1000.
+  flags:
+  - --min-instances
+- path:
+    admin_api: automaticScaling.standardSchedulerSettings.maxInstances
+    app_yaml: automatic_scaling.max_instances
+  range:
+    max: 1000
+    min: 0
+  severity: minor
+  reason: Cloud Run supports automatic scaling max instances values between 0 to 1000.
+  flags:
+  - --max-instances
+- path:
+    admin_api: manualScaling.instances
+    app_yaml: manual_scaling.instances
+  range:
+    max: 1000
+    min: 0
+  severity: minor
+  reason: Cloud Run supports manual scaling values between 0 and 1000.
+  flags:
+  - --min-instances
+  - --max-instances
+- path:
+    admin_api: basicScaling.maxInstances
+    app_yaml: basic_scaling.max_instances
+  range:
+    max: 1000
+    min: 0
+  severity: minor
+  reason: Cloud Run supports basic scaling values between 0 and 1000.
+  flags:
+  - --min-instances
+  - --max-instances
+- path:
+    admin_api: automaticScaling.maxConcurrentRequests
+    app_yaml: automatic_scaling.max_concurrent_requests
+  range:
+    max: 1000
+    min: 1
+  severity: minor
+  reason: Cloud Run supports concurrency values between 1 and 1000.
+  flags:
+  - --concurrency
+- path:
+    admin_api: automaticScaling.targetConcurrentRequests
+    app_yaml: automatic_scaling.target_concurrent_requests
+  range:
+    max: 1000
+    min: 1
+  severity: minor
+  reason: Cloud Run supports concurrency values between 1 and 1000.
+  flags:
+  - --concurrency
+value_limited:
+- path:
+    admin_api: runtimeConfig.pythonVersion
+    app_yaml: runtime_config.python_version
+  known_values:
+  - 2
+  - 3
+  allowed_values:
+  - 3
+  severity: major
+  reason: Cloud Run only supports second generation App Engine runtimes. Older runtimes are not compatible.
+- path:
+    admin_api: runtime
+    app_yaml: runtime
+  known_values:
+  - aspnetcore
+  - custom
+  - java
+  - java8
+  - java11
+  - java17
+  - java21
+  - python
+  - python27
+  - python39
+  - python310
+  - python311
+  - python312
+  - python313
+  - php
+  - php55
+  - php72
+  - php73
+  - php74
+  - php81
+  - php82
+  - php83
+  - php84
+  - ruby
+  - ruby25
+  - ruby26
+  - ruby27
+  - ruby30
+  - ruby31
+  - ruby32
+  - ruby33
+  - ruby34
+  - go
+  - go111
+  - go112
+  - go113
+  - go114
+  - go115
+  - go116
+  - go117
+  - go118
+  - go119
+  - go120
+  - go121
+  - go122
+  - go123
+  - nodejs
+  - nodejs8
+  - nodejs10
+  - nodejs12
+  - nodejs14
+  - nodejs16
+  - nodejs18
+  - nodejs20
+  - nodejs22
+  allowed_values:
+  - aspnetcore
+  - custom
+  - java11
+  - java17
+  - java21
+  - python37
+  - python39
+  - python310
+  - python311
+  - python312
+  - python313
+  - php72
+  - php73
+  - php74
+  - php81
+  - php82
+  - php83
+  - php84
+  - ruby25
+  - ruby26
+  - ruby27
+  - ruby30
+  - ruby31
+  - ruby32
+  - ruby33
+  - ruby34
+  - go112
+  - go113
+  - go114
+  - go115
+  - go116
+  - go117
+  - go118
+  - go119
+  - go120
+  - go121
+  - go122
+  - go123
+  - nodejs8
+  - nodejs10
+  - nodejs12
+  - nodejs14
+  - nodejs16
+  - nodejs18
+  - nodejs20
+  - nodejs22
+  severity: major
+  reason: Cloud Run only supports second generation App Engine runtimes. Older runtimes are not compatible.
+supported:
+- path:
+    admin_api: entrypoint.shell
+    app_yaml: entrypoint
+  flags:
+  - --command
+- path:
+    admin_api: envVariables
+    app_yaml: env_variables
+  flags:
+  - --set-env-vars
+- path:
+    admin_api: vpcAccessConnector.name
+    app_yaml: vpc_access_connector.name
+  flags:
+  - --vpc-connector
+- path:
+    admin_api: vpcAccessConnector.egressSetting
+    app_yaml: vpc_access_connector.egress_setting
+  flags:
+  - --vpc-egress
+- path:
+    admin_api: serviceAccount
+    app_yaml: service_account
+  flags:
+  - --service-account

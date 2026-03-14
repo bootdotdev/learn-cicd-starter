@@ -1,0 +1,27 @@
+- release_tracks: [ALPHA, BETA]
+
+  help_text:
+    brief: Describe a backup plan binding.
+    description: |
+      Describe a Backup for GKE backup plan binding.
+
+      ## EXAMPLES
+
+      To describe a backup plan binding ``my-backup-plan-binding'' in project ``my-project'' in location ``us-central1'' under backup channel ``my-backup-channel'', run:
+
+        $ {command} my-backup-plan-binding --backup-channel=my-backup-channel --project=my-project --location=us-central1
+
+  request:
+    collection: gkebackup.projects.locations.backupChannels.backupPlanBindings
+    api_version: v1
+
+  arguments:
+    resource:
+      help_text: |
+        Name of the backup plan binding to describe. The name may be provided either as a relative name, e.g.
+        `projects/<project>/locations/<location>/backupChannels/<backupChannel>/backupPlanBindings/<backupPlanBinding>`
+        or as a single ID name (with the parent resources provided via options or through
+        properties), e.g.
+        `BACKUP_PLAN_BINDING --project=<project> --location=<location> --backup-channel=<backupChannel>`.
+
+      spec: !REF googlecloudsdk.command_lib.container.backup_restore.resources:backup_plan_binding

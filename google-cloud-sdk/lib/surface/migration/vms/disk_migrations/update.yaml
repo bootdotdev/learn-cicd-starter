@@ -1,0 +1,49 @@
+- release_tracks: [ALPHA]
+  help_text:
+    brief: Update a disk migration resource target details.
+    description: |
+      {command} updates a disk migration resource.
+      To use this command, you must enable VM Migration API in your project.
+
+    examples: |
+      To update a disk migration resource my-disk-migration from AWS source
+      my-aws-source disk type to pd-ssd, run:
+
+        $ {command} my-disk-migration \
+          --project=my-project \
+          --location=us-central1 \
+          --source=my-aws-source \
+          --disk-type=COMPUTE_ENGINE_DISK_TYPE_SSD
+
+  request:
+    collection: vmmigration.projects.locations.sources.diskMigrationJobs
+
+  arguments:
+    resource:
+      help_text: The disk migration resource you want to udpate.
+      spec: !REF googlecloudsdk.command_lib.migration.vms.resources:diskMigration
+
+    params:
+    - _REF_: googlecloudsdk.command_lib.migration.vms.disk_migration.flags:labels
+    - _REF_: googlecloudsdk.command_lib.migration.vms.disk_migration.flags:target_project
+    - _REF_: googlecloudsdk.command_lib.migration.vms.disk_migration.flags:kms_key
+    - _REF_: googlecloudsdk.command_lib.migration.vms.disk_migration.flags:disk_id
+    - _REF_: googlecloudsdk.command_lib.migration.vms.disk_migration.flags:zone
+    - _REF_: googlecloudsdk.command_lib.migration.vms.disk_migration.flags:disk_type
+      choices:
+      - arg_value: compute-engine-disk-type-standard
+        enum_value: COMPUTE_ENGINE_DISK_TYPE_STANDARD
+        help_text: |-
+          Compute Engine Disk Type Standard.
+      - arg_value: compute-engine-disk-type-ssd
+        enum_value: COMPUTE_ENGINE_DISK_TYPE_SSD
+        help_text: |-
+          Compute Engine Disk Type SSD.
+      - arg_value: compute-engine-disk-type-balanced
+        enum_value: COMPUTE_ENGINE_DISK_TYPE_BALANCED
+        help_text: |-
+          Compute Engine Disk Type Balanced.
+      - arg_value: compute-engine-disk-type-hyperdisk-balanced
+        enum_value: COMPUTE_ENGINE_DISK_TYPE_HYPERDISK_BALANCED
+        help_text: |-
+          Compute Engine Disk Type hyperdisk-balanced.

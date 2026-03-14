@@ -1,0 +1,345 @@
+- release_tracks: [GA, ALPHA]
+
+  help_text:
+    brief: Create cloud access bindings for a specific group.
+    GA:
+      description: |
+        Create a new cloud access binding. The access level and/or session settings will be globally
+        bound with the group.
+
+        To apply access level and/or session settings to a specific application, specify the
+        restricted application in the 'binding-file'. In such case, the access level and/or
+        session settings specified in the yaml file will be bound with the group and the restricted
+        applications.
+      examples: |
+        To create a new cloud access binding, run:
+
+          $ {command} --group-key=my-group-key --level=accessPolicies/123/accessLevels/abc
+
+        To create a new cloud access binding for particular applications using a yaml file, run:
+
+          $ {command} --group-key=my-group-key --organization='1234567890' \
+            --binding-file='binding.yaml'
+
+        To create a new global cloud access binding, and for particular applications
+        using a yaml file, run:
+
+          $ {command} --group-key=my-group-key --level=accessPolicies/123/accessLevels/abc \
+            --organization='1234567890' \
+            --binding-file='binding.yaml'
+
+        To create a new cloud access binding for the dry run access level, run:
+
+          $ {command} --group-key=my-group-key --level=accessPolicies/123/accessLevels/abc \
+            --dry-run-level=accessPolicies/123/accessLevels/def
+
+        To create a new cloud access binding with global session settings, specify your session
+        length using an ISO duration string and the `session-length` flag. For example:
+
+          $ {command} --group-key=my-group-key --organization='1234567890' \
+            --session-length=2h
+
+        To set a particular session reauth method for these session settings, run:
+
+          $ {command} --group-key=my-group-key --organization='1234567890' \
+            --session-length=2h --session-reauth-method=LOGIN
+
+        To create session settings for a particular application, supply a YAML file and run:
+
+          $ {command} --group-key=my-group-key --organization='1234567890' \
+            --binding-file='binding.yaml'
+
+        Global and per-app session settings can be set on the same group, along with access levels.
+        For example:
+
+          $ {command} --group-key=my-group-key --organization='1234567890' \
+            --session-length=2h --session-reauth-method=LOGIN \
+            --level=accessPolicies/123/accessLevels/abc \
+            --dry-run-level=accessPolicies/123/accessLevels/def \
+            --binding-file='binding.yaml'
+    ALPHA:
+      description: |
+        Create a new access binding. The access level (if any) will be bound with
+
+        - a group and the restricted client application
+        - a specific service account or all service accounts in a specified project.
+
+        The session settings (if any) will be bound with
+
+        - a group
+
+        If you want to bind session settings to a particular application, use scoped access
+        settings.
+
+        If a group key is specified, the access level and/or session settings are globally enforced
+        for all context-aware access group members, as specified in the binding.
+        If a restricted client application is also specified, then the enforcement applies only to
+        the specified application, and not to the entire organization. Session settings are
+        incompatible with the top level --restricted-client-application flags; please use
+        --binding-file to specify scoped access settings. If the restricted client application is
+        specified, then --binding-file cannot be set.
+        If a service account is specified, then the enforcement applies only to the specified
+        service account.
+        If a service account project is specified, the enforcement applies to all of the
+        service accounts belonging to the specified project.
+      examples: |
+        To create a new global cloud access binding, run:
+
+          $ {command} --group-key=my-group-key --level=accessPolicies/123/accessLevels/abc
+
+        To create a new cloud access binding for particular applications, run:
+
+          $ {command} --group-key=my-group-key --level=accessPolicies/123/accessLevels/abc \
+            --organization='1234567890' \
+            --restricted-client-application-names='Google Cloud SDK, Cloud Console' \
+            --restricted-client-application-client-ids='123456789.apps.googleusercontent.com'
+
+        To create a new cloud access binding for particular applications using a yaml file, run:
+
+          $ {command} --group-key=my-group-key --organization='1234567890' \
+            --binding-file='binding.yaml'
+
+        To create a new global cloud access binding, and for particular applications
+        using a yaml file, run:
+
+          $ {command} --group-key=my-group-key --level=accessPolicies/123/accessLevels/abc \
+            --organization='1234567890' \
+            --binding-file='binding.yaml'
+
+        To create a new global cloud access binding for the dry run access level,
+        run:
+
+          $ {command} --group-key=my-group-key --level=accessPolicies/123/accessLevels/abc \
+            --dry-run-level=accessPolicies/123/accessLevels/def
+
+        To create a new cloud access binding for the dry run access level for particular
+        applications, run:
+
+          $ {command} --group-key=my-group-key --level=accessPolicies/123/accessLevels/abc \
+            --dry-run-level=accessPolicies/123/accessLevels/def \
+            --organization='1234567890' \
+            --restricted-client-application-names='Google Cloud SDK, Cloud Console' \
+            --restricted-client-application-client-ids='123456789.apps.googleusercontent.com'
+
+        To create a new cloud access binding for a particular service account, run:
+
+          $ {command} --service-account=service-account@project.iam.gserviceaccount.com \
+            --level=accessPolicies/123/accessLevels/abc \
+            --organization='1234567890'
+
+        To create a new cloud access binding for all service accounts in a particular project, run:
+
+          $ {command} --service-account-project-number='987654321' \
+            --level=accessPolicies/123/accessLevels/abc \
+            --organization='1234567890' \
+
+        To create a new cloud access binding for a specific federated principal, run:
+
+          $ {command} --federated-principal='//iam.googleapis.com/projects/1234567890/locations/global/workloadIdentityPools/my-pool/subject/my-subject' \
+            --level=accessPolicies/123/accessLevels/abc \
+            --organization='1234567890'
+
+        To create a new cloud access binding with global session settings, specify your session
+        length using an ISO duration string and the `session-length` flag. For example:
+
+          $ {command} --group-key=my-group-key --organization='1234567890' \
+            --session-length=2h
+
+        To set a particular session reauth method for these session settings, run:
+
+          $ {command} --group-key=my-group-key --organization='1234567890' \
+            --session-length=2h --session-reauth-method=LOGIN
+
+        To create session settings for specific applications, supply a YAML file and run:
+
+          $ {command} --group-key=my-group-key --organization='1234567890' \
+            --binding-file='binding.yaml'
+
+        Global and per-app session settings can be set on the same group, along with access levels.
+        For example:
+
+          $ {command} --group-key=my-group-key --organization='1234567890' \
+            --session-length=2h --session-reauth-method=LOGIN \
+            --level=accessPolicies/123/accessLevels/abc \
+            --dry-run-level=accessPolicies/123/accessLevels/def \
+            --binding-file='binding.yaml'
+
+  GA:
+    request:
+      collection: accesscontextmanager.organizations.gcpUserAccessBindings
+      api_version: v1
+      disable_resource_check: true
+      modify_request_hooks:
+      - googlecloudsdk.command_lib.accesscontextmanager.cloud_bindings:ProcessScopedAccessSettings
+      - googlecloudsdk.command_lib.accesscontextmanager.cloud_bindings:ProcessLevels
+      - googlecloudsdk.command_lib.accesscontextmanager.cloud_bindings:ProcessOrganization
+      - googlecloudsdk.command_lib.accesscontextmanager.cloud_bindings:ProcessSessionSettings
+
+  ALPHA:
+    request:
+      collection: accesscontextmanager.organizations.gcpUserAccessBindings
+      api_version: v1alpha
+      disable_resource_check: true
+      modify_request_hooks:
+      - googlecloudsdk.command_lib.accesscontextmanager.cloud_bindings:ProcessScopedAccessSettings
+      - googlecloudsdk.command_lib.accesscontextmanager.cloud_bindings:ProcessLevels
+      - googlecloudsdk.command_lib.accesscontextmanager.cloud_bindings:ProcessOrganization
+      - googlecloudsdk.command_lib.accesscontextmanager.cloud_bindings:ProcessRestrictedClientApplicationsAlpha
+      - googlecloudsdk.command_lib.accesscontextmanager.cloud_bindings:ProcessSessionSettings
+
+  arguments:
+    params:
+    - api_field: gcpUserAccessBinding
+      metavar: YAML_FILE
+      arg_name: binding-file
+      help_text: |
+        Path to the file that contains a Google Cloud Platform user access binding.
+
+        This file contains a YAML-compliant object representing
+        a GcpUserAccessBinding (as described in the API reference) containing ScopedAccessSettings only.
+        No other binding fields are allowed.
+      repeated: false
+      ALPHA:
+        processor: googlecloudsdk.command_lib.accesscontextmanager.cloud_bindings:ParseGcpUserAccessBindingFromBindingFile:api_version=v1alpha
+      GA:
+        processor: googlecloudsdk.command_lib.accesscontextmanager.cloud_bindings:ParseGcpUserAccessBindingFromBindingFile:api_version=v1
+    - api_field: gcpUserAccessBinding.groupKey
+      arg_name: group-key
+      type: str
+      help_text: Google Group ID whose members are subject to the restrictions of this binding.
+      GA:
+        required: true
+    - api_field: gcpUserAccessBinding.accessLevels
+      arg_name: level
+      type: str
+      GA:
+        help_text: |
+          The access level that binds to the given group. The input must be the full identifier
+          of an access level, such as `accessPolicies/123/accessLevels/abc`.
+      ALPHA:
+        help_text: |
+          The access level that binds to the given group and restricted client applications.
+          The input must be the full identifier of an access level, such as
+          `accessPolicies/123/accessLevels/abc`. If no `restricted-client-application-client-ids`
+          or `restricted-client-application-names` are provided, then the access level is applied
+          to the entire organization.
+    - api_field: gcpUserAccessBinding.dryRunAccessLevels
+      arg_name: dry-run-level
+      type: str
+      GA:
+        help_text: |
+          The dry run access level that binds to the given group. The dry run access level will be
+          evaluated but won't be enforced. Denial on dry run access level will be logged. The input
+          must be the full identifier of an access level, such as
+          `accessPolicies/123/accessLevels/new-def`.
+      ALPHA:
+        help_text: |
+          The dry run access level that binds to the given group and restricted client applications.
+          The dry run access level is evaluated but isn't enforced. Denial on a dry run access level
+          is logged. The input must be the full identifier of an access level, such as
+          `accessPolicies/123/accessLevels/new-def`. If no
+          `restricted-client-application-client-ids` or `restricted-client-application-names` are
+          provided, then the access level is applied to the entire organization.
+    - api_field: gcpUserAccessBinding.sessionSettings.sessionLength
+      arg_name: session-length
+      type: googlecloudsdk.command_lib.accesscontextmanager.cloud_bindings:ProcessSessionLength
+      GA:
+        help_text: |
+          The maximum lifetime of a user session provided as an  ISO 8601 duration string. Must be at
+          least one hour or zero seconds, and no more than twenty-four hours. Granularity is limited
+          to seconds.
+
+          When --session-length=0 then users in the group attached to this binding will have infinite
+          session length, effectively disabling the session settings.
+
+          A session begins when a user signs in successfully. If a user signs out before the end of
+          the session lifetime, a new login creates a new session with a fresh lifetime. When a
+          session expires, the user is asked to re-authenticate in accordance with session-method.
+
+          Setting --session-reauth-method when --session-length is empty raises an error.
+      ALPHA:
+        help_text: |
+            The maximum lifetime of a user session provided as an  ISO 8601 duration string. Must be at
+            least one hour or zero seconds, and no more than twenty-four hours. Granularity is limited
+            to seconds.
+
+            When --session-length=0 then users in the group attached to this binding will have infinite
+            session length, effectively disabling session.
+
+            A session begins when a user signs-in successfully. If a user signs out before the end of
+            the session lifetime, a new login creates a new session with a fresh lifetime. When a
+            session expires, the user is asked to re-authenticate in accordance with session-method.
+
+            Setting --session-reauth-method when --session-length is empty raises an error. Cannot set
+            --session-length with --restricted-client-application-client-ids or
+            --restricted-client-application-names; please use scoped access settings.
+    - api_field: gcpUserAccessBinding.sessionSettings.sessionReauthMethod
+      arg_name: session-reauth-method
+      default: login
+      help_text: |
+        Specifies the type of re-authentication challenge given to the user when their session
+         expires. Defaults to --session-reauth-method=login if unspecified and --session-length is
+         set. Cannot be used when --session-length is empty or 0.
+      choices:
+      - arg_value: login
+        enum_value: LOGIN
+        help_text: |
+          The user must complete a regular login.
+      - arg_value: security-key
+        enum_value: SECURITY_KEY
+        help_text: |
+         The user must re-autheticate using their security key. Before enabling this session reauth
+         method, ensure a security key is properly configured for the user. For help configuring
+         your security key, see
+         https://support.google.com/a/answer/2537800?hl=en#zippy=%2Cview-add-or-remove-security-keys
+      - arg_value: password
+        enum_value: PASSWORD
+        help_text: |
+          The user will only be required to enter their password.
+    - api_field: parent
+      arg_name: organization
+      type: googlecloudsdk.command_lib.util.hooks.types:Resource:collection=cloudresourcemanager.organizations
+      processor: googlecloudsdk.command_lib.util.hooks.processors:RelativeName
+      help_text: Parent organization for this binding.
+    - arg_name: policy
+      type: str
+      hidden: true
+      help_text: The access policy that the access level belongs to.
+    - arg_name: restricted-client-application-client-ids
+      required: false
+      release_tracks: [ALPHA]
+      type: 'googlecloudsdk.calliope.arg_parsers:ArgList:'
+      help_text: Client IDs to which the access level is applied.
+    - arg_name: restricted-client-application-names
+      required: false
+      release_tracks: [ALPHA]
+      type: 'googlecloudsdk.calliope.arg_parsers:ArgList:'
+      help_text: Application names to which the access level is applied.
+    - api_field: gcpUserAccessBinding.principal.serviceAccount
+      arg_name: service-account
+      hidden: true
+      required: false
+      release_tracks: [ALPHA]
+      type: str
+      help_text: |
+        The access level that binds to the given service account email. For example
+        `service-account@project.iam.gserviceaccount.com`.
+    - api_field: gcpUserAccessBinding.principal.serviceAccountProjectNumber
+      arg_name: service-account-project-number
+      hidden: true
+      required: false
+      release_tracks: [ALPHA]
+      type: str
+      help_text: |
+        The access level that binds to all the service accounts belong to the given project number.
+    - api_field: gcpUserAccessBinding.principal.federatedPrincipal
+      arg_name: federated-principal
+      hidden: true
+      required: false
+      release_tracks: [ALPHA]
+      type: str
+      help_text: |
+        The access level that binds to the given federated principal.
+
+  output:
+    format: yaml

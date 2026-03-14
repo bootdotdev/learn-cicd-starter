@@ -1,0 +1,37 @@
+- release_tracks: [ALPHA, BETA]
+  help_text:
+    brief: |
+      List migrations for a Dataproc Metastore service.
+    description: |
+      Lists all migrations for the specified Dataproc Metastore service.
+    examples: |
+      To list all migrations for service
+      `my-service`, run:
+
+        $ {command} --service=my-service
+
+  arguments:
+    resource:
+      help_text: The service to list the migrations for.
+      spec: !REF googlecloudsdk.command_lib.metastore.resources:service
+
+  request:
+    ALPHA:
+      api_version: v1alpha
+    BETA:
+      api_version: v1beta
+    collection: metastore.projects.locations.services.migrationExecutions
+
+  response:
+    id_field: name
+
+  output:
+    format: |
+      table(
+        name.basename():label=NAME,
+        state:label=STATE,
+        phase:label=PHASE,
+        createTime.date(),
+        endTime.date(),
+        state_message:label=MESSAGE
+      )

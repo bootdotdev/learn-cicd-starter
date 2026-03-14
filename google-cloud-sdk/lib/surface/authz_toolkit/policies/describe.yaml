@@ -1,0 +1,25 @@
+release_tracks: [ALPHA, GA]
+hidden: true
+
+help_text:
+  brief: |
+    Describe a policy.
+  description: |
+    Show details of the specified policy.
+  examples: |
+      To show details about a policy named `my-policy`, run:
+
+        $ {command} my-policy --location=us-central1
+
+arguments:
+  resource:
+    spec: !REF googlecloudsdk.command_lib.authz_toolkit.resources:policy
+    help_text: |
+      Name of the policy to be described.
+
+request:
+  ALPHA:
+    api_version: v1alpha
+  GA:
+    api_version: v1
+  collection: authztoolkit.projects.locations.policies

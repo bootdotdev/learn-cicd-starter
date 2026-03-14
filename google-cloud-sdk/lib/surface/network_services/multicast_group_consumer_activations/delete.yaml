@@ -1,0 +1,24 @@
+release_tracks: [GA, BETA, ALPHA]
+help_text:
+  brief: |
+    Delete a multicast group consumer activation.
+  description: |
+    Delete a multicast group consumer activation in the specified location of the current project.
+  examples: |
+    To delete a multicast group consumer activation in the current project, run:
+
+      $ {command} my-multicast-group-consumer-activation --location=zone
+arguments:
+  resource:
+    spec: !REF googlecloudsdk.command_lib.network_services.resources:multicastGroupConsumerActivation
+    help_text: The multicast group consumer activation to delete.
+async:
+  collection: networkservices.projects.locations.operations
+request: &request
+  GA:
+    api_version: v1
+  ALPHA:
+    api_version: v1alpha1
+  BETA:
+    api_version: v1beta1
+  collection: networkservices.projects.locations.multicastGroupConsumerActivations

@@ -1,0 +1,78 @@
+- release_tracks: [ALPHA, BETA, GA]
+
+  help_text:
+    brief: Create a new Privileged Access Manager (PAM) grant.
+    description: Create a new Privileged Access Manager (PAM) grant under an entitlement.
+    examples: |
+      The following command creates a new grant against the entitlement with the full name
+      ``ENTITLEMENT_NAME'', a requested duration of 1 hour 30 minutes, a justification of
+      `some justification` and two additional email recipients `abc@example.com` and
+      `xyz@example.com`:
+
+      $ {command} --entitlement=ENTITLEMENT_NAME --requested-duration=5400s --justification="some justification" --additional-email-recipients=abc@example.com,xyz@example.com
+
+  request:
+    ALPHA:
+      api_version: v1alpha
+      modify_request_hooks:
+      - googlecloudsdk.command_lib.pam.util:SetRequestedPrivilegedAccessInCreateGrantRequest
+    BETA:
+      api_version: v1beta
+      modify_request_hooks:
+      - googlecloudsdk.command_lib.pam.util:SetRequestedPrivilegedAccessInCreateGrantRequest
+    GA:
+      api_version: v1
+    collection:
+    - privilegedaccessmanager.projects.locations.entitlements.grants
+    - privilegedaccessmanager.folders.locations.entitlements.grants
+    - privilegedaccessmanager.organizations.locations.entitlements.grants
+
+  arguments:
+    params:
+    - arg_name: entitlement
+      resource_spec: !REF googlecloudsdk.command_lib.pam.resources:entitlement
+      is_parent_resource: true
+      is_primary_resource: true
+      is_positional: false
+      required: true
+      help_text: |
+        Entitlement the grant is to be created against.
+    - arg_name: requested-duration
+      api_field: grant.requestedDuration
+      required: true
+      help_text: |
+        Duration of the grant being created.
+    - arg_name: justification
+      api_field: grant.justification.unstructuredJustification
+      help_text: |
+        Justification for the grant.
+    - arg_name: additional-email-recipients
+      api_field: grant.additionalEmailRecipients
+      repeated: true
+      help_text: |
+        Additional email addresses that are notified for all actions performed on the grant.
+    # Group for grant scope selection.
+    - group:
+        release_tracks: [ALPHA, BETA]
+        mutex: true
+        help_text: |
+          Specify the grant's scope using either high-level resource or a fine-grained scope
+          configuration.
+        params:
+        - arg_name: requested-resources
+          type: 'googlecloudsdk.calliope.arg_parsers:ArgList:'
+          help_text: |
+            The Google Cloud resources to be granted access to.
+            Format: `{resource-type}/{resource_id}`.
+            Example: `projects/{project_id}` or `folders/{folder_id}` or
+            `organizations/{organization_id}`.
+            This command currently accepts only one resource.
+        - arg_name: requested-access-from-file
+          api_field: grant.requestedPrivilegedAccess
+          type: "googlecloudsdk.calliope.arg_parsers:FileContents:"
+          processor: googlecloudsdk.command_lib.pam.util:LoadGrantScopeFromYaml
+          help_text: |
+            Path to a YAML file defining the fine-grained scope for the grant.
+
+  output:
+    format: yaml

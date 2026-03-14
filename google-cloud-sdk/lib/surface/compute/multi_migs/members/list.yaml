@@ -1,0 +1,36 @@
+- release_tracks: [ALPHA]
+  help_text:
+    brief: List members of a multi-MIG
+    description: List members of a multi-MIG
+    examples: |
+      The following command lists the members of a multi-MIG for the 'example-multi-mig':
+
+        $ {command} --multi-mig=example-multi-mig
+
+      you can also pass the full resource name:
+
+        $ {command} projects/my-project/regions/us-central1/multiMigs/example-multimig
+
+  request:
+    collection: compute.regionMultiMigMembers
+    ALPHA:
+      api_version: alpha
+
+  response:
+    id_field: name
+
+  arguments:
+    resource:
+      help_text: |
+        The mutli-MIG to list members for.
+
+      spec: !REF googlecloudsdk.command_lib.compute.multi_migs.resources:multi_mig
+      is_positional: false
+
+  output:
+    format: |
+      table(
+      name.basename(),
+      region.basename(),
+      status.instance_group_manager
+      )

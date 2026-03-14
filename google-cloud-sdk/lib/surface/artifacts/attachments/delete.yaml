@@ -1,0 +1,23 @@
+- release_tracks: [GA]
+
+  help_text:
+    brief: |
+      Delete an Artifact Registry attachment.
+    description: |
+      Delete an Artifact Registry attachment.
+
+    examples: |
+      To delete an attachment `my-attachment` under the current project, repository, and
+      location, run:
+
+          $ {command} my-attachment
+
+  arguments:
+    resource:
+      spec: !REF googlecloudsdk.command_lib.artifacts.resources:attachment
+      help_text: |
+        The Artifact Registry attachment to delete.
+
+  request: &request
+    api_version: v1
+    collection: artifactregistry.projects.locations.repositories.attachments

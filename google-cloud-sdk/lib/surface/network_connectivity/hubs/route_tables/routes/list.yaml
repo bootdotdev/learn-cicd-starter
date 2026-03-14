@@ -1,0 +1,55 @@
+- release_tracks: [BETA, GA]
+
+  help_text:
+    brief: List routes.
+    description: Retrieve and display a list of all routes in the specified route table.
+
+    examples: |
+      To list all routes across all route tables, run:
+
+        $ {command} --hub=- --route_table=-
+
+      To list all routes in route table `my-route-table`, run:
+
+        $ {command} --hub=my-hub --route_table=my-route-table
+
+      To list all routes in route table `my-route-table`, effective at a location/region run:
+
+        $ {command} --hub=my-hub --route_table=my-route-table --effective-location=location
+
+  arguments:
+    resource:
+      spec: !REF googlecloudsdk.command_lib.network_connectivity.resources:routeTableDefaultAll
+      help_text: Parent route table of the routes to display.
+    params:
+    - arg_name: effective-location
+      help_text: The effective location/region to limit the list of routes. The effective location must be a valid region name. To list valid region names, use 'gcloud compute regions list'.
+
+  request: &request
+    BETA:
+      api_version: v1beta
+    GA:
+      api_version: v1
+    collection: networkconnectivity.projects.locations.global.hubs.routeTables.routes
+    modify_request_hooks:
+    - googlecloudsdk.command_lib.network_connectivity.util:CheckForRouteTableAndHubWildcardMismatch
+    - googlecloudsdk.command_lib.network_connectivity.util:AppendEffectiveLocationFilter
+
+  output:
+    # Columns: IP_CIDR_RANGE, PRIORITY, LOCATION, STATE, TYPE, NEXT_HOP, HUB, ROUTE_TABLE
+    format: |
+      table(
+        ipCidrRange,
+        priority,
+        location.basename(),
+        state,
+        type,
+        format(
+          "{0}{1}",
+          nextHopVpcNetwork.yesno(yes="N/A", no=""),
+          firstof(nextHopVpnTunnel.siteToSiteDataTransfer, nextHopRouterApplianceInstance.siteToSiteDataTransfer, nextHopInterconnectAttachment.siteToSiteDataTransfer, nextHopSpoke.siteToSiteDataTransfer).yesno(yes="ON", no="")
+        ).yesno(no="OFF"):label=SITE_TO_SITE,
+        firstof(nextHopVpcNetwork.uri, nextHopVpnTunnel.uri, nextHopRouterApplianceInstance.uri, nextHopInterconnectAttachment.uri, nextHopSpoke.uri).basename():label=NEXT_HOP,
+        name.segment(5):label=HUB:sort=1,
+        name.segment(7):label=ROUTE_TABLE:sort=2
+      )

@@ -1,0 +1,43 @@
+release_tracks: [GA, BETA, ALPHA]
+help_text:
+  brief: |
+    Create a multicast producer association.
+  description: |
+    Create a multicast producer association in the specified location of the current project.
+  examples: |
+    Create a multicast producer association with the name 'my-multicast-producer-association',
+    multicast-domain-activation 'path-to-mda',
+    network 'path-to-network',
+    and location 'zone'.
+
+      $ {command} my-multicast-producer-association --multicast-domain-activation=path-to-mda --network=path-to-network --location=zone
+arguments:
+  resource:
+    spec: !REF googlecloudsdk.command_lib.network_services.resources:multicastProducerAssociation
+    help_text: |
+      Name of the multicast producer association to be created.
+  params:
+  - arg_name:  multicast-domain-activation
+    api_field: multicastProducerAssociation.multicastDomainActivation
+    help_text: The multicast domain activation to be used.
+    required: true
+  - arg_name:  network
+    api_field: multicastProducerAssociation.network
+    help_text: The path of the multicast producer VPC network.
+    required: true
+  - arg_name: description
+    api_field: multicastProducerAssociation.description
+    help_text: The description for the multicast producer association.
+  labels:
+    api_field: multicastProducerAssociation.labels
+async:
+  collection: networkservices.projects.locations.operations
+request: &request
+  GA:
+    api_version: v1
+  ALPHA:
+    api_version: v1alpha1
+  BETA:
+    api_version: v1beta1
+  collection: networkservices.projects.locations.multicastProducerAssociations
+  method: create

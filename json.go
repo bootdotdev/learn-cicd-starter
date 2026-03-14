@@ -22,13 +22,23 @@ func respondWithError(w http.ResponseWriter, code int, msg string, logErr error)
 }
 
 func respondWithJSON(w http.ResponseWriter, code int, payload interface{}) {
-	w.Header().Set("Content-Type", "application/json")
+	w.Header().Set("Content-Type", "application/json; charset=utf-8")
+
 	dat, err := json.Marshal(payload)
 	if err != nil {
-		log.Printf("Error marshalling JSON: %s", err)
-		w.WriteHeader(500)
+		log.Printf("error marshalling json: %v", err)
+		w.WriteHeader(http.StatusInternalServerError)
 		return
 	}
+
 	w.WriteHeader(code)
-	w.Write(dat)
+	n, err := w.Write(dat)
+	if err != nil {
+		// client likely disconnected or socket failed; headers already sent, so just log
+		log.Printf("error writing response: %v", err)
+		return
+	}
+	if n != len(dat) {
+		log.Printf("partial write: wrote %d of %d bytes", n, len(dat))
+	}
 }

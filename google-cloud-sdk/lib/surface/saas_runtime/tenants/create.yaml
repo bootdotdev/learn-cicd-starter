@@ -1,0 +1,49 @@
+- release_tracks: [ALPHA, BETA]
+  help_text:
+    brief: Create a Tenant
+    description: Create a Tenant
+    examples: |-
+      To create the Tenant, run:
+
+      $ {command}
+  arguments:
+    params:
+    - help_text: |-
+        Identifier. The resource name (full URI of the resource) following the standard naming
+        scheme:
+
+          "projects/{project}/locations/{location}/tenants/{tenant}"
+      is_positional: true
+      request_id_field: tenantId
+      resource_spec: !REF googlecloudsdk.command_lib.saas_runtime.resources:tenant
+      required: true
+    - arg_name: saas
+      help_text: |-
+        A reference to the Saas that defines the product (managed service) that
+        the producer wants to manage with SaaS Runtime. Part of the
+        SaaS Runtime common data model.
+      is_positional: false
+      resource_spec: !REF googlecloudsdk.command_lib.saas_runtime.resources:saas
+      resource_method_params:
+        tenant.saas: '{__relative_name__}'
+      required: true
+    - arg_name: consumer-resource
+      api_field: tenant.consumerResource
+      required: false
+      repeated: false
+      help_text: |-
+        A reference to the consumer resource this SaaS Tenant is representing.
+    - arg_name: labels
+      api_field: tenant.labels
+      required: false
+      repeated: true
+      help_text: |-
+        The labels on the resource, which can be used for categorization.
+        similar to Kubernetes resource labels.
+      spec:
+      - api_field: key
+      - api_field: value
+  request:
+    api_version: v1beta1
+    collection:
+    - saasservicemgmt.projects.locations.tenants

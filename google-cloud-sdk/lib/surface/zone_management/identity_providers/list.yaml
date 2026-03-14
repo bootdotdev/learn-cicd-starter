@@ -1,0 +1,28 @@
+- release_tracks: [ALPHA]
+
+  help_text:
+    brief: list identity providers
+    description: Lists identity providers in a given organization and location.
+    examples: |
+      To list identity providers in organization `test-org`, location `us-central1` and zone `test-zone`, run:
+
+      $ {command} --location=us-central1 --organization=test-org --zone=test-zone
+
+  request:
+    collection: edgecontainer.organizations.locations.identityProviders
+    ALPHA:
+      api_version: v1alpha
+
+  response:
+    id_field: name
+
+  arguments:
+    resource:
+      help_text: Parent Edge Container location to list all identity providers.
+      spec: !REF googlecloudsdk.command_lib.zone_management.identity_provider.resources:location
+    params:
+    - arg_name: zone
+      api_field: zoneId
+      required: true
+      help_text: |
+        Zone of the identity provider.

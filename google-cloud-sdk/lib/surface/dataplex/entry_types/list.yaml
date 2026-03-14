@@ -1,0 +1,26 @@
+- release_tracks: [ALPHA, GA]
+  help_text:
+    brief: |
+      List Dataplex Entry Types.
+    description: |
+      List Dataplex Entry Types based on project and location.
+
+      {command} --project={project_id} --location={location}
+    examples: |
+      To list Entry Types in project `test-dataplex` at location `us-central1`
+
+          $ {command} --location=us-central1 --project=test-dataplex
+
+  request:
+    ALPHA:
+      api_version: v1
+    collection: dataplex.projects.locations.entryTypes
+
+  response:
+    id_field: name
+
+  arguments:
+    resource:
+      help_text: |
+        Location to list Entry Types in.
+      spec: !REF googlecloudsdk.command_lib.dataplex.resources:location

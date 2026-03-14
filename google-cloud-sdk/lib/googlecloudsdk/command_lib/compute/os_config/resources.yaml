@@ -1,0 +1,264 @@
+project:
+  name: project
+  collection: osconfig.projects
+  attributes:
+  - &project
+    parameter_name: projectsId
+    attribute_name: project
+    property: core/project
+    help: |
+      Project of the {resource}.
+
+project_global:
+  name: project_global
+  collection: osconfig.projects.locations.global
+  attributes:
+  - *project
+
+folder:
+  name: folder
+  collection: osconfig.folders
+  attributes:
+  - &folder
+    parameter_name: foldersId
+    attribute_name: folder
+    help: |
+      Folder of the {resource}.
+
+organization:
+  name: organization
+  collection: osconfig.organizations
+  attributes:
+  - &organization
+    parameter_name: organizationsId
+    attribute_name: organization
+    help: |
+      Organization of the {resource}.
+
+# project_a, folder_a, and organization_a are used in list actions. We cannot name it project,
+# folder, and organization because it will conflict with the project, folder, and organization
+# resources defined above.
+project_folder_organization:
+  name: project_folder_organization
+  resources:
+  - name: project_a
+    collection: osconfig.projects
+    attributes:
+    - *project
+  - name: folder_a
+    collection: osconfig.folders
+    attributes:
+    - *folder
+  - name: organization_a
+    collection: osconfig.organizations
+    attributes:
+    - *organization
+
+location:
+  name: location
+  collection: osconfig.projects.locations
+  attributes:
+  - *project
+  - &location
+    parameter_name: locationsId
+    attribute_name: location
+    property: compute/zone
+    help: |
+      Location of the {resource}.
+
+project_location:
+  name: project_location
+  collection: osconfig.projects.locations
+  attributes:
+  - *project
+  - &project_location
+    parameter_name: locationsId
+    attribute_name: location
+    help: |
+      Location of the {resource}.
+
+folder_location:
+  name: folder_location
+  collection: osconfig.folders.locations
+  attributes:
+  - *folder
+  - &folder_location
+    parameter_name: locationsId
+    attribute_name: location
+    help: |
+      Location of the {resource}.
+
+organization_location:
+  name: organization_location
+  collection: osconfig.organizations.locations
+  attributes:
+  - *organization
+  - &organization_location
+    parameter_name: locationsId
+    attribute_name: location
+    help: |
+      Location of the {resource}.
+
+instance:
+  name: instance
+  collection: osconfig.projects.locations.instances
+  attributes:
+  - *project
+  - *location
+  - &instance
+    parameter_name: instancesId
+    attribute_name: instance
+    help: |
+      Compute Engine VM instance.
+
+vulnerability_report:
+  name: vulnerability_report
+  collection: osconfig.projects.locations.instances.vulnerabilityReports
+  attributes:
+  - *project
+  - *location
+  - *instance
+  help: |
+    Vulnerability report for the {resource}.
+
+inventory:
+  name: inventory
+  collection: osconfig.projects.locations.instances.inventories
+  attributes:
+  - *project
+  - *location
+  - *instance
+  help: |
+    Inventory of the {resource}.
+
+# Create OS policy assignment is a separate resource due to
+#   the requirement of the request_id_field in the create method.
+create_os_policy_assignment:
+  name: OS policy assignment
+  collection: osconfig.projects.locations.osPolicyAssignments
+  request_id_field: osPolicyAssignmentId
+  attributes:
+  - *project
+  - *location
+  - &create_os_policy_assignment
+    parameter_name: osPolicyAssignmentsId
+    attribute_name: os_policy_assignment
+    help: |
+      OS policy assignment.
+
+os_policy_assignment:
+  name: OS policy assignment
+  collection: osconfig.projects.locations.osPolicyAssignments
+  attributes:
+  - *project
+  - *location
+  - &os_policy_assignment
+    parameter_name: osPolicyAssignmentsId
+    attribute_name: os_policy_assignment
+    help: |
+      OS policy assignment.
+
+# An additional OS policy assignment resource is needed since Gcloud
+#   disallows positional arguments with dashes. The only difference is
+#   in attribute_name.
+os_policy_assignment_operation_attribute:
+  name: OS policy assignment
+  collection: osconfig.projects.locations.osPolicyAssignments
+  attributes:
+  - *project
+  - *location
+  - &os_policy_assignment_operation_attribute
+    parameter_name: osPolicyAssignmentsId
+    attribute_name: os-policy-assignment
+    help: |
+      OS policy assignment.
+
+os_policy_assignment_operation:
+  name: OS policy assignment operation
+  collection: osconfig.projects.locations.osPolicyAssignments.operations
+  attributes:
+  - *project
+  - *location
+  - *os_policy_assignment_operation_attribute
+  - &os_policy_assignment_operations
+    parameter_name: operationsId
+    attribute_name: operation
+    help: |
+      OS policy assignment operation.
+
+instance_os_policy_assignment:
+  name: Instance OS policy assignment
+  collection: osconfig.projects.locations.instances.osPolicyAssignments
+  attributes:
+  - *project
+  - *location
+  - *instance
+  - &instance_os_policy_assignment
+    parameter_name: osPolicyAssignmentsId
+    attribute_name: instance_os_policy_assignment
+    help: |
+      Instance OS policy assignment.
+
+# Name of the `os_policy_assignment_report` has to be `OS policy assignment` so the help
+# help text generated can be accurate in the id it requests.
+# Reference: yaqs/1680031777009172480
+os_policy_assignment_report:
+  name: OS policy assignment
+  collection: osconfig.projects.locations.instances.osPolicyAssignments.reports
+  attributes:
+  - *project
+  - *location
+  - *instance
+  - *instance_os_policy_assignment
+
+policy_orchestrator:
+  name: policy_orchestrator
+  resources:
+  - name: policy_orchestrator_project
+    collection: osconfig.projects.locations.global.policyOrchestrators
+    request_id_field: policyOrchestratorId
+    attributes:
+    - *project
+    - &policy_orchestrator
+      parameter_name: policyOrchestratorsId
+      attribute_name: policy_orchestrator
+      help: |
+        Policy orchestrator.
+  - name: policy_orchestrator_folder
+    collection: osconfig.folders.locations.global.policyOrchestrators
+    request_id_field: policyOrchestratorId
+    attributes:
+    - *folder
+    - *policy_orchestrator
+  - name: policy_orchestrator_organization
+    collection: osconfig.organizations.locations.global.policyOrchestrators
+    request_id_field: policyOrchestratorId
+    attributes:
+    - *organization
+    - *policy_orchestrator
+
+multiparent_operation:
+  name: multiparent_operation
+  resources:
+  - name: operation_project
+    collection: osconfig.projects.locations.operations
+    attributes:
+    - *project
+    - *project_location
+    - &operation
+      parameter_name: operationsId
+      attribute_name: operation
+      help: |
+        Operation.
+  - name: operation_folder
+    collection: osconfig.folders.locations.operations
+    attributes:
+    - *folder
+    - *folder_location
+    - *operation
+  - name: operation_organization
+    collection: osconfig.organizations.locations.operations
+    attributes:
+    - *organization
+    - *organization_location
+    - *operation

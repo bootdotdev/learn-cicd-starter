@@ -1,0 +1,31 @@
+- release_tracks: [ALPHA, BETA, GA]
+  help_text:
+    brief: |
+      Add IAM policy binding for a Cloud Deploy Policy.
+    description: |
+      Adds a policy binding to the IAM policy of a Cloud Deploy Policy.
+      One binding consists of a member and a role.
+
+      See https://cloud.google.com/iam/docs/managing-policies for details of
+      the policy file format and contents.
+    examples: |
+      To add an IAM policy binding for the role of `roles/clouddeploy.policyAdmin`
+      for the user `test-user@gmail.com` on `holiday-policy` with the region
+      `us-central1`, run:
+
+        $ {command} holiday-policy \
+          --region='us-central1' \
+          --member='user:test-user@gmail.com' \
+          --role='roles/clouddeploy.policyAdmin'
+  request:
+    api_version: v1
+    collection: clouddeploy.projects.locations.deployPolicies
+  arguments:
+    resource:
+      help_text: The deploy policy for which to add the IAM policy binding.
+      spec: !REF googlecloudsdk.command_lib.deploy.resources:deploy_policy
+      is_positional: true
+  iam:
+    enable_condition: true
+    policy_version: 3
+    get_iam_policy_version_path: options_requestedPolicyVersion

@@ -1,0 +1,28 @@
+- help_text:
+    brief: |
+      List Memorystore for Valkey locations
+    description: |
+      List all locations where Memorystore for Valkey API is available.
+    examples: |
+      To list all the locations where Memorystore for Valkey instances can be created, run:
+
+          $ {command}
+
+  arguments:
+    resource:
+      spec: !REF googlecloudsdk.command_lib.memorystore.resources:project
+      help_text: |
+        The project name.
+
+  request:
+    api_version: v1
+    collection: memorystore.projects.locations
+
+  response:
+    id_field: name
+
+  output:
+    format: |
+      table(
+        locationId:label=NAME:sort=1
+      )

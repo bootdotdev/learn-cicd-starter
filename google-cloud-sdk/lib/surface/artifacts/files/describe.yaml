@@ -1,0 +1,33 @@
+- release_tracks: [GA]
+  help_text:
+    brief: |
+      Describe an Artifact Registry file.
+    description: |
+      Describe an Artifact Registry file.
+
+      The file hashes are displayed as hex strings.
+
+      This command can fail for the following reasons:
+        * The specified file does not exist.
+        * The active account does not have permission to view file.
+
+    examples: |
+      To describe a file named `my-file.txt` under the current project, repository, and location, run:
+
+          $ {command} my-file.txt
+
+  arguments:
+    resource:
+      spec: !REF googlecloudsdk.command_lib.artifacts.resources:file
+      help_text: |
+        The Artifact Registry file to describe.
+
+  request: &request
+    api_version: v1
+    collection: artifactregistry.projects.locations.repositories.files
+    modify_request_hooks:
+    - googlecloudsdk.command_lib.artifacts.file_util:EscapeFileNameHook
+
+  response:
+    modify_response_hooks:
+    - googlecloudsdk.command_lib.artifacts.file_util:ConvertFileHashes

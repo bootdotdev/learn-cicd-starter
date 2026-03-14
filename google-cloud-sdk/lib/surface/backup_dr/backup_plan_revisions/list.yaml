@@ -1,0 +1,30 @@
+- release_tracks: [ALPHA, GA]
+  help_text:
+    brief: List backup plan revisions.
+    description: List backup plan revisions in the project.
+    examples: |
+      To list backup plan revisions for all backup plans and locations, run:
+
+      $ {command}
+
+      To list all backup plan revisions for a backup plan ``my-backup-plan'', run:
+
+      $ {command} --backup-plan=my-backup-plan
+
+      To list all backup plan revisions for a backup plan ``my-backup-plan'' in location ``my-location'', run:
+
+      $ {command} --backup-plan=my-backup-plan --location=my-location
+  request:
+    collection: backupdr.projects.locations.backupPlans.revisions
+
+  response:
+    id_field: name
+
+  arguments:
+    resource:
+      help_text: Backup plan to list backup plan revisions from.
+      spec: !REF googlecloudsdk.command_lib.backupdr.resources:backupPlanDefault
+      is_positional: false
+
+  output:
+    format: json

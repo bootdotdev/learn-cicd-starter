@@ -1,0 +1,28 @@
+release_tracks: [ALPHA]
+
+help_text:
+  brief: |
+    Update a BigQuery Engine for Apache Flink deployment.
+  description: |
+    Update a BigQuery Engine for Apache Flink deployment.
+
+  examples: |
+    To update a BigQuery Engine for Apache Flink whose ID is mydeployment, run the following:
+
+      $ {command} mydeployment \
+          --location=us-central1 \
+          --max-slots=100
+
+request:
+  collection: managedflink.projects.locations.deployments
+
+async:
+  collection: managedflink.projects.locations.operations
+
+arguments:
+  resource:
+    help_text: Identifies the Flink deployment whose details are to be updated.
+    spec: !REF googlecloudsdk.command_lib.managed_flink.resources:deployment
+
+  params:
+  - _REF_: googlecloudsdk.command_lib.managed_flink.flags:max-slots

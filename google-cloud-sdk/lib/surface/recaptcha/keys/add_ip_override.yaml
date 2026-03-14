@@ -1,0 +1,27 @@
+- release_tracks: [ALPHA, GA]
+  help_text:
+    brief: Add an IP override to a key.
+    description: Add an IP override to a key.
+    examples: $ {command} test-key --ip=1.2.3.4 --override=allow
+
+  request:
+    collection: recaptchaenterprise.projects.keys
+    method: addIpOverride
+
+  arguments:
+    resource:
+      spec: !REF googlecloudsdk.command_lib.recaptcha.resources:keys
+      help_text: The reCAPTCHA key to add the IP override to.
+
+    params:
+    - arg_name: ip
+      required: true
+      api_field: googleCloudRecaptchaenterpriseV1AddIpOverrideRequest.ipOverrideData.ip
+      help_text: IP address to override for the key.
+    - arg_name: override
+      required: true
+      api_field: googleCloudRecaptchaenterpriseV1AddIpOverrideRequest.ipOverrideData.overrideType
+      help_text: If set to allow, the IP address/CIDR range will be allowlisted for the key.
+
+  output:
+    format: none

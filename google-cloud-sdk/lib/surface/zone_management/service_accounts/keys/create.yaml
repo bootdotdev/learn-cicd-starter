@@ -1,0 +1,33 @@
+- release_tracks: [ALPHA]
+  command_type: GENERIC
+  help_text:
+    brief: Creates service account key.
+    description: Creates service account key.
+    examples: |
+      To create service account key for a service account called `test-service-account` in project `test-project` and location `us-central1`, run:
+
+      $ {command} --service_account=test-service-account --location=us-central1 --project=test-project
+
+  request:
+    collection: edgecontainer.projects.locations.serviceAccounts
+    api_version: v1alpha
+    method: generateKey
+
+  arguments:
+    resource:
+      help_text: Service Account to create key for.
+      spec: !REF googlecloudsdk.command_lib.zone_management.service_account.resources:serviceAccount
+      is_positional: false
+      arg_name: service-account
+    params:
+    - arg_name: ca-cert-path
+      api_field: generateServiceAccountKeyRequest.caCertPath
+      help_text: Path to the CA certificate file.
+    - arg_name: output_file
+      is_positional: true
+      required: true
+      help_text: Path to the file to write the private key response to.
+
+  response:
+    modify_response_hooks:
+    - googlecloudsdk.command_lib.zone_management.service_account.hooks:PossiblyWritePrivateKeyToOutputFile

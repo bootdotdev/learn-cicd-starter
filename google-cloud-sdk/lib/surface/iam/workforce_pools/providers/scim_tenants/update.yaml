@@ -1,0 +1,55 @@
+# -*- coding: utf-8 -*- #
+# Copyright 2025 Google LLC. All Rights Reserved.
+#
+# Licensed under the Apache License, Version 2.0 (the "License");
+# you may not use this file except in compliance with the License.
+# You may obtain a copy of the License at
+#
+#    http://www.apache.org/licenses/LICENSE-2.0
+#
+# Unless required by applicable law or agreed to in writing, software
+# distributed under the License is distributed on an "AS IS" BASIS,
+# WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
+# See the License for the specific language governing permissions and
+# limitations under the License.
+#
+# Implementation definition for gcloud iam workforce-pools providers scim-tenants update
+
+- release_tracks: [ALPHA, BETA, GA]
+  help_text:
+    brief: Update an IAM workforce identity pool provider SCIM tenant.
+    description: |
+      Update the configuration of an existing SCIM tenant associated with a specific workforce identity pool provider.
+      Only fields specified in the command will be modified.
+    examples: |
+      To update the display name and description of a SCIM tenant with ID `my-tenant` under provider `my-okta-provider` in pool `my-pool` located in `global`:
+
+        $ {command} my-tenant --location=global --workforce-pool=my-pool --provider=my-okta-provider \
+          --display-name="Updated Tenant Name" --description="New description"
+
+      To update the claim mapping for the same tenant:
+
+        $ {command} my-tenant --location=global --workforce-pool=my-pool --provider=my-okta-provider \
+          --claim-mapping="google.subject=new_external_id,google.groups=all_groups"
+
+  request:
+    collection: iam.locations.workforcePools.providers.scimTenants
+
+  arguments:
+    resource:
+      help_text: The SCIM tenant to update.
+      spec: !REF googlecloudsdk.command_lib.iam.resources:workforce_pool_provider_scim_tenant
+      is_positional: true
+
+    params:
+    - _REF_: googlecloudsdk.command_lib.iam.flags:workforce_pool_provider_scim_tenant.display_name
+      required: false
+
+    - _REF_: googlecloudsdk.command_lib.iam.flags:workforce_pool_provider_scim_tenant.description
+      required: false
+
+    - _REF_: googlecloudsdk.command_lib.iam.flags:workforce_pool_provider_scim_tenant.claim_mapping
+      required: false
+
+  output:
+    format: yaml

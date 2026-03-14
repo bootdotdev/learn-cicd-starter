@@ -1,0 +1,49 @@
+release_tracks: [ALPHA, BETA, GA]
+
+help_text:
+  brief: |
+    Update a Managed Service for Apache Kafka connector.
+  description: |
+    Update a Managed Service for Apache Kafka connector.
+
+  examples: |
+    To update a connector name myconnector, run the following:
+
+      $ {command} myconnector \
+          --location=us-central1 \
+          --configs=KEY1=VALUE1,KEY2=VALUE2... \
+          --connect-cluster=mycluster \
+          [--task-restart-min-backoff=60s] \
+          [--task-restart-max-backoff=30m]
+      OR
+      $ {command} myconnector \
+          --location=us-central1 \
+          --config-file=my-config-file.yaml \
+          --connect-cluster=mycluster \
+          [--task-restart-min-backoff=60s] \
+          [--task-restart-max-backoff=30m]
+
+request:
+  collection: managedkafka.projects.locations.connectClusters.connectors
+  modify_request_hooks:
+  - googlecloudsdk.command_lib.managed_kafka.util:ConnectorUpdateReadConfigAndTaskRestartPolicy
+
+arguments:
+  resource:
+    help_text: Identifies the connector for which the command runs.
+    spec: !REF googlecloudsdk.command_lib.managed_kafka.resources:connector
+    is_positional: true
+  params:
+  - group:
+      mutex: true
+      params:
+      - _REF_: googlecloudsdk.command_lib.managed_kafka.flags:connector-configs
+      - _REF_: googlecloudsdk.command_lib.managed_kafka.flags:connector-config-file
+  # If one of the task restart flags is provided, both must be provided.
+  - group:
+      required: false
+      params:
+      - _REF_: googlecloudsdk.command_lib.managed_kafka.flags:task-restart-min-backoff
+        required: true
+      - _REF_: googlecloudsdk.command_lib.managed_kafka.flags:task-restart-max-backoff
+        required: true

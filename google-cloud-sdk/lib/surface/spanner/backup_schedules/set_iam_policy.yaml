@@ -1,0 +1,22 @@
+- release_tracks: [ALPHA, BETA, GA]
+
+  help_text:
+    brief: Set the IAM policy for a Cloud Spanner backup schedule.
+    description: |
+      Set the IAM policy for a Cloud Spanner backup schedule given a backup schedule ID and
+      a file encoded in JSON or YAML that contains the IAM policy.
+    examples: |
+      The following command reads an IAM policy defined in a JSON file
+      `policy.json` and sets it for a Cloud Spanner backup schedule:
+
+        $ {command} backup-schedule-id --instance=instance-id --database=database-id policy.json
+
+      See https://cloud.google.com/iam/docs/managing-policies for details of the
+      policy file format and contents.
+  request:
+    collection: spanner.projects.instances.databases.backupSchedules
+
+  arguments:
+    resource:
+      help_text: The Cloud Spanner backup schedule to set the IAM policy for.
+      spec: !REF googlecloudsdk.command_lib.spanner.resources:backupSchedule

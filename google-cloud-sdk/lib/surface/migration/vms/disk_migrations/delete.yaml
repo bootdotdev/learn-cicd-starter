@@ -1,0 +1,22 @@
+- release_tracks: [ALPHA]
+  help_text:
+    brief: Delete a disk migration resource.
+    description: |
+      {command} deletes a disk migration resource.
+      To use this command, you must enable VM Migration API in your project.
+
+      This command does not delete any disks on Google Compute Engine.
+
+    examples: |
+      To delete my-disk-migration resource in us-central1 in the AWS source my-aws-source in the
+      default project, run:
+
+        $ {command} my-image-import --location=us-central1 --source=my-aws-source
+
+  request:
+    collection: vmmigration.projects.locations.sources.diskMigrationJobs
+
+  arguments:
+    resource:
+      help_text: The disk migration resource you want to delete.
+      spec: !REF googlecloudsdk.command_lib.migration.vms.resources:diskMigration

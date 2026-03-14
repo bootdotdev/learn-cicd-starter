@@ -1,0 +1,27 @@
+- release_tracks: [ALPHA, GA]
+  help_text:
+    brief: List Dataproc GDC Spark applications.
+    description: |
+      List all Dataproc GDC Spark applications in a service instance.
+    examples: |
+      To list Dataproc Spark Applications in service instance in project `test-project` in `us-central1`, run:
+
+        $ {command} --project=test-project --location=us-central1 --service-instance=test-service-instance
+  request:
+    collection: dataprocgdc.projects.locations.serviceInstances.sparkApplications
+    ALPHA:
+      api_version: v1alpha1
+  response:
+    id_field: name
+  arguments:
+    resource:
+      help_text: service instance to list all Spark applications.
+      spec: !REF googlecloudsdk.command_lib.dataproc_gdc.resources:service_instance
+  output:
+    format: |
+      table(
+        name.basename():label=NAME,
+        displayName:label=DISPLAY_NAME,
+        createTime:label=CREATE_TIME,
+        state:label=STATE
+      )

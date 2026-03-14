@@ -1,0 +1,28 @@
+- release_tracks: [ALPHA, BETA]
+  help_text:
+    brief:  |
+      Cancel the migration to Dataproc Metastore service.
+    description: |
+      Cancel the migration to Dataproc Metastore service.
+
+      If run asynchronously with `--async`, exits after printing
+      the operation name that can be used to poll the status of the
+      migration operation via:
+
+        {top_command} metastore operations describe
+  request:
+    method: cancelMigration
+    ALPHA:
+      api_version: v1alpha
+    BETA:
+      api_version: v1beta
+    collection: metastore.projects.locations.services
+
+  arguments:
+    resource:
+      help_text: |
+        The Dataproc Metastore service to cancel the migration on.
+      spec: !REF googlecloudsdk.command_lib.metastore.resources:service
+
+  async:
+    collection: metastore.projects.locations.operations

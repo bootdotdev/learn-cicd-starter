@@ -1,0 +1,27 @@
+- release_tracks: [ALPHA, BETA, GA]
+  help_text:
+    brief: Get certificate authority details of a Memorystore instance.
+    description: Get certificate authority details of a Memorystore instance.
+    examples: |
+      To get the certificate authority for instance `my-instance` in project `my-project` and
+      location `us-central1`, run:
+
+      $ {command} my-instance --project=my-project --location=us-central1
+  arguments:
+    params:
+    - help_text: |-
+        The name of the Memorystore instance.
+        Format: projects/{project}/locations/{location}/instances/{instance}
+      is_positional: true
+      request_id_field: instanceId
+      resource_spec: !REF googlecloudsdk.command_lib.memorystore.resources:instance
+      required: true
+  request:
+    ALPHA:
+      api_version: v1alpha
+    BETA:
+      api_version: v1beta
+    GA:
+      api_version: v1
+    collection: memorystore.projects.locations.instances
+    method: getCertificateAuthority

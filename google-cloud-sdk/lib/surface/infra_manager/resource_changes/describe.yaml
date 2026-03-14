@@ -1,0 +1,14 @@
+- release_tracks: [GA]
+  help_text:
+    brief: Describe resource changes
+    description: Describe a resource change
+    examples: |-
+      To describe a resource change `rc` under preview `pr1` at location `us-central1`, run:
+
+      $ {command} projects/p1/locations/us-central1/previews/pr1/resourceChanges/rc
+  arguments:
+    resource:
+      spec: !REF googlecloudsdk.command_lib.infra_manager.resources:resource_change
+      help_text: The resource change to describe
+  request:
+    collection: config.projects.locations.previews.resourceChanges

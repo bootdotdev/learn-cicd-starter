@@ -1,0 +1,37 @@
+- release_tracks: [GA, BETA, ALPHA]
+  hidden: true  # TODO(b/420436006): unhide the CLI for GA.
+
+  help_text:
+    brief: Create a new Bigtable schema bundle.
+    description: Create a new Bigtable schema bundle.
+    examples: |
+      To create a schema bundle `my-schema-bundle` in instance `my-instance` and table
+      `my-table`, using the descriptor file `my-descriptor-file.pb`:
+
+        $ {command} my-schema-bundle --instance=test-instance --table=test-table --proto-descriptors-file=my-descriptor-file.pb
+
+  request:
+    collection: bigtableadmin.projects.instances.tables.schemaBundles
+    method: create
+    modify_request_hooks:
+    - googlecloudsdk.api_lib.bigtable.schema_bundles:ModifyCreateSchemaBundleRequest
+
+  arguments:
+    resource:
+      help_text: Bigtable schema bundle to create.
+      spec: !REF googlecloudsdk.command_lib.bigtable.resources:schema_bundle
+    params:
+    - arg_name: proto-descriptors-file
+      api_field: schemaBundle.protoSchema.protoDescriptors
+      required: true
+      help_text: |
+            Path of a file that contains a protobuf-serialized `google.protobuf.FileDescriptorSet` message. If specified, the schema bundle contains the protobuf schema.
+            To generate the file, install and run `protoc` with the following command:
+
+              protoc --proto_path=IMPORT_PATH --include_imports --descriptor_set_out=DESCRIPTOR_OUTPUT_LOCATION path/to/file.proto
+
+            where the --proto_path option specificies where to look for .proto files when resolving import directives (the current directory is used if you do not provide a value),
+            and the --descriptor_set_out option specifies where you want the generated FileDescriptorSet to be written.
+
+  async:
+    collection: bigtableadmin.operations

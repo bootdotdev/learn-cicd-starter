@@ -1,0 +1,59 @@
+release_tracks: [GA, BETA, ALPHA]
+
+help_text:
+  brief: |
+    Create a multicast domain.
+  description: |
+    Create a multicast domain in the specified location of the current project.
+  examples: |
+    Create a multicast domain with the name 'my-multicast-domain',
+    admin-network 'path_to_admin_network', connection-type 'SAME_VPC', and location 'global'.
+
+      $ {command} my-multicast-domain --admin-network=path_to_admin_network --connection-type=SAME_VPC --location=global
+
+    Create a multicast domain with the name 'my-multicast-domain',
+    admin-network 'path_to_admin_network', connection-type 'NCC', ncc-hub 'path_to_ncc_hub', and location 'global'.
+
+      $ {command} my-multicast-domain --admin-network=path_to_admin_network --connection-type=NCC --ncc-hub=path_to_ncc_hub --location=global
+
+arguments:
+  resource:
+    spec: !REF googlecloudsdk.command_lib.network_services.resources:multicastDomain
+    help_text: |
+      Name of the multicast domain to be created.
+  params:
+  - arg_name: description
+    api_field: multicastDomain.description
+    help_text: The description for the multicast domain.
+  - arg_name:  admin-network
+    api_field: multicastDomain.adminNetwork
+    help_text: The URI of the admin network to be used.
+    required: true
+  - group:
+      required: true
+      params:
+      - arg_name: connection-type
+        api_field: multicastDomain.connection.connectionType
+        help_text: The connection type for authorizing multicast traffic.
+        default: CONNECTION_TYPE_UNSPECIFIED
+      - arg_name: ncc-hub
+        api_field: multicastDomain.connection.nccHub
+        help_text: The URI of the NCC hub to be used.
+  - arg_name: multicast-domain-group
+    api_field: multicastDomain.multicastDomainGroup
+    help_text: The URI of the multicast domain group to be used.
+  labels:
+    api_field: multicastDomain.labels
+
+async:
+  collection: networkservices.projects.locations.operations
+
+request: &request
+  GA:
+    api_version: v1
+  ALPHA:
+    api_version: v1alpha1
+  BETA:
+    api_version: v1beta1
+  collection: networkservices.projects.locations.multicastDomains
+  method: create

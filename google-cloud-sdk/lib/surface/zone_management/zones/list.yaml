@@ -1,0 +1,22 @@
+- release_tracks: [ALPHA]
+
+  help_text:
+    brief: list zones
+    description: Lists zones in a given organization and location.
+    examples: |
+      To list zones in organization `test-org` and location `us-central1`, run:
+
+      $ {command} --location=us-central1 --organization=test-org
+
+  request:
+    collection: edgecontainer.organizations.locations.zones
+    ALPHA:
+      api_version: v1alpha
+
+  response:
+    id_field: name
+
+  arguments:
+    resource:
+      help_text: Parent Edge Container location to list all zones.
+      spec: !REF googlecloudsdk.command_lib.zone_management.zone.resources:orglocation

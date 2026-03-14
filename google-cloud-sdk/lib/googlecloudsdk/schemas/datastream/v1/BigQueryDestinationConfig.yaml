@@ -1,0 +1,49 @@
+$schema: "http://json-schema.org/draft-06/schema#"
+
+title: datastream v1 BigQueryDestinationConfig export schema
+description: A gcloud export/import command YAML validation schema.
+type: object
+additionalProperties: false
+properties:
+  COMMENT:
+    type: object
+    description: User specified info ignored by gcloud import.
+    additionalProperties: false
+    properties:
+      template-id:
+        type: string
+      region:
+        type: string
+      description:
+        type: string
+      date:
+        type: string
+      version:
+        type: string
+  UNKNOWN:
+    type: array
+    description: Unknown API fields that cannot be imported.
+    items:
+      type: string
+  appendOnly:
+    description: Append only mode
+    $ref: AppendOnly.yaml
+  blmtConfig:
+    description: Big Lake Managed Tables (BLMT) configuration.
+    $ref: BlmtConfig.yaml
+  dataFreshness:
+    description: |-
+      The guaranteed data freshness (in seconds) when querying tables created by
+      the stream. Editing this field will only affect new tables created in the
+      future, but existing tables will not be impacted. Lower values mean that
+      queries will return fresher data, but may result in higher cost.
+    type: string
+  merge:
+    description: The standard mode
+    $ref: Merge.yaml
+  singleTargetDataset:
+    description: Single destination dataset.
+    $ref: SingleTargetDataset.yaml
+  sourceHierarchyDatasets:
+    description: Source hierarchy datasets.
+    $ref: SourceHierarchyDatasets.yaml

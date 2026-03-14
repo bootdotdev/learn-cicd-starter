@@ -1,0 +1,49 @@
+- release_tracks: [BETA]
+
+  help_text:
+    brief: Set the IAM policy of a group resource.
+    description: |
+      Replace the existing IAM policy of a group resource with a policy
+      encoded in a JSON or YAML file.
+    examples: |
+      To replace the IAM policy of a group resource with the policy defined in a
+      file called ``policy.json'', run:
+
+        $ {command} my-group policy.json --hub="my-hub"
+
+  request:
+    collection: networkconnectivity.projects.locations.global.hubs.groups
+    api_version: v1beta
+
+  arguments:
+    resource:
+      help_text: The hub for which to set the IAM policy.
+      spec: !REF googlecloudsdk.command_lib.network_connectivity.resources:group
+
+  iam:
+    set_iam_policy_request_path: googleIamV1SetIamPolicyRequest
+    message_type_overrides:
+      policy: GoogleIamV1Policy
+      set_iam_policy_request: NetworkconnectivityProjectsLocationsGlobalHubsGroupsSetIamPolicyRequest
+
+- release_tracks: [GA]
+
+  help_text:
+    brief: Set the IAM policy of a group resource.
+    description: |
+      Replace the existing IAM policy of a group resource with a policy
+      encoded in a JSON or YAML file.
+    examples: |
+      To replace the IAM policy of a group resource with the policy defined in a
+      file called ``policy.json'', run:
+
+        $ {command} my-group policy.json --hub="my-hub"
+
+  request:
+    collection: networkconnectivity.projects.locations.global.hubs.groups
+    api_version: v1
+
+  arguments:
+    resource:
+      help_text: The hub for which to set the IAM policy.
+      spec: !REF googlecloudsdk.command_lib.network_connectivity.resources:group
