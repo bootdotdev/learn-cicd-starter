@@ -20,3 +20,7 @@ jobs:
 
       - name: Run tests with coverage
         run: go test ./... -cover
+
+      - name: style
+        run: test -z $(go fmt ./...)
+        
