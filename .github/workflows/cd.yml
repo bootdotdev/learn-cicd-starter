@@ -30,4 +30,4 @@ jobs:
         uses: 'google-github-actions/setup-gcloud@v3'
 
       - name: 'Use gcloud CLI'
-        run: 'gcloud info'
+        run: 'gcloud builds submit --tag us-central1-docker.pkg.dev/notely-490614/notely-ar-repo/notely:latest .'
