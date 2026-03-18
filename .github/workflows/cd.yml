@@ -19,9 +19,9 @@ jobs:
       - name: Build Go application
         run: ./scripts/buildprod.sh
 
-      - name: Build and push Docker image
-        uses: docker/build-push-action@v3
-        with:
-          context: .
-          push: true
-          tags: ghcr.io/your-username/your-repo-name:latest
+      # - name: Build and push Docker image
+      #   uses: docker/build-push-action@v3
+      #   with:
+      #     context: .
+      #     push: true
+      #     tags: ghcr.io/your-username/your-repo-name:latest
