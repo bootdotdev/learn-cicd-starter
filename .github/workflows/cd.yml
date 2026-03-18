@@ -19,13 +19,22 @@ jobs:
       - name: Build Go application
         run: ./scripts/buildprod.sh
 
-      - id: "auth"
+      - id: auth
         uses: "google-github-actions/auth@v2"
         with:
           credentials_json: "${{ secrets.GCP_CREDENTIALS }}"
 
-      - name: "Set up Cloud SDK"
+      - name: Set up Cloud SDK
         uses: "google-github-actions/setup-gcloud@v3"
 
-      - name: "Use gcloud CLI"
-        run: "gcloud builds submit --tag us-central1-docker.pkg.dev/notely-490617/notely-ar-repo/notely-app:latest ."
+      - name: Build to artifacts registry
+        run: gcloud builds submit --tag ${{ vars.GCP_REGION }}-docker.pkg.dev/${{ vars.GCP_PROJECT_ID }}/${{ vars.GCP_IMAGE }}:latest .
+
+      - name: Deploy to Cloud Run
+        run: |
+          gcloud run deploy notely \
+            --image ${{ vars.GCP_REGION }}-docker.pkg.dev/${{ vars.GCP_PROJECT_ID }}/${{ vars.GCP_IMAGE }}:latest \
+            --region ${{ vars.GCP_REGION }} \
+            --allow-unauthenticated \
+            --project ${{ vars.GCP_PROJECT_ID }} \
+            --max-instances=4
