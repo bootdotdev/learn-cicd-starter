@@ -19,9 +19,13 @@ jobs:
       - name: Build Go application
         run: ./scripts/buildprod.sh
 
-      # - name: Build and push Docker image
-      #   uses: docker/build-push-action@v3
-      #   with:
-      #     context: .
-      #     push: true
-      #     tags: ghcr.io/your-username/your-repo-name:latest
+      - id: "auth"
+        uses: "google-github-actions/auth@v2"
+        with:
+          credentials_json: "${{ secrets.GCP_CREDENTIALS }}"
+
+      - name: "Set up Cloud SDK"
+        uses: "google-github-actions/setup-gcloud@v3"
+
+      - name: "Use gcloud CLI"
+        run: "gcloud builds submit --tag us-central1-docker.pkg.dev/notely-490617/notely-ar-repo/notely-app:latest ."
