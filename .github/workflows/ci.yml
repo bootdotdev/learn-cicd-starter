@@ -20,3 +20,33 @@ jobs:
 
       - name: go test
         run: go test ./... -cover
+
+      - name: Install gosec
+        run: go install github.com/securego/gosec/v2/cmd/gosec@latest
+      
+      - name: go sec
+        run: gosec ./...
+
+
+  style:  
+    name: Style
+    runs-on: ubuntu-latest
+
+    steps:
+      - name: Check out code
+        uses: actions/checkout@v4
+
+      - name: Set up Go
+        uses: actions/setup-go@v5
+        with:
+          go-version: "1.26.0"
+
+      - name: go fmt
+        run: test -z $(go fmt ./...)
+
+      - name: linting with Staticcheck
+        uses: dominikh/staticcheck-action@v1.4.1
+        with:
+          version: "latest"
+          install-go: false
+
