@@ -1,6 +1,5 @@
 # <img alt="chi" src="https://cdn.rawgit.com/go-chi/chi/master/_examples/chi.svg" width="220" />
 
-
 [![GoDoc Widget]][GoDoc] [![Travis Widget]][Travis]
 
 `chi` is a lightweight, idiomatic and composable router for building Go HTTP services. It's
@@ -22,24 +21,21 @@ and [docgen](https://github.com/go-chi/docgen). We hope you enjoy it too!
 
 `go get -u github.com/go-chi/chi`
 
-
 ## Features
 
-* **Lightweight** - cloc'd in ~1000 LOC for the chi router
-* **Fast** - yes, see [benchmarks](#benchmarks)
-* **100% compatible with net/http** - use any http or middleware pkg in the ecosystem that is also compatible with `net/http`
-* **Designed for modular/composable APIs** - middlewares, inline middlewares, route groups and sub-router mounting
-* **Context control** - built on new `context` package, providing value chaining, cancellations and timeouts
-* **Robust** - in production at Pressly, CloudFlare, Heroku, 99Designs, and many others (see [discussion](https://github.com/go-chi/chi/issues/91))
-* **Doc generation** - `docgen` auto-generates routing documentation from your source to JSON or Markdown
-* **Go.mod support** - v1.x of chi (starting from v1.5.0), now has go.mod support (see [CHANGELOG](https://github.com/go-chi/chi/blob/master/CHANGELOG.md#v150-2020-11-12---now-with-gomod-support))
-* **No external dependencies** - plain ol' Go stdlib + net/http
-
+- **Lightweight** - cloc'd in ~1000 LOC for the chi router
+- **Fast** - yes, see [benchmarks](#benchmarks)
+- **100% compatible with net/http** - use any http or middleware pkg in the ecosystem that is also compatible with `net/http`
+- **Designed for modular/composable APIs** - middlewares, inline middlewares, route groups and sub-router mounting
+- **Context control** - built on new `context` package, providing value chaining, cancellations and timeouts
+- **Robust** - in production at Pressly, CloudFlare, Heroku, 99Designs, and many others (see [discussion](https://github.com/go-chi/chi/issues/91))
+- **Doc generation** - `docgen` auto-generates routing documentation from your source to JSON or Markdown
+- **Go.mod support** - v1.x of chi (starting from v1.5.0), now has go.mod support (see [CHANGELOG](https://github.com/go-chi/chi/blob/master/CHANGELOG.md#v150-2020-11-12---now-with-gomod-support))
+- **No external dependencies** - plain ol' Go stdlib + net/http
 
 ## Examples
 
-See [_examples/](https://github.com/go-chi/chi/blob/master/_examples/) for a variety of examples.
-
+See [\_examples/](https://github.com/go-chi/chi/blob/master/_examples/) for a variety of examples.
 
 **As easy as:**
 
@@ -169,7 +165,6 @@ func AdminOnly(next http.Handler) http.Handler {
 }
 ```
 
-
 ## Router interface
 
 chi's router is based on a kind of [Patricia Radix trie](https://en.wikipedia.org/wiki/Radix_tree).
@@ -251,7 +246,6 @@ supports named params (ie. `/users/{userID}`) and wildcards (ie. `/admin/*`). UR
 can be fetched at runtime by calling `chi.URLParam(r, "userID")` for named parameters
 and `chi.URLParam(r, "*")` for a wildcard parameter.
 
-
 ### Middleware handlers
 
 chi's middlewares are just stdlib net/http middleware handlers. There is nothing special
@@ -282,7 +276,6 @@ func MyMiddleware(next http.Handler) http.Handler {
 }
 ```
 
-
 ### Request handlers
 
 chi uses standard net/http request handlers. This little snippet is an example of a http.Handler
@@ -300,7 +293,6 @@ func MyRequestHandler(w http.ResponseWriter, r *http.Request) {
   w.Write([]byte(fmt.Sprintf("hi %s", user)))
 }
 ```
-
 
 ### URL parameters
 
@@ -324,7 +316,6 @@ func MyRequestHandler(w http.ResponseWriter, r *http.Request) {
 }
 ```
 
-
 ## Middlewares
 
 chi comes equipped with an optional `middleware` package, providing a suite of standard
@@ -333,7 +324,8 @@ with `net/http` can be used with chi's mux.
 
 ### Core middlewares
 
-----------------------------------------------------------------------------------------------------
+---
+
 | chi/middleware Handler | description                                                             |
 | :--------------------- | :---------------------------------------------------------------------- |
 | [AllowContentEncoding] | Enforces a whitelist of request Content-Encoding headers                |
@@ -358,7 +350,8 @@ with `net/http` can be used with chi's mux.
 | [Timeout]              | Signals to the request context when the timeout deadline is reached     |
 | [URLFormat]            | Parse extension from url and put it on request context                  |
 | [WithValue]            | Short-hand middleware to set a key/value on the request context         |
-----------------------------------------------------------------------------------------------------
+
+---
 
 [AllowContentEncoding]: https://pkg.go.dev/github.com/go-chi/chi/middleware#AllowContentEncoding
 [AllowContentType]: https://pkg.go.dev/github.com/go-chi/chi/middleware#AllowContentType
@@ -402,20 +395,21 @@ with `net/http` can be used with chi's mux.
 
 Please see https://github.com/go-chi for additional packages.
 
---------------------------------------------------------------------------------------------------------------------
-| package                                            | description                                                 |
-|:---------------------------------------------------|:-------------------------------------------------------------
-| [cors](https://github.com/go-chi/cors)             | Cross-origin resource sharing (CORS)                        |
-| [docgen](https://github.com/go-chi/docgen)         | Print chi.Router routes at runtime                          |
-| [jwtauth](https://github.com/go-chi/jwtauth)       | JWT authentication                                          |
-| [hostrouter](https://github.com/go-chi/hostrouter) | Domain/host based request routing                           |
-| [httplog](https://github.com/go-chi/httplog)       | Small but powerful structured HTTP request logging          |
-| [httprate](https://github.com/go-chi/httprate)     | HTTP request rate limiter                                   |
-| [httptracer](https://github.com/go-chi/httptracer) | HTTP request performance tracing library                    |
-| [httpvcr](https://github.com/go-chi/httpvcr)       | Write deterministic tests for external sources              |
-| [stampede](https://github.com/go-chi/stampede)     | HTTP request coalescer                                      |
---------------------------------------------------------------------------------------------------------------------
+---
 
+| package                                            | description                                        |
+| :------------------------------------------------- | :------------------------------------------------- |
+| [cors](https://github.com/go-chi/cors)             | Cross-origin resource sharing (CORS)               |
+| [docgen](https://github.com/go-chi/docgen)         | Print chi.Router routes at runtime                 |
+| [jwtauth](https://github.com/go-chi/jwtauth)       | JWT authentication                                 |
+| [hostrouter](https://github.com/go-chi/hostrouter) | Domain/host based request routing                  |
+| [httplog](https://github.com/go-chi/httplog)       | Small but powerful structured HTTP request logging |
+| [httprate](https://github.com/go-chi/httprate)     | HTTP request rate limiter                          |
+| [httptracer](https://github.com/go-chi/httptracer) | HTTP request performance tracing library           |
+| [httpvcr](https://github.com/go-chi/httpvcr)       | Write deterministic tests for external sources     |
+| [stampede](https://github.com/go-chi/stampede)     | HTTP request coalescer                             |
+
+---
 
 ## context?
 
@@ -426,9 +420,9 @@ and is available in stdlib since go1.7.
 Learn more at https://blog.golang.org/context
 
 and..
-* Docs: https://golang.org/pkg/context
-* Source: https://github.com/golang/go/tree/master/src/context
 
+- Docs: https://golang.org/pkg/context
+- Source: https://github.com/golang/go/tree/master/src/context
 
 ## Benchmarks
 
@@ -462,28 +456,25 @@ NOTE: the allocs in the benchmark above are from the calls to http.Request's
 on the duplicated (alloc'd) request and returns it the new request object. This is just
 how setting context on a request in Go works.
 
-
 ## Go module support & note on chi's versioning
 
-* Go.mod support means we reset our versioning starting from v1.5 (see [CHANGELOG](https://github.com/go-chi/chi/blob/master/CHANGELOG.md#v150-2020-11-12---now-with-gomod-support))
-* All older tags are preserved, are backwards-compatible and will "just work" as they
-* Brand new systems can run `go get -u github.com/go-chi/chi` as normal, or `go get -u github.com/go-chi/chi@latest`
-to install chi, which will install v1.x+ built with go.mod support, starting from v1.5.0.
-* For existing projects who want to upgrade to the latest go.mod version, run: `go get -u github.com/go-chi/chi@v1.5.0`,
-which will get you on the go.mod version line (as Go's mod cache may still remember v4.x).
-* Any breaking changes will bump a "minor" release and backwards-compatible improvements/fixes will bump a "tiny" release.
-
+- Go.mod support means we reset our versioning starting from v1.5 (see [CHANGELOG](https://github.com/go-chi/chi/blob/master/CHANGELOG.md#v150-2020-11-12---now-with-gomod-support))
+- All older tags are preserved, are backwards-compatible and will "just work" as they
+- Brand new systems can run `go get -u github.com/go-chi/chi` as normal, or `go get -u github.com/go-chi/chi@latest`
+  to install chi, which will install v1.x+ built with go.mod support, starting from v1.5.0.
+- For existing projects who want to upgrade to the latest go.mod version, run: `go get -u github.com/go-chi/chi@v1.5.0`,
+  which will get you on the go.mod version line (as Go's mod cache may still remember v4.x).
+- Any breaking changes will bump a "minor" release and backwards-compatible improvements/fixes will bump a "tiny" release.
 
 ## Credits
 
-* Carl Jackson for https://github.com/zenazn/goji
-  * Parts of chi's thinking comes from goji, and chi's middleware package
+- Carl Jackson for https://github.com/zenazn/goji
+  - Parts of chi's thinking comes from goji, and chi's middleware package
     sources from goji.
-* Armon Dadgar for https://github.com/armon/go-radix
-* Contributions: [@VojtechVitek](https://github.com/VojtechVitek)
+- Armon Dadgar for https://github.com/armon/go-radix
+- Contributions: [@VojtechVitek](https://github.com/VojtechVitek)
 
 We'll be more than happy to see [your contributions](./CONTRIBUTING.md)!
-
 
 ## Beyond REST
 
@@ -493,11 +484,11 @@ for managing state via HTTP, and there's a lot of other pieces required to write
 system or network of microservices.
 
 Looking beyond REST, I also recommend some newer works in the field:
-* [webrpc](https://github.com/webrpc/webrpc) - Web-focused RPC client+server framework with code-gen
-* [gRPC](https://github.com/grpc/grpc-go) - Google's RPC framework via protobufs
-* [graphql](https://github.com/99designs/gqlgen) - Declarative query language
-* [NATS](https://nats.io) - lightweight pub-sub
 
+- [webrpc](https://github.com/webrpc/webrpc) - Web-focused RPC client+server framework with code-gen
+- [gRPC](https://github.com/grpc/grpc-go) - Google's RPC framework via protobufs
+- [graphql](https://github.com/99designs/gqlgen) - Declarative query language
+- [NATS](https://nats.io) - lightweight pub-sub
 
 ## License
 

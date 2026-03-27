@@ -1,0 +1,35 @@
+{
+  "/Users/danabadarneh/learn-cicd-starter/src/api/auth.ts": {
+    "path": "/Users/danabadarneh/learn-cicd-starter/src/api/auth.ts",
+    "statementMap": {
+      "0": {
+        "start": { "line": 3, "column": 2 },
+        "end": { "line": 3, "column": null }
+      }
+    },
+    "fnMap": {
+      "0": {
+        "name": "getAPIKey",
+        "decl": {
+          "start": { "line": 2, "column": 16 },
+          "end": { "line": 2, "column": 28 }
+        },
+        "loc": {
+          "start": { "line": 2, "column": 28 },
+          "end": { "line": 4, "column": null }
+        },
+        "line": 2
+      }
+    },
+    "branchMap": {},
+    "s": { "0": 1 },
+    "f": { "0": 1 },
+    "b": {},
+    "meta": {
+      "lastBranch": 0,
+      "lastFunction": 1,
+      "lastStatement": 1,
+      "seen": { "f:2:16:2:28": 0, "s:3:2:3:Infinity": 0 }
+    }
+  }
+}

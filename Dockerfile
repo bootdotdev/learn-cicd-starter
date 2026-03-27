@@ -1,7 +1,16 @@
-FROM --platform=linux/amd64 debian:stable-slim
+FROM node:20-alpine AS build
+WORKDIR /app
+COPY package.json ./
+RUN npm install
+COPY tsconfig.json ./
+COPY src ./src
+RUN npm run build
 
-RUN apt-get update && apt-get install -y ca-certificates
-
-ADD notely /usr/bin/notely
-
-CMD ["notely"]
+FROM node:20-alpine AS runtime
+WORKDIR /app
+COPY package.json ./
+RUN npm install --omit=dev
+COPY --from=build /app/dist ./dist
+COPY src/db/schema.sql ./src/db/schema.sql
+EXPOSE 8080
+CMD ["node", "dist/server.js"]

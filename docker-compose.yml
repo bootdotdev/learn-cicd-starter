@@ -1,0 +1,54 @@
+services:
+  postgres:
+    image: postgres:16-alpine
+    environment:
+      POSTGRES_USER: pipeline
+      POSTGRES_PASSWORD: pipeline
+      POSTGRES_DB: pipeline_db
+    ports:
+      - "5432:5432"
+    volumes:
+      - postgres_data:/var/lib/postgresql/data
+    healthcheck:
+      test: ["CMD-SHELL", "pg_isready -U pipeline -d pipeline_db"]
+      interval: 5s
+      timeout: 5s
+      retries: 10
+
+  migrate:
+    build: .
+    command: ["npm", "run", "migrate:prod"]
+    environment:
+      DATABASE_URL: postgresql://pipeline:pipeline@postgres:5432/pipeline_db
+    depends_on:
+      postgres:
+        condition: service_healthy
+
+  api:
+    build: .
+    command: ["npm", "run", "start"]
+    environment:
+      PORT: 8080
+      BASE_URL: http://localhost:8080
+      DATABASE_URL: postgresql://pipeline:pipeline@postgres:5432/pipeline_db
+    ports:
+      - "8080:8080"
+    depends_on:
+      migrate:
+        condition: service_completed_successfully
+
+  worker:
+    build: .
+    command: ["npm", "run", "start:worker"]
+    environment:
+      DATABASE_URL: postgresql://pipeline:pipeline@postgres:5432/pipeline_db
+      DELIVERY_MAX_RETRIES: 5
+      DELIVERY_BACKOFF_BASE_MS: 1000
+      DELIVERY_TIMEOUT_MS: 5000
+      WORKER_POLL_INTERVAL_MS: 500
+    depends_on:
+      migrate:
+        condition: service_completed_successfully
+
+volumes:
+  postgres_data:
