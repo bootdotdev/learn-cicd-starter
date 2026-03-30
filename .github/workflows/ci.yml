@@ -1,0 +1,21 @@
+name: ci
+
+on:
+  pull_requests:
+    branches: [main]
+jobs:
+  tests:
+    name: Tests
+    run-on: ubuntu-latest
+
+    steps:
+      - name: check out code
+        uses: actions/check@v4
+
+      - name: Set up Go
+        uses: actions/setup-go@v5
+        with:
+          go-version: "1,26.0"
+
+      - name: FOrce Failure
+        run: (exit 1)
