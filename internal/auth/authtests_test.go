@@ -28,7 +28,7 @@ func TestAuth(t *testing.T) {
 
 	// Test case 3: Valid Authorization header
 	testHeader3 := http.Header{"Authorization": []string{"ApiKey mykey"}}
-	res3, err3 := GetAPIKesssy(testHeader3)
+	res3, err3 := GetAPIKey(testHeader3)
 	if err3 != nil {
 		t.Errorf("Expected no error, got %v", err3)
 	}
