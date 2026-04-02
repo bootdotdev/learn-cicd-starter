@@ -1,4 +1,4 @@
-![learn-cicd-starter](https://github.com/wooltim/learn-cicd-starter/actions/workflows/badge.svg)
+![learn-cicd-starter](https://github.com/wooltim/learn-cicd-starter/actions/workflows/ci.yml/badge.svg)
 
 # learn-cicd-starter (Notely)
 
