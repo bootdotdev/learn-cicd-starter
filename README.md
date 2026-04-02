@@ -1,3 +1,5 @@
+![learn-cicd-starter](https://github.com/wooltim/learn-cicd-starter/actions/workflows/badge.svg)
+
 # learn-cicd-starter (Notely)
 
 This repo contains the starter code for the "Notely" application for the "Learn CICD" course on [Boot.dev](https://boot.dev).
