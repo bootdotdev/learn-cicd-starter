@@ -7,7 +7,7 @@ import (
 
 func TestGetAPIKey(t *testing.T) {
 	headers := http.Header{}
-	headers.Set("Authorization", "ApiKey rest-api-key")
+	headers.Set("Authorization", "ApiKey test-api-key")
 	got, err:= GetAPIKey(headers)
 	if got != "test-api-key" {
 		t.Error("Expected API key, got empty string")
