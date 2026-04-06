@@ -1,4 +1,3 @@
-https://github.com/Dolamu-TheDataGuy/learn-cicd-starter/actions/workflows/ci.yml/badge.svg
 ![test badge](https://github.com/Dolamu-TheDataGuy/learn-cicd-starter/actions/workflows/ci.yml/badge.svg)
 # learn-cicd-starter (Notely)
 
