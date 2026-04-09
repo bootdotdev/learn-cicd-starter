@@ -1,17 +1,17 @@
 package auth
 
 import (
-	"testing"
 	"net/http"
+	"testing"
 )
 
 func TestGetAPIKey(t *testing.T) {
 	headers := http.Header{}
 	headers.Set("Authorization", "ApiKey test-api-key")
-	got, err:= GetAPIKey(headers)
+	got, err := GetAPIKey(headers)
 	if got != "test-api-key" {
 		t.Error("Expected API key, got empty string")
-	} 
+	}
 	if err != nil {
 		t.Errorf("Expected no error, got %v", err)
 	}
