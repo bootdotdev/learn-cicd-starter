@@ -5,6 +5,7 @@ import (
 	"embed"
 	"io"
 	"log"
+	"time"
 	"net/http"
 	"os"
 
@@ -27,7 +28,7 @@ var staticFiles embed.FS
 func main() {
 	err := godotenv.Load(".env")
 	if err != nil {
-		log.Printf("warning: assuming default configuration. .env unreadable: %v", err)
+		log.Println("warning: assuming default configuration. .env unreadable:" + err.Error())
 	}
 
 	port := os.Getenv("PORT")
@@ -91,8 +92,9 @@ func main() {
 	srv := &http.Server{
 		Addr:    ":" + port,
 		Handler: router,
+		ReadHeaderTimeout: 5 * time.Second,
 	}
 
-	log.Printf("Serving on port: %s\n", port)
+	// log.Println("Serving on port:" + port)
 	log.Fatal(srv.ListenAndServe())
 }
