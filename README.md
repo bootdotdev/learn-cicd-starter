@@ -1,6 +1,6 @@
 # learn-cicd-starter (Notely)
 
-This repo contains the starter code for the "Hadis" application for the "Learn CICD" course on [Boot.dev](https://boot.dev).
+This repo contains the starter code for the "Hadisul" application for the "Learn CICD" course on [Boot.dev](https://boot.dev).
 
 ## Local Development
 
