@@ -23,3 +23,12 @@ go build -o notely && ./notely
 You do *not* need to set up a database or any interactivity on the webpage yet. Instructions for that will come later in the course!
 
 " oatman's version of Boot.dev's Notely app. "
+---
+
+# Code Coverage
+
+![alt text goes here](https://github.com/oatmanelfarji/cicd-starter/actions/workflows/ci.yml/badge.svg)
+
+## License
+
+"This code is provided for educational purposes only, as part of the [Learn CICD](https://boot.dev/courses/learn-cicd) course on [Boot.dev](https://boot.dev)."
