@@ -35,4 +35,4 @@ You do *not* need to set up a database or any interactivity on the webpage yet. 
 
 # YOLO
 
-Goal: Merge a PR without review
+Merge a PR without review
