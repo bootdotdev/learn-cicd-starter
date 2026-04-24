@@ -32,3 +32,7 @@ You do *not* need to set up a database or any interactivity on the webpage yet. 
 ## License
 
 "This code is provided for educational purposes only, as part of the [Learn CICD](https://boot.dev/courses/learn-cicd) course on [Boot.dev](https://boot.dev)."
+
+# YOLO
+
+Goal: Merge a PR without review
