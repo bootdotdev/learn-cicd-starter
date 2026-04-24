@@ -1,0 +1,40 @@
+name: cd
+
+on:
+  push:
+    branches: [main]
+
+jobs:
+  deploy:
+    name: Deploy
+    runs-on: ubuntu-latest
+
+    steps:
+      - name: Check out code
+        uses: actions/checkout@v4
+
+      - name: Set up Go
+        uses: actions/setup-go@v5
+        with:
+          go-version: "1.26.0"
+
+      - name: Build Go binary
+        run: ./scripts/buildprod.sh
+
+      - name: Authenticate to Google Cloud
+        uses: google-github-actions/auth@v2
+        with:
+          credentials_json: ${{ secrets.GCP_CREDENTIALS }}
+
+      - name: Set up gcloud
+        uses: google-github-actions/setup-gcloud@v2
+        with:
+          project_id: first-skein-494213-p9
+
+      - name: Build and push image
+        run: |
+          gcloud builds submit \
+            --tag us-central1-docker.pkg.dev/first-skein-494213-p9/notely-ar-repo/notely:latest .
+
+      - name: Deploy to Cloud Run
+        run: gcloud run deploy notely --image us-central1-docker.pkg.dev/first-skein-494213-p9/notely-ar-repo/notely:latest --region us-central1 --allow-unauthenticated --project first-skein-494213-p9 --max-instances=4
