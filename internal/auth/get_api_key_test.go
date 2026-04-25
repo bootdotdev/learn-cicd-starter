@@ -18,7 +18,7 @@ func TestGetAPIKey(t *testing.T) {
 		{
 			"happy flow should pass",
 			http.Header{"Authorization": {"ApiKey 123"}},
-			"1234",
+			"123",
 			false,
 			"",
 		},
