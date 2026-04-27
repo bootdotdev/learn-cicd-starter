@@ -6,12 +6,12 @@ on:
 
 jobs:
   tests:
-    name: tests
+    name: Tests
     runs-on: ubuntu-latest
 
     steps:
       - name: Check out code
-        uses: actions/setup-go@v5
+        uses: actions/setup-go@v4
 
       - name: Set up Go 
         uses: actions/setup-go@v5 
