@@ -95,6 +95,6 @@ func main() {
 		ReadHeaderTimeout: time.Second * 5,
 	}
 
-	log.Printf("Serving on port: %s\n", port)
+	log.Println("Serving HTTP server")
 	log.Fatal(srv.ListenAndServe())
 }
