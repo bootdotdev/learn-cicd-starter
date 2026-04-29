@@ -3,15 +3,15 @@
 //
 // You can configure it by passing an option struct to cors.New:
 //
-//     c := cors.New(cors.Options{
-//         AllowedOrigins: []string{"foo.com"},
-//         AllowedMethods: []string{"GET", "POST", "DELETE"},
-//         AllowCredentials: true,
-//     })
+//	c := cors.New(cors.Options{
+//	    AllowedOrigins: []string{"foo.com"},
+//	    AllowedMethods: []string{"GET", "POST", "DELETE"},
+//	    AllowCredentials: true,
+//	})
 //
 // Then insert the handler in the chain:
 //
-//     handler = c.Handler(handler)
+//	handler = c.Handler(handler)
 //
 // See Options documentation for more options.
 //
