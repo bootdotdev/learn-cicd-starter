@@ -20,10 +20,8 @@ jobs:
       - name: Check out code
         uses: actions/checkout@v4
       - name: Formatting check
-        run: test -z $(go fmt ./...)
-
+        run: test -z $(go fmt $(go list ./... | grep -v /vendor/))
       - name: Install staticcheck
         run: go install honnef.co/go/tools/cmd/staticcheck@latest
-
       - name: Run staticcheck
         run: staticcheck ./...
