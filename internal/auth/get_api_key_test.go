@@ -1,4 +1,4 @@
-/*
+
 package auth
 
 import (
@@ -63,7 +63,9 @@ func TestGetAPIKey(t *testing.T) {
 		})
 	}
 }
-*/
+
+/*
+// Teste intencionalmente quebrado para demonstrar falha de teste
 
 package auth
 
@@ -84,4 +86,5 @@ func TestGetAPIKey_Broken(t *testing.T) {
 		t.Fatalf("expected key %q, got %q", "def456", gotKey)
 	}
 }
+*/
 
