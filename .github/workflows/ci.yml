@@ -21,3 +21,7 @@ jobs:
         uses: actions/checkout@v4
       - name: Formatting check
         run: test -z $(go fmt ./...)
+      - name: Install staticcheck
+        run: go install honnef.co/go/tools/cmd/staticcheck@latest
+      - name:  Run statick test
+        run: staticcheck ./...
