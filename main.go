@@ -7,7 +7,7 @@ import (
 	"log"
 	"net/http"
 	"os"
-
+	"time"
 	"github.com/go-chi/chi"
 	"github.com/go-chi/cors"
 	"github.com/joho/godotenv"
@@ -91,8 +91,9 @@ func main() {
 	srv := &http.Server{
 		Addr:    ":" + port,
 		Handler: router,
+		ReadHeaderTimeout: 30 * time.Second,
 	}
 
-	log.Printf("Serving on port: %s\n", port)
+	log.Println("Serving on port: " + port) // #nosec G706
 	log.Fatal(srv.ListenAndServe())
 }
