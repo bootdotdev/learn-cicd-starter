@@ -1,28 +1,23 @@
 name: ci
-
 on:
   pull_request:
     branches: [main]
-
 jobs:
   tests:
     name: Tests
     runs-on: ubuntu-latest
-
     steps:
       - name: Check out code
         uses: actions/checkout@v4
-
       - name: Run go code
         run: go test  -cover  ./...
-
       - name: passcode
         run: (exit 0)
-   style:
-      name: Style
-      runs-on: ubuntu-latest
-      steps:
-        - name: Check out code
-          uses: actions/checkout@v4
-        - name: Formatting check
-          run: test -z $(go fmt ./...)
+  style:
+    name: Style
+    runs-on: ubuntu-latest
+    steps:
+      - name: Check out code
+        uses: actions/checkout@v4
+      - name: Formatting check
+        run: test -z $(go fmt ./...)
