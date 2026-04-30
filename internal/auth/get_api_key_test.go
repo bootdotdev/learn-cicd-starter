@@ -1,4 +1,3 @@
-
 package auth
 
 import (
@@ -7,14 +6,12 @@ import (
 	"testing"
 )
 
-
-
 func TestGetAPIKey(t *testing.T) {
 	tests := []struct {
-		name      string
-		authValue string
-		wantKey   string
-		wantErr   error
+		name       string
+		authValue  string
+		wantKey    string
+		wantErr    error
 		wantErrMsg string
 	}{
 		{
@@ -87,4 +84,3 @@ func TestGetAPIKey_Broken(t *testing.T) {
 	}
 }
 */
-
