@@ -6,11 +6,13 @@ import (
 )
 
 // Test when API key exists
-func TestGetAPIKey_Valid(t *testing.T) {
+ifunc TestGetAPIKey_Valid(t *testing.T) {
 	req, _ := http.NewRequest("GET", "/", nil)
 	req.Header.Set("Authorization", "ApiKey 12345")
 
 	apiKey, err := GetAPIKey(req.Header) // 👈 هنا التعديل
+	
+	t.Errorf("fail intentionally")
 
 	if err != nil {
 		t.Errorf("expected no error, got %v", err)
