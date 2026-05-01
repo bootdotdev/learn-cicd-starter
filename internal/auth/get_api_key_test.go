@@ -12,7 +12,7 @@ ifunc TestGetAPIKey_Valid(t *testing.T) {
 
 	apiKey, err := GetAPIKey(req.Header) // 👈 هنا التعديل
 	
-	t.Errorf("fail intentionally")
+	//t.Errorf("fail intentionally")
 
 	if err != nil {
 		t.Errorf("expected no error, got %v", err)
