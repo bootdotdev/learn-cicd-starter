@@ -1,6 +1,7 @@
+
+![CI Status](https://img.shields.io/github/actions/workflow/status/mhmudyasien/learn-cicd-starter/ci.yml?branch=main)
 # learn-cicd-starter
 
-![CI](https://img.shields.io/github/actions/workflow/status/bootdotdev/learn-cicd-starter/ci.yml?branch=main)# learn-cicd-starter (Notely)
 This repo contains the starter code for the "Notely" application for the "Learn CICD" course on [Boot.dev](https://boot.dev).
 
 ## Local Development
