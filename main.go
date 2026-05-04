@@ -3,10 +3,13 @@ package main
 import (
 	"database/sql"
 	"embed"
+	"fmt"
 	"io"
 	"log"
 	"net/http"
 	"os"
+	"strconv"
+	"time"
 
 	"github.com/go-chi/chi"
 	"github.com/go-chi/cors"
@@ -30,9 +33,13 @@ func main() {
 		log.Printf("warning: assuming default configuration. .env unreadable: %v", err)
 	}
 
-	port := os.Getenv("PORT")
-	if port == "" {
+	portEnv := os.Getenv("PORT")
+	if portEnv == "" {
 		log.Fatal("PORT environment variable is not set")
+	}
+	port, err := strconv.Atoi(portEnv)
+	if err != nil || !(1 <= port && port <= 65535) {
+		log.Fatal("PORT environment variable is invalid")
 	}
 
 	apiCfg := apiConfig{}
@@ -89,10 +96,11 @@ func main() {
 
 	router.Mount("/v1", v1Router)
 	srv := &http.Server{
-		Addr:    ":" + port,
-		Handler: router,
+		Addr:              fmt.Sprintf(":%d", port),
+		Handler:           router,
+		ReadHeaderTimeout: 1 * time.Second,
 	}
 
-	log.Printf("Serving on port: %s\n", port)
+	log.Printf("Serving on port: %d\n", port)
 	log.Fatal(srv.ListenAndServe())
 }
