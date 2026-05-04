@@ -19,6 +19,5 @@ func GetAPIKey(headers http.Header) (string, error) {
 		return "", errors.New("malformed authorization header")
 	}
 
-	// Temporarily broken to verify CI fails when tests do not pass.
-	return "broken-key", nil
+	return splitAuth[1], nil
 }
