@@ -19,4 +19,4 @@ jobs:
           go-version: "1.26.0"
 
       - name: Run tests
-        run: go test ./internal/auth/get_api_key_test.go
+        run: go test ./...
