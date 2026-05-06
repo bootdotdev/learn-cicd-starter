@@ -7,4 +7,3 @@ import (
 func TestGetAPIKey(t *testing.T) {
 	t.Log("test passed")
 }
-
