@@ -22,7 +22,7 @@ func TestGetAPIKey(t *testing.T) {
 			expectedErr: ErrNoAuthHeaderIncluded,
 		},
 		{
-			name: "Empty Authorization header",
+			testName: "Empty Authorization header",
 			headers: http.Header{
 				"Authorization": []string{""},
 			},
@@ -30,7 +30,7 @@ func TestGetAPIKey(t *testing.T) {
 			expectedErr: ErrNoAuthHeaderIncluded,
 		},
 		{
-			name: "Malformed header - missing API key",
+			testName: "Malformed header - missing API key",
 			headers: http.Header{
 				"Authorization": []string{"ApiKey"},
 			},
@@ -38,7 +38,7 @@ func TestGetAPIKey(t *testing.T) {
 			errText:     "malformed authorization header",
 		},
 		{
-			name: "Malformed header - wrong scheme",
+			testName: "Malformed header - wrong scheme",
 			headers: http.Header{
 				"Authorization": []string{"Bearer 12345"},
 			},
@@ -46,7 +46,7 @@ func TestGetAPIKey(t *testing.T) {
 			errText:     "malformed authorization header",
 		},
 		{
-			name: "Valid API key",
+			testName: "Valid API key",
 			headers: http.Header{
 				"Authorization": []string{"ApiKey super-secret-key-123"},
 			},
