@@ -9,10 +9,10 @@ func TestGetAPIKey(t *testing.T) {
 	// TEST 1: The "Success" Case
 	// We create a header with a valid ApiKey
 	headers := http.Header{}
-	headers.Add("Authorization", "ApiKey 12345")
+	headers.Add("Authorization", "ApiKey 1234")
 
 	got, _ := GetAPIKey(headers)
-	want := "this test will fail"
+	want := "1234"
 
 	if got != want {
 		t.Errorf("expected %v, got %v", want, got)
