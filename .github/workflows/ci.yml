@@ -13,10 +13,8 @@ jobs:
       - name: Check out code
         uses: actions/checkout@v4
 
-      - name: Set up Go
-        uses: actions/setup-go@v5
-        with:
-          run: go test ./...
+      - name: Run tests
+        run: go test ./...
 
       - name: Force Success
         run: (exit 0)
