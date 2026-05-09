@@ -31,7 +31,7 @@ func TestGetAPIKeyMalformed(t *testing.T) {
 	token := "Bearer abc123"
 	req.Header.Set("Authorization", token)
 	_, err = GetAPIKey(req.Header)
-	if err != nil {
+	if err == nil {
 		t.Errorf("\nAuthorization header should only this format:\n'ApiKey <token>'\nbut it accepted:\n'%v'", token)
 	}
 }
