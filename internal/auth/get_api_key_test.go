@@ -19,7 +19,7 @@ func TestGetAPIKeyHappyPath(t *testing.T) {
 	}
 	want := "abc123"
 	if got != want {
-		t.Fatalf("expected: %v, got: %v", want, got)
+		t.Errorf("expected: %v, got: %v", want, got)
 	}
 }
 
@@ -31,7 +31,7 @@ func TestGetAPIKeyMalformed(t *testing.T) {
 	token := "Bearer abc123"
 	req.Header.Set("Authorization", token)
 	_, err = GetAPIKey(req.Header)
-	if err == nil {
-		t.Fatalf("function failed to notice malformed Authorization header: %v", token)
+	if err != nil {
+		t.Errorf("\nAuthorization header should only this format:\n'ApiKey <token>'\nbut it accepted:\n'%v'", token)
 	}
 }
