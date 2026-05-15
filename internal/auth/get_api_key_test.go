@@ -15,7 +15,7 @@ func TestGetAPIKey(t *testing.T) {
 		{
 			name:        "valid api key",
 			authHeader:  "ApiKey abc123",
-			expected:    "abc1234",
+			expected:    "abc123",
 			expectError: false,
 		},
 		{
