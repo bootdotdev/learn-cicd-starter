@@ -20,8 +20,8 @@ jobs:
 
       - name: Run tests
         run: go install github.com/securego/gosec/v2/cmd/gosec@latest
-      - name: run gosec
-        run: test -z "$(gosec ./...)"
+      - name: Gosec
+        run: test -z "$(gosec -quiet ./...)"
           
 
   style:
