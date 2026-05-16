@@ -7,6 +7,7 @@ import (
 	"log"
 	"net/http"
 	"os"
+	"time"
 
 	"github.com/go-chi/chi"
 	"github.com/go-chi/cors"
@@ -91,8 +92,12 @@ func main() {
 	srv := &http.Server{
 		Addr:    ":" + port,
 		Handler: router,
+		ReadTimeout:  5 * time.Second,
+		WriteTimeout: 10 * time.Second,
+		IdleTimeout:  60 * time.Second,
 	}
 
-	log.Printf("Serving on port: %s\n", port)
+	// #nosec G706 -- port is configuration, not untrusted user input
+	log.Printf("Serving on port: %q\n", port)
 	log.Fatal(srv.ListenAndServe())
 }
