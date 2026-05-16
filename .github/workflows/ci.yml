@@ -21,7 +21,7 @@ jobs:
       - name: Run tests
         run: go install github.com/securego/gosec/v2/cmd/gosec@latest
       - name: run gosec
-        run: test -z $(gosec ./...)
+        run: test -z "$(gosec ./...)"
           
 
   style:
@@ -44,4 +44,4 @@ jobs:
         run: go install honnef.co/go/tools/cmd/staticcheck@latest
       
       - name: Staticcheck
-        run: test -z "$(staticcheck ./...)"
+        run: test -z $(staticcheck ./...)
