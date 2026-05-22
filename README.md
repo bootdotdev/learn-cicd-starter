@@ -1,4 +1,5 @@
 # learn-cicd-starter (Notely)
+https://github.com/SKaraboM/learn-cicd-starter/actions/workflows/ci.ymlx/badge.svg
 
 This repo contains the starter code for the "Notely" application for the "Learn CICD" course on [Boot.dev](https://boot.dev).
 
