@@ -37,5 +37,6 @@ jobs:
       - name: Force Formatting
         run: test -z $(go fmt ./...)
 
-      - name: Install staticcheck
-        run: go install honnef.co/go/tools/cmd/staticcheck@latest
+      - uses: dominikh/staticcheck-action@v1
+        with:
+          version: "latest"
