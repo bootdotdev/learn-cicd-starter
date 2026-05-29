@@ -13,7 +13,7 @@ func TestGetAPIKey(t *testing.T) {
 	headers := http.Header{}
 	headers.Set("Authorization", "ApiKey TestKey")
 	apiKey, err := GetAPIKey(headers)
-	require.Error(t, err)
+	require.NoError(t, err)
 	assert.Equal(t, "TestKey", apiKey)
 
 	// Test: Missing Key
