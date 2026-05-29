@@ -34,9 +34,4 @@ jobs:
      
       - name: Run Style Check
 
-        run: |
-          if [ -n "$(go fmt ./...)" ]; then
-            echo "The following files are not formatted. Please run 'go fmt ./...':"
-            go fmt ./...
-            exit 1
-          fi
+        run: test -z "$(go fmt ./...)"
