@@ -1,4 +1,4 @@
-![Code test cover badge](https://github.com/pgrigorakis/notely/actions/workflows/ci/badge.svg)
+![Code test cover badge](https://github.com/pgrigorakis/notely/actions/workflows/ci.yml/badge.svg)
 
 # learn-cicd-starter (Notely)
 
