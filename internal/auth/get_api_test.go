@@ -1,30 +1,62 @@
 package auth
 
 import (
+	"fmt"
 	"net/http"
+	"strings"
 	"testing"
-
-	"github.com/stretchr/testify/assert"
-	"github.com/stretchr/testify/require"
 )
 
 func TestGetAPIKey(t *testing.T) {
-	// Test: Valid key
-	headers := http.Header{}
-	headers.Set("Authorization", "ApiKey TestKey")
-	apiKey, err := GetAPIKey(headers)
-	require.NoError(t, err)
-	assert.Equal(t, "TestKey", apiKey)
+	tests := []struct {
+		key       string
+		value     string
+		expect    string
+		expectErr string
+	}{
+		{
+			expectErr: "no authorization header",
+		},
+		{
+			key:       "Authorization",
+			expectErr: "no authorization header",
+		},
+		{
+			key:       "Authorization",
+			value:     "-",
+			expectErr: "malformed authorization header",
+		},
+		{
+			key:       "Authorization",
+			value:     "Bearer xxxxxx",
+			expectErr: "malformed authorization header",
+		},
+		{
+			key:       "Authorization",
+			value:     "ApiKey xxxxxx",
+			expect:    "xxxxxx",
+			expectErr: "not expecting an error",
+		},
+	}
 
-	// Test: Missing Key
-	headers = http.Header{}
-	headers.Set("Authorization", "ApiKey")
-	apiKey, err = GetAPIKey(headers)
-	require.Error(t, err)
+	for i, test := range tests {
+		t.Run(fmt.Sprintf("TestGetAPIKey Case #%v:", i), func(t *testing.T) {
+			header := http.Header{}
+			header.Add(test.key, test.value)
 
-	// Test: Missing Header
-	headers = http.Header{}
-	headers.Set("SomeHeader", "ApiKey")
-	apiKey, err = GetAPIKey(headers)
-	require.Error(t, err)
+			output, err := GetAPIKey(header)
+			if err != nil {
+				if strings.Contains(err.Error(), test.expectErr) {
+					return
+				}
+				t.Errorf("Unexpected: TestGetAPIKey:%v\n", err)
+				return
+			}
+
+			if output != test.expect {
+				t.Errorf("Unexpected: TestGetAPIKey:%s", output)
+				return
+			}
+		})
+	}
 }
