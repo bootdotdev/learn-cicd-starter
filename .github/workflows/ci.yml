@@ -34,5 +34,11 @@ jobs:
               with:
                   go-version: "1.26.0"
 
+            - name: Install staticcheck
+              run: go install honnef.co/go/tools/cmd/staticcheck@latest
+
             - name: Style code
               run: test -z $(go fmt ./...)
+
+            - name: Lint code
+              run: test -z $(staticcheck ./...)
