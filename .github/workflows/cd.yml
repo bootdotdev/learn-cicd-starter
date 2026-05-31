@@ -31,3 +31,6 @@ jobs:
 
             - name: Deploy image
               run: gcloud builds submit --tag us-central1-docker.pkg.dev/digital-method-497921-t0/notely-ar-repo/notely:latest .
+
+            - name: Deploy to Cloud Run
+              run: gcloud run deploy notely --image us-central1-docker.pkg.dev/digital-method-497921-t0/notely-ar-repo/notely:latest  --region us-central1 --allow-unauthenticated --project digital-method-497921-t0 --max-instances=4
