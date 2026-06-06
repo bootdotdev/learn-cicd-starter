@@ -16,11 +16,11 @@ jobs:
       - name: Set up Go
         uses: actions/setup-go@v5
         with:
-          go-version: "1.26.0"
+          go-version: "1.25.1"
 
-      - name: Force Failure
-        run: go test -cover ./...
-  
+      - name: Run unit tests
+        run: go test ./... -cover
+
   style:
     name: Style
     runs-on: ubuntu-latest
@@ -32,13 +32,13 @@ jobs:
       - name: Set up Go
         uses: actions/setup-go@v5
         with:
-          go-version: "1.26.0"
+          go-version: "1.25.1"
 
-      - name: Run gofmt
+      - name: Check formatting
         run: test -z $(go fmt ./...)
-      
+
       - name: Install staticcheck
         run: go install honnef.co/go/tools/cmd/staticcheck@latest
 
-      - name: Use staticcheck
+      - name: Run staticcheck
         run: staticcheck ./...
