@@ -7,6 +7,8 @@ import (
 	"log"
 	"net/http"
 	"os"
+	"strconv"
+	"time"
 
 	"github.com/go-chi/chi"
 	"github.com/go-chi/cors"
@@ -35,10 +37,7 @@ func main() {
 		log.Fatal("PORT environment variable is not set")
 	}
 
-	port = strings.Replace(port, "\n", "", -1)
-	port = strings.Replace(port, "\r", "", -1)
-	port = strings.TrimSpace(port)
-
+	
 	apiCfg := apiConfig{}
 
 	// https://github.com/libsql/libsql-client-go/#open-a-connection-to-sqld
@@ -47,8 +46,8 @@ func main() {
 	if dbURL == "" {
 		log.Println("DATABASE_URL environment variable is not set")
 		log.Println("Running without CRUD endpoints")
-	} else {
-		db, err := sql.Open("libsql", dbURL)
+		} else {
+			db, err := sql.Open("libsql", dbURL)
 		if err != nil {
 			log.Fatal(err)
 		}
@@ -56,9 +55,9 @@ func main() {
 		apiCfg.DB = dbQueries
 		log.Println("Connected to database!")
 	}
-
+	
 	router := chi.NewRouter()
-
+	
 	router.Use(cors.Handler(cors.Options{
 		AllowedOrigins:   []string{"https://*", "http://*"},
 		AllowedMethods:   []string{"GET", "POST", "PUT", "DELETE", "OPTIONS"},
@@ -67,7 +66,7 @@ func main() {
 		AllowCredentials: false,
 		MaxAge:           300,
 	}))
-
+	
 	router.Get("/", func(w http.ResponseWriter, r *http.Request) {
 		f, err := staticFiles.Open("static/index.html")
 		if err != nil {
@@ -81,7 +80,7 @@ func main() {
 	})
 
 	v1Router := chi.NewRouter()
-
+	
 	if apiCfg.DB != nil {
 		v1Router.Post("/users", apiCfg.handlerUsersCreate)
 		v1Router.Get("/users", apiCfg.middlewareAuth(apiCfg.handlerUsersGet))
@@ -90,14 +89,14 @@ func main() {
 	}
 
 	v1Router.Get("/healthz", handlerReadiness)
-
+	
 	router.Mount("/v1", v1Router)
 	srv := &http.Server{
 		Addr:    ":" + port,
 		Handler: router,
-		ReadHeaderTimeout: 5 * 1000 * 1000 * 1000, // 5 seconds
+		ReadHeaderTimeout: 5 * time.Second, // 5 seconds
 	}
 
-	log.Printf("Serving on port: %s\n", port)
+	log.Printf("Serving on port: %s\n", strconv.Quote(port))
 	log.Fatal(srv.ListenAndServe())
 }
