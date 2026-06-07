@@ -35,6 +35,10 @@ func main() {
 		log.Fatal("PORT environment variable is not set")
 	}
 
+	port = strings.Replace(port, "\n", "", -1)
+	port = strings.Replace(port, "\r", "", -1)
+	port = strings.TrimSpace(port)
+
 	apiCfg := apiConfig{}
 
 	// https://github.com/libsql/libsql-client-go/#open-a-connection-to-sqld
@@ -91,6 +95,7 @@ func main() {
 	srv := &http.Server{
 		Addr:    ":" + port,
 		Handler: router,
+		ReadHeaderTimeout: 5 * 1000 * 1000 * 1000, // 5 seconds
 	}
 
 	log.Printf("Serving on port: %s\n", port)
