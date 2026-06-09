@@ -7,12 +7,12 @@ import (
 )
 
 func TestGetAPIKey(t *testing.T) {
-//	type testCase struct {
+	type testCase struct {
 		name        string
 		headers     http.Header
 		expectedKey string
 		expectedErr error
-	//}
+	}
 
 	tests := []testCase{
 		{
