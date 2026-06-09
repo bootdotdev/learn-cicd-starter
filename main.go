@@ -36,9 +36,9 @@ func main() {
 	if port == "" {
 		log.Fatal("PORT environment variable is not set")
 	}
-	portNum, err := strconv.Atoi(port)
-	if err != nil {
-		log.Fatal("PORT environment variable must be a valid port number")
+
+	if _, err := strconv.Atoi(port); err != nil {
+    		log.Fatal("PORT environment variable must be a valid port number")
 	}
 
 	apiCfg := apiConfig{}
