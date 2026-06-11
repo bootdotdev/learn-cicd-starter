@@ -1,4 +1,4 @@
-![We don't test round here partner](https://github.com/PlinyTheYounger/learn-cicd-starter/actions/workflows/ci.yml/badge.svg)
+![We don't test round here partner](https://github.com/PlinyTheYounger0/learn-cicd-starter/actions/workflows/ci.yml/badge.svg)
 
 # learn-cicd-starter (Notely)
 
