@@ -1,3 +1,5 @@
+name: cd
+
 on:
   push:
     branches: [main]
@@ -9,4 +11,4 @@ jobs:
 
     steps:
       - name: Build Docker Image
-        uses: ./scripts/buildprod.sh
+        uses: buildprod.sh
