@@ -97,4 +97,6 @@ func main() {
 	}
 
 	log.Printf("Serving on port: %s\n", strings.ReplaceAll(port, "\n", ""))
+	log.Fatal(srv.ListenAndServe())
+
 }
