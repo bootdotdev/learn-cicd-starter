@@ -14,29 +14,31 @@ jobs:
     steps:
       - name: Check out code
         uses: actions/checkout@v4
-      
+
       - name: Set up Go
         uses: actions/setup-go@v5
         with:
           go-version: "1.25.1"
-          
-      - name: Install Goose
-        run: go install github.com/pressly/goose/v3/cmd/goose@latest
 
-      - name: build app
+      - name: Build app
         run: ./scripts/buildprod.sh
 
-      - name: authenticate with gcloud
+      - id: auth
         uses: google-github-actions/auth@v2
         with:
           credentials_json: ${{ secrets.GCP_CREDENTIALS }}
-        
-      - name: Set up gcloud CLI
-        uses: google-github-actions/setup-gcloud@v2
+
+      - name: Set up Cloud SDK
+        uses: google-github-actions/setup-gcloud@v1
 
       - name: Build and push Docker image
-        run:  gcloud builds submit --tag us-central1-docker.pkg.dev/notely-498820/notely-ar-repo/notely:latest
-      - name: Migration of DB
+        run: gcloud builds submit --tag REGION-docker.pkg.dev/PROJECT_ID/REPOSITORY/IMAGE:TAG .
+
+      - name: Install goose
+        run: go install github.com/pressly/goose/v3/cmd/goose@latest
+
+      - name: Run migrations
         run: ./scripts/migrateup.sh
+
       - name: Deploy to Cloud Run
-        run: gcloud run deploy notely --image us-central1-docker.pkg.dev/notely-498820/notely-ar-repo/notely:latest --region us-central1 --allow-unauthenticated --project notely-498820 --max-instances=4
+        run: gcloud run deploy notely --image REGION-docker.pkg.dev/PROJECT_ID/REPOSITORY/IMAGE:TAG --region REGION --allow-unauthenticated --project PROJECT_ID --max-instances=4
