@@ -15,15 +15,13 @@ jobs:
       - name: Check out code
         uses: actions/checkout@v4
       
-      - name: Install Goose
-        uses: mscno/setup-goose@v1
-        with:
-          version: 'latest'
-
       - name: Set up Go
         uses: actions/setup-go@v5
         with:
-            go-version: "1.25.1"
+          go-version: "1.25.1"
+          
+      - name: Install Goose
+        run: go install goose@latest
         
       - name: build app
         run: ./scripts/buildprod.sh
