@@ -3,9 +3,12 @@ name: ci
 on:
   pull_request:
     branches: [main]
+  push:
+    branches: [main]
 
 jobs:
   test:
+    name: Tests
     runs-on: ubuntu-latest
     steps:
       - uses: actions/checkout@v4
@@ -16,6 +19,7 @@ jobs:
         run: go test -cover ./...
 
   style:
+    name: Style
     runs-on: ubuntu-latest
     steps:
       - uses: actions/checkout@v4
