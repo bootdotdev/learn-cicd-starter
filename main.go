@@ -3,6 +3,7 @@ package main
 import (
 	"database/sql"
 	"embed"
+	"errors"
 	"io"
 	"log"
 	"net/http"
@@ -23,6 +24,14 @@ type apiConfig struct {
 
 //go:embed static/*
 var staticFiles embed.FS
+
+func loadEnv() {
+	_, err := os.Stat(".env")
+	if errors.Is(err, os.ErrNotExist) {
+		log.Println("Warning: .env file not found, continuing with defaults")
+		return
+	}
+}
 
 func main() {
 	err := godotenv.Load(".env")
