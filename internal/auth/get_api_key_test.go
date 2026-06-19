@@ -28,3 +28,15 @@ func TestGetAPIKeyNoHeader(t *testing.T) {
 		t.Fatalf("wrong key")
 	}
 }
+
+func TestGetAPIKeyMalformedHeader(t *testing.T) {
+	headers := http.Header{}
+	headers.Set("Authorization", "ApiKeyy 123456")
+	got, err := GetAPIKey(headers)
+	if err != ErrMalformedHeaderIncluded {
+		t.Fatalf("wrong error")
+	}
+	if got != "" {
+		t.Fatalf("wrong key")
+	}
+}
