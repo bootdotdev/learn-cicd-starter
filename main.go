@@ -38,7 +38,7 @@ func main() {
 	}
 
 	if _, err := strconv.Atoi(port); err != nil {
-    		log.Fatal("PORT environment variable must be a valid port number")
+		log.Fatal("PORT environment variable must be a valid port number")
 	}
 
 	apiCfg := apiConfig{}
@@ -95,8 +95,8 @@ func main() {
 
 	router.Mount("/v1", v1Router)
 	srv := &http.Server{
-		Addr:    ":" + port,
-		Handler: router,
+		Addr:              ":" + port,
+		Handler:           router,
 		ReadHeaderTimeout: 10 * time.Second,
 	}
 
