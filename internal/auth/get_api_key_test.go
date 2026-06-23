@@ -7,7 +7,7 @@ import (
 )
 
 func TestGetAPIKey(t *testing.T) {
-	got := GetAPIKey(http.Header{
+	got, _ := GetAPIKey(http.Header{
 		"Authorization": []string{"ApiKey test"},})
 	want := "test"
 	if !reflect.DeepEqual(got, want) {
