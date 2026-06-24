@@ -17,6 +17,3 @@ jobs:
         uses: actions/setup-go@v6
         with:
           go-version: "1.26.0"
-
-      - name: Force Failure
-        run: (exit 1)
