@@ -29,7 +29,7 @@ func TestGetAPIKey(t *testing.T) {
 		{
 			key:       "Authorization",
 			value:     "Bearer xxxxxx",
-			expectErr: "malformed authorization header",
+			expectErr: "malformed authorization headerdddd",
 		},
 		{
 			key:       "Authorization",
