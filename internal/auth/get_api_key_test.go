@@ -7,7 +7,7 @@ import (
 
 func TestGetAPIKey(t *testing.T) {
 	header := http.Header{}
-	header.Set("Authorization", "ApiKey test")
+	header.Set("Authorization", "failed test")
 
 	apiKey, err := GetAPIKey(header)
 	if err != nil {
