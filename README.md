@@ -1,3 +1,5 @@
+https://github.com/gcoria/learn-cicd-starter/actions/workflows/ci.yml/badge.svg
+
 ![CI status](https://github.com/gcoria/learn-cicd-starter/actions/workflows/ci.yml/badge.svg)
 
 # learn-cicd-starter (Notely)
