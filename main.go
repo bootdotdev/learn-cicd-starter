@@ -23,7 +23,10 @@ type apiConfig struct {
 
 //go:embed static/*
 var staticFiles embed.FS
-
+func unused() {
+    // this function does nothing
+    // and is called nowhere
+}
 func main() {
 	err := godotenv.Load(".env")
 	if err != nil {
@@ -63,7 +66,6 @@ func main() {
 		AllowCredentials: false,
 		MaxAge:           300,
 	}))
-
 	router.Get("/", func(w http.ResponseWriter, r *http.Request) {
 		f, err := staticFiles.Open("static/index.html")
 		if err != nil {
