@@ -16,7 +16,7 @@ jobs:
      
 
       - name: Run tests
-        run: go test ./...
+        run: go test ./... -cover
 
       - name: Force Failure
         run: (exit 0)
