@@ -30,3 +30,6 @@ jobs:
       - name: Build and Push Docker Image
         run: |
           gcloud builds submit --tag us-central1-docker.pkg.dev/crypto-symbol-440301-a6/notely-ar-repo/notely:latest .
+
+      - name: Deploy to Cloud Run
+        run: gcloud run deploy notely --image us-central1-docker.pkg.dev/crypto-symbol-440301-a6/notely-ar-repo/notely:latest --region us-central1  --allow-unauthenticated --project notely-00001-6nf --max-instances=4
