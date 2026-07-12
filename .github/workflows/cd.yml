@@ -7,12 +7,14 @@ on:
 jobs:
   Deploy:
     runs-on: ubuntu-latest
+    env:
+      DATABASE_URL: ${{ secrets.DATABASE_URL }}
+
     steps:
       - name: Checkout code
         uses: actions/checkout@v4
 
-        env:
-          DATABASE_URL: ${{ secrets.DATABASE_URL }}
+
 
       - name: Set up Go
         uses: actions/setup-go@v3
