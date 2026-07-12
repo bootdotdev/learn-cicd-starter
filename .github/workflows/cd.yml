@@ -19,6 +19,9 @@ jobs:
         with:
           go-version-file: "go.mod"
 
+      - name: install goose
+        run: go install github.com/install goosepressly/goose/v3/cmd/goose@latest
+
       - name: Build application
         run: bash scripts/buildprod.sh
 
