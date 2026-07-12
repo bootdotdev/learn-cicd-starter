@@ -11,8 +11,8 @@ jobs:
       - name: Checkout code
         uses: actions/checkout@v4
 
-    env:
-      DATABASE_URL: ${{ secrets.DATABASE_URL }}
+        env:
+          DATABASE_URL: ${{ secrets.DATABASE_URL }}
 
       - name: Set up Go
         uses: actions/setup-go@v5
