@@ -14,8 +14,6 @@ jobs:
       - name: Checkout code
         uses: actions/checkout@v4
 
-
-
       - name: Set up Go
         uses: actions/setup-go@v3
         with:
@@ -36,8 +34,7 @@ jobs:
         uses: "google-github-actions/setup-gcloud@v3"
 
       - name: Build and Push Docker Image
-        run: |
-          gcloud builds submit --tag us-central1-docker.pkg.dev/notely-502219/notely-ar-repo/notaly:latest .
+        run:  gcloud builds submit --tag us-central1-docker.pkg.dev/notely-502219/notely-ar-repo/notaly:latest .
 
       - name:  run migrations
         run: bash scripts/migrateup.sh
