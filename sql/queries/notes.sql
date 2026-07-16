@@ -10,3 +10,5 @@ SELECT * FROM notes WHERE id = ?;
 -- name: GetNotesForUser :many
 SELECT * FROM notes WHERE user_id = ?;
 --
+--
+__
