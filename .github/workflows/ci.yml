@@ -1,4 +1,4 @@
-name: ci
+name: CI
 
 on:
   pull_request:
@@ -8,15 +8,14 @@ jobs:
   tests:
     name: Tests
     runs-on: ubuntu-latest
+steps:
+  - name: Check out code
+    uses: actions/checkout@v6
 
-    steps:
-      - name: Check out code
-        uses: actions/checkout@v6
+  - name: Set up Go
+    uses: actions/setup-go@v6
+    with:
+      go-version: "1.26.0"
 
-      - name: Set up Go
-        uses: actions/setup-go@v6
-        with:
-          go-version: "1.26.0"
-
-      - name: go version
-        run: go version
+  - name: go version
+    run: go version
