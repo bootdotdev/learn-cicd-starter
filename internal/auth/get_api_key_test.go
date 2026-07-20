@@ -7,7 +7,7 @@ import (
 )
 
 func TestOk(t *testing.T) {
-	header := http.Header {}
+	header := http.Header{}
 	header.Add("Authorization", "ApiKey hello")
 	if key, err := GetAPIKey(header); err != nil {
 		t.Fatal("expected ok, but found error: ", err)
@@ -17,7 +17,7 @@ func TestOk(t *testing.T) {
 }
 
 func TestWrongApiKey(t *testing.T) {
-	header := http.Header {}
+	header := http.Header{}
 	header.Add("Authorization", "WrongApiKey hello")
 	if key, err := GetAPIKey(header); err.Error() != "malformed authorization header" {
 		t.Fatal("expected malformed authorization header, found: ", err)
@@ -27,7 +27,7 @@ func TestWrongApiKey(t *testing.T) {
 }
 
 func TestNoAuthHeader(t *testing.T) {
-	header := http.Header {}
+	header := http.Header{}
 	if key, err := GetAPIKey(header); !errors.Is(err, ErrNoAuthHeaderIncluded) {
 		t.Fatal("expected ErrNoAuthHeaderIncluded, found: ", err)
 	} else if key != "" {
