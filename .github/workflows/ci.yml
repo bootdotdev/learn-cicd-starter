@@ -17,6 +17,8 @@ jobs:
         uses: actions/setup-go@v6
         with:
           go-version: "1.26.0"
+      - name: Run Format
+        run: test -z $(go fmt ./...)
 
       - name: Run Tests
         run: go test ./... -cover
