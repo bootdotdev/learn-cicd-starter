@@ -5,7 +5,7 @@ on:
     branches: [main]
 
 jobs:
-  linting:
+  staticcheck:
     name: Linting
     runs-on: ubuntu-latest
 
