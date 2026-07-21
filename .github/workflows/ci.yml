@@ -20,7 +20,7 @@ jobs:
       - uses: dominikh/staticcheck-action@v1
         with:
           version: "latest"
-      - name: Run Linting
+      - name: Run staticcheck
         run: staticcheck ./...
   tests:
     name: Tests
