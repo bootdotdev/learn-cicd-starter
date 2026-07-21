@@ -37,7 +37,7 @@ func main() {
 	}
 	portInt, err := strconv.Atoi(port)
 	if err != nil {
-    log.Fatal("Format port tidak valid")
+		log.Fatal("Format port tidak valid")
 	}
 
 	apiCfg := apiConfig{}
@@ -94,8 +94,8 @@ func main() {
 
 	router.Mount("/v1", v1Router)
 	srv := &http.Server{
-		Addr:    ":" + port,
-		Handler: router,
+		Addr:        ":" + port,
+		Handler:     router,
 		ReadTimeout: 60 * 60 * 60,
 	}
 
