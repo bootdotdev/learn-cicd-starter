@@ -22,3 +22,6 @@ go build -o notely && ./notely
 
 vadhe version of Boot.dev's Notely app.
 You do *not* need to set up a database or any interactivity on the webpage yet. Instructions for that will come later in the course!
+
+
+![alt text goes here](https://github.com/vadhe/learn-cicd-starter/actions/workflows/ci.yml/badge.svg)
