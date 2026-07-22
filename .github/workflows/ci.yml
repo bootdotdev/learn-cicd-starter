@@ -46,7 +46,7 @@ jobs:
       - name: Check linting issues
         run: staticcheck
 
-      - name: Check security
+      - name: gosec
         run: gosec ./...
         
 
