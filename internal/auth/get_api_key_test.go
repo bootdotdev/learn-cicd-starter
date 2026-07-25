@@ -38,6 +38,11 @@ func TestGetAPIKey(t *testing.T) {
 			header:    " my-secret-key",
 			wantError: errors.New("malformed authorization header"),
 		},
+		{
+			name:      "too many authorization fields",
+			header:    "ApiKey my-secret-key extra",
+			wantError: errors.New("malformed authorization header"),
+		},
 	}
 
 	for _, tt := range tests {
