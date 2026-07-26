@@ -36,3 +36,8 @@ jobs:
 
       - name: Run Formatter
         run: test -z $(go fmt ./...)
+
+      - name: Run Linter
+        uses: dominikh/staticcheck-action@v1
+        with:
+          version: "latest"
