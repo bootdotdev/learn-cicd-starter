@@ -27,4 +27,4 @@ jobs:
 
     steps:
       - name: Run Formatter
-        run: test -z $(go fmt./...)
+        run: test -z $(go fmt ./...)
