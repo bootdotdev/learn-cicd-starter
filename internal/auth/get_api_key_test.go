@@ -19,7 +19,7 @@ func TestGetAPIKey(t *testing.T) {
 			headers: http.Header {
 				"Authorization": []string{"ApiKey secret-token-12345"},
 			},
-			expectedKey: "secret-token-123456", // check cicd
+			expectedKey: "secret-token-12345",
 			expectedError: nil,
 		},
 		{
