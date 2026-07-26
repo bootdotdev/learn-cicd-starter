@@ -26,10 +26,19 @@ jobs:
     runs-on: ubuntu-latest
 
     steps:
-      - name: Formatting Checks
+      - name: Check out code
+        uses: actions/checkout@v6
+
+      - name: Set up Go
+        uses: actions/setup-go@v6
+        with:
+          go-version: "1.25.1"
+
+      - name: Check formatting
         run: test -z $(go fmt ./...)
 
-      - name: Run Staticcheck
-        uses: dominikh/staticcheck-action@v1.3.1
-        with:
-          version: "latest"
+      - name: Install staticcheck
+        run: go install honnef.co/go/tools/cmd/staticcheck@latest
+
+      - name: Run staticcheck
+        run: staticcheck ./...
