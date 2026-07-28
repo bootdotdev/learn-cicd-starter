@@ -8,7 +8,6 @@ import (
 	"net/http"
 	"os"
 	"strconv"
-	"strings"
 	"time"
 
 	"github.com/go-chi/chi"
@@ -26,10 +25,6 @@ type apiConfig struct {
 
 //go:embed static/*
 var staticFiles embed.FS
-
-func sanitizeForLog(s string) string {
-	return strings.NewReplacer("\r", "\\r", "\n", "\\n").Replace(s)
-}
 
 func main() {
 	err := godotenv.Load(".env")
