@@ -21,4 +21,4 @@ jobs:
       - name: No failure policy
         run: go version
       - name: now leaving
-        run: exit(0)
+        run: exit 0
