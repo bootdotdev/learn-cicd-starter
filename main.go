@@ -7,6 +7,9 @@ import (
 	"log"
 	"net/http"
 	"os"
+	"strconv"
+	"strings"
+	"time"
 
 	"github.com/go-chi/chi"
 	"github.com/go-chi/cors"
@@ -24,6 +27,10 @@ type apiConfig struct {
 //go:embed static/*
 var staticFiles embed.FS
 
+func sanitizeForLog(s string) string {
+	return strings.NewReplacer("\r", "\\r", "\n", "\\n").Replace(s)
+}
+
 func main() {
 	err := godotenv.Load(".env")
 	if err != nil {
@@ -31,8 +38,9 @@ func main() {
 	}
 
 	port := os.Getenv("PORT")
-	if port == "" {
-		log.Fatal("PORT environment variable is not set")
+	portNum, err := strconv.Atoi(port)
+	if err != nil {
+		log.Fatalf("PORT environment variable must be an integer: %v", err)
 	}
 
 	apiCfg := apiConfig{}
@@ -89,10 +97,11 @@ func main() {
 
 	router.Mount("/v1", v1Router)
 	srv := &http.Server{
-		Addr:    ":" + port,
-		Handler: router,
+		Addr:              ":" + strconv.Itoa(portNum),
+		Handler:           router,
+		ReadHeaderTimeout: 3 * time.Second,
 	}
 
-	log.Printf("Serving on port: %s\n", port)
+	log.Printf("Serving on port: %d\n", portNum)
 	log.Fatal(srv.ListenAndServe())
 }
