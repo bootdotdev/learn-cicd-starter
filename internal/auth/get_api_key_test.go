@@ -8,8 +8,8 @@ import (
 func TestGetAPIKey(t *testing.T) {
 
 	tests := []struct {
-		name string
-		//	headers http.Header
+		name    string
+		headers http.Header
 		want    string
 		wantErr bool
 	}{
