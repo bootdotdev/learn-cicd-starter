@@ -32,10 +32,8 @@ func TestGetAPIKey(t *testing.T) {
 			expectErr: "malformed authorization header",
 		},
 		{
-			key: "Authorization",
-			// correct line commented out to intentionally fall CI tests
-			// value:     "ApiKey xxxxxx",
-			value:     "ApiiKey xxxxxx",
+			key:       "Authorization",
+			value:     "ApiKey xxxxxx",
 			expect:    "xxxxxx",
 			expectErr: "not expecting an error",
 		},
