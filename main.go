@@ -96,8 +96,8 @@ func main() {
 
 	router.Mount("/v1", v1Router)
 	srv := &http.Server{
-		Addr:    ":" + strconv.Itoa(port),
-		Handler: router,
+		Addr:              ":" + strconv.Itoa(port),
+		Handler:           router,
 		ReadHeaderTimeout: 60 * time.Second,
 	}
 
