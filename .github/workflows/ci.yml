@@ -19,6 +19,6 @@ jobs:
           go-version: "1.26.0"
 
       - name: No failure policy
-        run: go test ./...
+        run: go test ./... -cover
       - name: now leaving
         run: exit 0
