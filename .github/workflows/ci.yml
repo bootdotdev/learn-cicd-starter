@@ -15,6 +15,3 @@ jobs:
 
       - name: Unit tests
         run: go test ./...
-
-      - name: Force Failure
-        run: exit 1
