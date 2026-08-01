@@ -28,7 +28,7 @@ jobs:
         run: scripts/buildprod.sh
 
       - name: Migrate database changes
-        run: scripts/migrate.sh
+        run: scripts/migrateup.sh
 
         
       - id: "auth"
