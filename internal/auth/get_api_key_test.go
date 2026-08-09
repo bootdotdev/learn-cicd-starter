@@ -13,7 +13,7 @@ func TestGetAPIKey(t *testing.T) {
 		error  error
 	}{
 		{
-			name:   "missing authorization",
+			name: "missing authorization",
 			header: http.Header{
 				"Authorization": []string{},
 			},
@@ -21,7 +21,7 @@ func TestGetAPIKey(t *testing.T) {
 			error:  ErrNoAuthHeaderIncluded,
 		},
 		{
-			name:   "malformed authorization header",
+			name: "malformed authorization header",
 			header: http.Header{
 				"Authorization": []string{"ApiKey"},
 			},
@@ -29,7 +29,7 @@ func TestGetAPIKey(t *testing.T) {
 			error:  MalformedAuthorizationHeader,
 		},
 		{
-			name:   "valid headers",
+			name: "valid headers",
 			header: http.Header{
 				"Authorization": []string{
 					"ApiKey test-key",
@@ -41,7 +41,7 @@ func TestGetAPIKey(t *testing.T) {
 	}
 
 	for _, tt := range tests {
-		t.Run(tt.name, func(t *testing.T){
+		t.Run(tt.name, func(t *testing.T) {
 			result, err := GetAPIKey(tt.header)
 			if result != tt.result || err != tt.error {
 				t.Errorf("got %v, %v. want %v, %v", result, err, tt.result, tt.error)
