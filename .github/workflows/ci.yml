@@ -20,6 +20,14 @@ jobs:
 
       - name: Unit tests
         run: go test -cover ./...
+
+      # installing gosec and running to find potential security vulnerbilities
+      - name: Install gosec
+        run: go install github.com/securego/gosec/v2/cmd/gosec@latest
+
+      - name: Run gosec
+        run: go sec ./...
+
   # running in parallel to the unit tests.
   # steps are common so need to duplicate it
   style:
@@ -41,5 +49,8 @@ jobs:
         run: test -z $(go fmt ./...)
 
       # install staticcheck for linting our go code to spot any potential issues
-      - name: Install staticcheck
-        run: go install honnef.co/go/tools/cmd/staticcheck@latest && staticcheck ./...
+      - name: Install static check
+        run: go install honnef.co/go/tools/cmd/staticcheck@latest
+
+      - name: Lint
+        run: staticcheck ./...
