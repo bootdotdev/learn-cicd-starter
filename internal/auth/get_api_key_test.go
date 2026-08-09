@@ -26,7 +26,7 @@ func TestGetAPIKey(t *testing.T) {
 				"Authorization": []string{"ApiKey"},
 			},
 			result: "",
-			error:  MalformedAuthorizationHeader,
+			error:  ErrMalformedAuthorizationHeader,
 		},
 		{
 			name: "valid headers",
