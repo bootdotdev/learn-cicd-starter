@@ -1,4 +1,4 @@
-![Testing metrics](https://github.com/CodeZeroSugar/learn-cicd-starter/actions/workflows/addtests/badge.svg)
+![Testing metrics](https://github.com/CodeZeroSugar/learn-cicd-starter/actions/workflows/ci.yml/badge.svg)
 
 # learn-cicd-starter (Notely)
 
