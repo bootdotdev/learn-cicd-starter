@@ -8,7 +8,7 @@ import (
 var testReq = httptest.NewRequest("GET", "/api", nil)
 
 func TestGetAPIKeyGoodAuth(t *testing.T) {
-	testReq.Header.Set("Authorization", "ApiKey42069")
+	testReq.Header.Set("Authorization", "ApiKey 42069")
 	want := "42069"
 	got, err := GetAPIKey(testReq.Header)
 	if err != nil {
