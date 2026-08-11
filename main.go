@@ -7,6 +7,7 @@ import (
 	"log"
 	"net/http"
 	"os"
+	"strconv"
 	"time"
 
 	"github.com/go-chi/chi"
@@ -95,7 +96,6 @@ func main() {
 		ReadHeaderTimeout: 2 * time.Second,
 	}
 
-	// #nosec G706 -- False positive: server error logging on exit
-	log.Printf("Serving on port: %s\n", port)
+	log.Printf("Serving on port: %s", strconv.Quote(port))
 	log.Fatal(srv.ListenAndServe())
 }
