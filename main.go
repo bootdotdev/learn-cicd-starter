@@ -7,9 +7,9 @@ import (
 	"log"
 	"net/http"
 	"os"
-	"time"
 	"strconv"
 	"strings"
+	"time"
 
 	"github.com/go-chi/chi"
 	"github.com/go-chi/cors"
