@@ -18,3 +18,11 @@ jobs:
 
       - name: Build go
         run: ./scripts/buildprod.sh
+
+      - name: setup-gcloud
+        uses: 'google-github-actions/setup-gcloud@v3'
+        with:
+          version: '>= 363.0.0'
+        
+      - name: Docker build
+        run: gcloud builds submit --tag REGION-docker.pkg.dev/PROJECT_ID/REPOSITORY/IMAGE:TAG .
