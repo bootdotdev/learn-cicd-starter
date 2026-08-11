@@ -23,7 +23,7 @@ func TestGetAPIKey(t *testing.T) {
 		"Authorization" : []string{"ApiKey aslhdklash23908743kjshdf"}, 
 	})
 
-	if err == nil {
+	if err != nil {
 		t.Errorf("It should work")
 	}
 }
