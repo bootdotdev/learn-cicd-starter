@@ -13,7 +13,7 @@ import (
 	"strings"
 )
 
-type methodTyp int
+type methodTyp uint
 
 const (
 	mSTUB methodTyp = 1 << iota
@@ -41,6 +41,18 @@ var methodMap = map[string]methodTyp{
 	http.MethodPost:    mPOST,
 	http.MethodPut:     mPUT,
 	http.MethodTrace:   mTRACE,
+}
+
+var reverseMethodMap = map[methodTyp]string{
+	mCONNECT: http.MethodConnect,
+	mDELETE:  http.MethodDelete,
+	mGET:     http.MethodGet,
+	mHEAD:    http.MethodHead,
+	mOPTIONS: http.MethodOptions,
+	mPATCH:   http.MethodPatch,
+	mPOST:    http.MethodPost,
+	mPUT:     http.MethodPut,
+	mTRACE:   http.MethodTrace,
 }
 
 // RegisterMethod adds support for custom HTTP method handlers, available
@@ -72,17 +84,8 @@ const (
 )
 
 type node struct {
-	// node type: static, regexp, param, catchAll
-	typ nodeTyp
-
-	// first byte of the prefix
-	label byte
-
-	// first byte of the child prefix
-	tail byte
-
-	// prefix is the common prefix we ignore
-	prefix string
+	// subroutes on the leaf node
+	subroutes Routes
 
 	// regexp matcher for regexp nodes
 	rex *regexp.Regexp
@@ -90,12 +93,21 @@ type node struct {
 	// HTTP handler endpoints on the leaf node
 	endpoints endpoints
 
-	// subroutes on the leaf node
-	subroutes Routes
+	// prefix is the common prefix we ignore
+	prefix string
 
 	// child nodes should be stored in-order for iteration,
 	// in groups of the node type.
 	children [ntCatchAll + 1]nodes
+
+	// first byte of the child prefix
+	tail byte
+
+	// node type: static, regexp, param, catchAll
+	typ nodeTyp
+
+	// first byte of the prefix
+	label byte
 }
 
 // endpoints is a mapping of http method constants to handlers
@@ -454,6 +466,13 @@ func (n *node) findRoute(rctx *Context, method methodTyp, path string) *node {
 							return xn
 						}
 
+						for endpoints := range xn.endpoints {
+							if endpoints == mALL || endpoints == mSTUB {
+								continue
+							}
+							rctx.methodsAllowed = append(rctx.methodsAllowed, endpoints)
+						}
+
 						// flag that the routing context found a route, but not a corresponding
 						// supported method
 						rctx.methodNotAllowed = true
@@ -491,6 +510,13 @@ func (n *node) findRoute(rctx *Context, method methodTyp, path string) *node {
 				if h != nil && h.handler != nil {
 					rctx.routeParams.Keys = append(rctx.routeParams.Keys, h.paramKeys...)
 					return xn
+				}
+
+				for endpoints := range xn.endpoints {
+					if endpoints == mALL || endpoints == mSTUB {
+						continue
+					}
+					rctx.methodsAllowed = append(rctx.methodsAllowed, endpoints)
 				}
 
 				// flag that the routing context found a route, but not a corresponding
@@ -624,14 +650,12 @@ func (n *node) routes() []Route {
 				if h.handler == nil {
 					continue
 				}
-				m := methodTypString(mt)
-				if m == "" {
-					continue
+				if m, ok := reverseMethodMap[mt]; ok {
+					hs[m] = h.handler
 				}
-				hs[m] = h.handler
 			}
 
-			rt := Route{p, hs, subroutes}
+			rt := Route{subroutes, hs, p}
 			rts = append(rts, rt)
 		}
 
@@ -704,11 +728,9 @@ func patNextSegment(pattern string) (nodeTyp, string, string, byte, int, int) {
 			tail = pattern[pe]
 		}
 
-		var rexpat string
-		if idx := strings.Index(key, ":"); idx >= 0 {
+		key, rexpat, isRegexp := strings.Cut(key, ":")
+		if isRegexp {
 			nt = ntRegexp
-			rexpat = key[idx+1:]
-			key = key[:idx]
 		}
 
 		if len(rexpat) > 0 {
@@ -764,15 +786,6 @@ func longestPrefix(k1, k2 string) int {
 	return i
 }
 
-func methodTypString(method methodTyp) string {
-	for s, t := range methodMap {
-		if method == t {
-			return s
-		}
-	}
-	return ""
-}
-
 type nodes []*node
 
 // Sort the list of nodes by label
@@ -815,9 +828,9 @@ func (ns nodes) findEdge(label byte) *node {
 // Route describes the details of a routing handler.
 // Handlers map key is an HTTP method
 type Route struct {
-	Pattern   string
-	Handlers  map[string]http.Handler
 	SubRoutes Routes
+	Handlers  map[string]http.Handler
+	Pattern   string
 }
 
 // WalkFunc is the type of the function called for each method and route visited by Walk.
