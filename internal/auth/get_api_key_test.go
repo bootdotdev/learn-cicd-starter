@@ -8,19 +8,19 @@ import (
 	"github.com/bootdotdev/learn-cicd-starter/internal/auth"
 )
 
-func TestApiKey(t *testing.T){
-	tests := []struct{
-		name string
-		headers http.Header
-		expectedKey string
+func TestApiKey(t *testing.T) {
+	tests := []struct {
+		name          string
+		headers       http.Header
+		expectedKey   string
 		expectedError error
 	}{
 		{
 			name: "successfull extraction with ApiKey scheme",
 			headers: http.Header{
-				"Authorization":[]string{"ApiKey secret-token-123"},
+				"Authorization": []string{"ApiKey secret-token-123"},
 			},
-			expectedKey: "secret-token-123",
+			expectedKey:   "secret-token-123",
 			expectedError: nil,
 		},
 		{
@@ -28,19 +28,19 @@ func TestApiKey(t *testing.T){
 			headers: http.Header{
 				"Authorization": []string{"Bearer secret-token-123"},
 			},
-			expectedKey: "",
+			expectedKey:   "",
 			expectedError: errors.New("malformed authorization header"),
 		},
 	}
-	for _,tc := range tests{
-		t.Run(tc.name, func (t * testing.T)  {
+	for _, tc := range tests {
+		t.Run(tc.name, func(t *testing.T) {
 			key, err := auth.GetAPIKey(tc.headers)
 
 			if tc.expectedError != nil {
 				if err == nil {
 					t.Fatalf("expected error %v, got nil", tc.expectedError)
 				}
-				
+
 				// Use errors.Is for sentinel errors, or string comparison for generic errors
 				if errors.Is(tc.expectedError, auth.ErrNoAuthHeaderIncluded) {
 					if !errors.Is(err, auth.ErrNoAuthHeaderIncluded) {
@@ -59,6 +59,4 @@ func TestApiKey(t *testing.T){
 			if key != tc.expectedKey {
 				t.Errorf("expected key %q, got %q", tc.expectedKey, key)
 			}
-		})
-	}
-}
+		})}}
