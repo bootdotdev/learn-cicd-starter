@@ -8,7 +8,7 @@ import (
 	"github.com/bootdotdev/learn-cicd-starter/internal/auth"
 )
 
-func testApiKey(t *testing.T){
+func TestApiKey(t *testing.T){
 	tests := []struct{
 		name string
 		headers http.Header
