@@ -19,7 +19,7 @@ jobs:
 
       - name: Force Failure
         run: go test ./... -cover
-  security:
+  security-scans:
     name: Scurity Tests
     runs-on: ubuntu-latest
     steps:
