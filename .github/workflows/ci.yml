@@ -23,11 +23,10 @@ jobs:
     name: Scurity Tests
     runs-on: ubuntu-latest
     steps:
-      - name: Install gosec
-        run: go install github.com/securego/gosec/v2/cmd/gosec@latest
-
-      - name: check security
-        run: gosec ./...
+      - name: Run Gosec Security Scanner
+        uses: securego/gosec@master
+        with:
+          args: ./...
   lint-and-format:
     name: Style
     runs-on: ubuntu-latest
