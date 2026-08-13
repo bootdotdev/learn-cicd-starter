@@ -3,32 +3,34 @@ name: ci
 on:
   pull_request:
     branches: [main]
-  jobs:
-    tests:
-      name: Tests
-      runs-on: ubuntu-latest
-      steps:
-        - name: Check out code
-          uses: actions/checkout@v6
 
-        - name: Set up Go
-          uses: actions/setup-go@v6
-          with:
-            go-version: "1.26.0"
+jobs:
+  tests:
+    name: Tests
+    runs-on: ubuntu-latest
+    steps:
+      - name: Check out code
+        uses: actions/checkout@v6
 
-        - name: Force Failure
-          run: go test ./... -cover
-  jobs:
-    lint-and-format:
-      runs-on: ubuntu-latest
+      - name: Set up Go
+        uses: actions/setup-go@v6
+        with:
+          go-version: "1.26.0"
 
-      steps:
-        - name: Check out code
-        - uses: actions/checkout@v6
+      - name: Force Failure
+        run: go test ./... -cover
 
-        - name: Set up Go
-        - uses: actions/setup-go@v6
-          with:
-            go-version: "1.26.0"
-        - name: format code
-          run: test -z $(go fmt ./..)
+  lint-and-format:
+    name: Lint and Format
+    runs-on: ubuntu-latest
+    steps:
+      - name: Check out code
+        uses: actions/checkout@v6
+
+      - name: Set up Go
+        uses: actions/setup-go@v6
+        with:
+          go-version: "1.26.0"
+
+      - name: Format code
+        run: test -z "$(go fmt ./...)"
