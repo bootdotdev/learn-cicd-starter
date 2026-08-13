@@ -8,6 +8,7 @@ jobs:
   tests:
     name: Tests
     runs-on: ubuntu-latest
+
     steps:
       - name: Check out code
         uses: actions/checkout@v6
@@ -17,19 +18,26 @@ jobs:
         with:
           go-version: "1.26.0"
 
-      - name: Force Failure
+      - name: Run tests
         run: go test ./... -cover
+
   security-scans:
-    name: Scurity Tests
+    name: Security Tests
     runs-on: ubuntu-latest
+
     steps:
+      - name: Check out code
+        uses: actions/checkout@v6
+
       - name: Run Gosec Security Scanner
         uses: securego/gosec@master
         with:
           args: ./...
+
   lint-and-format:
     name: Style
     runs-on: ubuntu-latest
+
     steps:
       - name: Check out code
         uses: actions/checkout@v6
@@ -38,9 +46,12 @@ jobs:
         uses: actions/setup-go@v6
         with:
           go-version: "1.26.0"
+
       - name: Install staticcheck
         run: go install honnef.co/go/tools/cmd/staticcheck@v0.7.0
+
       - name: Format code
         run: test -z "$(go fmt ./...)"
-      - name: check linting
+
+      - name: Check linting
         run: staticcheck ./...
