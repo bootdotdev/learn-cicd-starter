@@ -22,7 +22,7 @@ jobs:
         run: go test ./... -cover
 
   security-scans:
-    name: Tests
+    name: Secuirty Tests
     runs-on: ubuntu-latest
 
     steps:
