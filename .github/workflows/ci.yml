@@ -1,0 +1,27 @@
+name: ci
+
+on:
+  pull_request:
+    branches: [main]
+
+jobs:
+  tests:
+    name: Tests
+    runs-on: ubuntu-latest
+
+    steps:
+      - name: Check out code
+        uses: actions/checkout@v4
+
+      - name: Run tests 
+        run: go test ./... -cover 
+
+      - name: graceful workflow
+        run: (exit 0)
+  style:
+    name: Style
+    runs-on: ubuntu-latest
+    steps:      
+      - name: Check formatting
+        run: test -z "$(go fmt ./...)"
+
