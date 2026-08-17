@@ -22,7 +22,7 @@ jobs:
         run: go test ./... -cover
 
       - name: Install gosec
-        run: go install github.com/securego/gosec/v2/cmd/gosec@v2.20.0
+        run: curl -sfL https://raw.githubusercontent.com/securego/gosec/master/install.sh | sh -s -- -b $(go env GOPATH)/bin v2.20.0
 
       - name: Run gosec
         run: gosec ./...
