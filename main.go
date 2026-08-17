@@ -7,7 +7,8 @@ import (
 	"log"
 	"net/http"
 	"os"
-	t "time"
+	"strings"
+	"time"
 
 	"github.com/go-chi/chi"
 	"github.com/go-chi/cors"
@@ -95,6 +96,7 @@ func main() {
 		ReadHeaderTimeout: 10 * time.Second,
 	}
 
-	log.Printf("Serving on port: %s\n", port)
+	cleanPort := strings.ReplaceAll(strings.ReplaceAll(port, "\n", ""), "\r", "")
+	log.Printf("Serving on port: %s\n", cleanPort)
 	log.Fatal(srv.ListenAndServe())
 }
