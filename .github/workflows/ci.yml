@@ -11,18 +11,18 @@ jobs:
 
     steps:
       - name: Check out code
-        uses: actions/checkout@v6
+        uses: actions/checkout@v4
 
       - name: Set up Go
-        uses: actions/setup-go@v6
+        uses: actions/setup-go@v5
         with:
-          go-version: "1.25.1"
+          go-version: "1.23"
 
       - name: Run unit tests
         run: go test ./... -cover
 
       - name: Install gosec
-        run: curl -sfL https://raw.githubusercontent.com/securego/gosec/master/install.sh | sh -s -- -b $(go env GOPATH)/bin v2.20.0
+        run: go install github.com/securego/gosec/v2/cmd/gosec@latest
 
       - name: Run gosec
         run: gosec ./...
@@ -33,12 +33,12 @@ jobs:
 
     steps:
       - name: Check out code
-        uses: actions/checkout@v6
+        uses: actions/checkout@v4
 
       - name: Set up Go
-        uses: actions/setup-go@v6
+        uses: actions/setup-go@v5
         with:
-          go-version: "1.25.1"
+          go-version: "1.23"
 
       - name: Check formatting
         run: test -z "$(go fmt ./...)"
