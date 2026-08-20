@@ -7,7 +7,7 @@
 </head>
 
 <body class="section">
-    <h1>Notely</h1>
+    <h1>Welcome to Notely</h1>
 
     <div id="userCreationContainer" class="section">
         <input id="nameField" type="text" placeholder="Enter your name">
@@ -21,7 +21,7 @@
         <button id="createNoteButton" onclick="createNote()">Create Note</button>
 
         <h2>Your Notes</h2>
-        <div id="notes"></div>
+        <div id='notes'></div>
 
         <button onclick="logout()">Logout</button>
     </div>
@@ -33,7 +33,7 @@
 
         async function createNote() {
             if (!currentUser) {
-                alert('Please create a user first');
+                alert('śPlease create a user first');
                 return;
             }
             const noteContent = document.getElementById('newNoteContent').value;
