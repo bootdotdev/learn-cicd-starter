@@ -2,3 +2,9 @@ out
 .env
 learn-cicd-starter
 notely
+
+# Local Claude Code settings (machine-specific permission allowlist)
+.claude/settings.json
+
+# Local secrets (service-account keys, credentials — never commit)
+secrets/
