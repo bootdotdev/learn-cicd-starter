@@ -14,7 +14,9 @@ jobs:
         uses: actions/checkout@v6
 
       - name: Set up Go
-        run: go test ./...
+        uses: actions/setup-go@v6
+        with:
+          go-version: "1.26.0"
 
-      - name: Check go version
-        run: (go version)
+      - name: Test go
+        run: go test ./... -cover
