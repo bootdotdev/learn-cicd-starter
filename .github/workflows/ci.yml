@@ -1,0 +1,20 @@
+name: ci
+
+on:
+  pull_request:
+    branches: [main]
+
+jobs:
+  tests:
+    name: Tests
+    runs-on: ubuntu-latest
+
+    steps:
+      - name: Check out code
+        uses: actions/checkout@v6
+
+      - name: Set up Go
+        run: go test ./...
+
+      - name: Check go version
+        run: (go version)
