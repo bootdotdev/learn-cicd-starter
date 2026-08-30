@@ -11,10 +11,10 @@ func TestGetAPIKey(t *testing.T) {
 		wantKey     string
 		wantErr     bool
 	}{
-		"valid key":      {headerValue: "ApiKey abc123", wantKey: "abc123", wantErr: false},
-		"no header":      {headerValue: "", wantKey: "", wantErr: true},
-		"wrong scheme":   {headerValue: "Bearer abc123", wantKey: "", wantErr: true},
-		"missing value":  {headerValue: "ApiKey", wantKey: "", wantErr: true},
+		"valid key":     {headerValue: "ApiKey abc123", wantKey: "abc123", wantErr: false},
+		"no header":     {headerValue: "", wantKey: "", wantErr: true},
+		"wrong scheme":  {headerValue: "Bearer abc123", wantKey: "", wantErr: true},
+		"missing value": {headerValue: "ApiKey", wantKey: "", wantErr: true},
 	}
 
 	for name, tc := range tests {
