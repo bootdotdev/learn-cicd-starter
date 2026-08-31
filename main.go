@@ -7,13 +7,14 @@ import (
 	"log"
 	"net/http"
 	"os"
+	"strings"
+	"time"
 
 	"github.com/go-chi/chi"
 	"github.com/go-chi/cors"
 	"github.com/joho/godotenv"
 
 	"github.com/bootdotdev/learn-cicd-starter/internal/database"
-
 	_ "github.com/tursodatabase/libsql-client-go/libsql"
 )
 
@@ -54,7 +55,6 @@ func main() {
 	}
 
 	router := chi.NewRouter()
-
 	router.Use(cors.Handler(cors.Options{
 		AllowedOrigins:   []string{"https://*", "http://*"},
 		AllowedMethods:   []string{"GET", "POST", "PUT", "DELETE", "OPTIONS"},
@@ -86,13 +86,15 @@ func main() {
 	}
 
 	v1Router.Get("/healthz", handlerReadiness)
-
 	router.Mount("/v1", v1Router)
+
 	srv := &http.Server{
-		Addr:    ":" + port,
-		Handler: router,
+		Addr:              ":" + port,
+		Handler:           router,
+		ReadHeaderTimeout: 10 * time.Second,
 	}
 
-	log.Printf("Serving on port: %s\n", port)
+	safePort := strings.ReplaceAll(strings.ReplaceAll(port, "\n", ""), "\r", "")
+	log.Printf("Serving on port: %s\n", safePort)
 	log.Fatal(srv.ListenAndServe())
 }
