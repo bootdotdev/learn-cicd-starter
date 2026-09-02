@@ -1,4 +1,41 @@
+# Binary files
 out
-.env
-learn-cicd-starter
 notely
+learn-cicd-starter
+
+# Environment files
+.env
+.env.*
+
+# Google Cloud SDK
+google-cloud-sdk/
+google-cloud-cli-*.tar.gz
+
+# Build artifacts
+*.exe
+*.exe~
+*.dll
+*.so
+*.dylib
+bin/
+dist/
+
+# Go specific
+*.test
+*.out
+vendor/
+go.work
+
+# IDE and editor files
+.idea/
+.vscode/
+*.swp
+*.swo
+
+# OS specific
+.DS_Store
+Thumbs.db
+
+# Temporary files
+tmp/
+temp/
