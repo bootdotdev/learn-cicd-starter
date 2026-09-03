@@ -7,7 +7,7 @@
 </head>
 
 <body class="section">
-    <h1>Notely</h1>
+    <h1>Welcome to Notely</h1>
 
     <div id="userCreationContainer" class="section">
         <input id="nameField" type="text" placeholder="Enter your name">
@@ -90,7 +90,7 @@
             localStorage.removeItem('currentUserAPIKey');
             currentUser = null;
 
-            // When a user logs out, show the user creation section and hide the note section
+            //, show the user creation section and hide the note section
             document.getElementById('userCreationContainer').style.display = 'block';
             document.getElementById('noteSection').style.display = 'none';
         }
