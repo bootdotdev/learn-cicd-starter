@@ -1,0 +1,50 @@
+name: CI
+
+on:
+  push:
+  pull_request:
+
+jobs:
+  style:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout code
+        uses: actions/checkout@v4
+
+      - name: Set up Go
+        uses: actions/setup-go@v5
+        with:
+          go-version: '1.22.x'
+
+      - name: Ensure module deps
+        run: go mod download
+
+      - name: Check go fmt
+        shell: bash
+        run: |
+          set -euo pipefail
+          fmt="$(gofmt -l .)"
+          if [[ -n "$fmt" ]]; then
+            echo "The following files are not gofmt-ed:"
+            echo "$fmt"
+            exit 1
+          fi
+
+      - name: Install staticcheck
+        run: go install honnef.co/go/tools/cmd/staticcheck@latest
+
+      - name: Run staticcheck
+        run: $(go env GOPATH)/bin/staticcheck ./...
+
+      - name: Run unit tests
+        run: go test ./...
+
+      # 👇 Assignment bits
+      - name: Install gosec
+        run: go install github.com/securego/gosec/v2/cmd/gosec@latest
+
+      - name: Run gosec (expect failure first time)
+        # gosec exits non-zero on findings, which is what the checkpoint wants
+        run: $(go env GOPATH)/bin/gosec ./...
+
+
