@@ -15,7 +15,6 @@ func (cfg *apiConfig) handlerNotesGet(w http.ResponseWriter, r *http.Request, us
 		respondWithError(w, http.StatusInternalServerError, "Couldn't get posts for user", err)
 		return
 	}
-
 	postsResp, err := databasePostsToPosts(posts)
 	if err != nil {
 		respondWithError(w, http.StatusInternalServerError, "Couldn't convert posts", err)
