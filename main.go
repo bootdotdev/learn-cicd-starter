@@ -3,10 +3,14 @@ package main
 import (
 	"database/sql"
 	"embed"
+	"fmt"
 	"io"
 	"log"
+	"math"
 	"net/http"
 	"os"
+	"strconv"
+	"time"
 
 	"github.com/go-chi/chi"
 	"github.com/go-chi/cors"
@@ -33,6 +37,13 @@ func main() {
 	port := os.Getenv("PORT")
 	if port == "" {
 		log.Fatal("PORT environment variable is not set")
+	}
+
+	portNum, err := strconv.Atoi(port)
+	if err != nil {
+		log.Fatalf("PORT environment variable is not a valid port address")
+	} else if portNum < 1 || portNum > math.MaxUint16 {
+		log.Fatalf("not a valid PORT enviornment variable, out of range")
 	}
 
 	apiCfg := apiConfig{}
@@ -89,10 +100,11 @@ func main() {
 
 	router.Mount("/v1", v1Router)
 	srv := &http.Server{
-		Addr:    ":" + port,
-		Handler: router,
+		ReadHeaderTimeout: 30 * time.Second,
+		Addr:              fmt.Sprintf(":%d", portNum),
+		Handler:           router,
 	}
 
-	log.Printf("Serving on port: %s\n", port)
+	log.Printf("Serving on port: %d\n", portNum)
 	log.Fatal(srv.ListenAndServe())
 }
