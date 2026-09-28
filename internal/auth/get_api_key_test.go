@@ -1,8 +1,8 @@
 package auth
 
 import (
-	"testing"
 	"net/http"
+	"testing"
 )
 
 func TestGetApiKey(t *testing.T) {
@@ -10,7 +10,7 @@ func TestGetApiKey(t *testing.T) {
 	headers.Set("Authorization", "ApiKey test-key")
 
 	got, err := GetAPIKey(headers)
-	if err != nil{
+	if err != nil {
 		t.Fatalf("GetApiKey() error =%v", err)
 	}
 	if got != "test-key" {
