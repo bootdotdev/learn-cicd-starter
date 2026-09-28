@@ -1,0 +1,21 @@
+name: ci
+
+on:
+  pull_request:
+    branches: [main]
+
+jobs:
+  tests:
+    name: Tests
+    runs-on: ubuntu-latest
+    steps:
+      - name: Check out code
+        uses: actions/checkout@v4
+
+      - name: Set up Go
+        uses: actions/setup-go@v5
+        with:
+          go-version: "1.25.1"   # if this ever flakes, try "1.22.x"
+
+      - name: Run unit tests (with coverage)
+        run: go test --cover ./...
