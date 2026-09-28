@@ -1,4 +1,27 @@
-out
-.env
-learn-cicd-starter
+# --- Build and output binaries ---
 notely
+out/
+
+# --- Environment and secrets ---
+.env
+*.json
+!package.json  # keep npm/package metadata if needed
+
+# --- Temporary or local folders ---
+mein-cicd-projekt-alt/
+learn-cicd-starter
+*.log
+
+# --- OS & IDE files ---
+.DS_Store
+Thumbs.db
+.vscode/
+.idea/
+
+# --- Go build cache ---
+bin/
+vendor/
+
+# --- Cloud & deployment ---
+key.json
+iam-policy.json

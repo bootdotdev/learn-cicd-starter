@@ -1,0 +1,38 @@
+#ci.yml
+name: Continuous Integration
+
+on:
+  push:
+    branches: ["*"]
+  pull_request:
+    branches: ["*"]
+
+jobs:
+  build-and-test:
+    name: Build and Test
+    runs-on: ubuntu-latest
+
+    steps:
+      - name: Checkout code
+        uses: actions/checkout@v4
+
+      - name: Set up Go
+        uses: actions/setup-go@v5
+        with:
+          go-version: "1.25.1"
+
+      - name: Install dependencies
+        run: go mod tidy
+
+      - name: Run unit tests
+        run: go test ./...
+
+      - name: Build app
+        run: go build -o notely .
+
+      - name: Upload artifact
+        uses: actions/upload-artifact@v4
+        with:
+          name: notely-binary
+          path: notely
+          
