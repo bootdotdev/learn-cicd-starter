@@ -14,7 +14,7 @@ func TestAPIKey(t *testing.T) {
 
 	tests := []test{
 		{header: http.Header{"Authorization": []string{"ApiKey test"}}, want: "test"},
-		{header: http.Header{"Authorization": []string{"ApiKey largerkeytest"}}, want: "largerkeyest"},
+		{header: http.Header{"Authorization": []string{"ApiKey largerkeytest"}}, want: "largerkeytest"},
 	}
 
 	for _, tc := range tests {
