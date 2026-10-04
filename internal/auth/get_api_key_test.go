@@ -22,4 +22,6 @@ func TestGetAPIKey_RequiresWelformedAuthorizationHeader(t *testing.T) {
 	if err != nil {
 		t.Errorf("expected err to not be nil")
 	}
+
+	t.Errorf("WAT")
 }
