@@ -5,17 +5,22 @@ on:
     branches: [main]
 
 jobs:
-<<<<<<< HEAD
   style:
     name: Style
     runs-on: ubuntu-latest
     
     steps:
+      - name: Check out code
+        uses: actions/checkout@v6
+
+      - name: Set up Go
+        uses: actions/setup-go@v6
+        with:
+          go-version: "1.27.1"
+
       - name: Run go fmt
         run: test -z $(go fmt ./...)
 
-=======
->>>>>>> main
   tests:
     name: Tests
     runs-on: ubuntu-latest
@@ -30,8 +35,4 @@ jobs:
           go-version: "1.27.1"
 
       - name: Run Tests
-<<<<<<< HEAD
         run: go test ./... -cover
-=======
-        run: go test ./... -cover
->>>>>>> main
