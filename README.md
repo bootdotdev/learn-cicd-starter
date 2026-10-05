@@ -1,5 +1,5 @@
 this is a bum file 
-[![CI](https://github.com/artur-bertash/learn-cicd-starter/actions/workflows/ci.yml/badge.svg)](https://github.com/artur-bertash/learn-cicd-starter/actions/workflows/ci.yml)
+[![CIll](https://github.com/artur-bertash/learn-cicd-starter/actions/workflows/ci.yml/badge.svg)](https://github.com/artur-bertash/learn-cicd-starter/actions/workflows/ci.yml)
 
 # learn-cicd-starter (Notely)
 
