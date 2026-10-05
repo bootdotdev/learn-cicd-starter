@@ -1,8 +1,8 @@
 # learn-cicd-starter (Notely)
 
-![ci](https://github.com/Forman37/learn-cicd-starter/actions/workflows/ci.yml)
+[![ci](https://github.com/Forman37/learn-cicd-starter/actions/workflows.ci.yml/badge.svg?branch=addtests)](https://github.com/Forman37/learn-cicd-starter/actions/workflows/ci.yml)
 
-# Number 4
+# Number 5
 
 This repo contains the starter code for the "Notely" application for the "Learn CICD" course on [Boot.dev](https://boot.dev).
 
