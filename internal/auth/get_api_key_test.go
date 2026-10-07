@@ -8,9 +8,9 @@ import (
 
 func TestGetAPIKey(t *testing.T) {
 	tests := map[string]struct {
-		headers   http.Header
-		wantKey   string
-		wantErr   error
+		headers http.Header
+		wantKey string
+		wantErr error
 	}{
 		"clave válida": {
 			headers: http.Header{"Authorization": []string{"ApiKey mi-clave-secreta"}},
