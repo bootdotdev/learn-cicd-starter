@@ -2,7 +2,7 @@
 
 **Estudiante:** Auda (Cecibel Espinoza)
 **Repositorio:** https://github.com/cecibelauda/learn-cicd-starter
-**Rama de trabajo:** `addtests`
+**Rama de trabajo:** `formatting` (activa, PR #2) — anteriores: `addtests` (mergeada, PR #1)
 **Directorio local:** `~/cicd_course/learn-cicd-starter`
 
 ---
@@ -1006,22 +1006,584 @@ gh repo view --web                         # verificar badge "ci passing" ✅
 
 ---
 
+# SECCIÓN 3 — Formatting
+
+## 3.1 Formateo automático con `go fmt`
+
+### Por qué formatear automáticamente
+
+El formateo automático mantiene el código **consistente y legible**, y evita discusiones sobre estilo (*bikeshedding*: debatir detalles triviales en lugar de lo importante).
+
+```go
+// Técnicamente válido, pero fuera de convención
+func main(){
+	fmt.Println("hello world!") }
+
+// Formato estándar
+func main() {
+	fmt.Println("hello world!")
+}
+```
+
+> **Idea central:** en Go no hay debate de estilo. `gofmt` define **un único formato oficial**, integrado en el toolchain, sin instalar nada adicional.
+
+### `go fmt` vs. `gofmt`
+
+| Herramienta | Qué es | Opera sobre |
+|---|---|---|
+| `gofmt` | El formateador en sí | Archivos y directorios |
+| `go fmt` | Atajo que ejecuta `gofmt -l -w` | Paquetes (`./...`) |
+
+### Flags de `gofmt`
+
+| Comando | Qué hace | ¿Modifica archivos? |
+|---|---|---|
+| `gofmt -l .` | **Lista** los archivos mal formateados | No |
+| `gofmt -d <archivo>` | Muestra el **diff** de lo que corregiría | No |
+| `gofmt -w <archivo>` | **Escribe** la corrección en el archivo | Sí |
+| `go fmt ./...` | Formatea todos los paquetes e imprime los archivos que corrigió | Sí |
+
+Equivalencia Java: es como tener Spotless o `google-java-format` integrado en el JDK, sin configurar plugins en el `pom.xml`.
+
+### El directorio `vendor/`: no se toca
+
+Al ejecutar `gofmt -l .` en Notely aparecieron muchos archivos bajo `vendor/`:
+
+```
+internal/auth/get_api_key_test.go
+vendor/github.com/go-chi/chi/chi.go
+vendor/github.com/google/uuid/dce.go
+...
+```
+
+`vendor/` contiene **copias del código de librerías de terceros** generadas con `go mod vendor`. Es como tener los `.jar` de las dependencias dentro del repo en lugar de en `~/.m2`.
+
+Aparecen porque el `gofmt` local es más nuevo que el que usaron sus autores. Algunas versiones de Go cambiaron reglas de formato, como los comentarios de documentación (Go 1.19) o las directivas `//go:build` (Go 1.17).
+
+| | `gofmt -l .` | `go fmt ./...` |
+|---|---|---|
+| ¿Revisa `vendor/`? | **Sí**: recorre carpetas sin distinguir | **No**: el patrón `./...` excluye `vendor` |
+
+⚠️ **Nunca modificar `vendor/`**: no es código propio y se sobrescribe con el próximo `go mod vendor`.
+
+Revisar solo el código propio:
+
+```bash
+gofmt -l $(find . -name '*.go' -not -path './vendor/*')
+```
+
+### Cómo leer un diff de `gofmt -d`
+
+Caso real encontrado en `get_api_key_test.go`:
+
+```diff
+@@ -8,9 +8,9 @@
+ func TestGetAPIKey(t *testing.T) {
+ 	tests := map[string]struct {
+-		headers   http.Header
+-		wantKey   string
+-		wantErr   error
++		headers http.Header
++		wantKey string
++		wantErr error
+ 	}{
+```
+
+| Símbolo | Significado |
+|---|---|
+| `@@ -8,9 +8,9 @@` | Bloque de 9 líneas desde la línea 8, antes y después |
+| `-` | Línea actual, que se eliminará |
+| `+` | Línea corregida que la reemplaza |
+| (espacio) | Línea de contexto sin cambios |
+
+### Regla de alineación de campos de un struct
+
+`gofmt` alinea los tipos en columna tomando como referencia el **nombre de campo más largo**:
+
+```go
+// Los tres nombres tienen 7 caracteres → basta un espacio
+headers http.Header
+wantKey string
+wantErr error
+
+// Con un campo más largo, los cortos reciben espacios extra
+id        int
+headers   http.Header
+createdAt time.Time
+```
+
+El archivo tenía espacios de más, probablemente por el auto-indent de `nano` al pegar el código (ver Sección 2.6).
+
+---
+
+## 3.2 Check Formatting — convertir la salida en exit code
+
+### El problema
+
+`go fmt` **siempre termina con exit code `0`**, aunque haya corregido archivos. Para GitHub Actions eso significa "éxito" siempre (Sección 1.1).
+
+Lo que sí hace es **imprimir los nombres de los archivos que corrigió**. Si no imprime nada, el repo ya estaba formateado.
+
+### La solución: `test -z`
+
+```bash
+test -z $(go fmt ./...)
+```
+
+| Parte | Qué hace |
+|---|---|
+| `go fmt ./...` | Formatea e imprime los archivos corregidos; si no hay ninguno, salida vacía |
+| `$( ... )` | **Sustitución de comandos**: ejecuta el comando y reemplaza la expresión por su salida |
+| `test -z <string>` | Devuelve `0` si el string está **vacío** y `1` si no lo está |
+
+### Diagrama del mecanismo
+
+```
+1ª vez:  go fmt ./...  ──► imprime "internal/auth/auth.go" (y lo corrige)
+              │
+         $( ... ) = "internal/auth/auth.go"
+              │
+         test -z "internal/auth/auth.go"  ──► no está vacío ──► exit 1 ❌
+
+2ª vez:  go fmt ./...  ──► no imprime nada
+              │
+         $( ... ) = ""
+              │
+         test -z  ──► vacío ──► exit 0 ✅
+```
+
+> **Idea central:** se transforma *"¿se imprimió algo en stdout?"* en un **exit code**, que es lo único que entiende GitHub Actions.
+
+### Verificación del exit code
+
+```bash
+test -z $(go fmt ./...)
+echo $?          # 1 → había archivos sin formato (y ya los corrigió)
+
+test -z $(go fmt ./...)
+echo $?          # 0 → repo formateado
+```
+
+⚠️ `echo $?` debe ir **inmediatamente después** del comando. Cualquier comando intermedio cambia el valor de `$?`.
+
+### Versión más robusta: con comillas
+
+Si hay **varios archivos** desformateados, la salida tiene varias palabras y `test` recibe demasiados argumentos:
+
+```
+test: too many arguments   → exit 2
+```
+
+Igual falla, pero por la razón equivocada. Con comillas la salida se trata como un único string:
+
+```bash
+test -z "$(go fmt ./...)"
+```
+
+El curso usa la versión sin comillas; la versión con comillas es la recomendable en pipelines reales.
+
+---
+
+## 3.3 Formatting CI — job "Style" en paralelo
+
+**Tarea:** agregar la verificación de formato como un **job separado** llamado `Style`, en paralelo al job `Tests`.
+
+### Workflow actualizado: `.github/workflows/ci.yml`
+
+```yaml
+name: ci
+
+on:
+  pull_request:
+    branches: [main]
+
+jobs:
+  tests:
+    name: Tests
+    runs-on: ubuntu-latest
+
+    steps:
+      - name: Check out code
+        uses: actions/checkout@v6
+
+      - name: Set up Go
+        uses: actions/setup-go@v6
+        with:
+          go-version: "1.27.1"
+
+      - name: Run unit tests
+        run: go test -cover ./...
+
+  style:
+    name: Style
+    runs-on: ubuntu-latest
+
+    steps:
+      - name: Check out code
+        uses: actions/checkout@v6
+
+      - name: Set up Go
+        uses: actions/setup-go@v6
+        with:
+          go-version: "1.27.1"
+
+      - name: Check formatting
+        run: test -z $(go fmt ./...)
+```
+
+⚠️ `style:` debe quedar en la **misma columna** que `tests:` (2 espacios). Si queda más indentado, GitHub no lo reconoce como job.
+
+Verificar la estructura de jobs:
+
+```bash
+grep -n "^  [a-z]*:$" .github/workflows/ci.yml
+# 8:  tests:
+# 25:  style:
+```
+
+### Jobs en paralelo
+
+```
+PR hacia main
+      │
+      ├──► Runner 1: job "Tests"          ├──► Runner 2: job "Style"
+      │     ├─ checkout                   │     ├─ checkout
+      │     ├─ setup-go                   │     ├─ setup-go
+      │     └─ go test -cover ./...       │     └─ test -z $(go fmt ./...)
+      │                                   │
+      └──────────── ambos corren al mismo tiempo ───────────┘
+```
+
+| Concepto | Detalle |
+|---|---|
+| Paralelismo | Los jobs corren **en paralelo por defecto** |
+| Secuencia | Solo corren en orden si se declara `needs: <job>` |
+| Aislamiento | Cada job corre en **su propia VM**, sin compartir archivos |
+| Consecuencia | `checkout` y `setup-go` **se duplican** en cada job |
+| Independencia | Un fallo en `Style` no detiene `Tests`, y viceversa |
+
+Analogía: son dos revisores trabajando al mismo tiempo en escritorios distintos. Cada uno necesita su propia copia del código (`checkout`) y sus propias herramientas (`setup-go`).
+
+⚠️ En el runner, `go fmt` sí corrige el archivo, pero **solo dentro de esa VM temporal**. El repo sigue desformateado hasta corregirlo localmente y hacer push.
+
+### Por qué se necesita un PR nuevo
+
+El workflow se dispara con `pull_request` hacia `main`. El PR #1 ya se mergeó y cerró, así que un push a una rama nueva **no dispara nada** hasta abrir otro PR.
+
+```
+PR #1 (addtests → main)   ── mergeado ── cerrado ✅ → ya no escucha pushes
+
+git push origin formatting  ──► ❌ sin PR abierto, el CI no corre
+
+gh pr create (formatting → main) ──► PR #2 abierto
+                                          │
+                                          ▼
+                              evento pull_request ──► Tests + Style
+```
+
+Con el PR abierto, **cada push a la rama vuelve a ejecutar el CI** automáticamente.
+
+```bash
+gh pr create --repo cecibelauda/learn-cicd-starter \
+  --base main --head formatting \
+  --title "Add formatting check" \
+  --body "Adds a Style job that fails if code is not formatted with go fmt"
+```
+
+### Validación del fallo en GitHub
+
+Se rompió el formato de `auth.go` a propósito, se hizo push y se confirmó:
+
+```bash
+gh pr checks --watch
+```
+
+```
+X  ci/Style (pull_request)    Fail
+✓  ci/Tests (pull_request)    Pass
+```
+
+```bash
+gh run view --log-failed
+```
+
+```
+Style  Check formatting  ##[group]Run test -z $(go fmt ./...)
+Style  Check formatting  shell: /usr/bin/bash -e {0}
+Style  Check formatting  ##[error]Process completed with exit code 1.
+```
+
+**`Process completed with exit code 1`** es la prueba de que el check funciona.
+
+En la web: página del PR → pestaña **Conversation** → al final aparece *"Some checks were not successful"* → **Details** junto a Style.
+
+| Resultado con el código roto | Significado |
+|---|---|
+| Style ❌, Tests ✅ | Correcto: detecta formato roto y los jobs son independientes |
+| Style ✅ | El check no funciona, o el cambio no llegó a GitHub |
+| Solo aparece Tests | El `ci.yml` con el job Style no está en la rama remota |
+
+Luego se restauró con `go fmt ./...` y push → ✅ ambos en verde.
+
+### Pestañas de un PR en GitHub
+
+```
+┌─────────────────────────────────────────────────────────┐
+│ Add formatting check  #2                                │
+│ [Conversation] [Commits] [Checks] [Files changed]       │
+│                                                         │
+│  ❌ Some checks were not successful                     │
+│     ✕ ci / Style (pull_request)   Details               │
+│     ✓ ci / Tests (pull_request)   Details               │
+└─────────────────────────────────────────────────────────┘
+```
+
+| Pestaña | Uso para diagnosticar |
+|---|---|
+| Conversation | Resumen de checks al final de la página |
+| Commits | Cuántos commits llegaron realmente al PR |
+| Checks | Cuántos jobs se ejecutaron y sus logs |
+| Files changed | Qué archivos incluye el PR |
+
+---
+
+## 3.4 Git: los tres estados de un cambio
+
+El error principal de esta sección: `ci.yml` estaba modificado pero **nunca se hizo commit**, así que GitHub seguía usando la versión anterior.
+
+```
+Working directory ──git add──► Staging ──git commit──► Repo local ──git push──► GitHub
+   (archivo editado)            (preparado)            (commit)                 (remoto)
+```
+
+`git push` **solo sube commits**. Un archivo sin `git add` + `git commit` se queda en la Mac.
+
+### La trampa del mensaje "up to date"
+
+```
+On branch formatting
+Your branch is up to date with 'origin/formatting'.
+
+Changes not staged for commit:
+	modified:   .github/workflows/ci.yml
+```
+
+*"Up to date"* se refiere a los **commits**, no a los archivos. Los commits estaban sincronizados, pero el cambio nunca se convirtió en commit.
+
+### Diagnóstico local vs. remoto
+
+```bash
+git status                              # ¿hay cambios sin commit?
+git log --oneline -3                    # commits en la Mac
+git log --oneline -3 origin/formatting  # commits en GitHub
+gh run list --branch formatting --limit 3   # ¿el último push disparó una ejecución?
+cat -e .github/workflows/ci.yml         # fin de línea = $, tabs = ^I
+```
+
+Si `HEAD` y `origin/formatting` apuntan al mismo commit y el archivo sigue en *not staged*, falta `git add` + `git commit` + `git push`.
+
+---
+
+## 3.5 Comandos nuevos de la Sección 3
+
+### Formato en Go
+
+```bash
+go fmt ./...                          # formatea paquetes (excluye vendor)
+gofmt -l .                            # lista archivos sin formato (incluye vendor)
+gofmt -l $(find . -name '*.go' -not -path './vendor/*')   # solo código propio
+gofmt -d <archivo>                    # diff sin modificar
+gofmt -w <archivo>                    # corrige el archivo
+test -z $(go fmt ./...) ; echo $?     # 0 = formateado, 1 = había cambios
+test -z "$(go fmt ./...)"             # versión robusta con comillas
+```
+
+### Shell
+
+```bash
+$(comando)                            # sustitución de comandos
+test -z "$var"                        # ¿string vacío?
+echo $?                               # exit code del último comando
+sed -i '' 's/viejo/nuevo/' archivo    # reemplazo en sitio (Mac)
+sed -i 's/viejo/nuevo/' archivo       # reemplazo en sitio (Linux)
+grep -n "texto" archivo               # buscar con número de línea
+grep -n $'\t' archivo                 # detectar tabs (Mac)
+cat -e archivo                        # ver fin de línea ($) y tabs (^I)
+```
+
+### Git y GitHub CLI
+
+```bash
+git branch --show-current             # rama actual
+git diff <archivo>                    # cambios sin commit
+git log --oneline -3 origin/<rama>    # commits en el remoto
+git show HEAD --stat                  # archivos del último commit
+
+gh pr create --repo OWNER/REPO --base main --head <rama> --title "..." --body "..."
+gh pr checks                          # estado de los checks (exit ≠ 0 si alguno falla)
+gh pr checks --watch                  # seguir en vivo
+gh run view --log-failed              # logs de los steps fallidos
+gh pr view --web                      # abrir el PR en el navegador
+```
+
+---
+
+## 3.6 Notas y errores encontrados
+
+| Situación | Causa | Solución |
+|---|---|---|
+| El curso dice "sigue en `addtests`", pero ya estaba mergeada | El curso asume que no se mergeó el PR #1 | Crear rama nueva desde `main` actualizado: `formatting` |
+| `gofmt -l .` lista decenas de archivos en `vendor/` | Dependencias de terceros formateadas con un `gofmt` más antiguo | Ignorarlas; `go fmt ./...` ya las excluye |
+| `get_api_key_test.go` aparecía sin formato | Espacios de más al alinear campos del struct (auto-indent de `nano`) | `go fmt ./...` y commit `style: ...` |
+| `sed -i` falla en Mac | El `sed` de macOS (BSD) exige un argumento de extensión | `sed -i ''` en Mac; `sed -i` en Linux |
+| El editor deshace el cambio al guardar | Auto-format on save (VS Code) | Usar `nano` o `sed` para romper el formato |
+| `echo $?` no muestra el valor esperado | Se ejecutó otro comando entre `test` y `echo` | Ejecutar `echo $?` inmediatamente después |
+| `test: too many arguments` | Varios archivos en la salida sin comillas | `test -z "$(go fmt ./...)"` |
+| Push a la rama nueva sin ejecución de CI | No había PR abierto hacia `main` | Crear PR #2 (`formatting → main`) |
+| El PR solo mostraba el check **Tests** | `ci.yml` modificado pero nunca commiteado | `git add` + `git commit` + `git push` |
+| `git status` decía "up to date" con cambios pendientes | "Up to date" compara commits, no archivos | Revisar la sección *Changes not staged* |
+| Duda sobre si hacer push a `main` para ver el CI | Confusión sobre qué dispara el workflow | Nunca push a `main`: push a la rama del PR |
+
+### Reglas de trabajo consolidadas
+
+1. **Rama mergeada = ciclo cerrado.** Si el curso nombra una rama ya mergeada, usar la rama activa.
+2. **Nunca modificar `vendor/`.** Revisar formato solo sobre el código propio.
+3. **Un archivo editado no está en GitHub** hasta pasar por `add` → `commit` → `push`.
+4. **Antes de dudar del CI, comparar local vs. remoto:** `git log origin/<rama>`.
+5. **Validar cada check nuevo rompiéndolo a propósito**, igual que con los tests.
+6. **Jobs independientes van en paralelo**; solo usar `needs:` cuando hay dependencia real.
+
+---
+
+## 3.7 Flujo completo ejecutado en la Sección 3
+
+```bash
+# 1. Rama nueva desde main actualizado
+cd ~/cicd_course/learn-cicd-starter
+git checkout main
+git pull origin main
+git checkout -b formatting
+
+# 2. Detectar y corregir el archivo propio sin formato
+gofmt -l $(find . -name '*.go' -not -path './vendor/*')
+gofmt -d internal/auth/get_api_key_test.go
+go fmt ./...
+go test ./...
+git add internal/auth/get_api_key_test.go
+git commit -m "style: format get_api_key_test.go with gofmt"
+
+# 3. Lección Formatting: romper y restaurar con go fmt
+sed -i '' 's/func GetAPIKey(headers http.Header) (string, error) {/func GetAPIKey(headers http.Header) (string, error){/' internal/auth/auth.go
+gofmt -d internal/auth/auth.go
+go fmt ./...
+git status                                   # working tree clean
+
+# 4. Lección Check Formatting: exit code con test -z
+sed -i '' 's/func GetAPIKey(headers http.Header) (string, error) {/func GetAPIKey(headers http.Header) (string, error){/' internal/auth/auth.go
+test -z $(go fmt ./...) ; echo $?            # 1
+test -z $(go fmt ./...) ; echo $?            # 0
+
+# 5. Lección Formatting CI: job Style
+nano .github/workflows/ci.yml                # contenido en la sección 3.3
+grep -n "^  [a-z]*:$" .github/workflows/ci.yml
+git add .github/workflows/ci.yml
+git commit -m "ci: add style job to check formatting"
+git push -u origin formatting
+
+# 6. PR #2 contra el fork
+gh pr create --repo cecibelauda/learn-cicd-starter \
+  --base main --head formatting \
+  --title "Add formatting check" \
+  --body "Adds a Style job that fails if code is not formatted with go fmt"
+gh pr checks --watch                         # Tests ✅  Style ✅
+
+# 7. Validar el fallo en GitHub
+sed -i '' 's/func GetAPIKey(headers http.Header) (string, error) {/func GetAPIKey(headers http.Header) (string, error){/' internal/auth/auth.go
+git add internal/auth/auth.go
+git commit -m "test: break formatting on purpose"
+git push
+gh pr checks --watch                         # Tests ✅  Style ❌
+gh run view --log-failed                     # exit code 1
+
+# 8. Restaurar
+go fmt ./...
+git add internal/auth/auth.go
+git commit -m "style: restore formatting"
+git push
+gh pr checks --watch                         # Tests ✅  Style ✅
+```
+
+---
+
+## 3.8 Referencias oficiales de la Sección 3
+
+**Go — formato**
+- `go fmt`: https://pkg.go.dev/cmd/go#hdr-Gofmt__reformat__package_sources
+- `gofmt` y sus flags: https://pkg.go.dev/cmd/gofmt
+- Effective Go, Formatting: https://go.dev/doc/effective_go#formatting
+- Patrones de paquetes (`./...` y `vendor`): https://pkg.go.dev/cmd/go#hdr-Package_lists_and_patterns
+- Vendoring de módulos: https://go.dev/ref/mod#vendoring
+- Go 1.19, doc comments: https://go.dev/doc/go1.19#go-doc
+
+**Shell**
+- `test` (POSIX): https://pubs.opengroup.org/onlinepubs/9699919799/utilities/test.html
+- Command Substitution (Bash): https://www.gnu.org/software/bash/manual/html_node/Command-Substitution.html
+- Exit Status (Bash): https://www.gnu.org/software/bash/manual/html_node/Exit-Status.html
+- Bikeshedding: https://en.wiktionary.org/wiki/bikeshedding
+
+**GitHub Actions**
+- Jobs en un workflow (paralelos y `needs`): https://docs.github.com/en/actions/using-jobs/using-jobs-in-a-workflow
+- `jobs.<job_id>.name`: https://docs.github.com/en/actions/reference/workflow-syntax-for-github-actions#jobsjob_idname
+- Shell por defecto en `run`: https://docs.github.com/en/actions/reference/workflow-syntax-for-github-actions#jobsjob_idstepsshell
+- Evento `pull_request`: https://docs.github.com/en/actions/using-workflows/events-that-trigger-workflows#pull_request
+- Logs de ejecución: https://docs.github.com/en/actions/monitoring-and-troubleshooting-workflows/monitoring-workflows/using-workflow-run-logs
+- Status checks en PRs: https://docs.github.com/en/pull-requests/collaborating-with-pull-requests/collaborating-on-repositories-with-code-quality-features/about-status-checks
+
+**GitHub CLI**
+- `gh pr create`: https://cli.github.com/manual/gh_pr_create
+- `gh pr checks`: https://cli.github.com/manual/gh_pr_checks
+- `gh run view`: https://cli.github.com/manual/gh_run_view
+
+**Git**
+- Recording changes (estados de un archivo): https://git-scm.com/book/en/v2/Git-Basics-Recording-Changes-to-the-Repository
+- GitHub Flow: https://docs.github.com/en/get-started/using-github/github-flow
+
+---
+
 # ESTADO DEL CURSO
 
 | Sección | Estado |
 |---|---|
 | 1 — Fundamentos de CI/CD y GitHub Actions | ✅ Completada |
 | 2 — Running Tests | ✅ Completada |
-| 3 — Security | ⏳ Pendiente |
-| 4 — Formatting / Linting | ⏳ Pendiente |
-| 5 — Continuous Deployment | ⏳ Pendiente |
+| 3 — Formatting | ✅ Completada |
+| 4 — Por confirmar al iniciar | ⏳ Pendiente |
 
-**Rama `addtests`:** mergeada a `main` ✅ — ciclo cerrado, crear rama nueva para la Sección 3.
+Temas pendientes según el temario inicial: Linting, Security y Continuous Deployment. El orden y la numeración se ajustarán a medida que avance el curso.
 
-**Próximo paso sugerido:**
+### Ramas y PRs
+
+| Rama | PR | Estado |
+|---|---|---|
+| `addtests` | #1 | ✅ Mergeada a `main` — ciclo cerrado |
+| `formatting` | #2 (`formatting → main`) | 🟡 Abierto, sin mergear. Checks: Tests ✅ Style ✅ |
+
+Commits de la rama `formatting`:
+
+```
+style: restore formatting
+test: break formatting on purpose
+ci: add style job to check formatting
+style: format get_api_key_test.go with gofmt
+```
+
+**Próximo paso:** al iniciar la Sección 4, confirmar si continúa sobre el PR #2 o si conviene mergearlo y crear una rama nueva:
 
 ```bash
+# Si corresponde mergear primero
+gh pr checks --watch
+gh pr merge --merge
 git checkout main
 git pull origin main
-git checkout -b security
+git checkout -b <nombre-rama-seccion-4>
 ```
