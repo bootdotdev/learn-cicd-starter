@@ -57,8 +57,7 @@ func databaseNoteToNote(post database.Note) (Note, error) {
 		UpdatedAt: updatedAt,
 		Note:      post.Note,
 		UserID:    post.UserID,
-	}, nil
-}
+	}, nil}
 
 func databasePostsToPosts(notes []database.Note) ([]Note, error) {
 	result := make([]Note, len(notes))
@@ -70,5 +69,4 @@ func databasePostsToPosts(notes []database.Note) ([]Note, error) {
 		}
 
 	}
-	return result, nil
-}
+	return result, nil}
