@@ -38,7 +38,7 @@ func main() {
 	}
 	port, err := strconv.Atoi(portStr)
 	if err != nil || port < 1 || port > 65535 {
-    	log.Fatal("Invalid PORT configuration")
+		log.Fatal("Invalid PORT configuration")
 	}
 
 	apiCfg := apiConfig{}
