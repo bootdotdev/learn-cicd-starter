@@ -2,7 +2,7 @@
 
 **Estudiante:** Auda (Cecibel Espinoza)
 **Repositorio:** https://github.com/cecibelauda/learn-cicd-starter
-**Rama de trabajo:** `formatting` (activa, PR #2) — anteriores: `addtests` (mergeada, PR #1)
+**Rama de trabajo:** `linting` (activa, PR #3) — anteriores: `addtests` (mergeada, PR #1), `formatting` (mergeada, PR #2)
 **Directorio local:** `~/cicd_course/learn-cicd-starter`
 
 ---
@@ -1550,6 +1550,622 @@ gh pr checks --watch                         # Tests ✅  Style ✅
 
 ---
 
+# SECCIÓN 4 — Linting
+
+## 4.1 Formatting vs. Linting
+
+| | Formatting (Sección 3) | Linting (Sección 4) |
+|---|---|---|
+| Se ocupa de | La **apariencia** del código: espacios, indentación, longitud de línea | El **análisis** del código para detectar problemas funcionales |
+| Resultado | Código reescrito con el formato estándar | Advertencias o errores sobre código potencialmente problemático |
+| Herramienta en Go | `go fmt` / `gofmt` | `staticcheck` |
+| ¿Modifica archivos? | Sí | No, solo reporta |
+
+> **Idea central:** el formato dice *cómo se ve* el código; el linter dice *si algo huele mal* aunque compile.
+
+### Staticcheck
+
+[Staticcheck](https://staticcheck.dev/docs/) es el linter recomendado por el curso: tiene muchas verificaciones útiles, valores por defecto sensatos y es fácil de configurar. En la práctica reemplazó a `golint` (deprecado) como el linter más popular de Go.
+
+### Equivalencia con el stack de La Tinka
+
+| Go | Java |
+|---|---|
+| `go fmt` | Spotless / google-java-format |
+| `staticcheck` | SpotBugs, PMD, reglas de SonarQube |
+| `go vet` | Advertencias de `javac -Xlint` |
+
+---
+
+## 4.2 Instalar y ejecutar staticcheck localmente
+
+### Instalación
+
+```bash
+go install honnef.co/go/tools/cmd/staticcheck@latest
+```
+
+O con Homebrew en Mac:
+
+```bash
+brew install staticcheck
+```
+
+### Si aparece `command not found`
+
+`go install` deja el binario en `$(go env GOPATH)/bin` (por defecto `~/go/bin`), que puede no estar en el `PATH`.
+
+La lección usa `~/.bashrc`, pero en Mac el shell por defecto es **Zsh** → el archivo es `~/.zshrc`:
+
+```bash
+echo 'export PATH=$PATH:$(go env GOPATH)/bin' >> ~/.zshrc
+source ~/.zshrc
+which staticcheck
+staticcheck -version
+```
+
+Se usa `$(go env GOPATH)` en lugar de `$GOPATH` porque en Mac esa variable suele estar vacía en el shell.
+
+### Ejecutar — siempre desde la raíz del repo
+
+```bash
+cd ~/cicd_course/learn-cicd-starter
+staticcheck ./... ; echo "exit code: $?"
+```
+
+Con el proyecto limpio: **sin salida** y `exit code: 0` (en las herramientas de Go, silencio = éxito).
+
+### El patrón `./...`
+
+Es un **patrón de paquetes de Go**, no del shell: el directorio actual **y todos sus subdirectorios**, recursivamente.
+
+```
+learn-cicd-starter/         ← ejecutas aquí: ./...
+├── main.go                 ✅ incluido
+├── internal/
+│   ├── auth/               ✅ incluido
+│   └── database/           ✅ incluido
+└── vendor/                 ❌ excluido automáticamente
+```
+
+⚠️ Ejecutado desde `~`, `./...` intenta recorrer todo el home y choca con carpetas protegidas por macOS:
+
+```
+-: pattern ./...: open Library/Accounts: operation not permitted (compile)
+```
+
+---
+
+## 4.3 Validar localmente con una función sin usar (U1000)
+
+### Agregar la función con un heredoc
+
+```bash
+cat >> main.go << 'EOF'
+
+func unused() {
+	// this function does nothing
+	// and is called nowhere
+}
+EOF
+```
+
+### Anatomía del heredoc
+
+| Parte | Qué hace |
+|---|---|
+| `cat` | Lee texto de entrada y lo imprime |
+| `>> main.go` | En lugar de imprimirlo, lo **agrega al final** de `main.go` |
+| `<< 'EOF'` | "Lo que escriba a continuación es la entrada, hasta encontrar `EOF`" |
+| `EOF` (línea final) | Marca de cierre (*End Of File*). Puede ser cualquier palabra; va **sola en su línea** |
+
+```
+cat >> main.go << 'EOF'     ← "empieza a capturar texto"
+func unused() {             ┐
+    // ...                  │  texto capturado
+}                           ┘
+EOF                         ← "deja de capturar" → se escribe en main.go
+```
+
+| Forma | Comportamiento |
+|---|---|
+| `<< EOF` | El shell **interpreta** `$variables` y `$(comandos)` dentro del texto |
+| `<< 'EOF'` | El texto se copia **literal** (recomendado para código) |
+
+El prompt `heredoc>` indica que Zsh está esperando la palabra de cierre.
+
+### `>>` vs `>`
+
+```bash
+echo "hola" >> archivo.txt   # AGREGA al final
+echo "hola" >  archivo.txt   # BORRA todo y escribe solo "hola" ⚠️
+```
+
+⚠️ Ambos **crean el archivo si no existe**. Un error de tipeo (`mian.go`) crea un archivo nuevo sin dar error. Usar **Tab** para autocompletar nombres.
+
+### Verificar
+
+```bash
+tail -6 main.go
+go fmt ./...
+go build ./...                   # compila sin errores
+staticcheck ./... ; echo "exit code: $?"
+```
+
+```
+main.go:XX:6: func unused is unused (U1000)
+exit code: 1
+```
+
+| Parte | Significado |
+|---|---|
+| `main.go:XX:6` | Archivo, línea y columna |
+| `func unused is unused` | Descripción del problema |
+| `U1000` | Código del check (familia `U` = *unused*) |
+| `exit code: 1` | Lo que leerá GitHub Actions para hacer fallar el step |
+
+### Compilador vs. linter
+
+**El código compila.** Go solo prohíbe *imports* y *variables locales* sin usar; una función sin usar es válida para el compilador. Para eso existe el linter.
+
+| Detecta | Compilador de Go | staticcheck |
+|---|---|---|
+| Imports y variables locales sin usar | ✅ (no compila) | ✅ |
+| Funciones y tipos sin usar | ❌ | ✅ U1000 |
+| `Printf` con formato incorrecto | ❌ | ✅ SA5009 |
+| Código simplificable | ❌ | ✅ S1001 |
+
+### Exit code: `go fmt` vs. `staticcheck`
+
+| | `go fmt` | `staticcheck` |
+|---|---|---|
+| Exit code si hay problemas | Siempre `0` → requiere `test -z` | `1` directamente |
+| Uso en CI | `run: test -z $(go fmt ./...)` | `run: staticcheck ./...` |
+
+---
+
+## 4.4 CI Linting — staticcheck en el job Style
+
+**Tarea:** agregar staticcheck al **mismo job `style`**, después de `go fmt`. Como el runner no trae staticcheck instalado, hay que instalarlo antes de usarlo.
+
+### Workflow actualizado: `.github/workflows/ci.yml`
+
+```yaml
+name: ci
+
+on:
+  pull_request:
+    branches: [main]
+
+jobs:
+  tests:
+    name: Tests
+    runs-on: ubuntu-latest
+
+    steps:
+      - name: Check out code
+        uses: actions/checkout@v6
+
+      - name: Set up Go
+        uses: actions/setup-go@v6
+        with:
+          go-version: "1.27.1"
+
+      - name: Run unit tests
+        run: go test -cover ./...
+
+  style:
+    name: Style
+    runs-on: ubuntu-latest
+
+    steps:
+      - name: Check out code
+        uses: actions/checkout@v6
+
+      - name: Set up Go
+        uses: actions/setup-go@v6
+        with:
+          go-version: "1.27.1"
+
+      - name: Check formatting
+        run: test -z $(go fmt ./...)
+
+      - name: Install staticcheck
+        run: go install honnef.co/go/tools/cmd/staticcheck@latest
+
+      - name: Run staticcheck
+        run: staticcheck ./...
+```
+
+Solo cambian las **dos últimas steps** del job `style`.
+
+### Orden de los steps en el job Style
+
+```
+Runner "Style"
+ ├── checkout                  (clona el código)
+ ├── setup-go                  (instala Go y agrega GOPATH/bin al PATH)
+ ├── test -z $(go fmt ./...)   ✅ formato correcto
+ ├── go install staticcheck    (el runner no lo trae instalado)
+ └── staticcheck ./...         ❌ exit 1 → U1000
+```
+
+`staticcheck` se instala **después** de `setup-go`, porque `go install` necesita Go. `setup-go` además agrega `GOPATH/bin` al `PATH` del runner, por eso el comando se encuentra sin configurar nada.
+
+### Validación del fallo en GitHub
+
+| Commit | Contenido | Resultado |
+|---|---|---|
+| `ci: add staticcheck linting (unused function on purpose)` | Workflow nuevo + función `unused` | Style ❌ / Tests ✅ |
+| `fix: remove unused function` | `main.go` restaurado desde `main` | Style ✅ / Tests ✅ |
+
+```bash
+gh run view --repo cecibelauda/learn-cicd-starter --log-failed
+```
+
+```
+Style  Run staticcheck  main.go:XX:6: func unused is unused (U1000)
+Style  Run staticcheck  ##[error]Process completed with exit code 1.
+```
+
+| Resultado con la función `unused` | Significado |
+|---|---|
+| Style ❌ en *Run staticcheck* | ✅ Correcto |
+| Style ❌ en *Check formatting* | `main.go` quedó sin formato: `go fmt ./...`, commit y push |
+| Style ✅ | El `ci.yml` o el `main.go` no llegaron al commit: `git show HEAD --stat` |
+
+### Eliminar la función de forma segura
+
+Restaurar `main.go` desde `main`, donde la función nunca existió:
+
+```bash
+git restore --source=main main.go
+git diff main -- main.go         # sin salida = idéntico a main ✅
+```
+
+### Dónde ver el CI en la web
+
+| Camino | Pasos |
+|---|---|
+| Desde el PR | **Pull requests** → PR #3 → sección de checks al final (o pestaña **Checks**) |
+| Desde Actions | **Actions** → ejecución más reciente (rama `linting`) → job **Style** |
+
+La portada del repo muestra la rama `main`, que no refleja el CI del PR.
+
+### Buena práctica: fijar la versión
+
+`@latest` puede traer checks nuevos y romper el CI sin que cambie el código. En pipelines reales se fija la versión:
+
+```yaml
+run: go install honnef.co/go/tools/cmd/staticcheck@2025.1.1
+```
+
+Alternativa: la action oficial [`dominikh/staticcheck-action`](https://github.com/dominikh/staticcheck-action).
+
+---
+
+## 4.5 Git: sincronizar una rama con `main`
+
+### El problema
+
+La rama `linting` se creó desde un `main` local **desactualizado**, sin el job Style del PR #2.
+
+```
+GitHub main:   A ── B ── C (merge PR #2: job Style ✅)
+                    │
+local main:    A ── B          ← sin git pull
+                    │
+linting:            └── (copia de B: ci.yml sin Style ❌)
+```
+
+### La solución
+
+```bash
+git restore .github/workflows/ci.yml internal/auth/get_api_key_test.go
+git stash
+git checkout main
+git pull origin main
+grep -n "style:" .github/workflows/ci.yml
+git checkout linting
+git merge main
+git stash pop
+```
+
+| Archivo | Acción | Motivo |
+|---|---|---|
+| `ci.yml` | Descartar (`git restore`) | Se editó sobre la versión vieja; se reescribe completo |
+| `get_api_key_test.go` | Descartar | La corrección de formato ya venía desde `main` |
+| `main.go` | Guardar (`git stash`) | Contenía la función `unused` necesaria para la lección |
+
+### `pull` vs. `merge`
+
+```
+git pull origin main  =  git fetch origin main  +  git merge origin/main
+                         (descargar)               (fusionar)
+```
+
+| Comando | Origen de los cambios | Cuándo usarlo |
+|---|---|---|
+| `git pull origin main` | GitHub (remoto) | Actualizar una rama con su versión en GitHub |
+| `git merge main` | Tu Mac (local) | Traer cambios de otra rama local ya actualizada |
+
+```
+GitHub main ──pull──► local main ──merge──► linting
+```
+
+### Fast-forward
+
+```
+Updating 64a0745..e0af0a7
+Fast-forward
+```
+
+Git solo movió el puntero de `main` hacia adelante, porque no había commits locales que fusionar → sin conflictos.
+
+### `git stash`
+
+| Comando | Qué hace |
+|---|---|
+| `git stash` | Guarda los cambios sin commit y deja la carpeta limpia |
+| `git stash list` | Muestra lo guardado |
+| `git stash show` | Archivos del último stash |
+| `git stash pop` | Aplica los cambios **y los borra** del stash |
+| `git stash apply` | Aplica los cambios **pero los conserva** |
+| `git stash drop` | Borra el stash manualmente |
+
+Analogía: guardar papeles en un cajón para despejar el escritorio (`stash`) y luego sacarlos (`pop`).
+
+El stash no guarda una copia del archivo, sino **las diferencias**. Al hacer `pop`:
+
+| Situación | Resultado |
+|---|---|
+| El archivo no cambió en la otra rama | Aplica tus cambios directamente |
+| Cambios en líneas distintas | Fusiona ambos automáticamente |
+| Cambios en las mismas líneas | Conflicto (`<<<<<<<` / `=======` / `>>>>>>>`); el stash **se conserva** |
+
+Resolver un conflicto de stash:
+
+```bash
+nano text.go          # dejar el código correcto y borrar las marcas
+git add text.go
+git stash drop
+```
+
+### Cómo leer `git diff`
+
+```diff
+diff --git a/.github/workflows/ci.yml b/.github/workflows/ci.yml
+index 7748090..0e4f957 100644
+--- a/.github/workflows/ci.yml
++++ b/.github/workflows/ci.yml
+@@ -35,3 +36,9 @@ jobs:
+       - name: Check formatting
+         run: test -z $(go fmt ./...)
++
++      - name: Install staticcheck
++        run: go install honnef.co/go/tools/cmd/staticcheck@latest
+```
+
+| Elemento | Significado |
+|---|---|
+| `--- a/...` | **a** = versión anterior (último commit) |
+| `+++ b/...` | **b** = versión nueva (archivo actual) |
+| `index 7748090..0e4f957` | Identificadores de la versión antes y después |
+| `100644` | Permisos: archivo normal, no ejecutable |
+| `@@ -35,3 +36,9 @@` | Antes: desde la línea 35, 3 líneas. Después: desde la 36, 9 líneas |
+| `+` / `-` / (espacio) | Agregada / eliminada / contexto |
+
+---
+
+## 4.6 Repaso de checks de staticcheck
+
+Lista completa: https://staticcheck.dev/docs/checks/
+
+| Código | Nombre | Qué detecta |
+|---|---|---|
+| **U1000** | Unused | Variables, funciones y tipos sin usar |
+| **SA5009** | Invalid Printf call | Llamadas a `Printf` inválidas, ej. un string con `%d` |
+| **SA9001** | Defer in range loops | `defer` dentro de bucles `range`, que puede no ejecutarse cuando se espera |
+| **S1001** | Replace for loop with copy | Bucles que copian un slice elemento por elemento |
+
+Ejemplo de S1001:
+
+```go
+// Antes
+for i, x := range src {
+    dst[i] = x
+}
+
+// Después
+copy(dst, src)
+```
+
+### Familias de checks
+
+| Prefijo | Familia |
+|---|---|
+| `SA` | *staticcheck*: bugs y usos incorrectos |
+| `S` | *simple*: código que se puede simplificar |
+| `ST` | *stylecheck*: convenciones de estilo |
+| `QF` | *quickfix*: refactorizaciones sugeridas |
+| `U` | *unused*: código sin usar |
+
+---
+
+## 4.7 Comandos nuevos de la Sección 4
+
+### Staticcheck
+
+```bash
+go install honnef.co/go/tools/cmd/staticcheck@latest
+brew install staticcheck
+which staticcheck
+staticcheck -version
+staticcheck ./...
+staticcheck ./... ; echo $?           # 0 = limpio, 1 = hallazgos
+go env GOPATH                         # dónde instala go install (~/go)
+```
+
+### Zsh / shell
+
+```bash
+echo 'export PATH=$PATH:$(go env GOPATH)/bin' >> ~/.zshrc
+echo 'setopt interactivecomments' >> ~/.zshrc   # permite # como comentario al pegar comandos
+source ~/.zshrc
+cat >> archivo << 'EOF'               # heredoc: agregar varias líneas
+...
+EOF
+cd ../..                              # subir dos niveles
+pwd                                   # directorio actual
+```
+
+### Git
+
+```bash
+git stash
+git stash list
+git stash show
+git stash pop
+git stash drop
+git merge main
+git restore <archivo>                 # descartar cambios sin commit
+git restore --source=main <archivo>   # restaurar desde otra rama
+git diff main -- <archivo>            # comparar con otra rama
+```
+
+### GitHub CLI
+
+```bash
+gh pr list --repo bootdotdev/learn-cicd-starter --author cecibelauda   # detectar PRs equivocados
+gh pr close <N> --repo bootdotdev/learn-cicd-starter
+gh pr view <N> --repo cecibelauda/learn-cicd-starter --json state
+gh pr merge <N> --repo cecibelauda/learn-cicd-starter --merge
+```
+
+---
+
+## 4.8 Notas y errores encontrados
+
+| Situación | Causa | Solución |
+|---|---|---|
+| `open Library/Accounts: operation not permitted` | `staticcheck ./...` ejecutado desde `~` | Ejecutar desde la raíz del repo |
+| La lección indica `~/.bashrc` | El shell de la Mac es Zsh | Usar `~/.zshrc` |
+| Se creó `mian.go` en lugar de editar `main.go` | Error de tipeo; `>>` crea el archivo si no existe | `rm mian.go` y repetir; usar Tab para autocompletar |
+| `git diff .github/workflows/ci.yml` → *ambiguous argument* | Ejecutado dentro de `.github/workflows/` | Volver a la raíz: `cd ~/cicd_course/learn-cicd-starter` |
+| `ci.yml` de `linting` sin el job Style | Rama creada desde un `main` local desactualizado | `git pull` en `main` y `git merge main` en `linting` |
+| `get_api_key_test.go` modificado sin motivo | `go fmt` corrigió de nuevo el archivo viejo | `git restore`: la corrección ya venía de `main` |
+| `error: pathspec '#' did not match` / `invalid mode specification` | Zsh no trata `#` como comentario al pegar comandos | `setopt interactivecomments` en `~/.zshrc` |
+| `git status` con comentario dijo "clean" sin serlo | Las palabras del comentario se tomaron como rutas | Ejecutar `git status` sin comentarios |
+| Commit del documento no aparecía en la portada | Se hizo en `formatting`; la portada muestra `main` | Ver la rama en GitHub o mergear el PR |
+| PR creado desde la web fue a `bootdotdev` (#2988) | GitHub propone el repo original como base | `gh pr close` y crear desde `.../compare/main...linting` del fork |
+| GitHub muestra *Merge pull request* tras los checks | Es normal cuando todo pasa | Enviar primero en Boot.dev; mergear después |
+
+### Reglas de trabajo consolidadas
+
+1. **Todos los comandos con `./...` y de Git se ejecutan desde la raíz del repo.** Revisar que el prompt diga `learn-cicd-starter %`.
+2. **`git pull origin main` antes de `git checkout -b`**, siempre.
+3. **Al crear un PR desde la web, verificar que la base sea el fork**, no `bootdotdev`.
+4. **Un linter no modifica código**: reporta y devuelve exit code ≠ 0.
+5. **Instalar en el runner toda herramienta que no venga por defecto**, después de `setup-go`.
+6. **Fijar versiones de herramientas en CI** para builds reproducibles.
+
+---
+
+## 4.9 Flujo completo ejecutado en la Sección 4
+
+```bash
+# 1. Cerrar el ciclo del PR #2
+cd ~/cicd_course/learn-cicd-starter
+gh pr merge 2 --repo cecibelauda/learn-cicd-starter --merge
+git checkout main
+git pull origin main
+git checkout -b linting
+
+# 2. Lección Linting: validar staticcheck localmente
+staticcheck ./... ; echo "exit code: $?"          # 0
+cat >> main.go << 'EOF'
+
+func unused() {
+	// this function does nothing
+	// and is called nowhere
+}
+EOF
+go fmt ./...
+go build ./...
+staticcheck ./... ; echo "exit code: $?"          # U1000, 1
+
+# 3. Lección CI Linting: agregar staticcheck al job Style
+cat > .github/workflows/ci.yml << 'EOF'
+# contenido completo en la sección 4.4
+EOF
+git diff .github/workflows/ci.yml
+grep -n $'\t' .github/workflows/ci.yml            # sin salida
+
+# 4. Commit con la función unused (debe fallar)
+git add .github/workflows/ci.yml main.go
+git commit -m "ci: add staticcheck linting (unused function on purpose)"
+git push -u origin linting
+
+# 5. PR #3 contra el fork
+gh pr create --repo cecibelauda/learn-cicd-starter \
+  --base main --head linting \
+  --title "Add linting check" \
+  --body "Adds staticcheck to the Style job"
+gh pr checks --repo cecibelauda/learn-cicd-starter --watch   # Style ❌  Tests ✅
+
+# 6. Eliminar la función unused
+git restore --source=main main.go
+staticcheck ./... ; echo "lint: $?"               # 0
+git add main.go
+git commit -m "fix: remove unused function"
+git push origin linting
+gh pr checks --repo cecibelauda/learn-cicd-starter --watch   # Style ✅  Tests ✅
+
+# 7. Enviar en Boot.dev la URL del repo
+# https://github.com/cecibelauda/learn-cicd-starter
+```
+
+---
+
+## 4.10 Referencias oficiales de la Sección 4
+
+**Staticcheck**
+- Documentación: https://staticcheck.dev/docs/
+- Getting started: https://staticcheck.dev/docs/getting-started/
+- Lista de checks: https://staticcheck.dev/docs/checks/
+- U1000: https://staticcheck.dev/docs/checks/#U1000
+- Running in CI (GitHub Actions): https://staticcheck.dev/docs/running-staticcheck/ci/github-actions/
+- `dominikh/staticcheck-action`: https://github.com/dominikh/staticcheck-action
+- `golint` (deprecado): https://github.com/golang/lint
+
+**Go**
+- Package lists and patterns (`./...`): https://pkg.go.dev/cmd/go#hdr-Package_lists_and_patterns
+- GOPATH: https://pkg.go.dev/cmd/go#hdr-GOPATH_environment_variable
+- `go vet`: https://pkg.go.dev/cmd/vet
+
+**Shell**
+- Here Documents: https://www.gnu.org/software/bash/manual/html_node/Redirections.html#Here-Documents
+- Redirections: https://www.gnu.org/software/bash/manual/html_node/Redirections.html
+- Zsh INTERACTIVE_COMMENTS: https://zsh.sourceforge.io/Doc/Release/Options.html#index-INTERACTIVE_005fCOMMENTS
+- Lint (software): https://en.wikipedia.org/wiki/Lint_%28software%29
+
+**Git**
+- `git stash`: https://git-scm.com/docs/git-stash
+- `git merge` (fast-forward): https://git-scm.com/docs/git-merge#_fast_forward_merge
+- `git pull`: https://git-scm.com/docs/git-pull
+- `git fetch`: https://git-scm.com/docs/git-fetch
+- `git restore`: https://git-scm.com/docs/git-restore
+- `git diff`: https://git-scm.com/docs/git-diff
+- Formato unificado de diff: https://www.gnu.org/software/diffutils/manual/html_node/Detailed-Unified.html
+- Resolver conflictos: https://docs.github.com/en/pull-requests/collaborating-with-pull-requests/addressing-merge-conflicts/resolving-a-merge-conflict-using-the-command-line
+
+**GitHub**
+- Viewing workflow run history: https://docs.github.com/en/actions/monitoring-and-troubleshooting-workflows/monitoring-workflows/viewing-workflow-run-history
+- Viewing branches: https://docs.github.com/en/repositories/configuring-branches-and-merges-in-your-repository/managing-branches-in-your-repository/viewing-branches-in-your-repository
+- `gh pr close`: https://cli.github.com/manual/gh_pr_close
+
+---
+
 # ESTADO DEL CURSO
 
 | Sección | Estado |
@@ -1557,33 +2173,46 @@ gh pr checks --watch                         # Tests ✅  Style ✅
 | 1 — Fundamentos de CI/CD y GitHub Actions | ✅ Completada |
 | 2 — Running Tests | ✅ Completada |
 | 3 — Formatting | ✅ Completada |
-| 4 — Por confirmar al iniciar | ⏳ Pendiente |
+| 4 — Linting | ✅ Completada |
+| 5 — Por confirmar al iniciar | ⏳ Pendiente |
 
-Temas pendientes según el temario inicial: Linting, Security y Continuous Deployment. El orden y la numeración se ajustarán a medida que avance el curso.
+Temas pendientes según el temario inicial: Security y Continuous Deployment. El orden y la numeración se ajustarán a medida que avance el curso.
+
+### Pipeline actual
+
+```
+PR hacia main
+      │
+      ├──► Job "Tests"                    ├──► Job "Style"
+      │     ├─ checkout                   │     ├─ checkout
+      │     ├─ setup-go                   │     ├─ setup-go
+      │     └─ go test -cover ./...       │     ├─ test -z $(go fmt ./...)
+      │                                   │     ├─ go install staticcheck
+      │                                   │     └─ staticcheck ./...
+```
 
 ### Ramas y PRs
 
 | Rama | PR | Estado |
 |---|---|---|
 | `addtests` | #1 | ✅ Mergeada a `main` — ciclo cerrado |
-| `formatting` | #2 (`formatting → main`) | 🟡 Abierto, sin mergear. Checks: Tests ✅ Style ✅ |
+| `formatting` | #2 | ✅ Mergeada a `main` — ciclo cerrado |
+| `linting` | #3 (`linting → main`) | 🟡 Abierto, sin mergear. Checks: Tests ✅ Style ✅ |
+| — | bootdotdev#2988 | ❌ Creado por error contra el repo original — cerrado |
 
-Commits de la rama `formatting`:
+Commits de la rama `linting`:
 
 ```
-style: restore formatting
-test: break formatting on purpose
-ci: add style job to check formatting
-style: format get_api_key_test.go with gofmt
+fix: remove unused function
+ci: add staticcheck linting (unused function on purpose)
 ```
 
-**Próximo paso:** al iniciar la Sección 4, confirmar si continúa sobre el PR #2 o si conviene mergearlo y crear una rama nueva:
+**Próximo paso:** al iniciar la Sección 5, mergear el PR #3 y crear una rama nueva desde `main` actualizado:
 
 ```bash
-# Si corresponde mergear primero
-gh pr checks --watch
-gh pr merge --merge
+gh pr checks 3 --repo cecibelauda/learn-cicd-starter
+gh pr merge 3 --repo cecibelauda/learn-cicd-starter --merge
 git checkout main
 git pull origin main
-git checkout -b <nombre-rama-seccion-4>
+git checkout -b <nombre-rama-seccion-5>
 ```
