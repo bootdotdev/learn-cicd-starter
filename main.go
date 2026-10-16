@@ -7,6 +7,9 @@ import (
 	"log"
 	"net/http"
 	"os"
+	"strconv"
+	"strings"
+	"time"
 
 	"github.com/go-chi/chi"
 	"github.com/go-chi/cors"
@@ -25,6 +28,7 @@ type apiConfig struct {
 var staticFiles embed.FS
 
 func main() {
+
 	err := godotenv.Load(".env")
 	if err != nil {
 		log.Printf("warning: assuming default configuration. .env unreadable: %v", err)
@@ -38,6 +42,7 @@ func main() {
 	apiCfg := apiConfig{}
 
 	// https://github.com/libsql/libsql-client-go/#open-a-connection-to-sqld
+
 	// libsql://[your-database].turso.io?authToken=[your-auth-token]
 	dbURL := os.Getenv("DATABASE_URL")
 	if dbURL == "" {
@@ -89,10 +94,14 @@ func main() {
 
 	router.Mount("/v1", v1Router)
 	srv := &http.Server{
-		Addr:    ":" + port,
-		Handler: router,
+		Addr:              ":" + port,
+		Handler:           router,
+		ReadHeaderTimeout: 5 * time.Second}
+
+	if _, err := strconv.Atoi(port); err != nil {
+		log.Fatal("invalid port: value must be numeric")
 	}
 
-	log.Printf("Serving on port: %s\n", port)
+	log.Printf("Serving on port: %s\n", strings.ReplaceAll(port, "\n", ""))
 	log.Fatal(srv.ListenAndServe())
 }
