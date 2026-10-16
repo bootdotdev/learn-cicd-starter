@@ -3,10 +3,13 @@ package main
 import (
 	"database/sql"
 	"embed"
+	"errors"
 	"io"
 	"log"
 	"net/http"
 	"os"
+	"strconv"
+	"time"
 
 	"github.com/go-chi/chi"
 	"github.com/go-chi/cors"
@@ -27,12 +30,23 @@ var staticFiles embed.FS
 func main() {
 	err := godotenv.Load(".env")
 	if err != nil {
-		log.Printf("warning: assuming default configuration. .env unreadable: %v", err)
+		if errors.Is(err, os.ErrNotExist) {
+			log.Println("warning: .env file not found, using environment defaults")
+		} else {
+			log.Printf("warning: .env unreadable, using environment defaults: %v", err)
+		}
 	}
 
 	port := os.Getenv("PORT")
 	if port == "" {
-		log.Fatal("PORT environment variable is not set")
+		port = "8080"
+	}
+	portNum, err := strconv.Atoi(port)
+	if err != nil {
+		log.Fatalf("invalid PORT: %v", err)
+	}
+	if portNum < 1 || portNum > 65535 {
+		log.Fatalf("invalid PORT: port must be between 1 and 65535, got %d", portNum)
 	}
 
 	apiCfg := apiConfig{}
@@ -89,10 +103,14 @@ func main() {
 
 	router.Mount("/v1", v1Router)
 	srv := &http.Server{
-		Addr:    ":" + port,
-		Handler: router,
+		Addr:              ":" + strconv.Itoa(portNum),
+		Handler:           router,
+		ReadHeaderTimeout: 10 * time.Second,
+		ReadTimeout:       30 * time.Second,
+		WriteTimeout:      30 * time.Second,
+		IdleTimeout:       60 * time.Second,
 	}
 
-	log.Printf("Serving on port: %s\n", port)
+	log.Printf("Serving on port: %d", portNum)
 	log.Fatal(srv.ListenAndServe())
 }
