@@ -38,6 +38,7 @@ jobs:
     - name: Build and push
       uses: docker/build-push-action@v7
       with:
+        context: .
         tags: tigru/notely:latest
         platforms: linux/amd64
         pull: true
