@@ -7,6 +7,8 @@ import (
 	"log"
 	"net/http"
 	"os"
+	"strconv"
+	"time"
 
 	"github.com/go-chi/chi"
 	"github.com/go-chi/cors"
@@ -30,9 +32,14 @@ func main() {
 		log.Printf("warning: assuming default configuration. .env unreadable: %v", err)
 	}
 
-	port := os.Getenv("PORT")
-	if port == "" {
+	portText := os.Getenv("PORT")
+	if portText == "" {
 		log.Fatal("PORT environment variable is not set")
+	}
+
+	port, err := strconv.Atoi(portText)
+	if err != nil || port < 1 || port > 65535 {
+		log.Fatal("PORT must be an integer between 1 and 65535")
 	}
 
 	apiCfg := apiConfig{}
@@ -70,7 +77,11 @@ func main() {
 			http.Error(w, err.Error(), http.StatusInternalServerError)
 			return
 		}
-		defer f.Close()
+		defer func() {
+			if err := f.Close(); err != nil {
+				http.Error(w, err.Error(), http.StatusInternalServerError)
+			}
+		}()
 		if _, err := io.Copy(w, f); err != nil {
 			http.Error(w, err.Error(), http.StatusInternalServerError)
 		}
@@ -89,10 +100,15 @@ func main() {
 
 	router.Mount("/v1", v1Router)
 	srv := &http.Server{
-		Addr:    ":" + port,
-		Handler: router,
+		Addr:              ":" + strconv.Itoa(port),
+		Handler:           router,
+		ReadHeaderTimeout: 5 * time.Second,
+		ReadTimeout:       15 * time.Second,
+		WriteTimeout:      30 * time.Second,
+		IdleTimeout:       120 * time.Second,
+		MaxHeaderBytes:    1 << 20,
 	}
 
-	log.Printf("Serving on port: %s\n", port)
+	log.Printf("Serving on port: %d\n", port)
 	log.Fatal(srv.ListenAndServe())
 }
