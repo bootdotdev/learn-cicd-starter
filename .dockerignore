@@ -1,0 +1,13 @@
+*
+
+!go.mod
+!go.sum
+!Dockerfile
+!*.go
+!sqlc.yaml
+
+!internal/**
+!scripts/**
+!sql/**
+!static/**
+!vendor/**

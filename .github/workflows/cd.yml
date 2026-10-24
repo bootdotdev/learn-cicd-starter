@@ -4,6 +4,9 @@ on:
   push:
     branches: [ "main" ]
 
+permissions:
+  id-token: write
+
 jobs:
   deploy:
     name: Deploy
@@ -14,32 +17,12 @@ jobs:
     - name: Check out code
       uses: actions/checkout@v7
 
-    - name: Set up Go
-      uses: actions/setup-go@v7
+    - name: Configure AWS credentials
+      uses: aws-actions/configure-aws-credentials@v6
       with:
-        go-version: "1.27.1"
+        role-to-assume: ${{ secrets.AWS_ROLE_ARN }}
+        aws-region: ${{ vars.AWS_REGION }}
 
-    - name: Build app
-      run: CGO_ENABLED=0 GOOS=linux GOARCH=amd64 go build -o notely
-
-    - name: Login to Docker Hub (scoped)
-      uses: docker/login-action@v4
-      with:
-        username: ${{ vars.DOCKERHUB_USERNAME }}
-        password: ${{ secrets.DOCKERHUB_TOKEN }}
-        scope: 'tigru/notely@push'
-
-    - name: Set up QEMU
-      uses: docker/setup-qemu-action@v4
-
-    - name: Set up Docker Buildx
-      uses: docker/setup-buildx-action@v4
-
-    - name: Build and push
-      uses: docker/build-push-action@v7
-      with:
-        context: .
-        tags: tigru/notely:latest
-        platforms: linux/amd64
-        pull: true
-        push: true
+    - name: Additional steps
+      run: |
+        aws sts get-caller-identity
