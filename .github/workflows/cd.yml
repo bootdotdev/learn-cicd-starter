@@ -6,6 +6,7 @@ on:
 
 permissions:
   id-token: write
+  contents: read
 
 jobs:
   deploy:
@@ -17,41 +18,23 @@ jobs:
     - name: Check out code
       uses: actions/checkout@v7
 
-    - name: Inspect GitHub OIDC claims
-      shell: bash
-      run: |
-        python3 - <<'PY'
-        import os
-        import json
-        import base64
-        import urllib.request
-
-        url = os.environ["ACTIONS_ID_TOKEN_REQUEST_URL"]
-        token = os.environ["ACTIONS_ID_TOKEN_REQUEST_TOKEN"]
-
-        separator = "&" if "?" in url else "?"
-        request = urllib.request.Request(
-            url + separator + "audience=sts.amazonaws.com",
-            headers={"Authorization": f"Bearer {token}"}
-        )
-
-        with urllib.request.urlopen(request) as response:
-            jwt = json.load(response)["value"]
-
-        payload = jwt.split(".")[1]
-        payload += "=" * (-len(payload) % 4)
-        claims = json.loads(base64.urlsafe_b64decode(payload))
-
-        print("aud:", claims.get("aud"))
-        print("sub:", claims.get("sub"))
-        PY
-
     - name: Configure AWS credentials
       uses: aws-actions/configure-aws-credentials@v6
       with:
         role-to-assume: ${{ secrets.AWS_ROLE_ARN }}
         aws-region: ${{ vars.AWS_REGION }}
 
-    - name: Additional steps
+    - name: Login to Amazon ECR
+      id: login-ecr
+      uses: aws-actions/amazon-ecr-login@v2
+
+    - name: Build, tag, and push docker image to Amazon ECR
+      env:
+        ECR_REGISTRY: ${{ steps.login-ecr.outputs.registry }}
+        ECR_REPOSITORY: prod/notely
+        IMAGE_TAG: ${{ github.sha }}
       run: |
-        aws sts get-caller-identity
+        IMAGE_URI="$ECR_REGISTRY/$ECR_REPOSITORY:$IMAGE_TAG"
+        docker buildx build --pull --platform=linux/amd64 -t "$IMAGE_URI" .
+        docker push "$IMAGE_URI"
+        echo "Image pushed: $IMAGE_URI"
