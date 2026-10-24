@@ -3,5 +3,7 @@
 docker buildx build \
   --platform=linux/amd64 \
   --pull \
+  --provenance=false \
+  --load \
   -t "${DOCKERHUB_NAMESPACE:?"ERROR: DOCKERHUB_NAMESPACE environment variable is not set or empty"}/notely:latest" \
   .
