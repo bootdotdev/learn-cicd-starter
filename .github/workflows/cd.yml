@@ -1,0 +1,42 @@
+name: cd
+
+on:
+  push:
+    branches: [main]
+
+jobs:
+  deploy:
+    name: Deploy
+    runs-on: ubuntu-latest
+
+    # Required for google-github-actions/auth@v2 Workload Identity Federation
+    permissions:
+      contents: 'read'
+      id-token: 'write'
+
+    steps:
+      - name: Check out code
+        uses: actions/checkout@v4
+
+      - name: Set up Go
+        uses: actions/setup-go@v5
+        with:
+          go-version: '1.27.1'
+
+      - name: Build binary
+        run: source scripts/buildprod.sh
+
+      - name: Authenticate to Google Cloud
+        id: auth
+        uses: google-github-actions/auth@v2
+        with:
+          workload_identity_provider: ' projects/145931963849/locations/global/workloadIdentityPools/github/providers/my-repo'
+          service_account: 'cloud-run-deployer@notely-513103.iam.gserviceaccount.com'
+
+      - name: Set up Cloud SDK
+        uses: google-github-actions/setup-gcloud@v2
+
+      - name: Submit build to Google Cloud
+        run: |
+          touch .gcloudignore
+          gcloud builds submit --tag us-central1-docker.pkg.dev/notely-513103/notely-ar-repo/notely:latest .
