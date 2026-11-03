@@ -6,6 +6,10 @@ on:
 
 jobs:
   deploy:
+    # Add "id-token" with the intended permissions.
+    permissions:
+      contents: 'read'
+      id-token: 'write'
     name: Deploy
     runs-on: ubuntu-latest
 
@@ -18,5 +22,17 @@ jobs:
         with:
           go-version: "1.27.1"
 
-      - name: Run setup script
+      - name: Create binary
         run: scripts/buildprod.sh
+        
+      - id: 'auth'
+        uses: 'google-github-actions/auth@v2'
+        with:
+            workload_identity_provider: 'projects/675821145089/locations/global/workloadIdentityPools/github/providers/my-repo'
+            service_account: 'cloud-run-deployer@notely-513614.iam.gserviceaccount.com'
+
+      - name: setup gcloud
+        uses: google-github-actions/setup-gcloud@v2
+
+      - name: submit to GCP AR
+        run: gcloud builds submit --tag us-central1-docker.pkg.dev/notely-513614/notely-ar-repo/notely:latest .
