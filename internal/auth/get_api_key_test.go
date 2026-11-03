@@ -1,4 +1,3 @@
-
 package auth
 
 import (
