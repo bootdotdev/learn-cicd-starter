@@ -96,6 +96,6 @@ func main() {
 	}
 
 	//log.Printf("Serving on port: %s\n", port)
-	log.Printf("Serving on port: %q", port)
+	log.Printf("Server is starting")
 	log.Fatal(srv.ListenAndServe())
 }
