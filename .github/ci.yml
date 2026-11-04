@@ -10,7 +10,7 @@ jobs:
     runs-on: ubuntu-latest
 
     steps:
-      - name: Check out code
+      - name: Check out codeee
         uses: actions/checkout@v6
 
       - name: Set up Go
