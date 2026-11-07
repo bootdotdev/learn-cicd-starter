@@ -1,0 +1,36 @@
+name: cd
+
+on: 
+    push: 
+        branches: ["main"]
+
+jobs:
+    deploy:
+        name: Deploy
+        runs-on: ubuntu-latest
+
+        steps:
+            - name: Checkout code
+              uses: actions/checkout@v4
+
+            - name: Set up go
+              uses: actions/setup-go@v5
+              with:
+                go-version: "1.23.0"
+            
+            - name: Build
+              run: ./scripts/buildprod.sh
+
+            - name: Authenticate to Google Cloud
+              uses: google-github-actions/auth@v2
+              with:
+                credentials_json: '${{ secrets.GCP_CREDENTIALS }}'
+            
+            - name: Set up Cloud SDK
+              uses: google-github-actions/setup-gcloud@v2
+            
+            - name: Use gcloud CLI
+              run: gcloud info
+
+            - name: Gcloud Build submit
+              run: gcloud builds submit --tag asia-south1-docker.pkg.dev/notelydemobyshantesh/notely-shan-repo/notely:latest .

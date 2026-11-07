@@ -1,4 +1,7 @@
-# learn-cicd-starter (Notely)
+# shaun (Notely)
+
+![Go Test](https://github.com/teamharmony/learn-cicd-starter/actions/workflows/ci.yml/badge.svg)
+
 
 This repo contains the starter code for the "Notely" application for the "Learn CICD" course on [Boot.dev](https://boot.dev).
 
