@@ -99,6 +99,6 @@ func main() {
 	if portErr != nil {
 		fmt.Println("Error:", portErr)
 	}
-	log.Println("Serving on port: %d\n", portint)
+	log.Printf("Serving on port: %d\n", portint)
 	log.Fatal(srv.ListenAndServe())
 }
