@@ -19,4 +19,4 @@ jobs:
           go-version: "1.27.1"
 
       - name: Build
-        run: go build -o notely ./...
+        run: go build -o notely 
