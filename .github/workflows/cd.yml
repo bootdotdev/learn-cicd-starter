@@ -1,0 +1,21 @@
+name: CD
+
+on:
+  push:
+    branches: [ main ]
+
+jobs:
+  deploy:
+    name: Deploy
+    runs-on: ubuntu-24.04
+    steps:
+      - name: Checkout
+        uses: actions/checout@v4
+
+      - name: Set up Go
+        uses: actions/setup-go@v5
+        with:
+          go-version: "1.23.0"
+
+      - name: Build
+        run: ./scripts/buildprod.sh
