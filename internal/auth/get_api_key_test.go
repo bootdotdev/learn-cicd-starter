@@ -4,7 +4,7 @@ import (
 	"net/http"
 	"testing"
 )
-a
+
 func TestGetAPIKey(t *testing.T) {
 	type test struct {
 		header string
