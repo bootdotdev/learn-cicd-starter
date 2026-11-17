@@ -2,7 +2,7 @@
 
 **Estudiante:** Auda (Cecibel Espinoza)
 **Repositorio:** https://github.com/cecibelauda/learn-cicd-starter
-**Ramas:** `addtests` (PR #1), `formatting` (PR #2), `linting` (PR #3/#4), `security` (PR #5) — todas mergeadas a `main`
+**Ramas:** `addtests` (PR #1), `formatting` (PR #2), `linting` (PR #3/#4), `security` (PR #5), `build` (PR #7), `auto-build` (PR #8) — todas mergeadas a `main`
 **Directorio local:** `~/learn-cicd-starter`
 
 ---
@@ -2677,6 +2677,666 @@ Commits de la rama `security`:
 
 ---
 
+# SECCIÓN 6 — Continuous Deployment (Build)
+
+## 6.1 CI vs. CD
+
+| | **CI** | **CD** |
+|---|---|---|
+| Pregunta que responde | ¿El código integra bien y es correcto? | ¿Cómo llega ese código a un ambiente real? |
+| Qué produce | Un ✅ / ❌ sobre el cambio | Un artefacto publicado (imagen Docker) y, luego, una app corriendo |
+| Cuándo corre | En cada PR (`pull_request`) | Al mergear (`push` a `main`) |
+| Efecto | No toca ningún ambiente | Cambia lo que existe en la nube |
+
+> **Idea central:** la CI **verifica**; la CD **entrega**. La CI también compila (`go test` y `gosec` compilan internamente), pero el resultado se descarta con el runner.
+
+### Las dos "D"
+
+| Variante | Qué hace |
+|---|---|
+| **Continuous Delivery** | El artefacto queda **listo** para desplegar; una persona aprueba el pase |
+| **Continuous Deployment** | Se despliega a producción **automáticamente** |
+
+🧠 **Analogía — una imprenta:** CI = revisar la prueba de impresión · Delivery = libro empacado en el almacén · Deployment = el camión sale solo a las librerías.
+
+**Equivalencia La Tinka:** CI = `mvn verify` + JaCoCo + SonarQube en el PR · CD = imagen Docker → ECR → EKS. Si el pase a producción requiere aprobación, es **Delivery**.
+
+### CI y CD son workflows independientes
+
+```
+PR abierto   ──► evento pull_request ──► ci.yml  (Tests + Style)
+Merge a main ──► evento push a main  ──► cd.yml  (Deploy)
+```
+
+Por eso en un PR **solo aparecen los checks de CI**: el CD se dispara recién tras el merge.
+
+---
+
+## 6.2 Git: `pull`, `push` y Pull Request
+
+| Comando | Dirección | Qué hace |
+|---|---|---|
+| `git pull origin <rama>` | GitHub → Mac | Baja commits de esa rama remota y los fusiona en la rama **donde estás** |
+| `git push origin <rama>` | Mac → GitHub | Sube los commits de tu rama local a su gemela remota |
+| **Pull Request** | (GitHub) | Propone fusionar una rama en `main`. No tiene relación con el comando `pull` |
+
+```
+        GitHub (origin)                         Tu Mac
+   ┌──────────────────────┐            ┌──────────────────────┐
+   │ main                 │ ──pull──►  │ main                 │
+   │ build                │ ◄──push──  │ build  (estás aquí)  │
+   └──────────────────────┘            └──────────────────────┘
+```
+
+- `push` sube a la rama donde estás, **no** a `main`.
+- `main` en GitHub solo cambia por **PR + Merge**. Nunca `git push origin main`.
+- `-u` se usa una vez para fijar el *upstream*.
+- `-m` cambia de significado: `commit -m` = mensaje; `branch -m` = renombrar (*move*).
+
+---
+
+## 6.3 Docker: construir la imagen localmente
+
+### Archivos del repo
+
+`scripts/buildprod.sh`:
+
+```bash
+#!/bin/bash
+
+CGO_ENABLED=0 GOOS=linux GOARCH=amd64 go build -o notely
+```
+
+`Dockerfile`:
+
+```dockerfile
+FROM --platform=linux/amd64 debian:stable-slim
+
+RUN apt-get update && apt-get install -y ca-certificates
+
+ADD notely /usr/bin/notely
+
+CMD ["notely"]
+```
+
+| Variable | Efecto |
+|---|---|
+| `GOOS=linux` | Compila para Linux (binario ELF, no Mach-O) |
+| `GOARCH=amd64` | Arquitectura Intel/AMD, la de Cloud Run |
+| `CGO_ENABLED=0` | Binario estático, sin depender de librerías del sistema |
+
+⚠️ **No cambiar a `arm64`** aunque la Mac sea Apple Silicon: Cloud Run corre en amd64. Docker Desktop lo emula con Rosetta.
+
+### Flujo
+
+```
+1. buildprod.sh              2. docker build                   3. docker run
+┌─────────────┐             ┌──────────────────────────┐      ┌──────────────────┐
+│ Código Go   │──go build─► │ debian:stable-slim       │─run─►│ Contenedor       │
+│ (tu Mac)    │ linux/amd64 │ + ca-certificates        │      │ PORT=8080        │
+└─────────────┘     ↓       │ + /usr/bin/notely        │      │ :8080 ◄── tu Mac │
+               binario      │ CMD ["notely"]           │      └──────────────────┘
+               notely (ELF) └──────────────────────────┘
+```
+
+🧠 **Analogía:** binario = comida cocinada · imagen = lonchera con comida y cubiertos · contenedor = lonchera abierta sirviéndose.
+
+```bash
+docker --version                                  # ≥ 20.10.21
+./scripts/buildprod.sh
+file notely                                       # ELF 64-bit ... x86-64 ... statically linked
+docker build -t DOCKERHUB_NAMESPACE/notely:latest .
+docker run -e PORT=8080 -p 8080:8080 DOCKERHUB_NAMESPACE/notely:latest
+# navegador: http://localhost:8080  (http, no https)
+```
+
+| Flag | Significado |
+|---|---|
+| `-t usuario/notely:latest` | Nombre (*tag*) de la imagen |
+| `.` | *Build context*: carpeta con `Dockerfile` y `notely` |
+| `-e PORT=8080` | Variable de entorno dentro del contenedor |
+| `-p 8080:8080` | Puerto de la Mac → puerto del contenedor |
+
+⚠️ **Docker Desktop debe estar abierto:** en Mac, el *daemon* de Docker corre dentro de una VM Linux que levanta Docker Desktop. Sin él: `Cannot connect to the Docker daemon`.
+
+💡 El binario `notely` no corre en la Mac (`exec format error`) y está en `.gitignore`.
+
+---
+
+## 6.4 Workflow de CD inicial (`cd.yml`)
+
+```yaml
+name: cd
+
+on:
+  push:
+    branches: [main]
+
+jobs:
+  deploy:
+    name: Deploy
+    runs-on: ubuntu-latest
+
+    steps:
+      - name: Check out code
+        uses: actions/checkout@v6
+
+      - name: Set up Go
+        uses: actions/setup-go@v6
+        with:
+          go-version: "1.27.1"
+
+      - name: Build the app
+        run: ./scripts/buildprod.sh
+```
+
+Diferencia clave con `ci.yml`: el evento es **`push` a `main`**, no `pull_request`.
+
+---
+
+## 6.5 Google Cloud Platform: cuenta, facturación y proyecto
+
+### Jerarquía creada
+
+```
+cecibel-espinoza02-org                (organización, creada automáticamente)
+   ├── notely-billing                 (cuenta de facturación — "Cuenta pagada", sin créditos de prueba)
+   └── Proyecto "notely"              (ID: inner-cinema-511617-v1 · número: 728416536675)
+          ├── Artifact Registry  → notely-ar-repo (us-central1)
+          ├── Cloud Build
+          ├── Service Account    → cloud-run-deployer
+          └── Workload Identity Pool "github" → Provider "my-repo"
+```
+
+| Concepto | Detalle |
+|---|---|
+| **Project** | Agrupa todos los recursos. Al terminar el curso, **borrar el proyecto** limpia todo |
+| **Billing Account** | Donde se registra la tarjeta; debe estar **vinculada** al proyecto |
+| **Project ID vs. número** | `inner-cinema-511617-v1` (nombre) ≠ `728416536675` (número; aparece en IDs de WIF) |
+| **Budget alert** | Recomendado (ej. S/. 10): la cuenta cobra todo lo que exceda el nivel gratuito |
+
+⚠️ La prueba gratuita (USD 300) se da **una sola vez por persona**. La cuenta anterior estaba cerrada y no se podía reabrir, por eso se creó `notely-billing`.
+
+### Google Cloud SDK (`gcloud`)
+
+```bash
+gcloud init                              # login por navegador (OAuth); no requiere SSH
+gcloud config get-value project          # inner-cinema-511617-v1
+gcloud components update                 # opcional
+```
+
+`--console-only` solo hace falta en entornos sin navegador (por ejemplo WSL).
+
+### Equivalencias con AWS
+
+| GCP | AWS |
+|---|---|
+| Project | Cuenta de AWS |
+| Billing Account | Facturación / AWS Organizations |
+| Artifact Registry | ECR |
+| Cloud Build | CodeBuild |
+| Cloud Run | ECS Fargate / App Runner |
+| Service Account | IAM Role |
+
+---
+
+## 6.6 Artifact Registry
+
+Registro **privado** de imágenes Docker en GCP (como Docker Hub, pero privado).
+
+### Configuración realizada
+
+1. Habilitar **Cloud Build API**.
+2. En *Cloud Build → Settings*, habilitar el rol **Cloud Build Service Account** para la cuenta por defecto.
+3. Habilitar **Artifact Registry API**.
+4. Crear repositorio:
+
+| Campo | Valor |
+|---|---|
+| Nombre | `notely-ar-repo` |
+| Formato | Docker |
+| Modo | Standard |
+| Ubicación | Region → `us-central1` |
+| Cifrado | Google-managed encryption key |
+| Análisis de vulnerabilidades | **Desactivado** (cuesta USD 0.26 por imagen) |
+
+5. Construir y subir desde la Mac:
+
+```bash
+gcloud builds submit --tag us-central1-docker.pkg.dev/inner-cinema-511617-v1/notely-ar-repo/notely:latest .
+```
+
+### Anatomía de la URL de imagen
+
+```
+us-central1-docker.pkg.dev / inner-cinema-511617-v1 / notely-ar-repo / notely : latest
+└──── región + host ─────┘  └────── proyecto ─────┘  └ repositorio ─┘ └imagen┘ └ tag ┘
+```
+
+### Dónde ver cada cosa
+
+| Lugar | Qué muestra |
+|---|---|
+| **Cloud Build → Historial** | El *proceso*: logs, éxito/falla, duración |
+| **Artifact Registry → notely-ar-repo → notely** | El *resultado*: versiones de la imagen |
+
+🧠 **Analogía:** Cloud Build es la cocina; Artifact Registry es la vitrina.
+
+### Digest vs. tag
+
+| | Digest (`sha256:92febe9ee084...`) | Tag (`latest`) |
+|---|---|---|
+| ¿Cambia? | **Inmutable**: identifica el contenido exacto | **Móvil**: se mueve a la imagen más nueva |
+| Analogía | El DNI | El "empleado del mes" |
+
+```
+Build 1:  92febe9ee084  ← latest
+Build 2:  92febe9ee084  (sin tag)
+          <digest nuevo> ← latest
+```
+
+La región de las imágenes y la de despliegue no tienen por qué coincidir ([regiones y zonas](https://cloud.google.com/compute/docs/regions-zones)).
+
+---
+
+## 6.7 Workload Identity Federation (WIF)
+
+### El problema
+
+`gcloud builds submit` funciona en la Mac con **tu** cuenta de Google. Desde GitHub Actions se necesita otra identidad, **sin** guardar llaves JSON de larga duración (que hay que esconder y rotar).
+
+**Federación** = un sistema (GCP) confía en una identidad emitida por otro (GitHub), usando **OpenID Connect (OIDC)**.
+
+### Cómo funciona
+
+```
+GitHub Actions (workflow)
+   │ 1. GitHub emite un token OIDC firmado
+   │    { repository: "cecibelauda/learn-cicd-starter", ref: "refs/heads/main", ... }
+   ▼
+google-github-actions/auth ──2. token + "quiero ser Cloud Run Deployer"──► GCP
+                                                                            │
+                     Pool "github" → Provider "my-repo"                     │
+                       ├─ ¿firma de GitHub? (issuer-uri)              ✅    │
+                       ├─ ¿es mi repo? (attribute-condition)          ✅    │
+                       └─ ¿puede suplantar a la service account?      ✅    │
+   ◄────────────── 3. credenciales temporales (~1 hora) ────────────────────┘
+   ▼
+4. gcloud builds submit con los permisos de "Cloud Run Deployer"
+```
+
+| Pieza | Función |
+|---|---|
+| **Workload identity pool** | Agrupa identidades externas |
+| **Workload identity provider** | Define cómo verificar tokens de un emisor (GitHub) y qué condiciones aceptar |
+| **Attribute mapping** | Convierte *claims* del token (`assertion.repository`) en atributos de IAM |
+| **Attribute condition** | Solo acepta tokens de **tu** repo, no de cualquier workflow de GitHub |
+| **`roles/iam.workloadIdentityUser`** | Permite a esas identidades **suplantar** a la service account |
+
+🧠 **Analogía — pase de visitante:** token OIDC = DNI de tu empresa · provider = guardia que verifica el DNI y la empresa · pool = lista de empresas con convenio · service account = rol "técnico de mantenimiento" · credencial temporal = pase que vence al final del día · llave JSON = copia permanente de la llave del edificio (lo que se evita).
+
+### Equivalencia AWS
+
+| GCP | AWS |
+|---|---|
+| Workload Identity Federation | IAM OIDC Identity Provider + `AssumeRoleWithWebIdentity` |
+| Service Account | IAM Role |
+| `roles/iam.workloadIdentityUser` | *Trust policy* del rol |
+| `google-github-actions/auth` | `aws-actions/configure-aws-credentials` |
+| `attribute-condition` | Condición `token.actions.githubusercontent.com:sub` |
+
+### Service account "Cloud Run Deployer"
+
+Email: `cloud-run-deployer@inner-cinema-511617-v1.iam.gserviceaccount.com`
+
+| Rol (lección) | Nombre en consola (español) | ID |
+|---|---|---|
+| Cloud Build Editor | Editor de Cloud Build | `roles/cloudbuild.builds.editor` |
+| Cloud Build Service Account | Cuenta de servicio de Cloud Build | `roles/cloudbuild.builds.builder` |
+| Cloud Run Admin | Administrador de Cloud Run | `roles/run.admin` |
+| Service Account User | Usuario de cuenta de servicio | `roles/iam.serviceAccountUser` |
+| Viewer | Visualizador (categoría **Básico**) | `roles/viewer` |
+
+⚠️ "Visualizador de Vertex AI" u otros "Visualizador de X" **no** son `roles/viewer`.
+
+En la consola es un rol por fila (**+ Agregar otro rol**). Alternativa con `gcloud`:
+
+```bash
+GCP_PROJECT_ID="$(gcloud config get-value project)"
+SA="cloud-run-deployer@${GCP_PROJECT_ID}.iam.gserviceaccount.com"
+
+for ROLE in roles/cloudbuild.builds.editor roles/cloudbuild.builds.builder \
+            roles/run.admin roles/iam.serviceAccountUser roles/viewer; do
+  gcloud projects add-iam-policy-binding "$GCP_PROJECT_ID" \
+    --member="serviceAccount:${SA}" --role="$ROLE" --condition=None
+done
+```
+
+### APIs habilitadas para WIF
+
+- Identity and Access Management (IAM) API
+- Cloud Resource Manager API
+- IAM Service Account Credentials API
+- Security Token Service API
+
+### Comandos de configuración (desde la raíz del repo)
+
+```bash
+GCP_PROJECT_ID="$(gcloud config get-value project)"
+GCP_SERVICE_ACCOUNT_EMAIL="cloud-run-deployer@${GCP_PROJECT_ID}.iam.gserviceaccount.com"
+GITHUB_REPO="$(git remote get-url origin | sed -E 's#.*github.com[:/]##; s#\.git$##')"
+
+gcloud iam workload-identity-pools create "github" \
+  --location="global" \
+  --display-name="GitHub Actions Pool"
+
+gcloud iam workload-identity-pools providers create-oidc "my-repo" \
+  --location="global" \
+  --workload-identity-pool="github" \
+  --display-name="My GitHub repo Provider" \
+  --attribute-mapping="google.subject=assertion.sub,attribute.repository=assertion.repository" \
+  --attribute-condition="assertion.repository == '${GITHUB_REPO}'" \
+  --issuer-uri="https://token.actions.githubusercontent.com"
+
+export WORKLOAD_IDENTITY_POOL="$(
+  gcloud iam workload-identity-pools describe "github" \
+    --location="global" \
+    --format="value(name)"
+)"
+
+gcloud iam service-accounts add-iam-policy-binding \
+  ${GCP_SERVICE_ACCOUNT_EMAIL} \
+  --role=roles/iam.workloadIdentityUser \
+  --member="principalSet://iam.googleapis.com/${WORKLOAD_IDENTITY_POOL}/attribute.repository/${GITHUB_REPO}"
+```
+
+"Raíz del repo" = `/Users/Cecibel/learn-cicd-starter` (con guiones). Es necesario porque `git remote get-url origin` solo funciona dentro del repo.
+
+---
+
+## 6.8 Automate Builds — CD completo hacia Artifact Registry
+
+### ID del provider
+
+```bash
+gcloud iam workload-identity-pools providers describe "my-repo" \
+  --location="global" \
+  --workload-identity-pool="github" \
+  --format="value(name)"
+# projects/728416536675/locations/global/workloadIdentityPools/github/providers/my-repo
+```
+
+Empieza con el **número** del proyecto, no con el ID.
+
+### Workflow final: `.github/workflows/cd.yml`
+
+```yaml
+name: cd
+
+on:
+  push:
+    branches: [main]
+
+jobs:
+  deploy:
+    name: Deploy
+    runs-on: ubuntu-latest
+
+    permissions:
+      contents: "read"
+      id-token: "write"
+
+    steps:
+      - name: Check out code
+        uses: actions/checkout@v6
+
+      - name: Set up Go
+        uses: actions/setup-go@v6
+        with:
+          go-version: "1.27.1"
+
+      - name: Build the app
+        run: ./scripts/buildprod.sh
+
+      - id: auth
+        name: Authenticate to Google Cloud
+        uses: google-github-actions/auth@v3
+        with:
+          workload_identity_provider: "projects/728416536675/locations/global/workloadIdentityPools/github/providers/my-repo"
+          service_account: "cloud-run-deployer@inner-cinema-511617-v1.iam.gserviceaccount.com"
+
+      - name: Set up Cloud SDK
+        uses: google-github-actions/setup-gcloud@v3
+
+      - name: Build and push Docker image
+        run: gcloud builds submit --tag us-central1-docker.pkg.dev/inner-cinema-511617-v1/notely-ar-repo/notely:latest .
+```
+
+| Bloque | Para qué |
+|---|---|
+| `permissions.id-token: write` | Permite que el job **pida el token OIDC**; sin esto, `auth` falla |
+| `permissions.contents: read` | Al declarar `permissions` se pierden los permisos por defecto; `checkout` necesita leer el repo |
+| `auth@v3` | Intercambia el token OIDC por credenciales temporales (WIF) |
+| `setup-gcloud@v3` | Instala la CLI `gcloud` en el runner, ya autenticada |
+| `gcloud builds submit` | Construye en Cloud Build y sube a Artifact Registry |
+
+### Flujo resultante
+
+```
+merge PR #8 ──► push a main ──► cd.yml (Deploy, ~1m 15s)
+                                  ├─ checkout
+                                  ├─ setup-go
+                                  ├─ buildprod.sh
+                                  ├─ auth (WIF: token OIDC → credenciales temporales)
+                                  ├─ setup-gcloud
+                                  └─ gcloud builds submit ──► Artifact Registry (notely:latest)
+```
+
+### Antes vs. ahora
+
+| | Lección Artifact Registry | Automate Builds |
+|---|---|---|
+| ¿Quién construye? | Tú, desde la Mac | GitHub Actions |
+| ¿Con qué identidad? | Tu cuenta de Google | Service account Cloud Run Deployer |
+| ¿Cuándo? | Manualmente | En cada merge a `main` |
+| ¿Llaves guardadas en GitHub? | — | **Ninguna** |
+
+### Verificación
+
+```bash
+gh run list --repo cecibelauda/learn-cicd-starter --workflow cd.yml --limit 3
+gh run watch --repo cecibelauda/learn-cicd-starter
+gcloud artifacts docker images list \
+  us-central1-docker.pkg.dev/inner-cinema-511617-v1/notely-ar-repo/notely \
+  --include-tags --sort-by=~CREATE_TIME --limit=2
+```
+
+El "1 notice" en *Annotations* del run es informativo, no un error.
+
+---
+
+## 6.9 Comandos nuevos de la Sección 6
+
+### Docker
+
+```bash
+docker --version
+docker info --format '{{.OSType}}/{{.Architecture}}'
+docker build -t usuario/notely:latest .
+docker images | grep notely
+docker image inspect usuario/notely:latest --format '{{.Os}}/{{.Architecture}}'
+docker run -e PORT=8080 -p 8080:8080 usuario/notely:latest
+file notely                                  # ELF (Linux) vs Mach-O (Mac)
+```
+
+### gcloud
+
+```bash
+gcloud init
+gcloud config get-value project
+gcloud components update
+gcloud builds submit --tag <URL_IMAGEN> .
+gcloud artifacts docker images list <REPO_O_IMAGEN> --include-tags
+gcloud iam service-accounts list --format="value(email)"
+gcloud projects add-iam-policy-binding <PROYECTO> --member=... --role=...
+gcloud projects get-iam-policy <PROYECTO> --flatten="bindings[].members" \
+  --filter="bindings.members:<SA>" --format="value(bindings.role)"
+gcloud iam workload-identity-pools create ...
+gcloud iam workload-identity-pools providers create-oidc ...
+gcloud iam workload-identity-pools providers describe ... --format="value(name)"
+gcloud iam service-accounts add-iam-policy-binding ...
+```
+
+### Git y GitHub CLI
+
+```bash
+git branch -m cd build                        # renombrar rama (conserva cambios)
+git rev-parse --show-toplevel                 # raíz del repo
+gh pr list --repo OWNER/REPO --state all --json number,title,state,mergedAt
+gh pr checks <N> --repo OWNER/REPO --watch    # con --repo, el número es obligatorio
+gh pr merge <N> --repo OWNER/REPO --merge
+gh run list --repo OWNER/REPO --workflow cd.yml --limit 3
+gh run watch --repo OWNER/REPO
+gh run view --repo OWNER/REPO --log-failed
+```
+
+---
+
+## 6.10 Notas y errores encontrados
+
+| Situación | Causa | Solución |
+|---|---|---|
+| En el PR solo aparecen checks de CI, no de CD | `cd.yml` escucha `push` a `main` | Normal: el CD corre tras el merge |
+| `Cannot connect to the Docker daemon` | Docker Desktop cerrado | Abrir Docker Desktop (hospeda la VM Linux del daemon) |
+| `./notely` → `exec format error` en la Mac | Binario compilado para linux/amd64 | Es solo para el contenedor; no cambiar a arm64 |
+| La cuenta de facturación anterior no se podía reabrir | Prueba gratuita ya usada / cuenta cerrada | Crear `notely-billing` (cuenta pagada) + alerta de presupuesto |
+| Banner "Activa el análisis de vulnerabilidades" | Oferta paga (USD 0.26/imagen) | Cerrar con X; no activar |
+| "Visualizador de IA" en lugar de Viewer | Rol predefinido de otro servicio | Categoría **Básico** → **Visualizador** (`roles/viewer`) |
+| No se pueden elegir varios roles en un desplegable | La consola asigna un rol por fila | **+ Agregar otro rol**, o loop con `gcloud` |
+| `gh pr list` sin columna de estado | La vista por defecto no muestra MERGED/CLOSED | `--json number,title,state,mergedAt` |
+| `argument required when using the --repo flag` | `gh pr checks --repo` sin número de PR | `gh pr checks 8 --repo ...` |
+| `gh run list` no mostraba el run nuevo tras el merge | GitHub tarda segundos en disparar el workflow | `sleep 10` y volver a listar |
+| Rama `build` ya mergeada al retomar | PR #7 mergeado el 14/10 | Rama nueva `auto-build` desde `main` actualizado |
+
+### Reglas de trabajo consolidadas
+
+1. **CI verifica, CD entrega.** Son workflows separados con eventos distintos.
+2. **Nunca `git push origin main`.** `main` solo cambia por PR + Merge.
+3. **Compilar para la arquitectura de destino** (Cloud Run = linux/amd64), no la de la Mac.
+4. **Sin llaves de larga duración en CI:** usar WIF/OIDC con credenciales temporales.
+5. **Restringir el provider a tu repo** (`attribute-condition`); nunca confiar en todo GitHub.
+6. **Mínimo privilegio:** la service account solo tiene los roles que necesita.
+7. **Controlar costos:** alerta de presupuesto, sin escaneos pagos, y borrar el proyecto `notely` al terminar.
+
+---
+
+## 6.11 Flujo completo ejecutado en la Sección 6
+
+```bash
+# 1. Preparar rama (se renombró cd → build)
+cd ~/learn-cicd-starter
+git branch -m cd build
+
+# 2. Lección Docker
+./scripts/buildprod.sh
+docker build -t DOCKERHUB_NAMESPACE/notely:latest .
+docker run -e PORT=8080 -p 8080:8080 DOCKERHUB_NAMESPACE/notely:latest
+
+# 3. Lección CD: crear .github/workflows/cd.yml (sección 6.4)
+git add .github/workflows/cd.yml
+git commit -m "..."
+git push -u origin build
+# PR #7 (build → main) → solo CI ✅ → merge (14/10)
+
+# 4. GCP: cuenta de facturación notely-billing, proyecto notely,
+#    gcloud init (sección 6.5)
+
+# 5. Artifact Registry (sección 6.6)
+gcloud config get-value project              # inner-cinema-511617-v1
+gcloud builds submit --tag us-central1-docker.pkg.dev/inner-cinema-511617-v1/notely-ar-repo/notely:latest .
+
+# 6. WIF: service account + APIs + pool + provider + binding (sección 6.7)
+
+# 7. Automate Builds
+gh pr list --repo cecibelauda/learn-cicd-starter --state all --limit 3 --json number,title,state,mergedAt
+git checkout main
+git pull origin main
+git checkout -b auto-build
+cat > .github/workflows/cd.yml << 'EOF2'
+# contenido completo en la sección 6.8
+EOF2
+git diff .github/workflows/cd.yml
+grep -n $'\t' .github/workflows/cd.yml
+git add .github/workflows/cd.yml
+git commit -m "cd: build and push Docker image to Artifact Registry"
+git push -u origin auto-build
+gh pr create --repo cecibelauda/learn-cicd-starter \
+  --base main --head auto-build \
+  --title "Automate Docker builds" \
+  --body "Authenticates to GCP via WIF and pushes the image to Artifact Registry"
+# PR #8 → Tests ✅ Style ✅
+gh pr merge 8 --repo cecibelauda/learn-cicd-starter --merge
+sleep 10
+gh run list --repo cecibelauda/learn-cicd-starter --workflow cd.yml --limit 3
+# cd: Merge pull request #8 → Deploy ✅ (d1889af)
+
+# 8. Sincronizar y limpiar
+git checkout main
+git pull origin main
+git branch -d auto-build
+```
+
+---
+
+## 6.12 Referencias oficiales de la Sección 6
+
+**CI/CD**
+- About continuous integration: https://docs.github.com/en/actions/about-github-actions/about-continuous-integration-with-github-actions
+- About continuous deployment: https://docs.github.com/en/actions/about-github-actions/about-continuous-deployment-with-github-actions
+- CI vs. Delivery vs. Deployment (Atlassian): https://www.atlassian.com/continuous-delivery/principles/continuous-integration-vs-delivery-vs-deployment
+- Eventos que disparan workflows: https://docs.github.com/en/actions/writing-workflows/choosing-when-your-workflow-runs/events-that-trigger-workflows
+
+**Docker y Go**
+- `docker build`: https://docs.docker.com/reference/cli/docker/buildx/build/
+- `docker run`: https://docs.docker.com/reference/cli/docker/container/run/
+- `GOOS` / `GOARCH`: https://go.dev/doc/install/source#environment
+- Digests de imágenes: https://docs.docker.com/reference/cli/docker/image/pull/#pull-an-image-by-digest-immutable-identifier
+
+**Google Cloud**
+- Programa gratuito: https://cloud.google.com/free/docs/free-cloud-features
+- Crear y administrar proyectos: https://cloud.google.com/resource-manager/docs/creating-managing-projects
+- Crear cuenta de facturación: https://cloud.google.com/billing/docs/how-to/create-billing-account
+- Alertas de presupuesto: https://cloud.google.com/billing/docs/how-to/budgets
+- Instalar gcloud CLI: https://cloud.google.com/sdk/docs/install
+- Artifact Registry: https://cloud.google.com/artifact-registry/docs/overview
+- Crear repositorios Docker: https://cloud.google.com/artifact-registry/docs/repositories/create-repos
+- Administrar imágenes: https://cloud.google.com/artifact-registry/docs/docker/manage-images
+- `gcloud builds submit`: https://cloud.google.com/sdk/gcloud/reference/builds/submit
+- Ver resultados de Cloud Build: https://cloud.google.com/build/docs/view-build-results
+- Regiones y zonas: https://cloud.google.com/compute/docs/regions-zones
+- Roles básicos: https://cloud.google.com/iam/docs/roles-overview#basic
+- Roles de Cloud Build: https://cloud.google.com/build/docs/iam-roles-permissions
+- Roles de Cloud Run: https://cloud.google.com/run/docs/reference/iam/roles
+
+**Workload Identity Federation / OIDC**
+- WIF (visión general): https://cloud.google.com/iam/docs/workload-identity-federation
+- WIF con pipelines de despliegue: https://cloud.google.com/iam/docs/workload-identity-federation-with-deployment-pipelines
+- OIDC en GitHub Actions: https://docs.github.com/en/actions/security-for-github-actions/security-hardening-your-deployments/about-security-hardening-with-openid-connect
+- Configurar OIDC en Google Cloud: https://docs.github.com/en/actions/security-for-github-actions/security-hardening-your-deployments/configuring-openid-connect-in-google-cloud-platform
+- `google-github-actions/auth`: https://github.com/google-github-actions/auth
+- `google-github-actions/setup-gcloud`: https://github.com/google-github-actions/setup-gcloud
+- Sintaxis de `permissions`: https://docs.github.com/en/actions/writing-workflows/workflow-syntax-for-github-actions#permissions
+
+**Git / GitHub CLI**
+- `git pull`: https://git-scm.com/docs/git-pull
+- `git push`: https://git-scm.com/docs/git-push
+- GitHub Flow: https://docs.github.com/en/get-started/using-github/github-flow
+- `gh pr list`: https://cli.github.com/manual/gh_pr_list
+- `gh pr checks`: https://cli.github.com/manual/gh_pr_checks
+- `gh run watch`: https://cli.github.com/manual/gh_run_watch
+
+---
+
 # ESTADO DEL CURSO
 
 | Sección | Estado |
@@ -2686,14 +3346,13 @@ Commits de la rama `security`:
 | 3 — Formatting | ✅ Completada |
 | 4 — Linting | ✅ Completada |
 | 5 — Security | ✅ Completada |
-| 6 — Por confirmar al iniciar | ⏳ Pendiente |
-
-Tema pendiente según el temario inicial: Continuous Deployment.
+| 6 — Continuous Deployment (Build) | ✅ Completada |
+| 7 — Por confirmar al iniciar | ⏳ Pendiente |
 
 ### Pipeline actual
 
 ```
-PR hacia main
+PR hacia main (ci.yml)
       │
       ├──► Job "Tests"                    ├──► Job "Style"
       │     ├─ checkout                   │     ├─ checkout
@@ -2701,6 +3360,16 @@ PR hacia main
       │     ├─ go test -cover ./...       │     ├─ test -z $(go fmt ./...)
       │     ├─ go install gosec           │     ├─ go install staticcheck
       │     └─ gosec ./...                │     └─ staticcheck ./...
+
+Push a main (cd.yml)
+      │
+      └──► Job "Deploy"
+            ├─ checkout
+            ├─ setup-go
+            ├─ ./scripts/buildprod.sh
+            ├─ google-github-actions/auth  (WIF)
+            ├─ google-github-actions/setup-gcloud
+            └─ gcloud builds submit ──► Artifact Registry (notely:latest)
 ```
 
 ### Ramas y PRs
@@ -2711,13 +3380,26 @@ PR hacia main
 | `formatting` | #2 | ✅ Mergeada a `main` — ciclo cerrado |
 | `linting` | #3, #4 | ✅ Mergeada a `main` — ciclo cerrado |
 | `security` | #5 | ✅ Mergeada a `main` (`11e3175`) — ciclo cerrado |
+| `build` | #6 | ❌ Cerrado sin merge (reemplazado por #7) |
+| `build` | #7 | ✅ Mergeada a `main` (`a2d18d0`) — ciclo cerrado |
+| `auto-build` | #8 | ✅ Mergeada a `main` (`d1889af`) — ciclo cerrado |
 | — | bootdotdev#2988 | ❌ Creado por error contra el repo original — cerrado |
 
-**Próximo paso:** al iniciar la Sección 6, crear una rama nueva desde `main` actualizado:
+### Recursos en GCP (eliminar al terminar el curso)
+
+| Recurso | Valor |
+|---|---|
+| Proyecto | `notely` (`inner-cinema-511617-v1`) |
+| Facturación | `notely-billing` (cuenta pagada) |
+| Artifact Registry | `notely-ar-repo` (us-central1) |
+| Service account | `cloud-run-deployer@inner-cinema-511617-v1.iam.gserviceaccount.com` |
+| WIF | Pool `github` / Provider `my-repo` |
+
+**Próximo paso:** al iniciar la siguiente sección, crear una rama nueva desde `main` actualizado:
 
 ```bash
 cd ~/learn-cicd-starter
 git checkout main
 git pull origin main
-git checkout -b <nombre-rama-seccion-6>
+git checkout -b <nombre-rama-seccion-7>
 ```
