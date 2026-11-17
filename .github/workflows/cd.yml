@@ -9,6 +9,10 @@ jobs:
     name: Deploy
     runs-on: ubuntu-latest
 
+    permissions:
+      contents: "read"
+      id-token: "write"
+
     steps:
       - name: Check out code
         uses: actions/checkout@v6
@@ -20,3 +24,16 @@ jobs:
 
       - name: Build the app
         run: ./scripts/buildprod.sh
+
+      - id: auth
+        name: Authenticate to Google Cloud
+        uses: google-github-actions/auth@v3
+        with:
+          workload_identity_provider: "projects/728416536675/locations/global/workloadIdentityPools/github/providers/my-repo"
+          service_account: "cloud-run-deployer@inner-cinema-511617-v1.iam.gserviceaccount.com"
+
+      - name: Set up Cloud SDK
+        uses: google-github-actions/setup-gcloud@v3
+
+      - name: Build and push Docker image
+        run: gcloud builds submit --tag us-central1-docker.pkg.dev/inner-cinema-511617-v1/notely-ar-repo/notely:latest .
