@@ -7,6 +7,7 @@ import (
 	"encoding/json"
 	"net/http"
 	"time"
+	"log"
 
 	"github.com/bootdotdev/learn-cicd-starter/internal/database"
 	"github.com/google/uuid"
@@ -37,7 +38,9 @@ func (cfg *apiConfig) handlerUsersCreate(w http.ResponseWriter, r *http.Request)
 		Name:      params.Name,
 		ApiKey:    apiKey,
 	})
+
 	if err != nil {
+		log.Printf("create user failed: %v", err)
 		respondWithError(w, http.StatusInternalServerError, "Couldn't create user", err)
 		return
 	}

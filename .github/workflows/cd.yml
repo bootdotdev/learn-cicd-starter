@@ -1,0 +1,72 @@
+name: cd
+
+on:
+  push:
+    branches: [main]
+
+jobs:
+  deploy:
+    name: Deploy
+    runs-on: ubuntu-latest
+
+    env:
+      DATABASE_URL: ${{ secrets.DATABASE_URL }}
+
+    steps:
+      - name: Check out code
+        uses: actions/checkout@v4
+
+      - name: Install goose
+        run: |
+          curl -fsSL https://raw.githubusercontent.com/pressly/goose/master/install.sh | sh
+
+      - id: 'auth'
+        uses: 'google-github-actions/auth@v2'
+        with:
+          credentials_json: '${{ secrets.GCP_CREDENTIALS }}'
+
+      - name: 'Set up Cloud SDK'
+        uses: 'google-github-actions/setup-gcloud@v3'
+
+      - name: Configure gcloud defaults
+        run: |
+          gcloud config set project notely-473217
+          gcloud config set run/region us-central1
+
+      - name: Set IMAGE_TAG
+        run: |
+          SHORT_SHA="$(echo ${{github.sha}} | head -c 8)"
+          echo "IMAGE_TAG=$SHORT_SHA" >> "$GITHUB_ENV"
+
+      - name: Build and push image (Cloud Build)
+        run: |
+          gcloud builds submit \
+            --tag us-central1-docker.pkg.dev/notely-473217/notely-ar-repo/notely:${IMAGE_TAG} .
+
+      - name: Debug DB URL presence
+        run: |
+          [ -n "$DATABASE_URL" ] && echo "DATABASE_URL is set" || echo "DATABASE_URL is MISSING"
+
+      - name: Run DB migrations
+        run: |
+          export PATH="$PWD/bin:$PATH"
+          chmod +x scripts/migrateup.sh
+          ./scripts/migrateup.sh
+
+      - name: Deploy to Cloud Run
+        run: |
+          gcloud run deploy notely \
+            --image us-central1-docker.pkg.dev/notely-473217/notely-ar-repo/notely:${IMAGE_TAG} \
+            --allow-unauthenticated \
+            --max-instances=4
+      
+      # Optional: ensure unauthenticated access if first deploy
+      - name: Ensure public invoker (optional)
+        continue-on-error: true
+        run: |
+          gcloud run services add-iam-policy-binding notely \
+            --member="allUsers" \
+            --role="roles/run.invoker"
+
+
+
