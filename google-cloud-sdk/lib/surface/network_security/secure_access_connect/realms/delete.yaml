@@ -1,0 +1,28 @@
+release_tracks: [ALPHA, BETA]
+
+help_text:
+  brief: |
+    Delete a SAC realm.
+  description: |
+    Delete the specified SAC realm.
+  examples: |
+    To delete a realm named `my-realm`, run:
+
+      $ {command} my-realm
+
+arguments:
+  resource:
+    spec: !REF googlecloudsdk.command_lib.network_security.resources:sacRealm
+    help_text: |
+      Realm to be deleted.
+
+async:
+  collection: networksecurity.projects.locations.operations
+
+request: &request
+  ALPHA:
+    api_version: v1alpha1
+  BETA:
+    api_version: v1beta1
+  collection: networksecurity.projects.locations.sacRealms
+  method: delete

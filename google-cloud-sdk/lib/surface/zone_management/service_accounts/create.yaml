@@ -1,0 +1,27 @@
+- release_tracks: [ALPHA]
+
+  help_text:
+    brief: create service account
+    description: Creates a service account.
+    examples: |
+      To create a service account called `test-service-account` in project `test-project` and location `us-central1`, run:
+
+      $ {command} test-service-account --location=us-central1 --project=test-project --zone=us-central1-edge-zone1
+
+  request:
+    collection: edgecontainer.projects.locations.serviceAccounts
+    api_version: v1alpha
+    method: create
+
+  arguments:
+    resource:
+      help_text: Service Account to create.
+      spec: !REF googlecloudsdk.command_lib.zone_management.service_account.resources:serviceAccount
+    params:
+    - arg_name: zone
+      api_field: serviceAccount.zone
+      required: true
+      help_text: Zone name.
+
+  async:
+    collection: edgecontainer.projects.locations.operations

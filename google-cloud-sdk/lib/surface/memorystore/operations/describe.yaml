@@ -1,0 +1,23 @@
+- release_tracks: [ALPHA, BETA, GA]
+  help_text:
+    brief: Describe a Memorystore operation.
+    description: Describe a Memorystore operation.
+    examples: |
+      To describe operation `my-operation` in project `my-project` and location `us-central1`, run:
+
+      $ {command} my-operation --project=my-project --location=us-central1
+  arguments:
+    params:
+    - help_text: The Memorystore operation to describe.
+      is_positional: true
+      request_id_field: operationId
+      resource_spec: !REF googlecloudsdk.command_lib.memorystore.resources:operation
+      required: true
+  request:
+    ALPHA:
+      api_version: v1alpha
+    BETA:
+      api_version: v1beta
+    GA:
+      api_version: v1
+    collection: memorystore.projects.locations.operations

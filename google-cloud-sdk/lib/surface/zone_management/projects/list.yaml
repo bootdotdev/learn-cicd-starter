@@ -1,0 +1,22 @@
+- release_tracks: [ALPHA]
+
+  help_text:
+    brief: List Zonal Projects
+    description: Lists zonal projects in a given project and location.
+    examples: |
+      To list zonal projects in zone `test-zone` in organization `test-org` and location `us-central1`, run:
+
+      $ {command} --location=us-central1 --zone=test-zone --organization=test-org
+
+  request:
+    collection: edgecontainer.organizations.locations.zones.zonalProjects
+    ALPHA:
+      api_version: v1alpha
+
+  response:
+    id_field: name
+
+  arguments:
+    resource:
+      help_text: Parent Edge Container location to list all zonal projects in a given location, zone and organization.
+      spec: !REF googlecloudsdk.command_lib.zone_management.project.resources:zone

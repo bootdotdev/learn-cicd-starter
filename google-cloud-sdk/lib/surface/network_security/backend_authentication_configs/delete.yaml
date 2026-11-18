@@ -1,0 +1,33 @@
+release_tracks: [ALPHA, BETA, GA]
+
+help_text:
+  brief: |
+    Delete BackendAuthenticationConfig.
+  description: |
+    Delete the specified BackendAuthenticationConfig.
+  examples: |
+      To delete a BackendAuthenticationConfig called 'my-backend-authentication-config', run:
+
+        $ {command} my-backend-authentication-config --location=global
+
+arguments:
+  resource:
+    spec: !REF googlecloudsdk.command_lib.network_security.resources:backendAuthenticationConfig
+    help_text: |
+      Name of the BackendAuthenticationConfig you want to delete.
+  params:
+  - arg_name: etag
+    api_field: etag
+    help_text: The entity-tag of the BackendAuthenticationConfig.
+
+async:
+  collection: networksecurity.projects.locations.operations
+
+request: &request
+  ALPHA:
+    api_version: v1alpha1
+  BETA:
+    api_version: v1beta1
+  GA:
+    api_version: v1
+  collection: networksecurity.projects.locations.backendAuthenticationConfigs

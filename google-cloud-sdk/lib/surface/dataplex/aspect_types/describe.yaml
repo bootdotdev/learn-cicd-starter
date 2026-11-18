@@ -1,0 +1,20 @@
+- release_tracks: [ALPHA, GA]
+  help_text:
+    brief: |
+      Describe a Dataplex Aspect Type.
+    description: |
+      Displays all details of an Aspect Type given a valid Aspect Type ID.
+    examples: |
+       To describe a Dataplex Aspect Type `test-aspect-type` in location `us-central1` and in project `test-project`, run:
+
+          $ {command} test-aspect-type --location=us-central1 --project=test-project
+  request:
+    ALPHA:
+      api_version: v1
+    collection: dataplex.projects.locations.aspectTypes
+    method: get
+  arguments:
+    resource:
+      help_text: |
+        Arguments and flags that define the Dataplex Aspect Type you want to retrieve.
+      spec: !REF googlecloudsdk.command_lib.dataplex.resources:aspect_type

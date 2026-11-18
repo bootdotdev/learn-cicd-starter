@@ -1,0 +1,12 @@
+- help_text:
+    brief: Describe an alert.
+    description: Describe an alert.
+
+  request:
+    collection: monitoring.projects.alerts
+    api_version: v3
+
+  arguments:
+    resource:
+      help_text: The alert to describe.
+      spec: !REF googlecloudsdk.command_lib.monitoring.resources:alert

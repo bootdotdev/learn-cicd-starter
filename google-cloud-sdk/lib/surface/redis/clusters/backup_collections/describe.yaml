@@ -1,0 +1,35 @@
+- release_tracks: [ALPHA, BETA, GA]
+
+  help_text:
+    brief: |
+      Show metadata for a backup collection.
+    description: |
+      Show metadata for a backup collection.
+
+      Displays all metadata associated with a backup collection.
+
+      This command can fail for the following reasons:
+        * The backup collection specified does not exist.
+        * The active account does not have permission to access the given
+          backup collection.
+    examples: |
+      To display the metadata for a backup collection with the name `my-backup-collection`
+      in the us-central1 region, run:
+
+        $ {commmand} my-backup-collection --region=us-central1
+
+  arguments:
+    resource:
+      spec: !REF googlecloudsdk.command_lib.redis.resources:backup_collection
+      help_text: |
+        Arguments and flags that specify the backup collection you want to describe.
+      is_positional: true
+
+  request:
+    ALPHA:
+      api_version: v1alpha1
+    BETA:
+      api_version: v1beta1
+    GA:
+      api_version: v1
+    collection: redis.projects.locations.backupCollections

@@ -1,0 +1,52 @@
+# -*- coding: utf-8 -*- #
+# Copyright 2025 Google LLC. All Rights Reserved.
+#
+# Licensed under the Apache License, Version 2.0 (the "License");
+# you may not use this file except in compliance with the License.
+# You may obtain a copy of the License at
+#
+#    http://www.apache.org/licenses/LICENSE-2.0
+#
+# Unless required by applicable law or agreed to in writing, software
+# distributed under the License is distributed on an "AS IS" BASIS,
+# WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
+# See the License for the specific language governing permissions and
+# limitations under the License.
+
+- release_tracks: [ALPHA, BETA, GA]
+  help_text:
+    brief: Create an IAM workforce identity pool provider SCIM tenant.
+    description: |
+      Create a new SCIM tenant associated with a specific workforce identity pool provider.
+
+      Upon successful creation, the command returns the created SCIM tenant resource.
+    examples: |
+      To create a SCIM tenant with ID `my-tenant` under provider `my-okta-provider` in pool `my-pool` located in `global` with claim mappings:
+
+        $ {command} my-tenant --location=global --workforce-pool=my-pool --provider=my-okta-provider --claim-mapping="google.subject=user.externalId,google.group=group.externalId"
+
+      To create a SCIM tenant `sales-tenant` under provider `salesforce` in pool `partner-pool` located in `europe-west1` with claim mappings:
+
+        $ {command} sales-tenant --location=europe-west1 --workforce-pool=partner-pool --provider=salesforce --claim-mapping="google.subject=user.externalId,google.group=group.externalId"
+
+  request:
+    collection: iam.locations.workforcePools.providers.scimTenants
+
+  arguments:
+    resource:
+      help_text: The ID of the SCIM tenant to create. Must be 4-32 characters, alphanumeric ([a-z0-9-]), and cannot start with gcp-.
+      spec: !REF googlecloudsdk.command_lib.iam.resources:workforce_pool_provider_scim_tenant
+      is_positional: true
+
+    params:
+    - _REF_: googlecloudsdk.command_lib.iam.flags:workforce_pool_provider_scim_tenant.display_name
+      required: false
+
+    - _REF_: googlecloudsdk.command_lib.iam.flags:workforce_pool_provider_scim_tenant.description
+      required: false
+
+    - _REF_: googlecloudsdk.command_lib.iam.flags:workforce_pool_provider_scim_tenant.claim_mapping
+      required: true
+
+  output:
+    format: yaml

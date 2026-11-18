@@ -1,0 +1,24 @@
+release_tracks: [ALPHA]
+help_text:
+  brief: |
+    List multicast group definitions.
+  description: |
+    List all multicast group definitions in the specified location of the current project.
+  examples: |
+    To list multicast group definitions in the current project, run:
+
+      $ {command} --location=global
+request: &request
+  api_version: v1alpha1
+  collection: networkservices.projects.locations.multicastGroupDefinitions
+arguments:
+  resource:
+    spec: !REF googlecloudsdk.command_lib.network_services.resources:location
+    help_text: The location of the multicast group definitions to display.
+response:
+  id_field: name
+output:
+  format: |
+     table(
+        name.basename():label=NAME, create_time, reserved_internal_range, multicast_domain, ip_cidr_range, consumer_accept_list, require_explicit_accept
+      )

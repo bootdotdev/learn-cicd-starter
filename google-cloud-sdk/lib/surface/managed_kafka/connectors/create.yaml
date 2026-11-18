@@ -1,0 +1,49 @@
+release_tracks: [ALPHA, BETA, GA]
+
+help_text:
+  brief: |
+    Create a Managed Service for Apache Kafka connector.
+  description: |
+    Create a Managed Service for Apache Kafka connector.
+
+  examples: |
+    To create a connector, run the following:
+
+      $ {command} myconnector \
+          --location=us-central1 \
+          --connect-cluster=mycluster \
+          --configs=connector.class="com.google.pubsub.kafka.source.CloudPubSubSourceConnector",cps.subscription="my-subscription",... \
+          [--task-restart-min-backoff=60s] \
+          [--task-restart-max-backoff=30m]
+      OR
+      $ {command} myconnector \
+          --location=us-central1 \
+          --connect-cluster=mycluster \
+          --config-file=my-config-file.yaml \
+          [--task-restart-min-backoff=60s] \
+          [--task-restart-max-backoff=30m]
+
+request:
+  collection: managedkafka.projects.locations.connectClusters.connectors
+  modify_request_hooks:
+  - googlecloudsdk.command_lib.managed_kafka.util:ConnectorCreateReadConfigAndTaskRestartPolicy
+
+arguments:
+  resource:
+    help_text: Identifies the connector for which the command runs.
+    spec: !REF googlecloudsdk.command_lib.managed_kafka.resources:connector
+    is_positional: true
+  params:
+  - group:
+      required: true
+      mutex: true
+      params:
+      - _REF_: googlecloudsdk.command_lib.managed_kafka.flags:connector-configs
+      - _REF_: googlecloudsdk.command_lib.managed_kafka.flags:connector-config-file
+  - group:
+      required: false
+      params:
+      - _REF_: googlecloudsdk.command_lib.managed_kafka.flags:task-restart-min-backoff
+        required: true
+      - _REF_: googlecloudsdk.command_lib.managed_kafka.flags:task-restart-max-backoff
+        required: true

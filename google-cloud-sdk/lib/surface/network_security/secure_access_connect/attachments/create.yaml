@@ -1,0 +1,59 @@
+release_tracks: [ALPHA, BETA]
+
+help_text:
+  brief: |
+    Create a SAC attachment.
+  description: |
+    Create a new attachment linked to an existing SAC realm and NCC gateway.
+  examples: |
+    The following command creates a new attachment named `my-attachment` in the location `us-central1`.
+
+      $ {command} my-attachment --location=us-central1 --realm=my-realm --gateway=my-gateway
+
+    The attachment adds security inspection from `my-realm` to traffic within `my-gateway`.
+
+arguments:
+  resource:
+    spec: !REF googlecloudsdk.command_lib.network_security.resources:sacAttachment
+    help_text: |
+      Attachment to be created.
+  params:
+  - arg_name: realm
+    required: true
+    api_field: sACAttachment.sacRealm
+    help_text: |
+      SAC realm to which this attachment belongs.
+  - arg_name: gateway
+    required: true
+    api_field: sACAttachment.nccGateway
+    help_text: |
+      NCC gateway whose traffic will be inspected by this attachment.
+  - arg_name: symantec-site
+    api_field: sACAttachment.symantecOptions.symantecSite
+    help_text: |
+      Identifier of the Symantec site to which this attachment connects.
+  - arg_name: symantec-location-name
+    api_field: sACAttachment.symantecOptions.symantecLocationName
+    help_text: |
+      Name of the Symantec Location that should be created along with this attachment.
+  - arg_name: country
+    api_field: sACAttachment.country
+    help_text: |
+      ISO 3166 alpha-2 country code associated with this attachment for localization. Does not need
+      to match the region where this attachment is created.
+  - arg_name: time-zone
+    api_field: sACAttachment.timeZone
+    help_text: |
+      tzinfo time zone associated with this attachment for localization. Does not need to match the
+      region where this attachment is created.
+
+async:
+  collection: networksecurity.projects.locations.operations
+
+request: &request
+  ALPHA:
+    api_version: v1alpha1
+  BETA:
+    api_version: v1beta1
+  collection: networksecurity.projects.locations.sacAttachments
+  method: create

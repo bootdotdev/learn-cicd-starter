@@ -1,0 +1,36 @@
+- release_tracks: [GA, BETA, ALPHA]
+  hidden: true  # TODO(b/420436006): unhide the CLI for GA.
+
+  help_text:
+    brief: Add an IAM policy binding to a Bigtable schema bundle.
+    description: |
+      Add an IAM policy binding to a Bigtable schema bundle. One binding consists of a member,
+      a role, and an optional condition.
+
+    examples: |
+      To add an IAM policy binding for the role of `roles/editor` for the user `222larabrown@gmail.com`
+      with schema bundle `my-schema-bundle` in instance `my-instance` and table `my-table`, run:
+
+        $ {command} my-schema-bundle --instance=`my-instance` --table=`my-table` --member=`user:222larabrown@gmail.com` --role=`roles/editor`
+
+      To add an IAM policy binding which expires at the end of the year 2025 for the role of
+      `roles/bigtable.admin` and the user `222larabrown@gmail.com` with schema bundle `my-schema-bundle`
+      in instance `my-instance` and table `my-table`, run:
+
+        $ {command} my-schema-bundle --instance=`my-instance` --table=`my-table` --member=`user:222larabrown@gmail.com` --role=`roles/bigtable.admin` --condition=`expression=request.time < timestamp("2021-01-01T00:00:00Z"),title=expires_end_of_2020,description=Expires at midnight on 2020-12-31`
+
+      See https://cloud.google.com/iam/docs/managing-policies for details of
+      policy role and member types.
+
+  iam:
+    enable_condition: true
+    policy_version: 3
+    get_iam_policy_version_path: getIamPolicyRequest.options.requestedPolicyVersion
+
+  request:
+    collection: bigtableadmin.projects.instances.tables.schemaBundles
+
+  arguments:
+    resource:
+      help_text: Bigtable schema bundle to add the IAM policy binding to.
+      spec: !REF googlecloudsdk.command_lib.bigtable.resources:schema_bundle

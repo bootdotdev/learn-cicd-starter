@@ -1,0 +1,55 @@
+# -*- coding: utf-8 -*- #
+# Copyright 2025 Google LLC. All Rights Reserved.
+#
+# Licensed under the Apache License, Version 2.0 (the "License");
+# you may not use this file except in compliance with the License.
+# You may obtain a copy of the License at
+#
+#    [http://www.apache.org/licenses/LICENSE-2.0](http://www.apache.org/licenses/LICENSE-2.0)
+#
+# Unless required by applicable law or agreed to in writing, software
+# distributed under the License is distributed on an "AS IS" BASIS,
+# WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
+# See the License for the specific language governing permissions and
+# limitations under the License.
+#
+# Implementation definition for gcloud iam workforce-pools providers scim-tenants list
+
+- release_tracks: [ALPHA, BETA, GA]
+  help_text:
+    brief: List IAM workforce identity pool provider SCIM tenants.
+    description: |
+      List all SCIM tenants associated with a specific workforce identity pool provider.
+
+    examples: |
+      To list all SCIM tenants under provider `my-okta-provider` in pool `my-pool` located in `global`:
+
+        $ {command} --location=global  --workforce-pool=my-pool  --provider=my-okta-provider
+
+      To list deleted SCIM tenants as well:
+
+        $ {command} --location=global  --workforce-pool=my-pool  --provider=my-okta-provider   --show-deleted
+
+  request:
+    collection: iam.locations.workforcePools.providers.scimTenants
+
+  arguments:
+    resource:
+      spec: !REF googlecloudsdk.command_lib.iam.resources:workforce_pool_provider
+      help_text: The workforce identity pool provider under which to list SCIM tenants.
+      is_positional: false
+
+    params:
+    - arg_name: show-deleted
+      api_field: showDeleted
+      required: false
+      help_text: Include SCIM tenants that have been deleted.
+
+  output:
+    format: |
+      table(
+        name.basename():label=SCIM_TENANT_ID,
+        displayName,
+        state,
+        baseUri
+      )

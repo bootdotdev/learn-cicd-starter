@@ -1,0 +1,658 @@
+backup_plan_cluster:
+  arg_name: cluster
+  api_field: backupPlan.cluster
+  required: true
+  help_text: |
+    Name of the cluster from which backups will be produced.
+    Value must be entered as a relative name, e.g.:
+
+    `projects/<project>/locations/<location>/clusters/<cluster>` for a regional cluster
+    or
+    `projects/<project>/zones/<zone>/clusters/<cluster>` for a zonal cluster.
+
+backup_plan_description:
+  arg_name: description
+  api_field: backupPlan.description
+  type: str
+  help_text: |
+    Optional text description for the backup plan.
+
+deactivated:
+  arg_name: deactivated
+  api_field: backupPlan.deactivated
+  type: bool
+  help_text: |
+    If set, no further changes may be made to this backup plan and no further backups may be created
+    for this plan. Backup deletion is still allowed.
+
+backup_plan_tags:
+  arg_name: tags
+  api_field: backupPlan.tags.additionalProperties
+  hidden: true
+  metavar: KEY=VALUE
+  help_text: |
+    List of tag KEY=VALUE pairs to add.
+  type:
+    arg_dict:
+      flatten: true
+      spec:
+      - api_field: key
+      - api_field: value
+
+backup_delete_lock_days:
+  arg_name: backup-delete-lock-days
+  api_field: backupPlan.retentionPolicy.backupDeleteLockDays
+  type: int
+  help_text: |
+    Number of days a backup produced via this plan cannot be deleted.
+
+    Must be less than or equal to 90 days.  If 0, delete operations are allowed. Updating this field
+    does not affect existing backups. Backups created after a successful update will inherit this
+    new value.
+
+backup_retain_days:
+  arg_name: backup-retain-days
+  api_field: backupPlan.retentionPolicy.backupRetainDays
+  help_text: |
+    Number of days after which a backup produced via this plan is automatically deleted.
+
+    Must be less than or equal to 365 days. If not set (value is 0), backups are not automatically
+    deleted. If set, must be greater than the value for backup_delete_lock_days. Updating this field
+    does not affect existing backups. Backups created after a successful update will inherit this
+    new value.
+
+locked:
+  arg_name: locked
+  api_field: backupPlan.retentionPolicy.locked
+  type: bool
+  help_text: |
+    If set, subsequent updates are not allowed to the backup plan's retention policy and this value
+    cannot be changed.
+
+cron_schedule:
+  arg_name: cron-schedule
+  api_field: backupPlan.backupSchedule.cronSchedule
+  type: str
+  # backupPlan.backupSchedule message should be nil by default.
+  default: null
+  help_text: |
+    Schedule on which backups will be automatically created.
+
+    Use standard [cron](http://en.wikipedia.org/wiki/Cron#Overview) syntax. For example,
+    `10 3 * * *` will automatically create a backup at 0310 every day. All times are interpreted as
+    UTC. The minimum interval between scheduled backups is 10 minutes.
+
+target_rpo_minutes:
+  arg_name: target-rpo-minutes
+  api_field: backupPlan.backupSchedule.rpoConfig.targetRpoMinutes
+  type: int
+  help_text: |
+    Schedule backups based on target RPO minutes instead of fixed cron schedules. Cannot be used with
+    --cron-schedule.
+
+exclusion_windows_file:
+  arg_name: exclusion-windows-file
+  api_field: backupPlan.backupSchedule.rpoConfig.exclusionWindows
+  processor: googlecloudsdk.command_lib.container.backup_restore.hooks:ReadExclusionWindowsFile
+  help_text: |
+    If provided, defines an array of exclusion windows for RPO based schedules from the given
+    config file in yaml. Only used together with --target-rpo-minutes for creation and rpo-based
+    plans during update.
+
+paused:
+  arg_name: paused
+  api_field: backupPlan.backupSchedule.paused
+  type: bool
+  # backupPlan.backupSchedule message should be nil by default.
+  default: null
+  help_text: |
+    If set, automatic backup creation is suppressed. When unset, automatic backup creation resumes
+    with the next scheduled create event.
+
+all_namespaces:
+  arg_name: all-namespaces
+  api_field: backupPlan.backupConfig.allNamespaces
+  processor: googlecloudsdk.command_lib.container.backup_restore.hooks:ProcessAllNamespaces
+  type: bool
+  action: store_true
+  default: null
+  help_text: |
+    Scope of the backup includes resources from all namespaces.  Mutually exclusive with
+    --selected-namespaces, --selected-applications and --selected-namespace-labels.
+
+selected_namespaces:
+  arg_name: selected-namespaces
+  api_field: backupPlan.backupConfig.selectedNamespaces.namespaces
+  processor: googlecloudsdk.command_lib.container.backup_restore.hooks:ProcessSelectedNamespaces
+  type: arg_list
+  default: null
+  help_text: |
+    List of namespaces whose resources are included in the backup. Mutually exclusive with
+    --all-namespaces, --selected-applications and --selected-namespace-labels. e.g:
+    --selected-namespaces=foo,bar
+
+selected_applications:
+  arg_name: selected-applications
+  api_field: backupPlan.backupConfig.selectedApplications
+  processor: googlecloudsdk.command_lib.container.backup_restore.hooks:ProcessSelectedApplications
+  default: null
+  help_text: |
+    List of ProtectedApplication instances whose resources are included in the backup. Mutually
+    exclusive with --all-namespaces, --selected-namespaces and --selected-namespace-labels. e.g:
+    --selected-applications=namespace1/foo,namespace2/bar
+
+selected_namespace_labels:
+  arg_name: selected-namespace-labels
+  api_field: backupPlan.backupConfig.selectedNamespaceLabels
+  processor: googlecloudsdk.command_lib.container.backup_restore.hooks:ProcessSelectedNamespaceLabels
+  default: null
+  help_text: |
+    List of Namespace labels whose resources are included in the backup. Mutually
+    exclusive with --all-namespaces, --selected-namespaces and --selected-applications. e.g:
+    --selected-namespace-labels=namespacelabel1=value1,namespacelabel2=value2
+
+include_volume_data:
+  arg_name: include-volume-data
+  api_field: backupPlan.backupConfig.includeVolumeData
+  type: bool
+  default: false
+  help_text: |
+    If true, snapshots are created for PD volumes corresponding to PersistentVolumeClaims that fall
+    within the scope. If unset, the default is false.
+
+include_secrets:
+  arg_name: include-secrets
+  api_field: backupPlan.backupConfig.includeSecrets
+  type: bool
+  default: false
+  help_text: |
+    If true, secret resources are included in the backup if they fall within the scope. If unset,
+    the default is false.
+
+encryption_key:
+  arg_name: encryption-key
+  api_field: backupPlan.backupConfig.encryptionKey.gcpKmsEncryptionKey
+  type: str
+  help_text: |
+    Encryption key used for encrypting the backup.
+
+    At this time, only the Cloud Key Management Service (Cloud KMS) is supported.
+    Value must be entered as a relative name, e.g.:
+    `projects/<project>/locations/<location>/keyRings/<key-ring>/cryptoKeys/<key>`.
+
+permissive_mode:
+  arg_name: permissive-mode
+  api_field: backupPlan.backupConfig.permissiveMode
+  type: bool
+  default: false
+  help_text: |
+    If true, backups won't fail when Backup for GKE detects
+    Kubernetes configuration that is known to cause restore failures.
+
+backup_channel_description:
+  arg_name: description
+  api_field: backupChannel.description
+  help_text: |
+    The description of the backup channel.
+
+backup_destination_project:
+  arg_name: destination-project
+  api_field: backupChannel.destinationProject
+  help_text: |
+    The project where Backups are allowed to be created.
+    The format is `projects/{project}`.
+    Project can be project number or project ID.
+    E.g. `projects/1234567890` or `projects/my-project`.
+
+delete_lock_days:
+  arg_name: delete-lock-days
+  api_field: backup.deleteLockDays
+  type: int
+  help_text: |
+    Delete lock days specifies the number of days from the create_time of this
+    Backup before which deletion will be blocked. For automatically created
+    Backup from schedule, this field will be set to the
+    backupPlan.retentionPolicy.backupDeleteBlockDays.
+    Manual creation of a backup with this field unspecified causes the service
+    to use the value of backupPlan.RetentionPolicy.backupDeleteBlockDays.
+    Creation of a backup with this field set to a value SMALLER than
+    backupPlan.RetentionPolicy.backupDeleteBlockDays results in an invalid
+    response from the service.
+    This field MUST be an int value between 0-90(inclusive).
+    This field may only be INCREASED in an update command, or an invalid
+    response will be returned by the service.
+
+retain_days:
+  arg_name: retain-days
+  api_field: backup.retainDays
+  type: int
+  help_text: |
+    Retain days specifies the desired number of days from the createTime of
+    this backup after which it will be automatically deleted.
+    If not specified or set to 0, it means the backup will NOT be automatically
+    deleted.
+    For automatically created backup from schedule, this field will be set to
+    the backupPlan.retentionPolicy.backupRetainDays.
+    Manual creation of a backup with this field unspecified causes the service
+    to use the value of backupPlan.retentionPolicy.backupRetainDays.
+    Creation of a Backup with this field set to a value SMALLER than
+    delete_lock_days results in an invalid response from the service.
+    This field may ONLY be increased in an Update request, or an invalid
+    response will be returned by the service immediately.
+    Default to 0.
+
+backup_description:
+  arg_name: description
+  api_field: backup.description
+  help_text: |
+    The description of the backup.
+
+restore_plan_cluster:
+  arg_name: cluster
+  api_field: restorePlan.cluster
+  required: true
+  help_text: |
+    The target cluster into which Restores created via this RestorePlan will restore data.
+    NOTE: the cluster's region must be the same as the RestorePlan.
+
+    Value must be entered as a relative name, e.g.:
+    `projects/<project>/locations/<location>/clusters/<cluster>` for a regional cluster
+    or
+    `projects/<project>/zones/<zone>/clusters/<cluster>` for a zonal cluster.
+
+restore_plan_backup_plan:
+  arg_name: backup-plan
+  api_field: restorePlan.backupPlan
+  required: true
+  help_text: |
+    The BackupPlan from which Backups may be used as the source for Restores created via this
+    RestorePlan.
+
+    Value must be entered as a relative name, e.g.
+    `projects/<project>/locations/<location>/backupPlans/<backupPlans>`.
+
+restore_plan_description:
+  arg_name: description
+  api_field: restorePlan.description
+  help_text: |
+    The description of the restore plan.
+
+restore_plan_tags:
+  arg_name: tags
+  api_field: restorePlan.tags.additionalProperties
+  hidden: true
+  metavar: KEY=VALUE
+  help_text: |
+    List of tag KEY=VALUE pairs to add.
+  type:
+    arg_dict:
+      flatten: true
+      spec:
+      - api_field: key
+      - api_field: value
+
+restore_channel_description:
+  arg_name: description
+  api_field: restoreChannel.description
+  help_text: |
+    The description of the restore channel.
+
+restore_destination_project:
+  arg_name: destination-project
+  api_field: restoreChannel.destinationProject
+  help_text: |
+    The project where Restores are allowed to be created.
+    The format is `projects/{project}`.
+    Project can be project number or project ID.
+    E.g. `projects/1234567890` or `projects/my-project`.
+
+volume_data_restore_policy:
+  arg_name: volume-data-restore-policy
+  api_field: restorePlan.restoreConfig.volumeDataRestorePolicy
+  help_text: |
+    Define how data is populated for restored volumes. If this flag is not specified,
+    'no-volume-data-restoration' will be used.
+  choices:
+  - arg_value: restore-volume-data-from-backup
+    help_text: |
+      Selecting 'restore-volume-data-from-backup' means a new PV will be restored using the
+      corresponding volume backup data in the Backup.
+  - arg_value: reuse-volume-handle-from-backup
+    help_text: |
+      Selecting 'reuse-volume-handle-from-backup' means a PV will be pre-provisioned using the
+      volume handle of the original PV in the Backup.
+  - arg_value: no-volume-data-restoration
+    help_text: |
+      Selecting 'no-volume-data-restoration' means PV will not be restored. The restoration will
+      ONLY restore selected PVCs and expects corresponding Kubernetes controllers to either
+      dynamically provision blank PVs or bind them to pre-provisioned PVs created out-of-band.
+  default: no-volume-data-restoration
+
+volume_data_restore_policy_bindings:
+  arg_name: volume-data-restore-policy-bindings
+  api_field: restorePlan.restoreConfig.volumeDataRestorePolicyBindings
+  metavar: VOLUME_TYPE=POLICY
+  type:
+    arg_dict:
+      flatten: true
+      spec:
+      - api_field: volumeType
+        type: str
+        choices:
+        - arg_value: gce-persistent-disk
+          help_text: Compute Engine Persistent Disk volume.
+      - api_field: policy
+        type: str
+        choices:
+        - arg_value: restore-volume-data-from-backup
+          help_text: |
+            Selecting 'restore-volume-data-from-backup' means a new PV will be restored using the
+            corresponding volume backup data in the Backup.
+        - arg_value: reuse-volume-handle-from-backup
+          help_text: |
+            Selecting 'reuse-volume-handle-from-backup' means a PV will be pre-provisioned using the
+            volume handle of the original PV in the Backup.
+        - arg_value: no-volume-data-restoration
+          help_text: |
+            Selecting 'no-volume-data-restoration' means PV will not be restored. The restoration
+            will ONLY restore selected PVCs and expects corresponding Kubernetes controllers to
+            either dynamically provision blank PVs or bind them to pre-provisioned PVs created
+            out-of-band.
+  help_text: |
+    Dict that binds a supported volume type to a volume data restore policy.
+    e.g. `gce-persistent-disk=restore-volume-data-from-backup` for
+    a binding that results in Persistent Disk volumes being restored
+    using the "restore volume data from backup" policy.
+
+cluster_resource_conflict_policy:
+  arg_name: cluster-resource-conflict-policy
+  api_field: restorePlan.restoreConfig.clusterResourceConflictPolicy
+  help_text: |
+    Define how to handle restore-time conflicts for cluster-scoped resources.
+  choices:
+  - arg_value: use-existing-version
+    help_text: |
+      Selecting 'use-existing-version' means no conflicting resources will be restored.
+  - arg_value: use-backup-version
+    help_text: |
+      Selecting 'use-existing-version' means deleting the existing version of the conflicting
+      resources before re-creating them from the Backup.
+
+      Note that this is a dangerous option which
+      could cause unintentional data loss if used inappropriately. For example, deleting a CRD will
+      cause Kubernetes to delete all CRs of that type.
+
+namespaced_resource_restore_mode:
+  arg_name: namespaced-resource-restore-mode
+  api_field: restorePlan.restoreConfig.namespacedResourceRestoreMode
+  help_text: |
+    Define how to handle restore-time conflicts for namespaced resources.
+  choices:
+  - arg_value: delete-and-restore
+    help_text: |
+      When conflicting top-level resources (either Namespaces or ProtectedApplications, depending
+      upon the scope) are encountered, this will first trigger a delete of the conflicting resource
+      AND ALL OF ITS REFERENCED RESOURCES (e.g., all resources in the Namespace or all resources
+      referenced by the ProtectedApplication) before restoring the resources from the Backup. This
+      mode should only be used when you are intending to revert some portion of a cluster to an
+      earlier state.
+  - arg_value: fail-on-conflict
+    help_text: |
+      If conflicting top-level resources (either Namespaces or ProtectedApplications, depending upon
+      the scope) are encountered at the beginning of a restore process, the Restore will fail. If a
+      conflict occurs during the restore process itself (e.g., because an out of band process
+      creates conflicting resources), a conflict will be reported.
+  - arg_value: merge-skip-on-conflict
+    help_text: |
+      This mode merges the backup and the target cluster and skips the conflicting resources. If a
+      single resource to restore exists in the cluster before restoration, the resource will be
+      skipped, otherwise it will be restored.
+  - arg_value: merge-replace-volume-on-conflict
+    help_text: |
+      This mode merges the backup and the target cluster and skips the conflicting resources except
+      volume data. If a PVC to restore already exists, this mode will restore/reconnect the volume
+      without overwriting the PVC. It is similar to MERGE_SKIP_ON_CONFLICT except that it will apply
+      the volume data policy for the conflicting PVCs
+      "RESTORE_VOLUME_DATA_FROM_BACKUP:" restore data only and respect the reclaim policy of the
+      original PV;
+      "REUSE_VOLUME_HANDLE_FROM_BACKUP:" reconnect and respect the reclaim policy of the original
+      PV;
+      "NO_VOLUME_DATA_RESTORATION:" new provision and respect the reclaim policy of the original PV.
+      Note that this mode could cause data loss as the original PV can be retained or deleted
+      depending on its reclaim policy.
+  - arg_value: merge-replace-on-conflict
+    help_text: |
+      This mode merges the backup and the target cluster and replaces the conflicting resources with
+      the ones in the backup. If a single resource to restore exists in the cluster before
+      restoration, the resource will be replaced with the one from the backup. To replace an
+      existing resource, the first attempt is to update the resource to match the one from the
+      backup; if the update fails, the second attempt is to delete the resource and restore it from
+      the backup. Note that this mode could cause data loss as it replaces the existing resources
+      in the target cluster, and the original PV can be retained or deleted depending on its reclaim
+      policy.
+
+
+namespaced_resource_restore_mode_update:
+  arg_name: namespaced-resource-restore-mode
+  api_field: restorePlan.restoreConfig.namespacedResourceRestoreMode
+  help_text: |
+    Define how to handle restore-time conflicts for namespaced resources.
+  choices:
+  - arg_value: delete-and-restore
+    help_text: |
+      When conflicting top-level resources (either Namespaces or ProtectedApplications, depending
+      upon the scope) are encountered, this will first trigger a delete of the conflicting resource
+      AND ALL OF ITS REFERENCED RESOURCES (e.g., all resources in the Namespace or all resources
+      referenced by the ProtectedApplication) before restoring the resources from the Backup. This
+      mode should only be used when you are intending to revert some portion of a cluster to an
+      earlier state.
+  - arg_value: fail-on-conflict
+    help_text: |
+      If conflicting top-level resources (either Namespaces or ProtectedApplications, depending upon
+      the scope) are encountered at the beginning of a restore process, the Restore will fail. If a
+      conflict occurs during the restore process itself (e.g., because an out of band process
+      creates conflicting resources), a conflict will be reported.
+  - arg_value: merge-skip-on-conflict
+    help_text: |
+      This mode merges the backup and the target cluster and skips the conflicting resources. If a
+      single resource to restore exists in the cluster before restoration, the resource will be
+      skipped, otherwise it will be restored.
+  - arg_value: merge-replace-volume-on-conflict
+    help_text: |
+      This mode merges the backup and the target cluster and skips the conflicting resources except
+      volume data. If a PVC to restore already exists, this mode will restore/reconnect the volume
+      without overwriting the PVC. It is similar to MERGE_SKIP_ON_CONFLICT except that it will apply
+      the volume data policy for the conflicting PVCs
+      "RESTORE_VOLUME_DATA_FROM_BACKUP:" restore data only and respect the reclaim policy of the
+      original PV;
+      "REUSE_VOLUME_HANDLE_FROM_BACKUP:" reconnect and respect the reclaim policy of the original
+      PV;
+      "NO_VOLUME_DATA_RESTORATION:" new provision and respect the reclaim policy of the original PV.
+      Note that this mode could cause data loss as the original PV can be retained or deleted
+      depending on its reclaim policy.
+  - arg_value: merge-replace-on-conflict
+    help_text: |
+      This mode merges the backup and the target cluster and replaces the conflicting resources with
+      the ones in the backup. If a single resource to restore exists in the cluster before
+      restoration, the resource will be replaced with the one from the backup. To replace an
+      existing resource, the first attempt is to update the resource to match the one from the
+      backup; if the update fails, the second attempt is to delete the resource and restore it from
+      the backup. Note that this mode could cause data loss as it replaces the existing resources
+      in the target cluster, and the original PV can be retained or deleted depending on its reclaim
+      policy.
+
+cluster_resource_selected_group_kinds:
+  arg_name: cluster-resource-scope-selected-group-kinds
+  api_field: restorePlan.restoreConfig.clusterResourceRestoreScope
+  processor: googlecloudsdk.command_lib.container.backup_restore.hooks:ProcessSelectedGroupKinds
+  type: arg_list
+  help_text: |
+    List of cluster-scoped resource group kinds to restore from the backup. If specified,
+    only the selected resources will be restored. The format of a resource is "<group>/<kind>", e.g.
+    `storage.k8s.io/StorageClass` for StorageClass. Use an empty string for core API group.
+
+cluster_resource_excluded_group_kinds:
+  arg_name: cluster-resource-scope-excluded-group-kinds
+  api_field: restorePlan.restoreConfig.clusterResourceRestoreScope
+  processor: googlecloudsdk.command_lib.container.backup_restore.hooks:ProcessExcludedGroupKinds
+  type: arg_list
+  help_text: |
+    List of cluster-scoped resource group kinds to NOT restore from the backup. If specified,
+    all valid cluster-scoped resources will be restored except for those specified in the list.
+    The format of a resource is "<group>/<kind>", e.g. `storage.k8s.io/StorageClass` for
+    StorageClass. Use an empty string for core API group.
+
+cluster_resource_all_group_kinds:
+  arg_name: cluster-resource-scope-all-group-kinds
+  api_field: restorePlan.restoreConfig.clusterResourceRestoreScope
+  processor: googlecloudsdk.command_lib.container.backup_restore.hooks:ProcessAllGroupKinds
+  type: bool
+  action: store_true
+  default: null
+  help_text: |
+    If true, all valid cluster-scoped resources will be restored.
+
+cluster_resource_no_group_kinds:
+  arg_name: cluster-resource-scope-no-group-kinds
+  api_field: restorePlan.restoreConfig.clusterResourceRestoreScope
+  processor: googlecloudsdk.command_lib.container.backup_restore.hooks:ProcessNoGroupKinds
+  type: bool
+  action: store_true
+  default: null
+  help_text: |
+    If true, no cluster-scoped resources will be restored.
+
+restore_plan_all_namespaces:
+  arg_name: all-namespaces
+  api_field: restorePlan.restoreConfig.allNamespaces
+  processor: googlecloudsdk.command_lib.container.backup_restore.hooks:ProcessAllNamespaces
+  type: bool
+  action: store_true
+  default: null
+  help_text: |
+    If true, restore all namespaced resources in the backup.
+
+restore_plan_no_namespaces:
+  arg_name: no-namespaces
+  api_field: restorePlan.restoreConfig.noNamespaces
+  processor: googlecloudsdk.command_lib.container.backup_restore.hooks:ProcessNoNamespaces
+  type: bool
+  action: store_true
+  default: null
+  help_text: |
+    If true, do not restore any namespaced resources in the backup.
+
+restore_plan_selected_namespaces:
+  arg_name: selected-namespaces
+  api_field: restorePlan.restoreConfig.selectedNamespaces.namespaces
+  type: arg_list
+  default: null
+  help_text: |
+    List of selected namespaces to restore. Only those namespaced resources belonging to a selected
+    namespace are restored.
+
+restore_plan_excluded_namespaces:
+  arg_name: excluded-namespaces
+  api_field: restorePlan.restoreConfig.excludedNamespaces.namespaces
+  type: arg_list
+  default: null
+  help_text: |
+    List of selected namespaces to skip. All namespaced resources in all namespaces excluding
+    selected namespaces are restored.
+
+restore_plan_selected_applications:
+  arg_name: selected-applications
+  api_field: restorePlan.restoreConfig.selectedApplications
+  processor: googlecloudsdk.command_lib.container.backup_restore.hooks:ProcessSelectedApplications
+  default: null
+  help_text: |
+    List of selected applications to restore. Only those namespaced resources which belong to one of
+    the selected applications are restored.
+
+restore_plan_substitution_rules_file:
+  arg_name: substitution-rules-file
+  api_field: restorePlan.restoreConfig.substitutionRules
+  processor: googlecloudsdk.command_lib.container.backup_restore.hooks:ReadSubstitutionRuleFile
+  action:
+    deprecated:
+      removed: false
+      warn: |
+        Flag substitution-rules-file is deprecated.
+          Please use --transformation-rules-file instead.
+  help_text: |
+    If provided, defines a set of resource transformations that will be applied to resources from
+    the source backup before they are created in the target cluster.
+
+restore_plan_transformation_rules_file:
+  arg_name: transformation-rules-file
+  api_field: restorePlan.restoreConfig.transformationRules
+  processor: googlecloudsdk.command_lib.container.backup_restore.hooks:ReadTransformationRuleFile
+  help_text: |
+    If provided, defines a set of resource transformations that will be applied to resources from
+    the source backup before they are created in the target cluster.
+
+restore_plan_restore_order_file:
+  arg_name: restore-order-file
+  api_field: restorePlan.restoreConfig.restoreOrder
+  processor: googlecloudsdk.command_lib.container.backup_restore.hooks:ReadRestoreOrderFile
+  help_text: |
+    If provided, defines a custom order that can be used in a restore, which includes dependencies
+    between two group kinds that must be honored during a restore, a satisfying group kind and a
+    requiring group kind. The satisfying group kind must be restored before the requiring group
+    kind.
+
+etag:
+  arg_name: etag
+  api_field: etag
+  type: str
+  help_text: |
+    The etag is used for optimistic concurrency control as a way to help
+    prevent simultaneous updates or deletes of a resource from overwriting each other.
+
+backup_plan_etag:
+  arg_name: etag
+  api_field: backupPlan.etag
+  type: str
+  help_text: |
+    The etag is used for optimistic concurrency control as a way to help
+    prevent simultaneous updates or deletes of a resource from overwriting each other.
+
+backup_channel_etag:
+  arg_name: etag
+  api_field: backupChannel.etag
+  type: str
+  help_text: |
+    The etag is used for optimistic concurrency control as a way to help
+    prevent simultaneous updates or deletes of a resource from overwriting each other.
+
+backup_etag:
+  arg_name: etag
+  api_field: backup.etag
+  type: str
+  help_text: |
+    The etag is used for optimistic concurrency control as a way to help
+    prevent simultaneous updates or deletes of a resource from overwriting each other.
+
+restore_plan_etag:
+  arg_name: etag
+  api_field: restorePlan.etag
+  type: str
+  help_text: |
+    The etag is used for optimistic concurrency control as a way to help
+    prevent simultaneous updates or deletes of a resource from overwriting each other.
+
+restore_channel_etag:
+  arg_name: etag
+  api_field: restoreChannel.etag
+  type: str
+  help_text: |
+    The etag is used for optimistic concurrency control as a way to help
+    prevent simultaneous updates or deletes of a resource from overwriting each other.
+
+restore_etag:
+  arg_name: etag
+  api_field: restore.etag
+  type: str
+  help_text: |
+    The etag is used for optimistic concurrency control as a way to help
+    prevent simultaneous updates or deletes of a resource from overwriting each other.

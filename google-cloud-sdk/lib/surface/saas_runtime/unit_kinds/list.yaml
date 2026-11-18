@@ -1,0 +1,19 @@
+- release_tracks: [ALPHA, BETA]
+  help_text:
+    brief: List Unit Kinds
+    description: List Unit Kinds
+    examples: |-
+      To list all Unit Kinds, run:
+
+      $ {command}
+  arguments:
+    resource:
+      help_text: |-
+        Parent value for ListUnitKindsRequest
+      spec: !REF googlecloudsdk.command_lib.saas_runtime.resources:project_location_with_default
+  request:
+    api_version: v1beta1
+    collection:
+    - saasservicemgmt.projects.locations.unitKinds
+  response:
+    id_field: name

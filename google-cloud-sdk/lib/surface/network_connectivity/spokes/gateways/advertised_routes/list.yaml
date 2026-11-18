@@ -1,0 +1,43 @@
+- release_tracks: [BETA]
+
+  help_text:
+    brief: List gateway advertised routes.
+    description: Retrieve and display a list of advertised routes for the specified gateway spoke.
+    examples: |
+      To list all advertised routes across all gateway spokes, run:
+
+        $ {command} --region=- --spoke=-
+
+      To list advertised routes for all gateway spokes in region ``us-central1'', run:
+
+        $ {command} --region=us-central1
+
+      To list all advertised routes for spoke `my-gateway`, run:
+
+        $ {command} --region=us-central1 --spoke=my-gateway
+
+  request: &request
+    BETA:
+      api_version: v1beta
+    collection: networkconnectivity.projects.locations.spokes.gatewayAdvertisedRoutes
+    modify_request_hooks:
+    - googlecloudsdk.command_lib.network_connectivity.util:CheckRegionSpecifiedIfSpokeSpecified
+
+  arguments:
+    resource:
+      spec: !REF googlecloudsdk.command_lib.network_connectivity.resources:spokeDefaultAll
+      help_text: A gateway spoke. Use this flag to filter the list of advertised routes to a specific spoke. Use ``-`` to specify all spokes.
+
+  output:
+    BETA:
+      format: |
+        table(
+            name.basename():sort=3,
+            name.segment(3):label=LOCATION:sort=1,
+            name.segment(5):label=SPOKE:sort=2,
+            ip_range,
+            recipient,
+            priority,
+            state,
+            description
+        )

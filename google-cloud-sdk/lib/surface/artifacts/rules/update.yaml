@@ -1,0 +1,53 @@
+- release_tracks: [GA]
+
+  help_text:
+    brief: |
+      Update an Artifact Registry rule.
+    description: |
+      Update an Artifact Registry rule.
+
+      This command can fail for the following reasons:
+        * The rule does not exist.
+        * A rule with the same name already exists.
+        * The active account does not have permission to create repositories.
+        * A rule with given package already exists.
+    examples: |
+      To create a rule with the name `my-rule` for package `my-pkg` with action deny
+      under the current project, repository, run:
+
+        $ {command} my-rule --package=my-pkg --action=deny
+
+  arguments:
+    resource:
+      spec: !REF googlecloudsdk.command_lib.artifacts.resources:rule
+      help_text: |
+        The Artifact Registry rule to update.
+    params:
+    - arg_name: action
+      api_field: googleDevtoolsArtifactregistryV1Rule.action
+      help_text: |
+        The action the rule would make, can only be DENY or ALLOW.
+      choices:
+      - arg_value: ALLOW
+        enum_value: ALLOW
+      - arg_value: DENY
+        enum_value: DENY
+    - arg_name: operation
+      api_field: googleDevtoolsArtifactregistryV1Rule.operation
+      choices:
+      - arg_value: DOWNLOAD
+        enum_value: DOWNLOAD
+      help_text: |
+        The operation the rule applies to.
+    - arg_name: package
+      api_field: googleDevtoolsArtifactregistryV1Rule.packageId
+      help_text: |
+        The package the rule applies to.
+    - arg_name: condition
+      api_field: googleDevtoolsArtifactregistryV1Rule.condition.expression
+      help_text: |
+        The CEL expression for the rule.
+
+  request:
+    api_version: v1
+    collection: artifactregistry.projects.locations.repositories.rules

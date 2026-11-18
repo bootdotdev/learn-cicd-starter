@@ -1,0 +1,50 @@
+release_tracks: [ALPHA, BETA]
+
+help_text:
+  brief: |
+    Create a SAC realm.
+  description: |
+    Create a new realm supported by the specified security service.
+  examples: |
+    To create a realm named `my-realm` using Prisma Access, run:
+
+      $ {command} my-realm --security-service=prisma-access
+
+arguments:
+  resource:
+    spec: !REF googlecloudsdk.command_lib.network_security.resources:sacRealm
+    help_text: |
+      Realm to be created.
+  params:
+  - arg_name: security-service
+    required: true
+    api_field: sACRealm.securityService
+    help_text: |
+      Security service supporting this realm.
+    choices:
+    - arg_value: prisma-access
+      enum_value: PALO_ALTO_PRISMA_ACCESS
+    - arg_value: symantec-cloud-swg
+      enum_value: SYMANTEC_CLOUD_SWG
+  - arg_name: symantec-secret
+    api_field: sACRealm.symantecOptions.secretPath
+    help_text: |
+      ID of the Secret in Secret Manager containing the Symantec credentials.
+  - arg_name: partner-environment
+    release_tracks: [ALPHA]
+    hidden: true
+    api_field: sACRealm.partnerEnvironment
+    help_text: |
+      URI of the Partner Environment to be used for this realm. Only supported for internal users
+      of SYMANTEC_CLOUD_SWG.
+
+async:
+  collection: networksecurity.projects.locations.operations
+
+request: &request
+  ALPHA:
+    api_version: v1alpha1
+  BETA:
+    api_version: v1beta1
+  collection: networksecurity.projects.locations.sacRealms
+  method: create

@@ -1,0 +1,24 @@
+release_tracks: [ALPHA]
+help_text:
+  brief: |
+    List multicast groups.
+  description: |
+    List all multicast groups in the specified location of the current project.
+  examples: |
+    To list multicast groups in the current project and location, run:
+
+      $ {command} --location=zone
+request: &request
+  api_version: v1alpha1
+  collection: networkservices.projects.locations.multicastGroups
+arguments:
+  resource:
+    spec: !REF googlecloudsdk.command_lib.network_services.resources:location
+    help_text: The location of the multicast groups to display.
+response:
+  id_field: name
+output:
+  format: |
+     table(
+        name.basename():label=NAME, create_time, multicast_group_definition, multicast_domain_activation, ip_cidr_range
+      )

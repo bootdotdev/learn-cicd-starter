@@ -1,0 +1,32 @@
+- release_tracks: [ALPHA]
+  help_text:
+    brief: Lists source environment volume inventory.
+    description: |
+      {command} prints a detailed list of the source environment volume inventory.
+      To use this command, you must enable VM Migration API in your project.
+
+    examples: |
+      To list the source environment volume resources in us-central1 in the AWS source my-aws-source in the
+      default project, run:
+
+        $ {command} my-aws-source --location=us-central1
+
+  request:
+    method: fetchStorageInventory
+    collection: vmmigration.projects.locations.sources
+    static_fields:
+      type: DISKS
+
+  response:
+    id_field: awsDiskDetails
+
+  arguments:
+    resource:
+      help_text: |
+        The source environment resource of the disk migration resources.
+        This is the parent resource of the disk migration resources.
+      spec: !REF googlecloudsdk.command_lib.migration.vms.resources:source
+      # is_primary_resource: true
+
+  output:
+    format: table(awsDiskDetails.volumeId, awsDiskDetails.sizeGib, awsDiskDetails.diskType, awsDiskDetails.tags)

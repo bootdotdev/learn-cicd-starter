@@ -1,0 +1,40 @@
+- release_tracks: [ALPHA, BETA]
+
+  help_text:
+    brief: Create a restore channel.
+    description: |
+      Create a Backup for GKE restore channel.
+
+      ## EXAMPLES
+
+      To create a restore channel ``my-restore-channel'' in project ``my-project'' in location ``us-central1'' with destination project ``projects/restore-project'', run:
+
+        $ {command} my-restore-channel --project=my-project --location=us-central1 --destination-project=projects/restore-project
+
+  request:
+    collection: gkebackup.projects.locations.restoreChannels
+    api_version: v1
+
+  async:
+    collection: gkebackup.projects.locations.operations
+
+  arguments:
+    resource:
+      help_text: |
+        Name of the restore channel to create. Once the channel is created, this name can't be
+        changed. This must be 63 or fewer characters long and must be unique within
+        the project and location. The name may be provided either as a relative name, e.g.
+        `projects/<project>/locations/<location>/restoreChannels/<restoreChannel>`
+        or as a single ID name (with the parent resources provided via options or through
+        properties), e.g.
+        `RESTORE_CHANNEL --project=<project> --location=<location>`.
+
+      spec: !REF googlecloudsdk.command_lib.container.backup_restore.resources:positional_restore_channel
+
+    params:
+    - _REF_: googlecloudsdk.command_lib.container.backup_restore.flags:restore_destination_project
+      required: true
+    - _REF_: googlecloudsdk.command_lib.container.backup_restore.flags:restore_channel_description
+
+    labels:
+      api_field: restoreChannel.labels

@@ -1,0 +1,19 @@
+release_tracks: [ALPHA]
+help_text:
+  brief: |
+    Delete a multicast group.
+  description: |
+    Delete a multicast group in the specified location of the current project.
+  examples: |
+    To delete a multicast group in the current project, run:
+
+      $ {command} my-multicast-group --location=zone
+arguments:
+  resource:
+    spec: !REF googlecloudsdk.command_lib.network_services.resources:multicastGroup
+    help_text: The multicast group to delete.
+async:
+  collection: networkservices.projects.locations.operations
+request: &request
+  api_version: v1alpha1
+  collection: networkservices.projects.locations.multicastGroups

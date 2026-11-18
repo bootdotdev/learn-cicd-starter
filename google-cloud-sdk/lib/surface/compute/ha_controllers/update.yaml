@@ -1,0 +1,48 @@
+- release_tracks: [ALPHA]
+  help_text:
+    brief: Update the settings of an existing HA Controller.
+    description: Update an High Availability (HA) Controller to, for example, change the existing HA Controller failover initiation configuration from automatic to manual, or vice-versa.
+    examples: |
+      To update the description of an HA Controller named `my-ha-controller` in the `us-central1` region, run the following command:
+
+        $ {command} my-ha-controller \
+            --description="new description" \
+            --region=us-central1
+
+  request:
+    api_version: alpha
+    collection: compute.haControllers
+    method: patch
+    modify_request_hooks:
+    - googlecloudsdk.command_lib.compute.ha_controllers.utils:SetResourceName
+
+  async:
+    collection: compute.regionOperations
+    response_name_field: selfLink
+    state:
+      field: status
+      success_values: ['DONE']
+
+  arguments:
+    resource:
+      help_text: The HA Controller that you want to update.
+      spec: !REF googlecloudsdk.command_lib.compute.ha_controllers.resources:ha_controller
+      is_positional: true
+
+    params:
+    - group:
+        required: true
+        mutex: false
+        params:
+        - arg_name: description
+          api_field: haControllerResource.description
+          help_text: |
+            Updates the text description of the HA controller.
+        - arg_name: failover-initiation
+          api_field: haControllerResource.failoverInitiation
+          help_text: |
+            Changes the failover trigger between AUTOMATIC and MANUAL_ONLY.
+        - arg_name: secondary-zone-capacity
+          api_field: haControllerResource.secondaryZoneCapacity
+          help_text: |
+            Changes the capacity guarantee in the secondary zone between GUARANTEED_STOPPED and BEST_EFFORT.

@@ -1,0 +1,40 @@
+- release_tracks: [ALPHA, BETA, GA]
+
+  help_text:
+    brief: |
+      List backup collections in a region.
+    description: |
+      List all backup collections under the specified project and region.
+
+      To specify the maximum number of results, use the `--limit` flag.
+
+    examples: |
+      To list up to 5 backup collections in the us-central1 region, run:
+
+      $ {command} --region=us-central1 --limit=5
+
+  arguments:
+    resource:
+      spec: !REF googlecloudsdk.command_lib.redis.resources:region
+      help_text: |
+        The region of the backup collections to display.
+
+  request:
+    ALPHA:
+      api_version: v1alpha1
+    BETA:
+      api_version: v1beta1
+    GA:
+      api_version: v1
+    collection: redis.projects.locations.backupCollections
+
+  response:
+    id_field: name
+
+  output:
+    format: |
+      table(
+        name.basename():label=BACKUP_COLLECTION_NAME:sort=2,
+        cluster:label=CLUSTER_NAME,
+        clusterUid:label=CLUSTER_UID
+      )

@@ -1,0 +1,25 @@
+release_tracks: [ALPHA, BETA, GA]
+
+help_text:
+  brief: |
+    Pauses operation of a Managed Service for Apache Kafka connector.
+  description: |
+    Pauses operation of a Managed Service for Apache Kafka connector.
+
+  examples: |
+    To pause a connector named myconnector located in us-central1,
+    run the following:
+
+      $ {command} myconnector \
+          --location=us-central1 \
+          --connect-cluster=mycluster
+
+request:
+  collection: managedkafka.projects.locations.connectClusters.connectors
+  method: pause
+
+arguments:
+  resource:
+    help_text: Identifies the connector to pause.
+    spec: !REF googlecloudsdk.command_lib.managed_kafka.resources:connector
+    is_positional: true

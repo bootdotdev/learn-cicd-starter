@@ -1,0 +1,22 @@
+- release_tracks: [ALPHA, BETA]
+  help_text:
+    brief: "Describe a health aggregation policy."
+    description: "Describe a health aggregation policy."
+    examples: |
+      To retrieve a single health aggregation policy and print its properties, run the following
+      command:
+
+      $ {command} <HEALTH_AGGREGATION_POLICY_NAME> --region=<REGION>
+
+  request:
+    ALPHA:
+      api_version: alpha
+    BETA:
+      api_version: beta
+
+    collection: compute.regionHealthAggregationPolicies
+
+  arguments:
+    resource:
+      help_text: Name of the health aggregation policy you want to inspect.
+      spec: !REF googlecloudsdk.command_lib.compute.resources:health_aggregation_policy

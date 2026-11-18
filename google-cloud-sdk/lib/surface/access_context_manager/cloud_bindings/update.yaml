@@ -1,0 +1,221 @@
+- release_tracks: [GA, ALPHA]
+
+  GA:
+    help_text:
+      brief: Update a existing cloud access binding under an organization.
+      description: |
+        Update an existing cloud access binding. You can update the level, dry run level, session
+        settings, and scoped access settings. They cannot all be empty.
+      examples: |
+        To update an existing cloud access binding, run:
+
+          $ {command} --binding=my-binding-id --level=accessPolicies/123/accessLevels/new-abc
+
+        To remove level and add dry run level, run:
+
+          $ {command} --binding=my-binding-id --level=  \
+            --dry-run-level=accessPolicies/123/accessLevels/new-def
+
+        To replace scoped access settings with a new list, run:
+
+          $ {command} --binding=my-binding-id --binding-file='binding.yaml'
+
+        To append scoped access settings to the existing list, run:
+
+          $ {command} --binding=my-binding-id --binding-file='binding.yaml' --append
+
+        Note this is only possible for scoped access settings that exclusively hold session
+        settings (i.e. no access levels).
+
+        To update session settings, run:
+
+          $ {command} --binding=my-binding-id --session-length=2h
+
+        To update the session reauth method you must also specify --session-length (this can be the
+        existing value if you only want to modify the reauth method), run:
+
+          $ {command} --binding=my-binding-id --session-length=2h --session-reauth-method=login
+
+        To disable session settings, set --session-length=0, for example:
+
+          $ {command} --binding=my-binding-id --session-length=0
+
+    request:
+      collection: accesscontextmanager.organizations.gcpUserAccessBindings
+      api_version: v1
+      modify_request_hooks:
+      - googlecloudsdk.command_lib.accesscontextmanager.cloud_bindings:ProcessScopedAccessSettings
+      - googlecloudsdk.command_lib.accesscontextmanager.cloud_bindings:ProcessLevels
+      - googlecloudsdk.command_lib.accesscontextmanager.cloud_bindings:AddUpdateMask
+      - googlecloudsdk.command_lib.accesscontextmanager.cloud_bindings:ProcessSessionSettings
+
+  ALPHA:
+    help_text:
+      brief: Update an existing access binding under an organization.
+      description: |
+        Update an existing access binding. You can update the level, dry run level, scoped access
+        settings, session settings, restricted client application client IDs, and restricted client
+        application names.
+        They can't all be empty. Session settings are incompatible with restricted client
+        application client IDs/names; please use scoped access settings to bind session settings to
+        an application.
+      examples: |
+        To update an existing access binding, run:
+
+          $ {command} --binding=my-binding-id --level=accessPolicies/123/accessLevels/new-abc
+
+        To remove level and add dry run level, run:
+
+          $ {command} --binding=my-binding-id --level=  \
+            --dry-run-level=accessPolicies/123/accessLevels/new-def
+
+        To update restricted client applications, run:
+
+          $ {command} --binding=my-binding-id  \
+            --restricted-client-application-client-ids='123.apps.googleusercontent.com'  \
+            --restricted-client-application-names='Cloud Console, Google Cloud SDK'
+
+          Or
+
+          $ {command} --binding=my-binding-id --binding-file='binding.yaml'
+
+        To replace scoped access settings with a new list, run:
+
+          $ {command} --binding=my-binding-id --binding-file='binding.yaml'
+
+        To append scoped access settings to the existing list, run:
+
+          $ {command} --binding=my-binding-id --binding-file='binding.yaml' --append
+
+        Note this is only possible for scoped access settings that exclusively hold session
+        settings.
+
+        To update session settings, run:
+
+          $ {command} --binding=my-binding-id --session-length=2h
+
+        To update the session reauth method you must also specify --session-length (this can be the
+        existing value if you only want to modify the reauth method), run:
+
+          $ {command} --binding=my-binding-id --session-length=2h --session-reauth-method=login
+
+        To disable session settings, set --session-length=0, for example:
+
+          $ {command} --binding=my-binding-id --session-length=0
+
+    request:
+      collection: accesscontextmanager.organizations.gcpUserAccessBindings
+      api_version: v1alpha
+      modify_request_hooks:
+      - googlecloudsdk.command_lib.accesscontextmanager.cloud_bindings:ProcessScopedAccessSettings
+      - googlecloudsdk.command_lib.accesscontextmanager.cloud_bindings:ProcessLevels
+      - googlecloudsdk.command_lib.accesscontextmanager.cloud_bindings:ProcessRestrictedClientApplicationsAlpha
+      - googlecloudsdk.command_lib.accesscontextmanager.cloud_bindings:ProcessSessionSettings
+      - googlecloudsdk.command_lib.accesscontextmanager.cloud_bindings:AddUpdateMaskAlpha
+
+
+  arguments:
+    resource:
+      help_text: The cloud access binding you want to update.
+      spec: !REF googlecloudsdk.command_lib.accesscontextmanager.resources:cloud-access-binding
+      is_positional: false
+    params:
+    - api_field: gcpUserAccessBinding
+      metavar: YAML_FILE
+      arg_name: binding-file
+      help_text: |
+        Path to the file that contains a Google Cloud Platform user access binding.
+
+        This file contains a YAML-compliant object representing
+        a GcpUserAccessBinding (as described in the API reference) containing ScopedAccessSettings only.
+        No other binding fields are allowed.
+
+        The file content replaces the corresponding fields in the existing binding. Unless --append
+        is specified. See --append help text for more details.
+      repeated: false
+      ALPHA:
+        processor: googlecloudsdk.command_lib.accesscontextmanager.cloud_bindings:ParseGcpUserAccessBindingFromBindingFile:api_version=v1alpha
+      GA:
+        processor: googlecloudsdk.command_lib.accesscontextmanager.cloud_bindings:ParseGcpUserAccessBindingFromBindingFile:api_version=v1
+    - api_field: gcpUserAccessBinding.accessLevels
+      arg_name: level
+      type: str
+      help_text: |
+        The access level that replaces the existing level for the given binding. The input must
+        be the full identifier of an access level, such as
+        `accessPolicies/123/accessLevels/new-abc`.
+    - api_field: gcpUserAccessBinding.dryRunAccessLevels
+      arg_name: dry-run-level
+      type: str
+      help_text: |
+        The dry run access level that replaces the existing dry run level for the given binding.
+        The input must be the full identifier of an access level, such as
+        `accessPolicies/123/accessLevels/new-def`.
+    - api_field: gcpUserAccessBinding.sessionSettings.sessionLength
+      arg_name: session-length
+      type: googlecloudsdk.command_lib.accesscontextmanager.cloud_bindings:ProcessSessionLength
+      help_text: |
+        The maximum lifetime of a user session provided as an  ISO 8601 duration string. Must be at
+        least one hour or zero, and no more than twenty-four hours. Granularity is limited to
+        seconds.
+
+        When --session-length=0 users in the group attached to this binding will have infinite
+        session length, effectively disabling the session settings.
+
+        A session begins after a user signs in successfully. If a user signs out before the end of
+        the session lifetime, a new login creates a new session with a fresh lifetime. When a
+        session expires, the user is asked to reauthenticate in accordance with
+        session-reauth-method.
+
+        Setting --session-reauth-method when --session-length is empty raises an error. Cannot set
+        --session-length on restricted client applications; please use scoped access settings.
+    - api_field: gcpUserAccessBinding.sessionSettings.sessionReauthMethod
+      arg_name: session-reauth-method
+      default: login
+      help_text: |
+        Specifies the security check a user must undergo when their session expires. Defaults to
+        --session-reauth-method=LOGIN if unspecified and --session-length is set. Cannot be used when
+        --session-length is empty or 0.
+      choices:
+      - arg_value: login
+        enum_value: LOGIN
+        help_text: |
+          The user will be prompted to perform regular login. Users who are enrolled in two-step
+          verification and haven't chosen to "Remember this computer" will be prompted for their
+          second factor.
+      - arg_value: security-key
+        enum_value: SECURITY_KEY
+        help_text: |
+         The user will be prompted to autheticate using their security key. If no security key has
+         been configured, the LOGIN method is used.
+      - arg_value: password
+        enum_value: PASSWORD
+        help_text: |
+          The user will only be required to enter their password.
+    - arg_name: policy
+      type: str
+      hidden: true
+      help_text: The access policy that the access level belongs to.
+    - arg_name: restricted-client-application-client-ids
+      required: false
+      release_tracks: [ALPHA]
+      type: 'googlecloudsdk.calliope.arg_parsers:ArgList:'
+      help_text: |
+        The application client IDs that replace the existing application client IDs for
+        the restricted client applications in the given binding.
+    - arg_name: restricted-client-application-names
+      required: false
+      release_tracks: [ALPHA]
+      type: 'googlecloudsdk.calliope.arg_parsers:ArgList:'
+      help_text: |
+        The application names that replace the existing application names for
+        the restricted client applications in the given binding.
+    - api_field: append
+      arg_name: append
+      help_text: |
+        When true, append the ScopedAccessSettings in `--binding-file` to the existing
+        ScopedAccessSettings on the binding. When false, the existing binding's ScopedAccessSettings
+        will be overwritten. Defaults to false. You may only append ScopedAccessSettings that
+        exclusively hold session settings (i.e no access levels).
+      required: false
+      default: false

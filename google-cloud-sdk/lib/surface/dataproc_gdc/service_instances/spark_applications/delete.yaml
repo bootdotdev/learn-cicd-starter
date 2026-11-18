@@ -1,0 +1,40 @@
+- release_tracks: [ALPHA, GA]
+  help_text:
+    brief: Delete a Dataproc GDC spark application.
+    description: Delete a Dataproc GDC spark application.
+    examples: |
+      To delete a Dataproc GDC spark application named 'my-application' in 'my-instance' service instance in project `test-project` in `us-central1`, run:
+
+          $ {command} my-application --service-instance=my-instance --project=test-project --location=us-central1
+  request:
+    ALPHA:
+      api_version: v1alpha1
+    collection: dataprocgdc.projects.locations.serviceInstances.sparkApplications
+    method: delete
+  arguments:
+    resource:
+      help_text: |
+        The Dataproc GDC spark application to delete.
+      spec: !REF googlecloudsdk.command_lib.dataproc_gdc.resources:spark_application
+    params:
+    - api_field: allowMissing
+      arg_name: allow-missing
+      help_text: |
+        If set to true, and the service instance is not found, the request will
+        succeed but no action will be taken on the server
+    - api_field: etag
+      arg_name: etag
+      help_text: |
+        Optional. The etag of the service instance. If this is provided, it must
+        match the server etag.
+    - api_field: requestId
+      arg_name: request-id
+      help_text: |
+        An optional request ID to identify requests. If the service receives two identical
+        instance delete requests with the same request_id, the second request is
+        ignored and the operation that corresponds to the first request is returned for both.
+
+        The request ID must be a valid UUID with the exception that zero UUID is
+        not supported (00000000-0000-0000-0000-000000000000).
+  async:
+    collection: dataprocgdc.projects.locations.operations

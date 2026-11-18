@@ -1,0 +1,32 @@
+- release_tracks: [ALPHA, BETA]
+  help_text:
+    brief: |
+      Delete a migration.
+    description: |
+      Delete a migration.
+
+      If run asynchronously with `--async`, exits after printing
+      an operation name that can be used to poll the status of the
+      deletion via:
+
+        {top_command} metastore operations describe
+    examples: |
+      To delete a migration named `my-migration` for the service `my-service`, run:
+
+          $ {command} my-migration --service=my-service
+
+  request:
+    ALPHA:
+      api_version: v1alpha
+    BETA:
+      api_version: v1beta
+    collection: metastore.projects.locations.services.migrationExecutions
+    method: delete
+
+  arguments:
+    resource:
+      help_text: Migration to delete.
+      spec: !REF googlecloudsdk.command_lib.metastore.resources:migration
+
+  async:
+    collection: metastore.projects.locations.operations

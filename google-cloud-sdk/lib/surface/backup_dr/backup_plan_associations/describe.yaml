@@ -1,0 +1,22 @@
+- release_tracks: [ALPHA, GA]
+  help_text:
+    brief: Show details of the backup plan association.
+    description: Show all configuration data associated with the specified backup plan association.
+    examples: |
+      To view details for backup plan association ``BACKUP_PLAN_ASSOCIATION'', run:
+
+        $ {command} BACKUP_PLAN_ASSOCIATION
+
+  request:
+    collection: backupdr.projects.locations.backupPlanAssociations
+
+  response:
+    id_field: name
+
+  arguments:
+    resource:
+      help_text: Name of the backup plan association to describe.
+      spec: !REF googlecloudsdk.command_lib.backupdr.resources:backupPlanAssociations
+
+  output:
+    format: json

@@ -1,0 +1,63 @@
+release_tracks: [ALPHA, BETA, GA]
+
+help_text:
+  brief: |
+    Create a BackendAuthenticationConfig.
+  description: |
+    Create a new BackendAuthenticationConfig.
+  examples: |
+    To create a config named `backend-authentication-config`, run:
+
+      $ {command} backend-authentication-config  \
+      --trust-config=projects/my-project/locations/global/trustConfigs/my-trust-config \
+      --location=global
+
+arguments:
+  resource:
+    spec: !REF googlecloudsdk.command_lib.network_security.resources:backendAuthenticationConfig
+    help_text: |
+      Realm to be created.
+  params:
+  - arg_name: description
+    api_field: backendAuthenticationConfig.description
+    help_text: Description of the backend authentication config.
+  - arg_name: client-certificate
+    api_field: backendAuthenticationConfig.clientCertificate
+    help_text: ID of certificate resource.
+  - arg_name: trust-config
+    api_field: backendAuthenticationConfig.trustConfig
+    help_text: ID of trust config resource.
+  - arg_name: well-known-roots
+    api_field: backendAuthenticationConfig.wellKnownRoots
+    choices:
+    - arg_value: none
+      enum_value: NONE
+    - arg_value: public-roots
+      enum_value: PUBLIC_ROOTS
+    help_text: Indicates whether the load balancer should trust backend server certificates.
+  - arg_name: labels
+    api_field: backendAuthenticationConfig.labels.additionalProperties
+    metavar: KEY=VALUE
+    help_text: |
+      List of label KEY=VALUE pairs to add.
+    type:
+      arg_dict:
+        flatten: true
+        spec:
+        - api_field: key
+        - api_field: value
+async:
+  collection: networksecurity.projects.locations.operations
+
+output:
+  format: yaml
+
+request: &request
+  ALPHA:
+    api_version: v1alpha1
+  BETA:
+    api_version: v1beta1
+  GA:
+    api_version: v1
+  collection: networksecurity.projects.locations.backendAuthenticationConfigs
+  method: create

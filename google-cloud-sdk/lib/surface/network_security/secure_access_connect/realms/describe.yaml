@@ -1,0 +1,24 @@
+release_tracks: [ALPHA, BETA]
+
+help_text:
+  brief: |
+    Describe a SAC realm.
+  description: |
+    Show details for the specified SAC realm.
+  examples: |
+    To describe a realm named `my-realm`, run:
+
+      $ {command} my-realm
+
+arguments:
+  resource:
+    spec: !REF googlecloudsdk.command_lib.network_security.resources:sacRealm
+    help_text: |
+      Realm to be described.
+
+request: &request
+  ALPHA:
+    api_version: v1alpha1
+  BETA:
+    api_version: v1beta1
+  collection: networksecurity.projects.locations.sacRealms

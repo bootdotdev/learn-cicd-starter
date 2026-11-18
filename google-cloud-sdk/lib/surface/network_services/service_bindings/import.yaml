@@ -1,0 +1,42 @@
+release_tracks: [GA, BETA, ALPHA]
+
+help_text:
+  brief: |
+    Import a service binding.
+  description: |
+    Import a service binding from a YAML file.
+  examples: |
+      To import a service binding named `my-service-binding` from a YAML file, run:
+
+        $ {command} my-service-binding --source=my-service-binding.yaml --location=global
+
+arguments:
+  resource:
+    spec: !REF googlecloudsdk.command_lib.network_services.resources:serviceBinding
+    help_text: |
+      Name of the service binding to import.
+
+async:
+  collection: networkservices.projects.locations.operations
+
+request:
+  ALPHA:
+    api_version: v1alpha1
+  BETA:
+    api_version: v1beta1
+  GA:
+    api_version: v1
+  collection: networkservices.projects.locations.serviceBindings
+
+import:
+  abort_if_equivalent: true
+  create_if_not_exists: true
+  create_request:
+    ALPHA:
+      api_version: v1alpha1
+    BETA:
+      api_version: v1beta1
+    GA:
+      api_version: v1
+    method: create
+    collection: networkservices.projects.locations.serviceBindings

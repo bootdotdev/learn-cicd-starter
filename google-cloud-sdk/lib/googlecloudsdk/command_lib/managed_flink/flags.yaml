@@ -1,0 +1,78 @@
+deployment-name:
+  api_field: deploymentId
+  arg_name: deployment
+  help_text: |
+    deployment name.
+
+max-slots:
+  api_field: deployment.deploymentSpec.limits.maxSlots
+  arg_name: max-slots
+  type: googlecloudsdk.core.util.scaled_integer:ParseInteger
+  help_text: |
+    max slots of the Flink deployment.
+
+display-name:
+  api_field: deployment.displayName
+  arg_name: display-name
+  help_text: |
+    display name of the Flink deployment.
+
+workload-identity:
+  api_field: deployment.deploymentSpec.workloadIdentity
+  arg_name: workload-identity
+  help_text: |
+    The workload identity to use for the deployment. Managed Flink Default Workload Identity will be used if not specified.
+
+network-config-vpc:
+  api_field: deployment.deploymentSpec.networkConfig.vpc
+  arg_name: network-config-vpc
+  help_text: |
+    fully qualified VPC network for the Flink deployment network config.
+    Formatted as: projects/{project}/global/networks/{network_id}.
+
+network-config-subnetwork:
+  api_field: deployment.deploymentSpec.networkConfig.subnetwork
+  arg_name: network-config-subnetwork
+  help_text: |
+    subnetwork for the Flink deployment network config.
+
+secrets-paths:
+  api_field: deployment.deploymentSpec.secretsPaths
+  arg_name: secrets-paths
+  help_text: |
+    path to the secrets manager for the Flink deployment. (ie. projects/{my-project}/secrets/{my-secret}/versions/{1})
+
+## Job Specific Flags
+
+deployment:
+  arg_name: deployment
+  help_text: |
+    deployment name.
+
+staging-location:
+  arg_name: staging-location
+  help_text: |
+    staging location for artifacts related to Flink jobs. For example:
+    `gs://staging-bucket/flink`
+
+args:
+  arg_name: args
+  type: "googlecloudsdk.calliope.arg_parsers:ArgList:"
+  help_text: |
+    List of arguments to pass to the Flink job.
+
+class:
+  arg_name: class
+  help_text: |
+    Class with the program entry point (`main()` method). Only needed if the
+    JAR files does not specify the class in its manifest.
+
+# GCP "Better Together" Flags
+
+managed-kafka-clusters:
+  api_field: job.jobSpec.managedKafkaConfig.managedKafkaClusters
+  arg_name: managed-kafka-clusters
+  type: "googlecloudsdk.calliope.arg_parsers:ArgList:"
+  help_text: |
+    a list of Managed Kafka clusters for the Flink job to connect to. For example:
+    `projects/123456789/locations/us-central1/clusters/my-cluster`.

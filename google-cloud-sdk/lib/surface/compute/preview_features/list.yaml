@@ -1,0 +1,35 @@
+- release_tracks: [ALPHA, BETA, GA]
+  help_text:
+    brief: "View preview features."
+    description: "View preview features."
+    examples: |
+        To display all preview features, run the following command:
+
+        $ {command}
+
+  request:
+    ALPHA:
+      api_version: alpha
+    BETA:
+      api_version: beta
+    GA:
+      api_version: v1
+
+    collection: compute.previewFeatures
+
+  arguments:
+    resource:
+      help_text: |
+        The project of the preview features to list.
+      spec: !REF googlecloudsdk.command_lib.compute.resources:compute_project
+      override_resource_collection: true
+
+  response:
+    id_field: name
+
+  output:
+    format: |
+      table(
+        name,
+        activationStatus:label=STATUS
+      )

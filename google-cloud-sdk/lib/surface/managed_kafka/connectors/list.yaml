@@ -1,0 +1,30 @@
+release_tracks: [ALPHA, BETA, GA]
+
+help_text:
+  brief: |
+    List all Managed Service for Apache Kafka connectors for a given connect cluster.
+  description: |
+    List all Managed Service for Apache Kafka connectors for a given connect cluster.
+    To specify the maximum number of connectors to list, use the --limit flag.
+
+  examples: |
+    To list all Managed Service for Apache Kafka connectors belonging to the "mycluster" connect cluster in us-central1, run the following:
+
+      $ {command} mycluster --location=us-central1
+
+request:
+  collection: managedkafka.projects.locations.connectClusters.connectors
+
+arguments:
+  resource:
+    help_text: Identifies the cluster which contains all the connectors to be listed.
+    spec: !REF googlecloudsdk.command_lib.managed_kafka.resources:connect_cluster
+    is_positional: true
+
+output:
+  format: |
+    table[box](
+      name.segment(7):label=NAME,
+      configs."connector.class":label=CLASS,
+      state:label=STATE
+    )

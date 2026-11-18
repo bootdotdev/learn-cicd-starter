@@ -1,0 +1,24 @@
+- release_tracks: [BETA]
+  help_text:
+    brief: Set the IAM policy for a security gateway application.
+    description: Sets the IAM policy for the given security gateway application.
+    examples: |
+      The following command will read an IAM policy defined in a JSON file
+      'policy.json' and set it for the security gateway application with ID ``my-security-gateway-application'':
+
+        $ {command} my-security-gateway-application policy.json --location=global
+
+  request:
+    collection: beyondcorp.projects.locations.securityGateways.applications
+    BETA:
+      api_version: v1
+
+  iam:
+    set_iam_policy_request_path: googleIamV1SetIamPolicyRequest
+    message_type_overrides:
+      policy: GoogleIamV1Policy
+      set_iam_policy_request: BeyondcorpProjectsLocationsSecurityGatewaysApplicationsSetIamPolicyRequest
+  arguments:
+    resource:
+      help_text: The security gateway application for which to set the IAM policy.
+      spec: !REF googlecloudsdk.command_lib.beyondcorp.v1_resources:projects_locations_security_gateways_applications

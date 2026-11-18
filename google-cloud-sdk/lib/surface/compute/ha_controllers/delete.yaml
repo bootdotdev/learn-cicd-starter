@@ -1,0 +1,27 @@
+- release_tracks: [ALPHA]
+  help_text:
+    brief: Permanently delete a specified HA Controller.
+    description: Delete an High Availability (HA) Controller to permanently remove the high availability and failover capabilities from the associated virtual machine (VM) instance.
+    examples: |
+      To delete an HA Controller named `my-ha-controller` in the `us-central1` region, run the following command:
+
+        $ {command} my-ha-controller \
+            --region=us-central1
+
+  request:
+    api_version: alpha
+    collection: compute.haControllers
+    method: delete
+
+  async:
+    collection: compute.regionOperations
+    response_name_field: selfLink
+    state:
+      field: status
+      success_values: ['DONE']
+
+  arguments:
+    resource:
+      help_text: The HA Controller that you want to delete.
+      spec: !REF googlecloudsdk.command_lib.compute.ha_controllers.resources:ha_controller
+      is_positional: true

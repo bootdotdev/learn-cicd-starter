@@ -1,0 +1,23 @@
+- release_tracks: [ALPHA]
+
+  help_text:
+    brief: List deploymentEvents
+    description: List deploymentEvents
+    examples: |-
+      To list all deploymentEvents, run:
+
+          $ {command}
+  arguments:
+    params:
+    - help_text: |-
+        The parent insights config that owns this collection of deployment events.
+        Format:
+        projects/{project}/locations/{location}/insightsConfigs/{insights_config}
+      is_positional: false
+      is_primary_resource: true
+      resource_spec: !REF googlecloudsdk.command_lib.developer_connect.v1_resources:projects_locations_insights_configs
+      required: true
+  request:
+    api_version: v1
+    collection:
+    - developerconnect.projects.locations.insightsConfigs.deploymentEvents

@@ -1,0 +1,307 @@
+project:
+  name: project
+  collection: networkservices.projects
+  attributes:
+  - &project
+    parameter_name: projectsId
+    attribute_name: project
+    help: The project Id.
+    property: core/project
+
+location:
+  name: location
+  collection: networkservices.projects.locations
+  attributes:
+  - *project
+  - &location
+    parameter_name: locationsId
+    attribute_name: location
+    help: The location Id.
+
+operation:
+  name: operation
+  collection: networkservices.projects.locations.operations
+  attributes:
+  - *project
+  - *location
+  - &operation
+    parameter_name: operationsId
+    attribute_name: operation
+    help: Id of the operation.
+  disable_auto_completers: true
+
+httpFilter:
+  name: http filter
+  collection: networkservices.projects.locations.httpFilters
+  request_id_field: httpFilterId
+  attributes:
+  - *project
+  - *location
+  - &httpFilter
+    parameter_name: httpFiltersId
+    attribute_name: http_filter
+    help: Id of the http filter.
+
+endpointPolicy:
+  name: endpoint policy
+  collection: networkservices.projects.locations.endpointPolicies
+  request_id_field: endpointPolicyId
+  attributes:
+  - *project
+  - *location
+  - &endpointPolicy
+    parameter_name: endpointPoliciesId
+    attribute_name: endpoint_policy
+    help: Id of the endpoint policy.
+
+observabilityPolicy:
+  name: observability policy
+  collection: networkservices.projects.locations.observabilityPolicies
+  request_id_field: observabilityPolicyId
+  attributes:
+  - *project
+  - *location
+  - &observabilityPolicy
+    parameter_name: observabilityPoliciesId
+    attribute_name: observability_policy
+    help: Id of the observability policy.
+
+grpcRoute:
+  name: grpc route
+  collection: networkservices.projects.locations.grpcRoutes
+  request_id_field: grpcRouteId
+  attributes:
+  - *project
+  - *location
+  - &grpcRoute
+    parameter_name: grpcRoutesId
+    attribute_name: grpc_route
+    help: Id of the grpc route.
+
+router:
+  name: router
+  collection: networkservices.projects.locations.routers
+  request_id_field: routerId
+  attributes:
+  - *project
+  - *location
+  - &router
+    parameter_name: routersId
+    attribute_name: router
+    help: Id of the router.
+
+mesh:
+  name: mesh
+  collection: networkservices.projects.locations.meshes
+  request_id_field: meshId
+  attributes:
+  - *project
+  - *location
+  - &mesh
+    parameter_name: meshesId
+    attribute_name: mesh
+    help: Id of the mesh.
+
+gateway:
+  name: gateway
+  collection: networkservices.projects.locations.gateways
+  request_id_field: gatewayId
+  attributes:
+  - *project
+  - *location
+  - &gateway
+    parameter_name: gatewaysId
+    attribute_name: gateway
+    help: Id of the gateway.
+
+httpRoute:
+  name: http route
+  collection: networkservices.projects.locations.httpRoutes
+  request_id_field: httpRouteId
+  attributes:
+  - *project
+  - *location
+  - &httpRoute
+    parameter_name: httpRoutesId
+    attribute_name: http_route
+    help: Id of the http route.
+
+tcpRoute:
+  name: tcp route
+  collection: networkservices.projects.locations.tcpRoutes
+  request_id_field: tcpRouteId
+  attributes:
+  - *project
+  - *location
+  - &tcpRoute
+    parameter_name: tcpRoutesId
+    attribute_name: tcp_route
+    help: Id of the tcp route.
+
+tlsRoute:
+  name: tls route
+  collection: networkservices.projects.locations.tlsRoutes
+  request_id_field: tlsRouteId
+  attributes:
+  - *project
+  - *location
+  - &tlsRoute
+    parameter_name: tlsRoutesId
+    attribute_name: tls_route
+    help: Id of the tls route.
+
+serviceBinding:
+  name: service binding
+  collection: networkservices.projects.locations.serviceBindings
+  request_id_field: serviceBindingId
+  attributes:
+  - *project
+  - *location
+  - &serviceBinding
+    parameter_name: serviceBindingsId
+    attribute_name: service_binding
+    help: Id of the service binding.
+
+serviceLbPolicy:
+  name: service lb policy
+  collection: networkservices.projects.locations.serviceLbPolicies
+  request_id_field: serviceLbPolicyId
+  attributes:
+  - *project
+  - *location
+  - &serviceLbPolicy
+    parameter_name: serviceLbPoliciesId
+    attribute_name: service_lb_policy
+    help: Id of the service LB Policy.
+
+multicastDomain:
+  name: multicast domain
+  collection: networkservices.projects.locations.multicastDomains
+  request_id_field: multicastDomainId
+  attributes:
+  - *project
+  - *location
+  - &multicastDomain
+    parameter_name: multicastDomainsId
+    attribute_name: multicast_domain
+    help: Id of the multicast domain.
+
+multicastDomainGroup:
+  name: multicast domain group
+  collection: networkservices.projects.locations.multicastDomainGroups
+  request_id_field: multicastDomainGroupId
+  attributes:
+  - *project
+  - *location
+  - &multicastDomainGroup
+    parameter_name: multicastDomainGroupsId
+    attribute_name: multicast_domain_group
+    help: Id of the multicast domain group.
+
+multicastGroupDefinition:
+  name: multicast group definition
+  collection: networkservices.projects.locations.multicastGroupDefinitions
+  request_id_field: multicastGroupDefinitionId
+  attributes:
+  - *project
+  - *location
+  - &multicastGroupDefinition
+    parameter_name: multicastGroupDefinitionsId
+    attribute_name: multicast_group_definition
+    help: Id of the multicast group definition.
+
+multicastGroupRange:
+  name: multicast group range
+  collection: networkservices.projects.locations.multicastGroupRanges
+  request_id_field: multicastGroupRangeId
+  attributes:
+  - *project
+  - *location
+  - &multicastGroupRange
+    parameter_name: multicastGroupRangesId
+    attribute_name: multicast_group_range
+    help: Id of the multicast group range.
+
+multicastDomainActivation:
+  name: multicast domain activation
+  collection: networkservices.projects.locations.multicastDomainActivations
+  request_id_field: multicastDomainActivationId
+  attributes:
+  - *project
+  - *location
+  - &multicastDomainActivation
+    parameter_name: multicastDomainActivationsId
+    attribute_name: multicast_domain_activation
+    help: Id of the multicast domain activation.
+
+multicastGroup:
+  name: multicast group
+  collection: networkservices.projects.locations.multicastGroups
+  request_id_field: multicastGroupId
+  attributes:
+  - *project
+  - *location
+  - &multicastGroup
+    parameter_name: multicastGroupsId
+    attribute_name: multicast_group
+    help: Id of the multicast group.
+
+multicastGroupRangeActivation:
+  name: multicast group range activation
+  collection: networkservices.projects.locations.multicastGroupRangeActivations
+  request_id_field: multicastGroupRangeActivationId
+  attributes:
+  - *project
+  - *location
+  - &multicastGroupRangeActivation
+    parameter_name: multicastGroupRangeActivationsId
+    attribute_name: multicast_group_range_activation
+    help: Id of the multicast group range activation.
+
+multicastConsumerAssociation:
+  name: multicast consumer association
+  collection: networkservices.projects.locations.multicastConsumerAssociations
+  request_id_field: multicastConsumerAssociationId
+  attributes:
+  - *project
+  - *location
+  - &multicastConsumerAssociation
+    parameter_name: multicastConsumerAssociationsId
+    attribute_name: multicast_consumer_association
+    help: Id of the multicast consumer association.
+
+multicastGroupConsumerActivation:
+  name: multicast group consumer activation
+  collection: networkservices.projects.locations.multicastGroupConsumerActivations
+  request_id_field: multicastGroupConsumerActivationId
+  attributes:
+  - *project
+  - *location
+  - &multicastGroupConsumerActivation
+    parameter_name: multicastGroupConsumerActivationsId
+    attribute_name: multicast_group_consumer_activation
+    help: Id of the multicast group consumer activation.
+
+multicastProducerAssociation:
+  name: multicast producer association
+  collection: networkservices.projects.locations.multicastProducerAssociations
+  request_id_field: multicastProducerAssociationId
+  attributes:
+  - *project
+  - *location
+  - &multicastProducerAssociation
+    parameter_name: multicastProducerAssociationsId
+    attribute_name: multicast_producer_association
+    help: Id of the multicast producer association.
+
+multicastGroupProducerActivation:
+  name: multicast group producer activation
+  collection: networkservices.projects.locations.multicastGroupProducerActivations
+  request_id_field: multicastGroupProducerActivationId
+  attributes:
+  - *project
+  - *location
+  - &multicastGroupProducerActivation
+    parameter_name: multicastGroupProducerActivationsId
+    attribute_name: multicast_group_producer_activation
+    help: Id of the multicast group producer activation.

@@ -1,0 +1,22 @@
+- release_tracks: [ALPHA]
+  hidden: true
+  help_text:
+    brief: |
+      Delete a Dataplex Governance Rule.
+    description: |
+      Delete a Dataplex Governance Rule.
+    examples: |
+      To delete a Governance Rule `test-governance-rule` in project `test-project` and in location `us-central1`, run:
+
+          $ {command} test-governance-rule --location=us-central1 --project=test-project
+  request:
+    ALPHA:
+      api_version: v1
+    collection: dataplex.projects.locations.governanceRules
+  arguments:
+    resource:
+      help_text: |
+        Arguments and flags that define the Dataplex Governance Rule you want to delete.
+      spec: !REF googlecloudsdk.command_lib.dataplex.resources:governance_rule
+  async:
+    collection: dataplex.projects.locations.operations

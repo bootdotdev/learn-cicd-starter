@@ -1,0 +1,61 @@
+- release_tracks: [GA, BETA, ALPHA]
+
+  help_text:
+    brief: Create a new Cloud Bigtable authorized view.
+    description: Create a new Cloud Bigtable authorized view.
+    examples: |
+      To create an authorized view `my-authorized-view` in instance `my-instance` and table
+      `my-table`, using the definition file `authorized_view.json`:
+
+        $ {command} my-authorized-view --instance=test-instance --table=test-table --definition-file=authorized_view.json
+
+      To create an authorized view `my-authorized-view` in instance `my-instance` and table
+      `my-table`, using the pre-encoded definition file `authorized_view_pre_encoded.json`:
+
+        $ {command} my-authorized-view --instance=test-instance --table=test-table --definition-file=authorized_view_pre_encoded.json --pre-encoded
+
+  request:
+    collection: bigtableadmin.projects.instances.tables.authorizedViews
+    method: create
+    modify_request_hooks:
+    - googlecloudsdk.api_lib.bigtable.authorized_views:ModifyCreateAuthorizedViewRequest
+
+  arguments:
+    resource:
+      help_text: Cloud Bigtable authorized view to create.
+      spec: !REF googlecloudsdk.command_lib.bigtable.resources:authorized_view
+    params:
+    - arg_name: definition-file
+      help_text: |
+        Path to a JSON or YAML file containing a valid authorized view protobuf.
+
+        The `name` field is ignored. The name is deduced from the other command line arguments.
+
+        Example:
+        {
+          "subsetView":
+          {
+            "rowPrefixes": ["store1#"],
+            "familySubsets":
+            {
+              "column_family_name":
+              {
+                "qualifiers":["address"],
+                "qualifierPrefixes":["tel"]
+              }
+            }
+          },
+          "deletionProtection": true
+        }
+    - arg_name: pre-encoded
+      type: bool
+      default: false
+      help_text: |
+        By default, Base64 encoding is applied to all binary fields ("rowPrefixes", "qualifiers" and
+        "qualifierPrefixes") in the JSON or YAML definition file.
+
+        Use this to indicate that all binary fields are already Base64-encoded and should be used
+        directly.
+
+  async:
+    collection: bigtableadmin.operations

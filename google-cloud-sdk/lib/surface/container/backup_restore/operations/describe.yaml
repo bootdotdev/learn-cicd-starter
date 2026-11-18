@@ -1,0 +1,18 @@
+- help_text:
+    brief: Describe an operation.
+    description: |
+      Describe a Backup for GKE operation.
+
+      ## EXAMPLES
+
+      To describe an operation ``OPERATION'' in project ``my-project'', run:
+
+        $ {command} OPERATION --project=my-project
+
+  request:
+    collection: gkebackup.projects.locations.operations
+
+  arguments:
+    resource:
+      spec: !REF googlecloudsdk.command_lib.container.backup_restore.resources:operation
+      help_text: Operation to describe.

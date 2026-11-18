@@ -1,0 +1,51 @@
+project:
+  name: project
+  collection: dlp.projects
+  attributes:
+  - &project
+    parameter_name: projectsId
+    attribute_name: project
+    help: The project ID.
+
+content:
+  name: content
+  collection: dlp.projects.content
+  attributes:
+  - *project
+
+image:
+  name: image
+  collection: dlp.projects.image
+  attributes:
+  - *project
+
+location:
+  name: location
+  collection: dlp.projects.locations
+  attributes:
+  - *project
+  - parameter_name: locationsId
+    attribute_name: location
+    help: The location ID.
+    fallthroughs:
+    - value: "global"
+      hint: |
+        uses "global" by default
+
+job:
+  name: job
+  collection: dlp.projects.dlpJobs
+  disable_auto_completers: false
+  attributes:
+  - parameter_name: dlpJobsId
+    attribute_name: job
+    help: The id of the DLP Job
+
+job_trigger:
+  name: job_trigger
+  collection: dlp.projects.jobTriggers
+  disable_auto_completers: false
+  attributes:
+  - parameter_name: jobTriggersId
+    attribute_name: job_trigger
+    help: The id of the DLP JobTrigger

@@ -1,0 +1,31 @@
+- release_tracks: [ALPHA]
+  help_text:
+    brief: Add IAM policy binding to a Cloud Run worker pool.
+    description: |
+      Add an IAM policy binding to the IAM policy of a Cloud Run worker pool. One binding consists of a member,
+      and a role.
+
+    examples: |
+      To add an IAM policy binding for the role of 'roles/run.developer' for the user 'test-user@gmail.com'
+      with worker pool 'my-worker-pool' and region 'us-central1', run:
+
+        $ {command} my-worker-pool --region='us-central1' --member='user:test-user@gmail.com' --role='roles/run.developer'
+
+      See https://cloud.google.com/iam/docs/managing-policies for details of
+      policy role and member types.
+
+  request:
+    collection: run.projects.locations.workerpools
+    modify_request_hooks:
+    - googlecloudsdk.command_lib.run.platforms:ValidatePlatformIsManaged
+
+  arguments:
+    resource:
+      help_text: The worker pool for which to add IAM policy binding to.
+      spec: !REF googlecloudsdk.command_lib.run.resources:workerpool
+
+  ALPHA:
+    iam:
+      enable_condition: true
+      policy_version: 3
+      get_iam_policy_version_path: options_requestedPolicyVersion

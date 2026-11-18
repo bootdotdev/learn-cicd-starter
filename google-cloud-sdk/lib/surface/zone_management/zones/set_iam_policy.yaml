@@ -1,0 +1,26 @@
+- release_tracks: [ALPHA]
+
+  help_text:
+    brief: set IAM policy for a project on the zone
+    description: Sets the IAM policy for a project on the zone.
+    examples: |
+      To set the IAM policy for a project called `test-project` in zone `test-zone` in location `us-central1` from a local file `test-policy.json`, run:
+
+      $ {command} --project=test-project --location=us-central1 --zone=test-zone test-policy.json
+
+  request:
+    collection: edgecontainer.projects.locations.zones
+    api_version: v1alpha
+
+  arguments:
+    resource:
+      help_text: |
+        The name of the zone to set the IAM policy for the project in.
+      is_positional: false
+      spec: !REF googlecloudsdk.command_lib.zone_management.zone.resources:projzone
+
+  iam:
+    set_iam_policy_request_path: setIamPolicyRequest
+    message_type_overrides:
+      policy: IamPolicy
+      set_iam_policy_request: EdgecontainerProjectsLocationsZonesSetIamPolicyRequest

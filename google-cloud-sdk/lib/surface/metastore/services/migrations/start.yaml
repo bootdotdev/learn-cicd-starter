@@ -1,0 +1,161 @@
+- release_tracks: [ALPHA, BETA]
+  help_text:
+    brief:  |
+      Start the migration on a Dataproc Metastore service.
+    description: |
+      Start the migration on a Dataproc Metastore service.
+
+      If run asynchronously with `--async`, exits after printing
+      the operation name that can be used to poll the status of the
+      migration operation via:
+
+        {top_command} metastore operations describe
+  request:
+    method: startMigration
+    ALPHA:
+      api_version: v1alpha
+    BETA:
+      api_version: v1beta
+    collection: metastore.projects.locations.services
+
+  arguments:
+    resource:
+      help_text: |
+        The Dataproc Metastore service to start the migration on.
+      spec: !REF googlecloudsdk.command_lib.metastore.resources:service
+    params:
+    - group:
+        help_text: |
+          Configuration information required by Dataproc Metastore to start the migration.
+        mutex: true
+        required: true
+        params:
+        - group:
+            help_text: |
+              Configuration information specific to migrating from "Self-Managed Hive Metastore on
+              Google Cloud Platform with Cloud SQL as the backend database" to a Dataproc Metastore
+              service.
+            params:
+            - group:
+                help_text: |
+                  Configuration information required for Dataproc Metastore to establish customer
+                  database connection before the cutover phase of migration.
+                required: true
+                params:
+                - arg_name: instance-connection-name
+                  api_field: startMigrationRequest.migrationExecution.cloudSqlMigrationConfig.cloudSqlConnectionConfig.instanceConnectionName
+                  processor: googlecloudsdk.command_lib.metastore.validators:ValidateCloudSqlInstanceConnectionName
+                  help_text: |
+                    The Cloud SQL database connection name, in the format,
+                    "project_id:region:instance_name"
+                  required: true
+                - arg_name: ip-address
+                  api_field: startMigrationRequest.migrationExecution.cloudSqlMigrationConfig.cloudSqlConnectionConfig.ipAddress
+                  processor: googlecloudsdk.command_lib.metastore.validators:ValidateCloudSqlIpAddress
+                  help_text: |
+                    The private IP address of the Cloud SQL instance.
+                  required: true
+                - arg_name: port
+                  api_field: startMigrationRequest.migrationExecution.cloudSqlMigrationConfig.cloudSqlConnectionConfig.port
+                  processor: googlecloudsdk.command_lib.metastore.validators:ValidatePort
+                  help_text: |
+                    The network port of the database.
+                  required: true
+                - arg_name: hive-database-name
+                  api_field: startMigrationRequest.migrationExecution.cloudSqlMigrationConfig.cloudSqlConnectionConfig.hiveDatabaseName
+                  processor: googlecloudsdk.command_lib.metastore.validators:ValidateHiveDatabaseName
+                  help_text: |
+                    The name of the hive metastore database.
+                  required: true
+                - arg_name: connection-username
+                  api_field: startMigrationRequest.migrationExecution.cloudSqlMigrationConfig.cloudSqlConnectionConfig.username
+                  help_text: |
+                    The username that Dataproc Metastore service should use to connect to the database.
+                  required: true
+                - arg_name: connection-password
+                  api_field: startMigrationRequest.migrationExecution.cloudSqlMigrationConfig.cloudSqlConnectionConfig.password
+                  help_text: |
+                    The password for the user that Dataproc Metastore service should use to connect to
+                    the database.
+                  required: true
+                - arg_name: proxy-subnet
+                  api_field: startMigrationRequest.migrationExecution.cloudSqlMigrationConfig.cloudSqlConnectionConfig.proxySubnet
+                  processor: googlecloudsdk.command_lib.metastore.validators:ValidateSubnetworkResourceName:arg_name=--proxy-subnet
+                  help_text: |
+                    The relative resource name of the subnetwork to deploy the SOCKS5 proxy service
+                    in. The subnetwork should reside in a network through which the Cloud SQL instance
+                    is accessible. The resource name should be in the format,
+                    "projects/{project_id}/regions/{region_id}/subnetworks/{subnetwork_id}"
+                  required: true
+                - arg_name: nat-subnet
+                  api_field: startMigrationRequest.migrationExecution.cloudSqlMigrationConfig.cloudSqlConnectionConfig.natSubnet
+                  processor: googlecloudsdk.command_lib.metastore.validators:ValidateSubnetworkResourceName:arg_name=--nat-subnet
+                  help_text: |
+                    The relative resource name of the subnetwork to be used for Private Service
+                    Connect. Note that this cannot be a regular subnet and is used only for NAT.
+                    More context in https://cloud.google.com/vpc/docs/about-vpc-hosted-services#psc-subnets.
+                    This subnet is used to publish the SOCKS5 proxy service. The subnet size must be
+                    at least `/29` and it should reside in a network through which the Cloud SQL
+                    instance is accessible. The resource name should be in the format,
+                    "projects/{project_id}/regions/{region_id}/subnetworks/{subnetwork_id}"
+                  required: true
+            - group:
+                help_text: |
+                  Configuration information required to start the Change Data Capture (CDC) streams
+                  from customer's Cloud SQL database to backend database of Dataproc Metastore.
+                required: true
+                params:
+                - arg_name: vpc-network
+                  api_field: startMigrationRequest.migrationExecution.cloudSqlMigrationConfig.cdcConfig.vpcNetwork
+                  processor: googlecloudsdk.command_lib.metastore.validators:ValidateNetworkResourceName:arg_name=--vpc-network
+                  help_text: |
+                    Fully qualified name of the Cloud SQL instance's VPC network or the shared VPC
+                    network that Datastream will peer to, in the following format:
+                    "projects/{project_id}/locations/global/networks/{network_id}".
+                    More context in https://cloud.google.com/datastream/docs/network-connectivity-options#privateconnectivity
+                  required: true
+                - arg_name: subnet-ip-range
+                  api_field: startMigrationRequest.migrationExecution.cloudSqlMigrationConfig.cdcConfig.subnetIpRange
+                  processor: googlecloudsdk.command_lib.metastore.validators:ValidateSubnetIpRange
+                  help_text: |
+                    A "/29" CIDR IP range for peering with datastream
+                  required: true
+                - arg_name: cdc-username
+                  api_field: startMigrationRequest.migrationExecution.cloudSqlMigrationConfig.cdcConfig.username
+                  help_text: |
+                    The username that the Datastream service should use for the MySQL connection.
+                  required: true
+                - arg_name: cdc-password
+                  api_field: startMigrationRequest.migrationExecution.cloudSqlMigrationConfig.cdcConfig.password
+                  help_text: |
+                    The password for the user that Datastream service should use for the MySQL
+                    connection.
+                  required: true
+                - arg_name: reverse-proxy-subnet
+                  api_field: startMigrationRequest.migrationExecution.cloudSqlMigrationConfig.cdcConfig.reverseProxySubnet
+                  processor: googlecloudsdk.command_lib.metastore.validators:ValidateSubnetworkResourceName:arg_name=--reverse-proxy-subnet
+                  help_text: |
+                    The URL of the subnetwork resource to create the VM instance hosting the reverse
+                    proxy in. More context in https://cloud.google.com/datastream/docs/private-connectivity#reverse-csql-proxy
+                    The subnetwork should reside in the network provided in the request that
+                    Datastream will peer to and should be in the same region as Datastream, in the
+                    following format.
+                    "projects/{project_id}/regions/{region_id}/subnetworks/{subnetwork_id}""
+                  required: true
+                - arg_name: bucket
+                  api_field: startMigrationRequest.migrationExecution.cloudSqlMigrationConfig.cdcConfig.bucket
+                  processor: googlecloudsdk.command_lib.metastore.validators:ValidateMigrationBucketName
+                  help_text: |
+                    The bucket to write the intermediate stream event data in. The bucket name must be
+                    without any prefix like "gs://".
+                    This field is optional. If not set, the Artifacts Cloud Storage bucket is used.
+                - arg_name: root-path
+                  api_field: startMigrationRequest.migrationExecution.cloudSqlMigrationConfig.cdcConfig.rootPath
+                  processor: googlecloudsdk.command_lib.metastore.validators:ValidateMigrationRootPath
+                  help_text: |
+                    The root path inside the Cloud Storage bucket. The stream event data will be
+                    written to this path. The default value is "/migration".
+                  default: /migration
+
+  async:
+    collection: metastore.projects.locations.operations

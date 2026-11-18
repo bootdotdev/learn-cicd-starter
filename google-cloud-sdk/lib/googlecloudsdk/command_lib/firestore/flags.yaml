@@ -1,0 +1,203 @@
+# Copyright 2018 Google LLC. All Rights Reserved.
+#
+# Licensed under the Apache License, Version 2.0 (the "License");
+# you may not use this file except in compliance with the License.
+# You may obtain a copy of the License at
+#
+#    http://www.apache.org/licenses/LICENSE-2.0
+#
+# Unless required by applicable law or agreed to in writing, software
+# distributed under the License is distributed on an "AS IS" BASIS,
+# WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
+# See the License for the specific language governing permissions and
+# limitations under the License.
+
+type:
+  api_field: googleFirestoreAdminV1Database.type
+  arg_name: type
+  help_text: The database type.
+  required: false
+  choices:
+  - arg_value: firestore-native
+    enum_value: FIRESTORE_NATIVE
+  - arg_value: datastore-mode
+    enum_value: DATASTORE_MODE
+
+
+enable_delete_protection:
+  api_field: googleFirestoreAdminV1Database.deleteProtectionState
+  arg_name: delete-protection
+  action: store_true
+  default: null
+  required: false
+  help_text: |
+    If set to true, the Firestore database will be updated to have database delete protection
+    enabled. A database with delete protection enabled cannot be deleted. You can disable the
+    delete protection via --no-delete-protection.
+  choices:
+  - arg_value: true
+    enum_value: DELETE_PROTECTION_ENABLED
+  - arg_value: false
+    enum_value: DELETE_PROTECTION_DISABLED
+
+enable_pitr:
+  api_field: googleFirestoreAdminV1Database.pointInTimeRecoveryEnablement
+  arg_name: enable-pitr
+  action: store_true
+  default: null
+  required: false
+  help_text: |
+    If set to true, the Firestore database will be updated to enable Point In Time Recovery. You can
+    disable the this feature via --no-enable-pitr.
+  choices:
+  - arg_value: true
+    enum_value: POINT_IN_TIME_RECOVERY_ENABLED
+  - arg_value: false
+    enum_value: POINT_IN_TIME_RECOVERY_DISABLED
+
+query_scope:
+  api_field: googleFirestoreAdminV1Index.queryScope
+  arg_name: query-scope
+  help_text: Query scope the index applies to.
+  default: collection
+  choices:
+  - arg_value: collection
+    enum_value: COLLECTION
+  - arg_value: collection-group
+    enum_value: COLLECTION_GROUP
+  - arg_value: collection-recursive
+    enum_value: COLLECTION_RECURSIVE
+
+api_scope:
+  api_field: googleFirestoreAdminV1Index.apiScope
+  arg_name: api-scope
+  help_text: Api scope the index applies to.
+  default: any-api
+  choices:
+  - arg_value: any-api
+    enum_value: ANY_API
+  - arg_value: datastore-mode-api
+    enum_value: DATASTORE_MODE_API
+  - arg_value: mongodb-compatible-api
+    enum_value: MONGODB_COMPATIBLE_API
+
+density:
+  api_field: googleFirestoreAdminV1Index.density
+  arg_name: density
+  required: false
+  help_text: Density of the index.
+  default: null
+  choices:
+  - arg_value: density-unspecified
+    enum_value: DENSITY_UNSPECIFIED
+  - arg_value: sparse-any
+    enum_value: SPARSE_ANY
+  - arg_value: sparse-all
+    enum_value: SPARSE_ALL
+  - arg_value: DENSE
+    enum_value: DENSE
+
+field_config:
+  api_field: googleFirestoreAdminV1Index.fields
+  arg_name: field-config
+  help_text: Configuration for an index field.
+  type: arg_object
+  required: [field-path]
+  spec:
+  - api_field: fieldPath
+    json_name: field-path
+    help_text: Specifies the field path (e.g. 'address.city'). This is required.
+  - api_field: arrayConfig
+    json_name: array-config
+    help_text: |
+      Specifies the configuration for an array field. The only valid option
+      is 'contains'. Exactly one of 'order', 'array-config', or
+      'vector-config' must be specified.
+  - api_field: order
+    json_name: order
+    help_text: |
+      Specifies the order. Valid options are 'ascending', 'descending'.
+      Exactly one of 'order', 'array-config', or 'vector-config' must be
+      specified.
+  - api_field: vectorConfig
+    json_name: vector-config
+    help_text: |
+      Specifies the configuration for a vector field. Exactly one of
+      'order', 'array-config', or 'vector-config' must be specified.
+
+index:
+  api_field: googleFirestoreAdminV1Field.indexConfig.indexes
+  arg_name: index
+  metavar: KEY=VALUE
+  processor: googlecloudsdk.command_lib.firestore.util:AddQueryScope
+  help_text: |
+    An index for the field.
+
+    This flag can be repeated to provide multiple indexes. Any existing indexes will
+    be overwritten with the ones provided. Any omitted indexes will be deleted if
+    they currently exist.
+
+    The following keys are allowed:
+
+    *order*:::: Specifies the order. Valid options are: 'ascending', 'descending'.
+    Exactly one of 'order' or 'array-config' must be specified.
+
+    *array-config*:::: Specifies the configuration for an array field. The only
+    valid option is 'contains'. Exactly one of 'order' or 'array-config' must be
+    specified.
+
+  type:
+    arg_dict:
+      flatten: false
+      spec:
+      - api_field: fields.arrayConfig
+        arg_name: array-config
+        type: str
+        required: false
+        choices:
+        - arg_value: contains
+          enum_value: CONTAINS
+      - api_field: fields.order
+        arg_name: order
+        type: str
+        required: false
+        choices:
+        - arg_value: ascending
+          enum_value: ASCENDING
+        - arg_value: descending
+          enum_value: DESCENDING
+
+disable_indexes:
+  arg_name: disable-indexes
+  help_text: If provided, the field will no longer be indexed at all.
+  action: store_true
+
+multikey:
+  api_field: googleFirestoreAdminV1Index.multikey
+  arg_name: multikey
+  required: false
+  help_text: |
+    Optional. Whether the index is multikey. By default, the index
+    is not multikey. For non-multikey indexes, none of the paths in the
+    index definition reach or traverse an array, except via an explicit
+    array index. For multikey indexes, at most one of the paths in the index
+    definition reach or traverse an array, except via an explicit array
+    index. Violations will result in errors. Note this field only applies to
+    index with MONGODB_COMPATIBLE_API ApiScope.
+  action: store_true
+
+unique:
+  api_field: googleFirestoreAdminV1Index.unique
+  arg_name: unique
+  required: false
+  help_text: |
+    Optional. Whether it is an unique index. Unique index ensures all values for
+    the indexed field(s) are unique across documents.
+  action: store_true
+
+clear_exemption:
+  arg_name: clear-exemption
+  help_text: |
+    If provided, the field's current index configuration will be
+    reverted to inherit from its ancestor index configurations.
+  action: store_true

@@ -1,0 +1,48 @@
+release_tracks: [GA, BETA, ALPHA]
+help_text:
+  brief: |
+    Update a multicast group range.
+  description: |
+    Update a multicast group range in the specified location of the current project.
+  examples: |
+    Update a multicast group range with the name 'my-multicast-group-range'
+    and location 'global'.
+
+      $ {command} my-multicast-group-range --require-explicit-accept --enable-logging --location=global
+arguments:
+  resource:
+    spec: !REF googlecloudsdk.command_lib.network_services.resources:multicastGroupRange
+    help_text: |
+      Name of the multicast group range to be updated.
+  params:
+  - arg_name: consumer-accept-list
+    repeated: true
+    api_field: multicastGroupRange.consumerAcceptList
+    help_text: An optional list of consumer projects that can use this multicast group range.
+    clearable: true
+  - arg_name: require-explicit-accept
+    api_field: multicastGroupRange.requireExplicitAccept
+    help_text: Whether an empty consumer accept list will reject all consumer projects.
+    action: store_true_false
+  - arg_name: enable-logging
+    api_field: multicastGroupRange.logConfig.enabled
+    help_text: Whether to enable logging for this multicast group range.
+    action: store_true_false
+  - arg_name: description
+    api_field: multicastGroupRange.description
+    help_text: The description for the multicast group range.
+  labels:
+    api_field: multicastGroupRange.labels
+update:
+  read_modify_update: true
+async:
+  collection: networkservices.projects.locations.operations
+request: &request
+  GA:
+    api_version: v1
+  ALPHA:
+    api_version: v1alpha1
+  BETA:
+    api_version: v1beta1
+  collection: networkservices.projects.locations.multicastGroupRanges
+  method: patch

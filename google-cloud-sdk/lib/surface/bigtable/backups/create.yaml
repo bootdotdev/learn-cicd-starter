@@ -1,0 +1,86 @@
+- release_tracks: [ALPHA, BETA, GA]
+  help_text:
+    brief: Creates a backup of a Cloud Bigtable table.
+    description: Creates a backup of a Cloud Bigtable table.
+    examples: |
+      To create a backup `BACKUP_NAME` asyncronously from table `TABLE_NAME` which expires at
+      `2019-03-30T10:49:41Z`, run:
+
+        $ {command} BACKUP_NAME --instance=INSTANCE_NAME --cluster=CLUSTER_NAME
+        --table=TABLE_NAME --expiration-date=2019-03-30T10:49:41Z --async
+
+      To create a backup `BACKUP_NAME` syncronously from table `TABLE_NAME` which expires in 2 weeks
+      from now, run:
+
+        $ {command} BACKUP_NAME --instance=INSTANCE_NAME --cluster=CLUSTER_NAME
+        --table=TABLE_NAME --retention-period=2w
+
+      To create a hot backup `BACKUP_NAME` from table `TABLE_NAME` which expires in 2 weeks
+      from now, run:
+
+        $ {command} BACKUP_NAME --instance=INSTANCE_NAME --cluster=CLUSTER_NAME
+        --table=TABLE_NAME --retention-period=2w --backup-type=HOT
+
+      To create a hot backup `BACKUP_NAME` from table `TABLE_NAME` which will be converted to a
+      standard backup at `2019-03-31T10:49:41Z` and expires in 2 weeks from now, run:
+
+        $ {command} BACKUP_NAME --instance=INSTANCE_NAME --cluster=CLUSTER_NAME
+        --table=TABLE_NAME --retention-period=2w --backup-type=HOT
+        --hot-to-standard-time=2019-03-31T10:49:41Z
+
+      To create a hot backup `BACKUP_NAME` from table `TABLE_NAME` which will be converted to a
+      standard backup in 1 week from now and expires in 2 weeks from now, run:
+
+      $ {command} BACKUP_NAME --instance=INSTANCE_NAME --cluster=CLUSTER_NAME
+        --table=TABLE_NAME --retention-period=2w --backup-type=HOT
+        --hot-to-standard-time=+P1w
+
+  request:
+    collection: bigtableadmin.projects.instances.clusters.backups
+    modify_request_hooks:
+    - googlecloudsdk.api_lib.bigtable.backups:ModifyCreateRequest
+  arguments:
+    params:
+    - api_field: backup.sourceTable
+      arg_name: table
+      required: true
+      help_text: ID of the table from which the backup will be created.
+    - group:
+        mutex: true
+        required: true
+        params:
+        - arg_name: expiration-date
+          api_field: backup.expireTime
+          help_text: |
+            Absolute expiration time of the backup. From the time the request is received, must be:
+            - At least 6 hours in the future
+            - At most 90 days in the future
+
+            See `$ gcloud topic datetimes` for information on date/time formats.
+        - arg_name: retention-period
+          api_field: backup.expireTime
+          help_text: |
+            Retention period of the backup relative from now; must be:
+            - At least 6 hours
+            - At most 90 days
+
+            See `$ gcloud topic datetimes` for information on duration formats.
+    - arg_name: backup-type
+      api_field: backup.backupType
+      help_text: |
+        Type of the backup; whether the backup is a standard backup or a hot backup.
+    - arg_name: hot-to-standard-time
+      api_field: backup.hotToStandardTime
+      help_text: |
+        Time at which a hot backup will be converted to a standard backup relative from now; must
+        be:
+        - At least 24 hours
+
+        Only applies for hot backups. See `$ gcloud topic datetimes` for information on date/time
+        formats.
+    resource:
+      help_text: The Cloud Bigtable backup to create.
+      spec: !REF googlecloudsdk.command_lib.bigtable.resources:backup
+
+  async:
+    collection: bigtableadmin.operations

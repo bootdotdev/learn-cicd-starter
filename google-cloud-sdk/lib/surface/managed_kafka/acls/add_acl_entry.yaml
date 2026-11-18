@@ -1,0 +1,55 @@
+release_tracks: [GA, ALPHA, BETA]
+
+help_text:
+  brief: |
+    Add an acl entry to a Managed Service for Apache Kafka acl.
+  description: |
+    Add an acl entry to a Managed Service for Apache Kafka acl.
+
+  examples: |
+    To add an acl entry for the Kafka cluster resource pattern (acl ID = cluster),
+    in a cluster named mycluster located in us-central1, run the following:
+
+      $ {command} cluster \
+          --cluster=mycluster \
+          --location=us-central1 \
+          --principal='User:admin@project.iam.gserviceaccount.com' --operation=ALL \
+          --permission-type=ALLOW --host='*'
+
+request:
+  collection: managedkafka.projects.locations.clusters.acls
+  method: addAclEntry
+
+arguments:
+  resource:
+    help_text: |
+      Identifies the acl that this command updates.
+
+      The structure of the acl ID defines the Resource Pattern for which the
+      acl entries apply in the Kafka cluster. The acl ID must be structured
+      like one of the following:
+
+        For acls on the cluster:
+          cluster
+
+        For acls on a single resource within the cluster:
+          topic/{resource_name}
+          consumerGroup/{resource_name}
+          transactionalId/{resource_name}
+
+        For acls on all resources that match a prefix:
+          topicPrefixed/{resource_name}
+          consumerGroupPrefixed/{resource_name}
+          transactionalIdPrefixed/{resource_name}
+
+        For acls on all resources of a given type (i.e. the wildcard literal "*"):
+          allTopics (represents topic/*)
+          allConsumerGroups (represents consumerGroup/*)
+          allTransactionalIds (represents transactionalId/*)
+    spec: !REF googlecloudsdk.command_lib.managed_kafka.resources:acl
+
+  params:
+  - _REF_: googlecloudsdk.command_lib.managed_kafka.flags:acl-entry-principal
+  - _REF_: googlecloudsdk.command_lib.managed_kafka.flags:acl-entry-operation
+  - _REF_: googlecloudsdk.command_lib.managed_kafka.flags:acl-entry-permission-type
+  - _REF_: googlecloudsdk.command_lib.managed_kafka.flags:acl-entry-host

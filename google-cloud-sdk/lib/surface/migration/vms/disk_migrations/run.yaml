@@ -1,0 +1,19 @@
+- release_tracks: [ALPHA]
+  help_text:
+    brief: Run a disk migration resource process.
+    description: |
+      {command} initiates a disk migration resource process.
+      To use this command, you must enable VM Migration API in your project.
+
+    examples: |
+      To run my-disk-migration resource process in us-central1 in the AWS source my-aws-source in the default project, run:
+        $ {command} my-disk-migration --location=us-central1 --source=my-aws-source
+
+  request:
+    method: run
+    collection: vmmigration.projects.locations.sources.diskMigrationJobs
+
+  arguments:
+    resource:
+      help_text: The disk migration resource you want to initiate its process.
+      spec: !REF googlecloudsdk.command_lib.migration.vms.resources:diskMigration

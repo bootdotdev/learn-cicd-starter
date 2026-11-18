@@ -1,0 +1,40 @@
+- release_tracks: [GA]
+  help_text:
+    brief: |
+      Update annotations on an Artifact Registry package version.
+    description: |
+      Update annotations on an Artifact Registry package version.
+
+    examples: |
+      To update annotations on version `1.0.0` of `my-pkg` when the project ID, repository and location defaults are set, run the following command:
+
+      CAUTION: This command will overwrite any existing annotations on the version.
+
+          $ {command} 1.0.0 --package=my-pkg --annotations=key1=value1,key2=value2
+
+      To clear all annotations on the version run the following command:
+
+          $ {command} 1.0.0 --package=my-pkg --annotations={}
+
+  arguments:
+    resource:
+      spec: !REF googlecloudsdk.command_lib.artifacts.resources:version
+      help_text: |
+        The Artifact Registry package version to update.
+    params:
+    - arg_name: annotations
+      api_field: version.annotations
+      required: false
+      help_text: |
+        List of annotations in the format of KEY=VALUE pairs to add, update, or remove.
+        Duplicate keys will be overwritten. For more details on annotations,
+        see https://google.aip.dev/148#annotations.
+      spec:
+      - api_field: key
+      - api_field: value
+
+  request: &request
+    api_version: v1
+    collection: artifactregistry.projects.locations.repositories.packages.versions
+    modify_request_hooks:
+    - googlecloudsdk.command_lib.artifacts.util:EscapeVersionNameHook

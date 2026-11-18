@@ -1,0 +1,68 @@
+- release_tracks: [ALPHA, BETA, GA]
+
+  help_text:
+    brief: Update an existing Privileged Access Manager (PAM) entitlement.
+    description: Update an existing Privileged Access Manager (PAM) entitlement.
+    examples: |
+      The following command updates an entitlement with a name of `sample-entitlement`, in a
+      project named `sample-project`, in location `global`, and the new entitlement configuration
+      stored in a file named `sample-entitlement.yaml`:
+
+      $ {command} sample-entitlement --project=sample-project --location=global --entitlement-file=sample-entitlement.yaml
+
+      The following command updates an entitlement with a name of `sample-entitlement`, in a folder
+      with ID ``FOLDER_ID'', in location `global`, and the new entitlement configuration stored in
+      a file named `sample-entitlement.yaml`:
+
+      $ {command} sample-entitlement --folder=FOLDER_ID --location=global --entitlement-file=sample-entitlement.yaml
+
+      The following command updates an entitlement with a name of `sample-entitlement`, in an
+      organization with ID ``ORGANIZATION_ID'', in location `global`, and the new entitlement
+      configuration stored in a file named `sample-entitlement.yaml`:
+
+      $ {command} sample-entitlement --organization=ORGANIZATION_ID --location=global --entitlement-file=sample-entitlement.yaml
+
+  request:
+    ALPHA:
+      api_version: v1alpha
+    BETA:
+      api_version: v1beta
+    GA:
+      api_version: v1
+    collection:
+    - privilegedaccessmanager.projects.locations.entitlements
+    - privilegedaccessmanager.folders.locations.entitlements
+    - privilegedaccessmanager.organizations.locations.entitlements
+    modify_request_hooks:
+    - googlecloudsdk.command_lib.pam.util:SetUpdateMaskInUpdateEntitlementRequest
+
+  arguments:
+    resource:
+      spec: !REF googlecloudsdk.command_lib.pam.resources:entitlement
+      help_text: |
+        Name of the entitlement to update.
+    params:
+    - arg_name: entitlement-file
+      api_field: entitlement
+      required: true
+      type: "googlecloudsdk.calliope.arg_parsers:FileContents:"
+      processor: googlecloudsdk.core.yaml:load
+      help_text: |
+        YAML file containing the new configuration of the entitlement.
+
+  async:
+    ALPHA:
+      api_version: v1alpha
+    BETA:
+      api_version: v1beta
+    collection:
+    - privilegedaccessmanager.projects.locations.operations
+    - privilegedaccessmanager.folders.locations.operations
+    - privilegedaccessmanager.organizations.locations.operations
+
+  output:
+    format: yaml
+
+  input:
+    confirmation_prompt: |
+      Only new grants created against the entitlement are affected by the changes.

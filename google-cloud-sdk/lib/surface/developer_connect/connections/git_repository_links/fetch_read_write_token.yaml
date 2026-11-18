@@ -1,0 +1,18 @@
+- help_text:
+    brief: Fetch the read/write token of a given gitRepositoryLink.
+    description: |
+      Fetch the read/write token of a given gitRepositoryLink.
+
+    examples: |
+      To get the read/write token of a GitRepositoryLink named "my-git-repository-link" in a Connection named "my-connection":
+
+        $ {command} fetch-read-write-token my-git-repository-link --connection=my-connection --location=us-central1 --project=my-project
+
+  request:
+    collection: developerconnect.projects.locations.connections.gitRepositoryLinks
+    api_version: v1
+    method: fetchReadWriteToken
+  arguments:
+    resource:
+      help_text: Developer Connect GitRepositoryLink from which to fetch the read/write token.
+      spec: !REF googlecloudsdk.command_lib.developer_connect.v1_resources:projects_locations_connections_git_repository_links

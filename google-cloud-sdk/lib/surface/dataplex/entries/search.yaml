@@ -1,0 +1,52 @@
+- release_tracks: [ALPHA, BETA, GA]
+  help_text:
+    brief: Searches for Dataplex entries.
+    description: Searches for entries matching given query and scope.
+    examples: |-
+      To search project 'my-project' for Dataplex resources that match the simple predicate 'foo':
+
+        $ {command} 'foo' --project=my-project
+
+  generic:
+    # This removes `filter`, `sort-by`, `limit`, and `page-size` flags. `limit` and `page-size` are
+    # re-added later in this config. This seems to be the only way to remove flags `filter` and
+    # `sort-by` that duplicate functionality of flags that API already has and are exposed with other commands.
+    disable_paging_flags: true
+
+  request:
+    collection: dataplex.projects.locations
+    method: searchEntries
+    disable_resource_check: true
+
+  arguments:
+    params:
+    - arg_name: query
+      api_field: query
+      help_text: The query against which entries in scope should be matched.
+      is_positional: true
+      required: true
+    - arg_name: project
+      help_text: The project to which the request should be attributed.
+      api_field: name
+      processor: googlecloudsdk.command_lib.dataplex.processors:ProjectToSearchEntriesName
+      required: true
+    - arg_name: scope
+      help_text: The scope under which the search should be operating. Should either be organizations/<org_id> or projects/<project_ref>. If left unspecified, it will default to the organization where the project is located.
+      api_field: scope
+    - arg_name: order-by
+      help_text: |
+        Specifies the ordering of results, currently supported case-sensitive
+        choices are:
+
+        * `title [asc|desc]`, defaults to ascending if not specified.
+      api_field: orderBy
+    - arg_name: page-size
+      help_text: Maximum number of resources per page. No more than 500.
+      type: int
+      api_field: pageSize
+    - arg_name: limit
+      help_text: Maximum number of resources.
+      type: int
+  response:
+    modify_response_hooks:
+    - googlecloudsdk.command_lib.dataplex.response_hooks:ExtractEntryFromSearchEntriesResult

@@ -1,0 +1,18 @@
+release_tracks: [ALPHA]
+help_text:
+  brief: |
+    Describe a multicast group definition.
+  description: |
+    Show details of a multicast group definition in the specified location of the current project.
+  examples: |
+    To describe a multicast group definition in the current project, run:
+
+      $ {command} my-multicast-group-definition --location=global
+arguments:
+  resource:
+    spec: !REF googlecloudsdk.command_lib.network_services.resources:multicastGroupDefinition
+    help_text: |
+      The multicast group definition to display.
+request: &request
+  api_version: v1alpha1
+  collection: networkservices.projects.locations.multicastGroupDefinitions

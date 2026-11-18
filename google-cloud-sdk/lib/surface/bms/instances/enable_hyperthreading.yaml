@@ -1,0 +1,31 @@
+- release_tracks: [ALPHA]
+  help_text:
+    brief: |
+      Enable hyperthreading for a Bare Metal Solution instance.
+    description: |
+      Enables hyperthreading for a Bare Metal Solution instance.
+    examples: |
+      To enable hyperthreading for an instance named ``test-instance'', run:
+
+        $ {command} test-instance
+
+  arguments:
+    resource:
+      spec: !REF googlecloudsdk.command_lib.bms.resources:instance
+      help_text: |
+        Arguments and flags that specify the Bare Metal Solution instance you
+        want to enable hyperthreading for.
+
+  request:
+    method: enableHyperthreading
+    collection: baremetalsolution.projects.locations.instances
+
+  output:
+    format: none
+
+  async:
+    api_version: v2
+    collection: baremetalsolution.projects.locations.operations
+    request_issued_message: |
+      Enable hyperthreading request issued for: [{__name__}]
+    extract_resource_result: false

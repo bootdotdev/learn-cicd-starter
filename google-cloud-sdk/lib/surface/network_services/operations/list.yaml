@@ -1,0 +1,28 @@
+release_tracks: [ALPHA, BETA, GA]
+help_text:
+  brief: List all Network Services long running operations.
+  description: List all Network Services long running operations.
+  examples: |
+      The following command lists all operations in the current project and in
+      location `global`:
+
+      $ {command} --location=global
+arguments:
+  resource:
+    spec: !REF googlecloudsdk.command_lib.network_services.resources:location
+    help_text: Location of the operations.
+request: &request
+  ALPHA:
+    api_version: v1alpha1
+  BETA:
+    api_version: v1beta1
+  GA:
+    api_version: v1
+  collection: networkservices.projects.locations.operations
+response:
+  id_field: name
+output:
+  format: |
+     table(
+        name.basename():label=NAME, done, metadata.verb, metadata.target, metadata.create_time, metadata.end_time, metadata.requested_cancellation
+      )

@@ -1,0 +1,43 @@
+release_tracks: [GA, ALPHA, BETA]
+
+help_text:
+  brief: |
+    Create a Managed Service for Apache Kafka cluster.
+  description: |
+    Create a Managed Service for Apache Kafka cluster.
+
+  examples: |
+    To create a cluster, run the following:
+
+      $ {command} mycluster \
+          --location=us-central1 \
+          --cpu=3 \
+          --memory=3GiB
+          --subnets=projects/PROJECT_ID/regions/us-central1/subnetworks/default
+
+request:
+  collection: managedkafka.projects.locations.clusters
+  modify_request_hooks:
+  - googlecloudsdk.command_lib.managed_kafka.util:MapSubnetsToNetworkConfig
+  - googlecloudsdk.command_lib.managed_kafka.util:MapCaPoolsToCASConfig
+
+async:
+  collection: managedkafka.projects.locations.operations
+
+arguments:
+  resource:
+    help_text: Identifies the cluster for which the command runs.
+    spec: !REF googlecloudsdk.command_lib.managed_kafka.resources:cluster
+  params:
+  - _REF_: googlecloudsdk.command_lib.managed_kafka.flags:cpu
+    required: true
+  - _REF_: googlecloudsdk.command_lib.managed_kafka.flags:memory
+    required: true
+  - _REF_: googlecloudsdk.command_lib.managed_kafka.flags:subnets
+    required: true
+  - _REF_: googlecloudsdk.command_lib.managed_kafka.flags:labels
+  - _REF_: googlecloudsdk.command_lib.managed_kafka.flags:encryption-key
+  - _REF_: googlecloudsdk.command_lib.managed_kafka.flags:auto-rebalance
+    default: true
+  - _REF_: googlecloudsdk.command_lib.managed_kafka.flags:mtls-ca-pools
+  - _REF_: googlecloudsdk.command_lib.managed_kafka.flags:ssl-principal-mapping-rules

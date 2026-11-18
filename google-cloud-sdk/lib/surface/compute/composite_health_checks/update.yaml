@@ -1,0 +1,61 @@
+- release_tracks: [ALPHA, BETA]
+  help_text:
+    brief: "Update a composite health check."
+    description: "Update a composite health check."
+    examples: |
+      The following command updates an existing composite health check:
+
+        $ {command} <COMPOSITE_HEALTH_CHECK_NAME> \
+          --region=<REGION> \
+          --health-destination=my-new-fr
+
+  request:
+    ALPHA:
+      api_version: alpha
+    BETA:
+      api_version: beta
+    collection: compute.regionCompositeHealthChecks
+    method: patch
+    modify_request_hooks:
+    - googlecloudsdk.api_lib.compute.composite_health_checks.modify_request_hooks:parse_health_sources_update
+    - googlecloudsdk.api_lib.compute.composite_health_checks.modify_request_hooks:parse_health_destination_update
+
+  async:
+    collection: compute.regionOperations
+    response_name_field: selfLink
+    state:
+      field: status
+      success_values: ['DONE']
+
+  arguments:
+    resource:
+      help_text: The name of the composite health check you want to update.
+      spec: !REF googlecloudsdk.command_lib.compute.resources:composite_health_check
+
+    params:
+    - group:
+        mutex: false
+        required: true
+        params:
+        - arg_name: description
+          api_field: compositeHealthCheckResource.description
+          help_text: |
+            A textual description of this resource.
+
+        - arg_name: health-sources
+          type: googlecloudsdk.command_lib.compute.common:ArgList:min_length=1
+          api_field: compositeHealthCheckResource.healthSources
+          help_text: |
+            URLs to the HealthSource resources whose results are AND'ed. I.e. the aggregated result is
+            HEALTHY only if all sources are HEALTHY. Must have at least 1. Must not have more than 10.
+            Must be regional and in the same region as the CompositeHealthCheck. Can be mutated.
+
+        - arg_name: health-destination
+          api_field: compositeHealthCheckResource.healthDestination
+          help_text: |
+            URL to the destination resource. Must be set. Must be a ForwardingRule. The ForwardingRule
+            must have load balancing scheme INTERNAL or INTERNAL_MANAGED and must be regional and in the
+            same region as the CompositeHealthCheck (cross-region deployment for INTERNAL_MANAGED is not
+            supported). Can be mutated.
+  update:
+    read_modify_update: true

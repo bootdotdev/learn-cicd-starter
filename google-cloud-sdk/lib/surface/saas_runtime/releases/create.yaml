@@ -1,0 +1,86 @@
+- release_tracks: [ALPHA, BETA]
+  help_text:
+    brief: Create a Release
+    description: Create a Release
+    examples: |-
+      To create the Release, run:
+
+      $ {command}
+  arguments:
+    params:
+    - help_text: |-
+        Identifier. The resource name (full URI of the resource) following the standard naming
+        scheme:
+
+          "projects/{project}/locations/{location}/releases/{release}"
+      is_positional: true
+      is_primary_resource: true
+      request_id_field: releaseId
+      resource_spec: !REF googlecloudsdk.command_lib.saas_runtime.resources:release
+      required: true
+    - arg_name: unit-kind
+      help_text: |-
+        Reference to the UnitKind this Release corresponds to (required and
+        immutable once created).
+      is_positional: false
+      resource_spec: !REF googlecloudsdk.command_lib.saas_runtime.resources:unit_kind
+      resource_method_params:
+        release.unitKind: '{__relative_name__}'
+      required: true
+    - group:
+        api_field: release.blueprint
+        required: true
+        help_text: |-
+          Blueprints are OCI Images that contain all of the artifacts needed to
+          provision a unit. Metadata such as, type of the engine used to actuate the
+          blueprint (e.g. terraform, helm etc) and version will come from the image
+          manifest. If the hostname is omitted, it will be assumed to be the regional
+          path to Artifact Registry (eg. us-east1-docker.pkg.dev).
+        params:
+        - arg_name: blueprint-package
+          api_field: release.blueprint.package
+          required: true
+          repeated: false
+          help_text: |-
+            URI to a blueprint used by the Unit.
+    - arg_name: upgradeable-from-releases
+      api_field: release.releaseRequirements.upgradeableFromReleases
+      required: false
+      repeated: true
+      help_text: |-
+        A list of releases from which a unit can be upgraded to this one
+        (optional). If left empty no constraints will be applied. When provided,
+        unit upgrade requests to this release will check and enforce this
+        constraint.
+    - arg_name: input-variable-defaults
+      api_field: release.inputVariableDefaults
+      required: false
+      repeated: true
+      help_text: |-
+        Mapping of input variables to default values. Maximum 100
+      spec:
+      - api_field: variable
+        help_text: |-
+          Name of the variable from actuation configs.
+      - api_field: type
+        help_text: |-
+          Name of a supported variable type. Supported types are string, int, bool.
+      - api_field: value
+        help_text: |-
+          String encoded value for the variable.
+    - arg_name: labels
+      api_field: release.labels
+      required: false
+      repeated: true
+      help_text: |-
+        The labels on the resource, which can be used for categorization.
+        similar to Kubernetes resource labels.
+      spec:
+      - api_field: key
+      - api_field: value
+  request:
+    api_version: v1beta1
+    collection:
+    - saasservicemgmt.projects.locations.releases
+    modify_request_hooks:
+    - googlecloudsdk.command_lib.saas_runtime.releases:AddParentToUpgradeableFromReleases

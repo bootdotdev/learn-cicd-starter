@@ -1,0 +1,34 @@
+release_tracks: [GA, BETA, ALPHA]
+
+help_text:
+  brief: |
+    Create a service binding.
+  description: |
+    Create a new service binding with the given name.
+  examples: |
+    Create a service binding with the name 'my-service-binding' and location 'global'.
+
+      $ {command} my-service-binding --location=global
+
+arguments:
+  resource:
+    spec: !REF googlecloudsdk.command_lib.network_services.resources:serviceBinding
+    help_text: |
+      Name of the service binding to be created.
+  params:
+  - arg_name: description
+    api_field: serviceBinding.description
+    help_text: The description for the service binding.
+
+async:
+  collection: networkservices.projects.locations.operations
+
+request: &request
+  ALPHA:
+    api_version: v1alpha1
+  BETA:
+    api_version: v1beta1
+  GA:
+    api_version: v1
+  collection: networkservices.projects.locations.serviceBindings
+  method: create

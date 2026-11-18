@@ -1,0 +1,59 @@
+- release_tracks: [ALPHA, BETA, GA]
+  help_text:
+    brief: Update a preview feature's activation status.
+    description: Update a preview feature's activation status.
+    examples: |
+      To enable/unspecify a preview feature's activation status, run the following command:
+
+      $ {command}
+
+  request:
+    ALPHA:
+      api_version: alpha
+    BETA:
+      api_version: beta
+    GA:
+      api_version: v1
+
+    collection: compute.previewFeatures
+    method: update
+
+  arguments:
+    resource:
+      help_text: Name of the preview feature you want to update.
+      spec: !REF googlecloudsdk.command_lib.compute.resources:preview_feature
+
+    params:
+    - arg_name: activation-status
+      api_field: previewFeatureResource.activationStatus
+      help_text: |
+        The activation status of the preview feature.
+      required: true
+      choices:
+      - arg_value: enabled
+        enum_value: ENABLED
+      - arg_value: unspecified
+        enum_value: ACTIVATION_STATE_UNSPECIFIED
+
+    - group:
+        mutex: true
+        required: true
+        help_text: |
+          The rollout plan of the preview feature.
+        params:
+        - arg_name: rollout-plan
+          api_field: previewFeatureResource.rolloutOperation.rolloutInput.predefinedRolloutPlan
+          required: false
+          help_text: |-
+            Use a predefined rollout plan.
+          choices:
+          - arg_value: fast-rollout
+            enum_value: ROLLOUT_PLAN_FAST_ROLLOUT
+          - arg_value: two-day-rollout
+            enum_value: ROLLOUT_PLAN_TWO_DAY_ROLLOUT
+        - arg_name: custom-rollout-plan
+          api_field: previewFeatureResource.rolloutOperation.rolloutInput.name
+          required: false
+          help_text: |-
+            Use a custom rollout plan by name.
+          type: str

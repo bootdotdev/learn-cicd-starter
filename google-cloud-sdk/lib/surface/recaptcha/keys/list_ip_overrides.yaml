@@ -1,0 +1,21 @@
+- release_tracks: [ALPHA, GA]
+  help_text:
+    brief: List IP overrides for a key.
+    description: List IP overrides for a key.
+    examples: $ {command} test-key
+
+  request:
+    collection: recaptchaenterprise.projects.keys
+    method: listIpOverrides
+
+  arguments:
+    resource:
+      spec: !REF googlecloudsdk.command_lib.recaptcha.resources:keys
+      help_text: The reCAPTCHA key for which to list the IP overrides.
+
+  output:
+    format: |
+      table(
+        name.basename():label=SITE_KEY,
+        ip_overrides:label=IP_OVERRIDE_DATA
+      )

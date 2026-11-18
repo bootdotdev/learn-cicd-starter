@@ -1,0 +1,20 @@
+- release_tracks: [ALPHA, GA]
+  help_text:
+    brief: |
+      Describe a Metadata Job.
+    description: |
+      Displays all details of a Dataplex Metadata Job given a valid Metadata Job ID.
+    examples: |
+       To describe a Dataplex Metadata Job `test-metadata-job` within location `us-central1` and in project `test-project`
+
+          $ {command} test-metadata-job --location=us-central1 --project=test-project
+  request:
+    ALPHA:
+      api_version: v1
+    collection: dataplex.projects.locations.metadataJobs
+    method: get
+  arguments:
+    resource:
+      help_text: |
+        Arguments and flags that define the Dataplex metadata job you want to retrieve.
+      spec: !REF googlecloudsdk.command_lib.dataplex.resources:metadata_job

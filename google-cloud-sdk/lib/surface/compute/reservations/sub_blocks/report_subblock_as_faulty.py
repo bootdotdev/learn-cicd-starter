@@ -1,0 +1,129 @@
+# -*- coding: utf-8 -*- #
+# Copyright 2025 Google LLC. All Rights Reserved.
+#
+# Licensed under the Apache License, Version 2.0 (the "License");
+# you may not use this file except in compliance with the License.
+# You may obtain a copy of the License at
+#
+#    http://www.apache.org/licenses/LICENSE-2.0
+#
+# Unless required by applicable law or agreed to in writing, software
+# distributed under the License is distributed on an "AS IS" BASIS,
+# WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
+# See the License for the specific language governing permissions and
+# limitations under the License.
+"""Command for reporting a faulty reservation sub-block."""
+
+from __future__ import absolute_import
+from __future__ import division
+from __future__ import unicode_literals
+
+from googlecloudsdk.api_lib.compute import base_classes
+from googlecloudsdk.calliope import base
+from googlecloudsdk.command_lib.compute import flags as compute_flags
+from googlecloudsdk.command_lib.compute import scope as compute_scope
+from googlecloudsdk.command_lib.compute.reservations import resource_args
+from googlecloudsdk.command_lib.compute.reservations.sub_blocks import flags
+from googlecloudsdk.command_lib.compute.reservations.sub_blocks import util
+from googlecloudsdk.core.console import console_io
+
+
+def _GetReportFaultyRequest(args, reservation_ref, holder):
+  """Create Update Request for report faulty."""
+  client = holder.client
+  parent_name = f'reservations/{reservation_ref.reservation}/reservationBlocks/{args.block_name}'
+
+  fault_reasons = []
+  if args.fault_reasons:
+    for reason in args.fault_reasons:
+      fault_reasons.append(
+          client.messages.ReservationSubBlocksReportFaultyRequestFaultReason(
+              behavior=util.MakeFaultBehavior(
+                  client.messages, reason.get('behavior')
+              ),
+              description=reason.get('description'),
+          )
+      )
+
+  disruption_schedule = util.MakeDisruptionSchedule(
+      client.messages, args.disruption_schedule
+  )
+  failure_component = util.MakeFailureComponent(
+      client.messages, args.failure_component
+  )
+  report_faulty_body = client.messages.ReservationSubBlocksReportFaultyRequest(
+      disruptionSchedule=disruption_schedule,
+      faultReasons=fault_reasons,
+      failureComponent=failure_component,
+  )
+
+  request = client.messages.ComputeReservationSubBlocksReportFaultyRequest(
+      parentName=parent_name,
+      zone=reservation_ref.zone,
+      project=reservation_ref.project,
+      reservationSubBlock=args.sub_block_name,
+      reservationSubBlocksReportFaultyRequest=report_faulty_body,
+  )
+  return request
+
+
+@base.UniverseCompatible
+@base.ReleaseTracks(
+    base.ReleaseTrack.ALPHA, base.ReleaseTrack.BETA, base.ReleaseTrack.GA
+)
+class ReportFaulty(base.UpdateCommand):
+  """Report a sub-block within a reservation as faulty."""
+
+  @staticmethod
+  def Args(parser):
+    resource_args.GetReservationResourceArg(
+        help_text=(
+            'The name of the reservation containing the sub-block to report as'
+            ' faulty'
+        )
+    ).AddArgument(parser, operation_type='report-subblock-as-faulty')
+    flags.AddDescribeFlags(parser)
+    flags.GetDisruptionScheduleFlag().AddToParser(parser)
+    flags.GetFaultReasonsFlag().AddToParser(parser)
+    flags.GetFailureComponentFlag().AddToParser(parser)
+
+  def Run(self, args):
+    holder = base_classes.ComputeApiHolder(self.ReleaseTrack())
+    client = holder.client
+
+    reservation_ref = resource_args.GetReservationResourceArg(
+        ).ResolveAsResource(
+            args,
+            holder.resources,
+            default_scope=compute_scope.ScopeEnum.ZONE,
+            scope_lister=compute_flags.GetDefaultScopeLister(client))
+
+    prompt_message = (
+        'WARNING: This action is highly disruptive and will immediately '
+        'terminate all running VMs within this sub-block.'
+    )
+    console_io.PromptContinue(
+        message=prompt_message,
+        prompt_string='Do you want to continue?',
+        throw_if_unattended=True,
+        cancel_on_no=True,
+    )
+
+    request = _GetReportFaultyRequest(args, reservation_ref, holder)
+
+    return client.MakeRequests([(client.apitools_client.reservationSubBlocks,
+                                 'ReportFaulty', request)])
+
+ReportFaulty.detailed_help = {
+    'EXAMPLES':
+        """\
+    To report reservation exr-1 in ZONE with block name block-1 and
+    sub block name sub-block-1 as faulty, run:
+
+      $ {command} exr-1 --zone=ZONE --block-name=block-1 \
+          --sub-block-name=sub-block-1 \
+          --disruption-schedule=IMMEDIATE \
+          --fault-reasons=behavior=PERFORMANCE,description="performance issues" \
+          --failure-component=NVLINK_SWITCH
+    """,
+}

@@ -1,0 +1,27 @@
+release_tracks: [BETA]
+
+help_text:
+  brief: |
+    Delete an `LbTcpExtension` resource.
+  description: |
+    Delete the specified `LbTcpExtension` resource.
+  examples: |
+      To delete an `LbTcpExtension` resource named
+      `my-tcp-extension` in `us-central1`, run:
+
+        $ {command} my-tcp-extension --location=us-central1
+
+arguments:
+  resource:
+    spec: !REF googlecloudsdk.command_lib.service_extensions.resources:lbTcpExtension
+    help_text: |
+      The ID of the deleted `LbTcpExtension` resource.
+
+async:
+  collection: networkservices.projects.locations.operations
+
+request: &request
+  BETA:
+    api_version: v1beta1
+
+  collection: networkservices.projects.locations.lbTcpExtensions

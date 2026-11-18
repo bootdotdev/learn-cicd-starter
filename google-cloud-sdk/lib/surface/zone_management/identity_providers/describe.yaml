@@ -1,0 +1,27 @@
+- release_tracks: [ALPHA]
+
+  help_text:
+    brief: |
+      describes an identity provider.
+    description: |
+      Describes an identity provider.
+    examples: |
+      To describe an identity provider called `test-identity-provider` in organization `test-org`, location `us-central1` and zone `test-zone`:
+
+      $ {command} test-identity-provider --location=us-central1 --organization=test-org --zone=test-zone
+
+  request:
+    collection: edgecontainer.organizations.locations.identityProviders
+    api_version: v1alpha
+    method: get
+
+  arguments:
+    resource:
+      help_text: The identity provider to describe.
+      spec: !REF googlecloudsdk.command_lib.zone_management.identity_provider.resources:identityProvider
+    params:
+    - arg_name: zone
+      api_field: zoneId
+      required: true
+      help_text: |
+        Zone of the identity provider.

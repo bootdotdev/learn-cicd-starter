@@ -1,0 +1,39 @@
+release_tracks: [GA, ALPHA, BETA]
+help_text:
+  brief: |
+    Update a multicast group range activation.
+  description: |
+    Update a multicast group range activation in the specified location of the current project.
+  examples: |
+    Update a multicast group range activation with the name 'my-multicast-group-range-activation'
+    and location 'zone'.
+
+      $ {command} my-multicast-group-range-activation --enable-logging --location=zone
+arguments:
+  resource:
+    spec: !REF googlecloudsdk.command_lib.network_services.resources:multicastGroupRangeActivation
+    help_text: |
+      Name of the multicast group range to be updated.
+  params:
+  - arg_name: enable-logging
+    api_field: multicastGroupRangeActivation.logConfig.enabled
+    help_text: Whether to enable logging for this multicast group range activation.
+    action: store_true_false
+  - arg_name: description
+    api_field: multicastGroupRangeActivation.description
+    help_text: The description for the multicast group range activation.
+  labels:
+    api_field: multicastGroupRangeActivation.labels
+update:
+  read_modify_update: true
+async:
+  collection: networkservices.projects.locations.operations
+request: &request
+  GA:
+    api_version: v1
+  ALPHA:
+    api_version: v1alpha1
+  BETA:
+    api_version: v1beta1
+  collection: networkservices.projects.locations.multicastGroupRangeActivations
+  method: patch

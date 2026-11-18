@@ -1,0 +1,43 @@
+release_tracks: [ALPHA]
+help_text:
+  brief: |
+    Create a multicast group.
+  description: |
+    Create a multicast group in the specified location of the current project.
+  examples: |
+    Create a multicast group with the name 'my-multicast-group',
+    multicast-group-definition 'path-to-mgd',
+    multicast-domain-activation 'path-to-mda',
+    and location 'zone'.
+
+      $ {command} my-multicast-group --multicast-group-definition=path-to-mgd --multicast-domain-activation=path-to-mda --location=zone
+arguments:
+  resource:
+    spec: !REF googlecloudsdk.command_lib.network_services.resources:multicastGroup
+    help_text: |
+      Name of the multicast group to be created.
+  params:
+  - arg_name:  multicast-group-definition
+    api_field: multicastGroup.multicastGroupDefinition
+    help_text: The multicast group definition to be used.
+    required: true
+  - arg_name:  multicast-domain-activation
+    api_field: multicastGroup.multicastDomainActivation
+    help_text: The multicast domain activation to be used.
+    required: true
+  - arg_name: description
+    api_field: multicastGroup.description
+    help_text: The description for the multicast group.
+  - arg_name: enable-logging
+    api_field: multicastGroup.logConfig.enabled
+    help_text: Whether to enable logging for this multicast group.
+    action: store_true_false
+  labels:
+    api_field: multicastGroup.labels
+async:
+  collection: networkservices.projects.locations.operations
+request: &request
+  ALPHA:
+    api_version: v1alpha1
+  collection: networkservices.projects.locations.multicastGroups
+  method: create

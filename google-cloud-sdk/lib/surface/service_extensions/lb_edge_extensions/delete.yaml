@@ -1,0 +1,27 @@
+release_tracks: [BETA]
+
+help_text:
+  brief: |
+    Delete an `LbEdgeExtension` resource.
+  description: |
+    Delete the specified `LbEdgeExtension` resource.
+  examples: |
+      To delete a global `LbEdgeExtension` resource named
+      `my-edge-extension`, run:
+
+        $ {command} my-edge-extension --location=global
+
+arguments:
+  resource:
+    spec: !REF googlecloudsdk.command_lib.service_extensions.resources:lbEdgeExtension
+    help_text: |
+      The ID of the deleted `LbEdgeExtension` resource.
+
+async:
+  collection: networkservices.projects.locations.operations
+
+request: &request
+  BETA:
+    api_version: v1beta1
+
+  collection: networkservices.projects.locations.lbEdgeExtensions

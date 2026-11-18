@@ -1,0 +1,35 @@
+release_tracks: [BETA]
+help_text:
+  brief: |
+    Import an `LbEdgeExtension` resource.
+  description: |
+    Import an `LbEdgeExtension` resource defined in a YAML file.
+  examples: |
+    To import a global `LbEdgeExtension` resource named
+    `my-edge-extension` from a YAML file, run:
+
+        $ {command} my-edge-extension --source=my-edge-extension.yaml --location=global
+
+request:
+  collection: networkservices.projects.locations.lbEdgeExtensions
+  BETA:
+    api_version: v1beta1
+
+
+arguments:
+  resource:
+    spec: !REF googlecloudsdk.command_lib.service_extensions.resources:lbEdgeExtension
+    help_text: |
+      The ID of the new or updated `LbEdgeExtension` resource.
+
+async:
+  collection: networkservices.projects.locations.operations
+
+import:
+  abort_if_equivalent: true
+  create_if_not_exists: true
+  create_request:
+    collection: networkservices.projects.locations.lbEdgeExtensions
+    BETA:
+      api_version: v1beta1
+    method: create

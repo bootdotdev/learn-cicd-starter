@@ -1,0 +1,26 @@
+- release_tracks: [ALPHA, GA]
+  help_text:
+    brief: |
+      Delete a Dataplex Entry Group.
+    description: |
+      Delete a Dataplex Entry Group.
+    examples: |
+      To delete Entry Group `test-entry-group` in project `test-project` and in location `us-central1`, run:
+
+          $ {command} test-entry-group --location=us-central1 --project=test-project
+  request:
+    ALPHA:
+      api_version: v1
+    collection: dataplex.projects.locations.entryGroups
+  arguments:
+    resource:
+      help_text: |
+        Arguments and flags that define the Dataplex Entry Group you want to delete.
+      spec: !REF googlecloudsdk.command_lib.dataplex.resources:entry_group
+    params:
+    - arg_name: etag
+      api_field: etag
+      help_text: |
+        etag for the Entry Group you want to delete.
+  async:
+    collection: dataplex.projects.locations.operations

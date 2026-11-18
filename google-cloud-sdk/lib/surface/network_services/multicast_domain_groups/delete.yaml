@@ -1,0 +1,24 @@
+release_tracks: [GA, BETA, ALPHA]
+help_text:
+  brief: |
+    Delete a multicast domain group.
+  description: |
+    Delete a multicast domain group in the specified location of the current project.
+  examples: |
+    To delete a multicast domain group in the current project, run:
+
+      $ {command} my-multicast-domain-group --location=global
+arguments:
+  resource:
+    spec: !REF googlecloudsdk.command_lib.network_services.resources:multicastDomainGroup
+    help_text: The multicast domain group to delete.
+async:
+  collection: networkservices.projects.locations.operations
+request: &request
+  GA:
+    api_version: v1
+  ALPHA:
+    api_version: v1alpha1
+  BETA:
+    api_version: v1beta1
+  collection: networkservices.projects.locations.multicastDomainGroups

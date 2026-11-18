@@ -1,0 +1,41 @@
+- release_tracks: [GA]
+
+  help_text:
+    brief: |
+      List Artifact Registry rules.
+    description: |
+      List all Artifact Registry rules for the specified repository.
+
+      This command can fail for the following reasons:
+        * The specified repository does not exist.
+        * The active account does not have permission to list rules.
+
+      To specify the maximum number of rules to list, use the --limit flag.
+    examples: |
+      The following command lists a maximum of five rules for repository `my-repo`:
+
+         $ {command} --limit=5
+
+  arguments:
+    resource:
+      spec: !REF googlecloudsdk.command_lib.artifacts.resources:repository
+      help_text: |
+        The parent repository for the list of rules.
+
+  request:
+    api_version: v1
+    collection: artifactregistry.projects.locations.repositories.rules
+
+  response:
+    modify_response_hooks:
+    - googlecloudsdk.command_lib.artifacts.util:AppendParentInfoToListRulesResponse
+
+  output:
+    format: |
+      table(
+         name.basename():label=RULE,
+         packageId:label=PACKAGE,
+         action:label=ACTION,
+         operation:label=OPERATION,
+         condition.expression:label=CONDITION
+       )

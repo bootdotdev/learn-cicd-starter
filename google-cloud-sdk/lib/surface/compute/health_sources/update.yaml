@@ -1,0 +1,66 @@
+- release_tracks: [ALPHA, BETA]
+  help_text:
+    brief: "Update a health source."
+    description: "Update a health source."
+    examples: |
+      The following command updates a new health source named
+      "my-health-source":
+
+        $ {command} <HEALTH_SOURCE_NAME> --region=<REGION> \
+          --source-type=BACKEND_SERVICE
+          --sources=my-backend-service
+          --health-aggregation-policy=my-health-aggregation-policy
+
+  request:
+    ALPHA:
+      api_version: alpha
+    BETA:
+      api_version: beta
+    collection: compute.regionHealthSources
+    method: patch
+    modify_request_hooks:
+    - googlecloudsdk.api_lib.compute.health_sources.modify_request_hooks:parse_health_aggregation_policy_update
+    - googlecloudsdk.api_lib.compute.health_sources.modify_request_hooks:parse_sources_update
+
+
+  async:
+    collection: compute.regionOperations
+    response_name_field: selfLink
+    state:
+      field: status
+      success_values: ['DONE']
+
+  arguments:
+    resource:
+      help_text: The name of the health source you want to create.
+      spec: !REF googlecloudsdk.command_lib.compute.resources:health_source
+
+    params:
+    - group:
+        mutex: false
+        required: true
+        params:
+        - arg_name: description
+          api_field: healthSourceResource.description
+          help_text: |
+            A textual description of the health source.
+
+        - arg_name: sources
+          type: googlecloudsdk.command_lib.compute.common:ArgList:min_length=1
+          api_field: healthSourceResource.sources
+          help_text: |
+            URLs to the source resources. Must be size 1. Must be a BackendService
+            if the sourceType is BACKEND_SERVICE. The BackendService must have load
+            balancing scheme INTERNAL or INTERNAL_MANAGED and must be regional and
+            in the same region as the HealthSource (cross-region deployment for
+            INTERNAL_MANAGED is not supported). The BackendService may use only IGs,
+            MIGs, or NEGs of type GCE_VM_IP or GCE_VM_IP_PORT. The BackendService
+            may not use haPolicy. Can be mutated.
+
+        - arg_name: health-aggregation-policy
+          api_field: healthSourceResource.healthAggregationPolicy
+          help_text: |
+            URL to the health aggregation policy resource. Must be set. Must be
+            regional and in the same region as the HealthSource. Can be mutated.
+  update:
+    read_modify_update: true

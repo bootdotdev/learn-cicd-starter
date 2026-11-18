@@ -1,0 +1,29 @@
+release_tracks: [GA, BETA, ALPHA]
+help_text:
+  brief: |
+    List multicast consumer associations.
+  description: |
+    List all multicast consumer associations in the specified location of the current project.
+  examples: |
+    To list multicast consumer associations in the current project and location, run:
+
+      $ {command} --location=zone
+request: &request
+  GA:
+    api_version: v1
+  ALPHA:
+    api_version: v1alpha1
+  BETA:
+    api_version: v1beta1
+  collection: networkservices.projects.locations.multicastConsumerAssociations
+arguments:
+  resource:
+    spec: !REF googlecloudsdk.command_lib.network_services.resources:location
+    help_text: The location of the multicast consumer associations to display.
+response:
+  id_field: name
+output:
+  format: |
+     table(
+        name.basename():label=NAME, create_time, network, multicast_domain_activation
+      )

@@ -1,0 +1,47 @@
+release_tracks: [GA, BETA, ALPHA]
+help_text:
+  brief: |
+    Create a multicast group range activation.
+  description: |
+    Create a multicast group range activation in the specified location of the current project.
+  examples: |
+    Create a multicast group range activation with the name 'my-mg-range-activation',
+    multicast-group-range 'path-to-mgr',
+    multicast-domain-activation 'path-to-mda',
+    and location 'zone'.
+
+      $ {command} my-mg-range-activation --multicast-group-range=path-to-mgr --multicast-domain-activation=path-to-mda --location=zone
+arguments:
+  resource:
+    spec: !REF googlecloudsdk.command_lib.network_services.resources:multicastGroupRangeActivation
+    help_text: |
+      Name of the multicast group range activation to be created.
+  params:
+  - arg_name:  multicast-group-range
+    api_field: multicastGroupRangeActivation.multicastGroupRange
+    help_text: The multicast group range to be used.
+    required: true
+  - arg_name:  multicast-domain-activation
+    api_field: multicastGroupRangeActivation.multicastDomainActivation
+    help_text: The multicast domain activation to be used.
+    required: true
+  - arg_name: description
+    api_field: multicastGroupRangeActivation.description
+    help_text: The description for the multicast group.
+  - arg_name: enable-logging
+    api_field: multicastGroupRangeActivation.logConfig.enabled
+    help_text: Whether to enable logging for this multicast group range activation.
+    action: store_true_false
+  labels:
+    api_field: multicastGroupRangeActivation.labels
+async:
+  collection: networkservices.projects.locations.operations
+request: &request
+  GA:
+    api_version: v1
+  ALPHA:
+    api_version: v1alpha1
+  BETA:
+    api_version: v1beta1
+  collection: networkservices.projects.locations.multicastGroupRangeActivations
+  method: create

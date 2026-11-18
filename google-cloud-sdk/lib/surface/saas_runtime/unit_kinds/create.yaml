@@ -1,0 +1,143 @@
+- release_tracks: [ALPHA, BETA]
+  help_text:
+    brief: Create a Unit Kind
+    description: Create a Unit Kind
+    examples: |-
+      To create the Unit Kind, run:
+
+      $ {command}
+  arguments:
+    params:
+    - help_text: |-
+        Identifier. The resource name (full URI of the resource) following the standard naming
+        scheme:
+
+          "projects/{project}/locations/{location}/unitKinds/{unitKind}"
+      is_positional: true
+      request_id_field: unitKindId
+      resource_spec: !REF googlecloudsdk.command_lib.saas_runtime.resources:unit_kind
+      required: true
+    - arg_name: default-release
+      help_text: |-
+        A reference to the Release object to use as default for creating new units
+        of this Unit Kind (optional).
+
+        If not specified, a new unit must explicitly reference which release to use
+        for its creation.
+      is_positional: false
+      resource_spec: !REF googlecloudsdk.command_lib.saas_runtime.resources:release
+      resource_method_params:
+        unitKind.defaultRelease: '{__relative_name__}'
+      required: false
+    - arg_name: saas
+      help_text: |-
+        A reference to the Saas that defines the product (managed service) that
+        the producer wants to manage with Saas Runtime. Immutable once set.
+      is_positional: false
+      resource_spec: !REF googlecloudsdk.command_lib.saas_runtime.resources:saas
+      resource_method_params:
+        unitKind.saas: '{__relative_name__}'
+      required: true
+    - arg_name: dependencies
+      api_field: unitKind.dependencies
+      required: false
+      repeated: true
+      help_text: |-
+        List of other unit kinds that this release will depend on. Dependencies
+        will be automatically provisioned if not found. Maximum 10.
+      spec:
+      - api_field: unitKind
+        resource_pattern: projects/{project}/locations/{location}/unitKinds/{unitKind}
+        help_text: |-
+          The unit kind of the dependency.
+      - api_field: alias
+        help_text: |-
+          An alias for the dependency. Used for input variable mapping.
+    - arg_name: input-variable-mappings
+      api_field: unitKind.inputVariableMappings
+      required: false
+      repeated: true
+      help_text: |-
+        List of inputVariables for this release that will either be retrieved from
+        a dependency's outputVariables, or will be passed on to a dependency's
+        inputVariables. Maximum 100.
+      spec:
+      - api_field: variable
+        help_text: |-
+          name of the variable
+      - json_name: from
+        api_field: from_
+        help_text: |-
+          Output variables which will get their values from dependencies
+        spec:
+        - api_field: dependency
+          help_text: |-
+            Alias of the dependency that the outputVariable will pass its value to
+        - api_field: outputVariable
+          help_text: |-
+            Name of the outputVariable on the dependency
+      - api_field: to
+        help_text: |-
+          Input variables whose values will be passed on to dependencies.
+        spec:
+        - api_field: dependency
+          help_text: |-
+            Alias of the dependency that the inputVariable will pass its value to
+        - api_field: inputVariable
+          help_text: |-
+            Name of the inputVariable on the dependency
+        - api_field: ignoreForLookup
+          help_text: |-
+            Indicates if this mapping should be used during lookup or not
+    - arg_name: output-variable-mappings
+      api_field: unitKind.outputVariableMappings
+      required: false
+      repeated: true
+      help_text: |-
+        List of inputVariables for this release that will either be retrieved from
+        a dependency's outputVariables, or will be passed on to a dependency's
+        inputVariables. Maximum 100.
+      spec:
+      - api_field: variable
+        help_text: |-
+          name of the variable
+      - json_name: from
+        api_field: from_
+        help_text: |-
+          Output variables which will get their values from dependencies
+        spec:
+        - api_field: dependency
+          help_text: |-
+            Alias of the dependency that the outputVariable will pass its value to
+        - api_field: outputVariable
+          help_text: |-
+            Name of the outputVariable on the dependency
+      - api_field: to
+        help_text: |-
+          Input variables whose values will be passed on to dependencies.
+        spec:
+        - api_field: dependency
+          help_text: |-
+            Alias of the dependency that the inputVariable will pass its value to
+        - api_field: inputVariable
+          help_text: |-
+            Name of the inputVariable on the dependency
+        - api_field: ignoreForLookup
+          help_text: |-
+            Indicates if this mapping should be used during lookup or not
+    - arg_name: labels
+      api_field: unitKind.labels
+      required: false
+      repeated: true
+      help_text: |-
+        The labels on the resource, which can be used for categorization.
+        similar to Kubernetes resource labels.
+      spec:
+      - api_field: key
+      - api_field: value
+  request:
+    api_version: v1beta1
+    collection:
+    - saasservicemgmt.projects.locations.unitKinds
+    modify_request_hooks:
+    - googlecloudsdk.command_lib.saas_runtime.unit_kinds:AddParentToDependencies

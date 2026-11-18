@@ -1,0 +1,35 @@
+- release_tracks: [ALPHA]
+  help_text:
+    brief: Initiate the failover of the virtual machine (VM) instance to a designated failover zone.
+    description: Initiate the failover of the VM to a designated zone by using a High Availability (HA) Controller. Regional disks attached to the other preconfigured zone are included in this failover.
+    examples: |
+      To trigger the failover of HA Controller `my-ha-controller` to zone `us-central1-a`, run the following command:
+
+        $ {command} my-ha-controller \
+          --region=us-central1 \
+          --failover-to-zone=us-central1-a
+
+  request:
+    api_version: alpha
+    collection: compute.haControllers
+    method: failover
+
+  async:
+    collection: compute.regionOperations
+    response_name_field: selfLink
+    state:
+      field: status
+      success_values: ['DONE']
+
+  arguments:
+    resource:
+      help_text: The HA Controller that you want to failover.
+      spec: !REF googlecloudsdk.command_lib.compute.ha_controllers.resources:ha_controller
+      is_positional: true
+
+    params:
+    - arg_name: failover-to-zone
+      api_field: haControllersFailoverRequest.primaryZone
+      required: true
+      help_text: |
+        The destination zone for the failover. This must be the pre-configured secondary zone for the HA Controller.
