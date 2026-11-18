@@ -1,0 +1,22 @@
+name: Continuous Deployment
+
+on:
+  workflow_run:
+    workflows: ["Docker build and push"]
+    types:
+      - completed
+
+jobs:
+  deploy:
+    name: Deploy
+    runs-on: self-hosted
+
+    steps:
+      - name: Pull docker image from Docker Hub
+        run: sudo docker pull ${{ secrets.DOCKER_USERNAME }}/notely:latest
+
+      - name: Delete old docker container
+        run: sudo docker rm -f notely || true
+      
+      - name: Run new docker container
+        run: sudo docker run -d -e PORT=8080 -p 8080:8080 --name notely ${{ secrets.DOCKER_USERNAME }}/notely:latest
