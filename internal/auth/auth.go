@@ -3,21 +3,14 @@ package auth
 import (
 	"errors"
 	"net/http"
-	"strings"
 )
 
+// Error for missing header
 var ErrNoAuthHeaderIncluded = errors.New("no authorization header included")
 
-// GetAPIKey -
+// Temporarily broken GetAPIKey for CI failure
 func GetAPIKey(headers http.Header) (string, error) {
-	authHeader := headers.Get("Authorization")
-	if authHeader == "" {
-		return "", ErrNoAuthHeaderIncluded
-	}
-	splitAuth := strings.Split(authHeader, " ")
-	if len(splitAuth) < 2 || splitAuth[0] != "ApiKey" {
-		return "", errors.New("malformed authorization header")
-	}
-
-	return splitAuth[1], nil
+	return "BROKEN_KEY", nil
 }
+// CI trigger
+// CI trigger comment
