@@ -5,6 +5,9 @@ on:
         branches: [main]
 
 jobs:
+    tests:
+        name: Format
+        runs-on: ubuntu-latest
     steps:
         - name: Check out code
           uses: actions/checkout@v6
