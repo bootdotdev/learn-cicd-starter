@@ -21,3 +21,23 @@ go build -o notely && ./notely
 *This starts the server in non-database mode.* It will serve a simple webpage at `http://localhost:8080`.
 
 You do *not* need to set up a database or any interactivity on the webpage yet. Instructions for that will come later in the course!
+
+
+sample change
+
+
+
+## BADGE EXAMPLE
+
+Badge shows the status of the workflow. It can be added to the README file of the repository.
+
+Here Syntax for the badge:
+
+```markdown	
+![ALL_TEXT](https://github.com/<OWNER>/<REPOSITORY>/actions/workflows/<WORKFLOW_FILE/badge.svg)
+```
+
+Here is the badge for this repo:
+
+![code coverage badge](https://github.com/yasintuncerr/learn-cicd-starter/actions/workflows/ci.yml/badge.svg)
+ 
