@@ -1,0 +1,53 @@
+name: cd
+
+on:
+  push:
+    branches: [main]
+
+jobs:
+  deploy:
+    name: Deploy
+    runs-on: ubuntu-latest
+
+    #Get the database url from Github secrets and put it in an environment variable for the job to access
+    env:
+      DATABASE_URL: ${{ secrets.DATABASE_URL }}
+
+    steps:
+      - name: Check out code
+        uses: actions/checkout@v4
+        # yaml
+      #- name: Mark workspace as safe
+      #  run: |
+      #    git config --global --add safe.directory "$GITHUB_WORKSPACE"
+        
+      - name: Set up Go
+        uses: actions/setup-go@v5
+        with:
+          go-version: "1.25.1"
+
+      # Must install goose after setting up Go
+      - name: Install Goose
+        run: go install github.com/pressly/goose/v3/cmd/goose@latest
+
+      - name: Build Application
+        run: ./scripts/buildprod.sh
+
+      - name: Set up gcloud auth
+        uses: google-github-actions/auth@v2
+        with:
+          credentials_json: ${{ secrets.GCP_CREDENTIALS }}
+          project_id: balmy-elf-474204-h5
+
+      - name: Set up gcloud
+        uses: google-github-actions/setup-gcloud@v3
+
+      - name: Build and push image to Artifact Registry
+        run: |
+          gcloud builds submit --tag us-central1-docker.pkg.dev/balmy-elf-474204-h5/notely-ar-repo/notely:latest .
+      
+      - name: Migrate Database
+        run: ./scripts/migrateup.sh
+
+      - name: Deploy to Cloud Run
+        run: gcloud run deploy notely --image us-central1-docker.pkg.dev/balmy-elf-474204-h5/notely-ar-repo/notely:latest --region us-central1 --allow-unauthenticated --project balmy-elf-474204-h5 --max-instances=4
