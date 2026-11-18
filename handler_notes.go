@@ -2,6 +2,7 @@ package main
 
 import (
 	"encoding/json"
+	"fmt"
 	"net/http"
 	"time"
 
@@ -63,4 +64,8 @@ func (cfg *apiConfig) handlerNotesCreate(w http.ResponseWriter, r *http.Request,
 	}
 
 	respondWithJSON(w, http.StatusCreated, noteResp)
+}
+
+func JustaFunction() {
+	fmt.Print("Just a function")
 }
