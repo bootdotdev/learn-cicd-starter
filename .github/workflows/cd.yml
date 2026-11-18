@@ -1,0 +1,46 @@
+name: ci
+
+on:
+  push:
+    branches: [main]
+
+jobs:
+  Deploy:
+    runs-on: ubuntu-latest
+
+    steps:
+      - name: Check out code
+        uses: actions/checkout@v4
+
+      - name: Set up Go 
+        uses: actions/setup-go@v5 
+        with:
+          go-version: "1.26.0"
+
+      - name: Build Application
+        run: |
+           chmod +x scripts/buildprod.sh
+           ./scripts/buildprod.sh
+
+      - id: auth
+        uses: google-github-actions/auth@v2
+        with:
+          credentials_json: ${{secrets.GCP_CREDENTIALS}}
+
+      - name: Set up Cloud SDK
+        uses: google-github-actions/setup-gcloud@v3
+        with:
+          version: '>= 363.0.0'
+
+      - name: Use gcloud CLI
+        run: gcloud info
+
+      - name: Build image
+        run: gcloud builds submit --tag us-central1-docker.pkg.dev/notely-494716/notely-ar-repo/notely:latest .
+
+      - name: deploy
+        run: gcloud run deploy notely --image us-central1-docker.pkg.dev/notely-494716/notely-ar-repo/notely:latest --region us-central1 --allow-unauthenticated --project notely-494716 --max-instance=4
+            
+
+
+       
