@@ -9,6 +9,8 @@ import (
 	"github.com/google/uuid"
 )
 
+// my first comment in go
+
 func (cfg *apiConfig) handlerNotesGet(w http.ResponseWriter, r *http.Request, user database.User) {
 	posts, err := cfg.DB.GetNotesForUser(r.Context(), user.ID)
 	if err != nil {
