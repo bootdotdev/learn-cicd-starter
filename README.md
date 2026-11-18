@@ -13,9 +13,10 @@ PORT="8080"
 ```
 
 Run the server:
-
+	
+	
 ```bash
-go build -o notely && ./notely
+go build -o notely.exe &&  ./notely.exe
 ```
 
 *This starts the server in non-database mode.* It will serve a simple webpage at `http://localhost:8080`.
