@@ -100,29 +100,60 @@
             if (!currentUserAPIKey) {
                 return;
             }
-            const user = await getUser();
-            currentUser = user;
-            currentUserAPIKey = user.api_key;
-            await loadNotes();
+            try {
+                const user = await getUser();
+                currentUser = user;
+                currentUserAPIKey = user.api_key;
+                await loadNotes();
 
-            // When a user logs in, hide the user creation section and show the note section
-            document.getElementById('userCreationContainer').style.display = 'none';
-            document.getElementById('noteSection').style.display = 'flex';
+                // When a user logs in, hide the user creation section and show the note section
+                document.getElementById('userCreationContainer').style.display = 'none';
+                document.getElementById('noteSection').style.display = 'flex';
 
-            // Display a greeting message
-            document.getElementById('greetingMessage').textContent = `Hello ${user.name}!`;
+                // Display a greeting message
+                document.getElementById('greetingMessage').textContent = `Hello ${user.name}!`;
+            } catch (error) {
+                // If we get an error, we're probably in non-database mode
+                document.getElementById('userCreationContainer').style.display = 'none';
+                document.getElementById('noteSection').style.display = 'flex';
+                document.getElementById('greetingMessage').textContent = 'Running in non-database mode. Database features are not available.';
+                document.getElementById('newNoteContent').disabled = true;
+                document.getElementById('createNoteButton').disabled = true;
+                document.getElementById('notes').innerHTML = '<p>Database features are not available in this mode.</p>';
+            }
         }
 
         async function fetchWithAlert(url, options) {
             const response = await fetch(url, options);
             if (response.status > 299) {
+                if (response.status === 404) {
+                    throw new Error('Database features are not available in this mode.');
+                }
                 alert(`Error: ${response.status}`);
                 return;
             }
             return response;
         }
 
-        login();
+        // Check if we're in database mode first
+        async function checkDatabaseMode() {
+            try {
+                const response = await fetch(`${API_BASE}/healthz`);
+                if (!response.ok) {
+                    throw new Error('Database features are not available');
+                }
+                login();
+            } catch (error) {
+                document.getElementById('userCreationContainer').style.display = 'none';
+                document.getElementById('noteSection').style.display = 'flex';
+                document.getElementById('greetingMessage').textContent = 'Running in non-database mode. Database features are not available.';
+                document.getElementById('newNoteContent').disabled = true;
+                document.getElementById('createNoteButton').disabled = true;
+                document.getElementById('notes').innerHTML = '<p>Database features are not available in this mode.</p>';
+            }
+        }
+
+        checkDatabaseMode();
     </script>
 
     <style>
