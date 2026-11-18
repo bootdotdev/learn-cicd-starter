@@ -1,0 +1,62 @@
+Results:
+
+
+[[30;43m/Users/diegocastillo/learn-cicd-starter/json.go:33[0m] - G705 (CWE): XSS via taint analysis (Confidence: HIGH, Severity: MEDIUM)
+    32: 	w.WriteHeader(code)
+  > 33: 	w.Write(dat)
+    34: }
+
+Autofix: 
+
+[[30;43m/Users/diegocastillo/learn-cicd-starter/main.go:90-93[0m] - G112 (CWE-400): Potential Slowloris Attack because ReadHeaderTimeout is not configured in the http.Server (Confidence: LOW, Severity: MEDIUM)
+    89: 	router.Mount("/v1", v1Router)
+  > 90: 	srv := &http.Server{
+  > 91: 		Addr:    ":" + port,
+  > 92: 		Handler: router,
+  > 93: 	}
+    94: 
+
+Autofix: 
+
+[[30;43m/Users/diegocastillo/learn-cicd-starter/models.go:14[0m] - G117 (CWE-499): Exported struct field "ApiKey" (JSON key "api_key") matches secret pattern (Confidence: MEDIUM, Severity: MEDIUM)
+    13: 	Name      string    `json:"name"`
+  > 14: 	ApiKey    string    `json:"api_key"`
+    15: }
+
+Autofix: 
+
+[[30;43m/Users/diegocastillo/learn-cicd-starter/internal/database/users.sql.go:28[0m] - G117 (CWE-499): Exported struct field "ApiKey" (JSON key "ApiKey") matches secret pattern (Confidence: MEDIUM, Severity: MEDIUM)
+    27: 	Name      string
+  > 28: 	ApiKey    string
+    29: }
+
+Autofix: 
+
+[[30;43m/Users/diegocastillo/learn-cicd-starter/internal/database/models.go:22[0m] - G117 (CWE-499): Exported struct field "ApiKey" (JSON key "ApiKey") matches secret pattern (Confidence: MEDIUM, Severity: MEDIUM)
+    21: 	Name      string
+  > 22: 	ApiKey    string
+    23: }
+
+Autofix: 
+
+[[37;40m/Users/diegocastillo/learn-cicd-starter/main.go:95[0m] - G706 (CWE): Log injection via taint analysis (Confidence: HIGH, Severity: LOW)
+    94: 
+  > 95: 	log.Printf("Serving on port: %s\n", port)
+    96: 	log.Fatal(srv.ListenAndServe())
+
+Autofix: 
+
+[[37;40m/Users/diegocastillo/learn-cicd-starter/json.go:33[0m] - G104 (CWE-703): Errors unhandled (Confidence: HIGH, Severity: LOW)
+    32: 	w.WriteHeader(code)
+  > 33: 	w.Write(dat)
+    34: }
+
+Autofix: 
+
+[1;36mSummary:[0m
+  Gosec  : dev
+  Files  : 12
+  Lines  : 607
+  Nosec  : 0
+  Issues : [1;31m7[0m
+
