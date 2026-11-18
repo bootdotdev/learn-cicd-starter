@@ -1,0 +1,50 @@
+name: ci
+
+on:
+  push:
+    branches: [main, format]
+
+jobs:
+  tests:
+    name: Tests
+    runs-on: ubuntu-latest
+
+    steps:
+      - name: Check out code
+        uses: actions/checkout@v4
+
+      - name: Set up Go
+        uses: actions/setup-go@v5
+        with:
+          go-version: '1.22'
+
+      - name: Don't Force Failure, Not Funny, Coffee
+        run: go version
+
+      - name: Actually Test Code
+        run: go test -cover
+
+      - name: Install gosec
+        run: go install github.com/securego/gosec/v2/cmd/gosec@latest
+
+      - name: Check gosec
+        run: gosec ./...
+
+  style:
+    name: Style
+    runs-on: ubuntu-latest
+    
+    steps:
+    - name: Check out code
+      uses: actions/checkout@v4
+
+    - name: Set Up Go
+      uses: actions/setup-go@v4
+      with:
+        go-version: '1.22.x'
+
+    - name: Check Formatting
+      run: test -z $(go fmt ./...)
+
+    - name: Install staticcheck
+      run: go install honnef.co/go/tools/cmd/staticcheck@latest
