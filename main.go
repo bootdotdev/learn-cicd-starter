@@ -7,11 +7,11 @@ import (
 	"log"
 	"net/http"
 	"os"
-
+	"time"
 	"github.com/go-chi/chi"
 	"github.com/go-chi/cors"
 	"github.com/joho/godotenv"
-
+	"strconv"
 	"github.com/bootdotdev/learn-cicd-starter/internal/database"
 
 	_ "github.com/tursodatabase/libsql-client-go/libsql"
@@ -20,6 +20,7 @@ import (
 type apiConfig struct {
 	DB *database.Queries
 }
+
 
 //go:embed static/*
 var staticFiles embed.FS
@@ -89,10 +90,16 @@ func main() {
 
 	router.Mount("/v1", v1Router)
 	srv := &http.Server{
-		Addr:    ":" + port,
-		Handler: router,
+	    Addr:              ":" + port,
+	    Handler:           router,
+	    ReadHeaderTimeout: 5 * time.Second,
+	    ReadTimeout:       10 * time.Second,
+	    WriteTimeout:      10 * time.Second,
+	    IdleTimeout:       60 * time.Second,
 	}
-
-	log.Printf("Serving on port: %s\n", port)
+	if _, err := strconv.Atoi(port); err != nil {
+	    log.Fatal("PORT must be numeric")
+	}
+	log.Printf("Serving on port: 8080\n")
 	log.Fatal(srv.ListenAndServe())
 }
