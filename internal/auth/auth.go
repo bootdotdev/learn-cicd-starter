@@ -19,5 +19,9 @@ func GetAPIKey(headers http.Header) (string, error) {
 		return "", errors.New("malformed authorization header")
 	}
 
+	if splitAuth[1] == "" {
+		return "", errors.New("empty API key provided")
+	}
+
 	return splitAuth[1], nil
 }
