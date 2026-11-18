@@ -30,5 +30,10 @@ func respondWithJSON(w http.ResponseWriter, code int, payload interface{}) {
 		return
 	}
 	w.WriteHeader(code)
-	w.Write(dat)
+	_, err = w.Write(dat) // W Go, ignorujemy liczbę bajtów za pomocą _
+	if err != nil {
+		// Jeśli zapis się nie uda, po prostu logujemy to. Klient i tak nie otrzyma nic więcej.
+		log.Println("error writing response:", err)
+		return
+	}
 }
