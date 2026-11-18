@@ -1,0 +1,5 @@
+nohup: ignoring input
+2026/04/21 17:54:50 warning: assuming default configuration. .env unreadable: open .env: no such file or directory
+2026/04/21 17:54:50 DATABASE_URL environment variable is not set
+2026/04/21 17:54:50 Running without CRUD endpoints
+2026/04/21 17:54:50 Serving on port: 8080
