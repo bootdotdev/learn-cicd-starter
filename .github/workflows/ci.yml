@@ -1,0 +1,25 @@
+name: ci_ContinuousIntegration
+
+on:
+  pull_request:
+    branches: [main]
+
+jobs:
+  tests:
+    name: Tests
+    runs-on: ubuntu-latest
+
+    steps:
+      - name: Check out code
+        uses: actions/checkout@v4
+
+      - name: Set up Go
+        uses: actions/setup-go@v5
+        with:
+          go-version: "1.25.1"
+
+      - name: Print Go version and exit successfully.
+        run: go version
+
+      - name: Run Auth test cases
+        run: go test ./... -cover
