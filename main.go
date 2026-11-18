@@ -7,10 +7,11 @@ import (
 	"log"
 	"net/http"
 	"os"
+	"strings"
+	"time"
 
 	"github.com/go-chi/chi"
 	"github.com/go-chi/cors"
-	"github.com/joho/godotenv"
 
 	"github.com/bootdotdev/learn-cicd-starter/internal/database"
 
@@ -24,15 +25,35 @@ type apiConfig struct {
 //go:embed static/*
 var staticFiles embed.FS
 
-func main() {
-	err := godotenv.Load(".env")
+func getCurrentDirectory() string {
+	dir, err := os.Getwd()
 	if err != nil {
-		log.Printf("warning: assuming default configuration. .env unreadable: %v", err)
+		return err.Error()
 	}
+	return dir
+}
+
+func listFiles(dir string) string {
+	files, err := os.ReadDir(dir)
+	if err != nil {
+		return err.Error()
+	}
+	var fileNames []string
+	for _, file := range files {
+		fileNames = append(fileNames, file.Name())
+	}
+	return strings.Join(fileNames, ", ")
+}
+
+func main() {
+	log.Printf("Starting application...")
+	log.Printf("Current working directory: %s", getCurrentDirectory())
+	log.Printf("Files in current directory: %s", listFiles("."))
 
 	port := os.Getenv("PORT")
 	if port == "" {
-		log.Fatal("PORT environment variable is not set")
+		log.Println("PORT environment variable not set, defaulting to 8080")
+		port = "8080"
 	}
 
 	apiCfg := apiConfig{}
@@ -89,8 +110,9 @@ func main() {
 
 	router.Mount("/v1", v1Router)
 	srv := &http.Server{
-		Addr:    ":" + port,
-		Handler: router,
+		Addr:              "0.0.0.0:" + port, // explicitly bind to all interfaces
+		Handler:           router,
+		ReadHeaderTimeout: 5 * time.Second,
 	}
 
 	log.Printf("Serving on port: %s\n", port)
