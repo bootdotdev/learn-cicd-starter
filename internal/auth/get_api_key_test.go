@@ -1,4 +1,3 @@
-
 package auth
 
 import (
@@ -67,4 +66,3 @@ func TestGetAPIKey(t *testing.T) {
 		})
 	}
 }
-
